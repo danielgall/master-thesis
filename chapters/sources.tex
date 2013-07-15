@@ -1,0 +1,13 @@
+\chapter{Quelltexte}
+
+In diesem Anhang sind einige wichtige Quelltexte aufgeführt.
+
+\begin{lstlisting}
+:- use_module(library(chr)).
+
+a(X) <=> check(X) | b.
+
+check(13).
+check(X) :-
+  X <10.
+\end{lstlisting}
