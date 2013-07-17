@@ -1,54 +1,50 @@
 This is BibTeX, Version 0.99d (TeX Live 2012/Arch Linux)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: arbeit.aux
-The style file: alphadin.bst
-Reallocated singl_function (elt_size=8) to 100 items from 50.
-Reallocated singl_function (elt_size=8) to 100 items from 50.
-Reallocated wiz_functions (elt_size=8) to 6000 items from 3000.
-Reallocated singl_function (elt_size=8) to 100 items from 50.
-Reallocated singl_function (elt_size=8) to 100 items from 50.
+The style file: amsalpha.bst
 Database file #1: bibliography.bib
 Warning--I didn't find a database entry for "unknown"
 Warning--to sort, need author or key in actr_homepage
-You've used 6 entries,
-            4793 wiz_defined-function locations,
-            934 strings with 7580 characters,
-and the built_in function-call counts, 4752 in all, are:
-= -- 472
-> -- 110
-< -- 127
-+ -- 147
-- -- 44
-* -- 349
-:= -- 762
-add.period$ -- 14
-call.type$ -- 6
-change.case$ -- 32
-chr.to.int$ -- 6
-cite$ -- 8
-duplicate$ -- 125
-empty$ -- 388
-format.name$ -- 74
-if$ -- 965
+Warning--to sort, need author or key in actr_tutorial
+You've used 8 entries,
+            2624 wiz_defined-function locations,
+            607 strings with 5572 characters,
+and the built_in function-call counts, 3206 in all, are:
+= -- 288
+> -- 135
+< -- 3
++ -- 48
+- -- 45
+* -- 258
+:= -- 492
+add.period$ -- 8
+call.type$ -- 8
+change.case$ -- 48
+chr.to.int$ -- 8
+cite$ -- 12
+duplicate$ -- 144
+empty$ -- 274
+format.name$ -- 52
+if$ -- 670
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 28
-newline$ -- 51
-num.names$ -- 16
-pop$ -- 54
+missing$ -- 15
+newline$ -- 35
+num.names$ -- 22
+pop$ -- 69
 preamble$ -- 1
-purify$ -- 44
+purify$ -- 56
 quote$ -- 0
-skip$ -- 226
+skip$ -- 107
 stack$ -- 0
-substring$ -- 458
-swap$ -- 26
-text.length$ -- 20
+substring$ -- 181
+swap$ -- 23
+text.length$ -- 3
 text.prefix$ -- 2
 top$ -- 0
-type$ -- 56
-warning$ -- 1
-while$ -- 32
-width$ -- 9
-write$ -- 98
-(There were 2 warnings)
+type$ -- 60
+warning$ -- 2
+while$ -- 30
+width$ -- 11
+write$ -- 95
+(There were 3 warnings)

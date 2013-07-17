@@ -121,12 +121,44 @@ The previously discussed aspects of the ACT-R theory are part of the so-called s
 \item How long does it take to retrieve a certain chunk? 
 \item Forgetting of chunks
 \item If more than one rule matches, which one will be taken?
-\item \dots
 \end{itemize}
 
-Therefore, ACT-R provides a subsymbolic layer that introduces ``neural-like activation processes that determine the availability of [\dots] symbolic structures.
+Therefore, ACT-R provides a subsymbolic layer that introduces ``neural-like activation processes that determine the availability of [\dots] symbolic structures'' \cite{anderson_implications_2000}.
 
 \subsection{Activation of Chunks}
+
+The activation $A_i$ of a chunk $i$ is a numerical value that determines if and how fast a chunk can be retrieved by the declarative module. Suppose there are two chunks that encode addition facts for the same two arguments (let them be 5 and 2), but with different sums (6 and 7), for example. This could be the case, if a child learned the wrong fact, for example. When stating a module request for an addition fact that encodes the sum of 5 and 2, somehow one of the two chunks has to be chosen by a certain method, since they are both matching the request. This is determined by the activation of the chunks: The chunk with the higher activation will be chosen.
+
+Additionally, a very low chunk activation can prevent a chunk of being retrieved: If the activation $A_i$ is less than a certain \emph{threshold} $\tau$, then the chunk $i$ cannot be found.
+
+At last, activation determines also how fast a chunk is being retrieved: The higher the activation, the shorter the retrieval time.
+
+The activation $A_i$ of a chunk $i$ is defined as:
+
+\begin{equation}
+ \label{eq:activation_equation}
+ A_i = B_i + \sum_j{W_j S_{ji}}
+\end{equation}
+
+where $B_i$ is the \emph{base-level activation} of the chunk $i$, $W_j$ the \emph{attentional weighting} of chunk $j$ and $S_{ji}$ the \emph{associative strength} from chunk $j$ to chunk $i$ \cite[p. 1042]{anderson_integrated_2004}, \cite[p. 33]{taatgen_modeling_2006}. Figure \ref{fig:chunk_activation} illustrates the addition-fact $5 + 2 = 7$ with the corresponding quantities introduced in the last equation. Equation \eqref{eq:activation_equation} is called \emph{Activation Equation}.
+
+The values for $W_j$ reflect how many sources of activation are in the current context. A source of activation is a chunk that is referred to in the slots of a chunk in the goal buffer or in all buffers, depending on the version of the ACT-R theory \cite[p. 1042]{anderson_integrated_2004}, \cite[p. 33]{taatgen_modeling_2006}, \cite[unit 5, p. 1]{actr_tutorial}.
+
+The base-level activation is a value associated with each chunk and depends on how often a chunk has been practiced and when the last retrieval of the chunk has been performed. Hence, $B_i$ of chunk $i$ is defined as:
+
+\begin{equation}
+\label{eq:base_level_learning}
+B_i = \mathrm{ln}\left(\sum_{j=1}^n{t_j^{-d}}\right)
+\end{equation}
+
+where $t_j$ is the time since the $j$th practice, $n$ the number of overall practices of the chunk and $d$ is the decay rate that describes how fast the base-level activation decreases if a chunk has not been practiced (how fast a chunk will be forgotten). Usually, $d$ is set to $0.5$ \cite[p. 1042]{anderson_integrated_2004}. Equation \eqref{eq:base_level_learning} is called \emph{Base-Level Learning Equation}, as it defines the adaptive learning process of the base-level value.
+
+This equation is the result of a rational analysis by Anderson and Schooler. It reflects the log odds that a chunk will reappear depending on when it has appeared in the past \cite[p. 33]{taatgen_modeling_2006}. This analysis led to the \emph{power law of practice} \cite[p. 1042]{anderson_integrated_2004}. In \cite[pp. 8--11]{anderson_implications_2000} equation \eqref{eq:base_level_learning} is motivated in more detail by describing the power law of learning/practice, the power law of forgetting and the multiplicative effect of practice and retention with some data. Shortly, it states, that if a particular fact is practiced, there is a improvement of performance which corresponds to a power law. At the same time, performance degrades with time corresponding to a power law. Additionally, they state that if a fact has been practiced a lot, it will not be forgotten for a longer time.
+
+\subsubsection{Strength of Association and Fan effect}
+
+
+
 
 motivation and effects of activation
 activation equation
