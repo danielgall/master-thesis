@@ -18,4 +18,27 @@
 \newblock DOI 10.1037/0033--295X.111.4.1036. --
 \newblock ISSN 0033--{295X}
 
+\bibitem[act]{actr_homepage}
+\emph{The ACT-R Homepage}.
+\newblock \url{http://act-r.psy.cmu.edu/}
+
+\bibitem[Sun08]{sun_introduction_2008}
+\textsc{Sun}, Ron:
+\newblock Introduction to Computational Cognitive Modeling.
+\newblock \,Version:\,2008.
+\newblock
+  \url{http://www.cogsci.rpi.edu/~rsun/folder-files/sun-CHCP-intro.pdf}.
+\newblock {In: }\textsc{Sun}, Ron (Hrsg.): \emph{The Cambridge Handbook of
+  Computational Psychology}.
+\newblock New York : Cambridge University Press, 2008, 3--19
+
+\bibitem[TLA06]{taatgen_modeling_2006}
+\textsc{Taatgen}, Niels~A. ; \textsc{Lebiere}, C.  ; \textsc{Anderson}, J.R.:
+\newblock Modeling Paradigms in {ACT-R}.
+\newblock \,Version:\,2006.
+\newblock \url{http://act-r.psy.cmu.edu/papers/570/SDOC4697.pdf}.
+\newblock {In: }\emph{Cognition and Multi-Agent Interaction: From Cognitive
+  Modeling to Social Simulation.}
+\newblock Cambridge University Press, 2006, 29--52
+
 \end{thebibliography}

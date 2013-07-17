@@ -8,44 +8,47 @@ Reallocated wiz_functions (elt_size=8) to 6000 items from 3000.
 Reallocated singl_function (elt_size=8) to 100 items from 50.
 Reallocated singl_function (elt_size=8) to 100 items from 50.
 Database file #1: bibliography.bib
-You've used 1 entry,
+Warning--I didn't find a database entry for "unknown"
+Warning--to sort, need author or key in actr_homepage
+You've used 4 entries,
             4793 wiz_defined-function locations,
-            899 strings with 6571 characters,
-and the built_in function-call counts, 1517 in all, are:
-= -- 160
-> -- 40
-< -- 56
-+ -- 64
-- -- 17
-* -- 126
-:= -- 256
-add.period$ -- 2
-call.type$ -- 1
-change.case$ -- 9
-chr.to.int$ -- 1
-cite$ -- 1
-duplicate$ -- 25
-empty$ -- 87
-format.name$ -- 27
-if$ -- 280
+            919 strings with 7111 characters,
+and the built_in function-call counts, 3118 in all, are:
+= -- 303
+> -- 77
+< -- 87
++ -- 102
+- -- 30
+* -- 219
+:= -- 508
+add.period$ -- 11
+call.type$ -- 4
+change.case$ -- 22
+chr.to.int$ -- 4
+cite$ -- 6
+duplicate$ -- 87
+empty$ -- 257
+format.name$ -- 52
+if$ -- 635
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 6
-newline$ -- 19
-num.names$ -- 3
-pop$ -- 10
+missing$ -- 18
+newline$ -- 39
+num.names$ -- 10
+pop$ -- 39
 preamble$ -- 1
-purify$ -- 11
+purify$ -- 30
 quote$ -- 0
-skip$ -- 65
+skip$ -- 156
 stack$ -- 0
-substring$ -- 182
-swap$ -- 10
-text.length$ -- 8
-text.prefix$ -- 0
+substring$ -- 247
+swap$ -- 18
+text.length$ -- 14
+text.prefix$ -- 1
 top$ -- 0
-type$ -- 10
-warning$ -- 0
-while$ -- 11
-width$ -- 2
-write$ -- 26
+type$ -- 40
+warning$ -- 1
+while$ -- 22
+width$ -- 6
+write$ -- 71
+(There were 2 warnings)
