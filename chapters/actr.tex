@@ -24,7 +24,7 @@ A central idea of ACT-R is the distinction between \emph{declarative} and \emph{
 
 This approach leads to a modular organization of ACT-R with modules for each purpose needed to simulate human cognition. Figure \ref{fig:modular_organization} provides an overview of some of the default modules of ACT-R. For example, the declarative module stores the factual information (the declarative knowledge), the visual module perceives and processes the visual field, the procedural module holds the procedural information and controls the computational process. 
 
-Each module is independent from the other modules and computations can be performed massively parallel within one module. The visual module, for example, can process the entire visual field at once and modules can perform their computation while other modules are working.
+Each module is independent from the other modules and computations can be performed massively parallel within one module. The visual module, for example, can process the entire visual field at once. Additionally, modules can perform their computations parallel to other modules, for instance: The declarative module can search a specific fact while the visual module processes the visual field.
 
 However, each module can perform its computation only locally and has no access to computations of other modules. To communicate, modules have associated buffers, where they can put a limited amount of information -- one primitive knowledge element -- and the procedural module can access each of these buffers. The information in a buffer could be one single fact retrieved from declarative memory or one visual object from the visual field perceived by the visual module. Information between modules is exchanged by the procedural module taking information from one buffer and putting it into another (with an optional computation on the way). This leads to a serial bottleneck in the computation, since every communication between modules has to go its way through the procedural module.
 
@@ -40,7 +40,7 @@ Such elementary concepts are represented in form of chunks that can be seen as b
 
 Chunks can have slots that are connected to other chunks or elements. Such an element can be regarded as a chunk without any slots. For instance, the fact that five plus to equals to seven can be modeled as a chunk that is connected to the numbers 5, 2 and 7 (see \ref{fig:chunk_addition_fact}). Notice that in the figure each slot has a individual name. This is necessary to distinguish the connections of the chunks, otherwise the summands were indistinguishable from the sum in the example.
 
-Each chunk is associated to a chunk-type that determines which slots a chunk can have. For example, the fact in figure \ref{fig:chunk_addition_fact} has the type \verb|addition-fact|. All chunks of this type must provide the slots \verb|arg1|, \verb|arg2| and \verb|sum|.
+Each chunk is associated with a chunk-type that determines which slots a chunk can have. For example, the fact in figure \ref{fig:chunk_addition_fact} has the type \verb|addition-fact|. All chunks of this type must provide the slots \verb|arg1|, \verb|arg2| and \verb|sum|.
 
 For the chunk types there is no upper limit of slots they can define. However, Anderson et al. suggested to limit the number of slots to Miller's Number of $7 \pm 2$, for the reason of plausibility \cite{unknown}. \FIXME{Find cite}
 
@@ -60,19 +60,39 @@ The term \verb|chunk(name isa type slot1 val1 ... slotn valn)| defines a chunk o
  \verb|chunk(a isa addition-fact arg1 5 arg2 2 sum 7)|
 \end{example}
 
-
-
-\subsection{Buffers}
+\subsubsection{Buffers}
 
 As mentioned before, modules communicate through buffers by putting a limited amount of information into their associated buffers. More precisely, each buffer can hold only \emph{one chunk at a time}.
 
+For example, the declarative module has the retrieval buffer associated with it, which can hold one specific declarative chunk. The declarative module can put chunks in the buffer that can be processed by the procedural module, which is described in the next section.
+
 \subsection{Procedural Knowledge}
 
+Procedural Knowledge in ACT-R is formulated as a set of condition-action rules. Each rule defines in its condition-part the circumstances under which it can be applied. Those conditions refer to the current chunks in the buffer. In the condition-part of a rule it is defined which kind of chunk with certain slot values must be present in which buffer for the rule to fire. For example, one rule in the process of adding the numbers 5 and 2 could have the conditions that there is a chunk of type \verb|addition-fact| in the retrieval buffer with 5 and 7 in its argument-slots and specify certain actions if this is the case.
 
+If the chunks in the buffers match all the conditions stated in a rule, it can be applied (``fired''), which leads its action-part to be performed. Actions can be changes of values in the chunks of a buffer, the clearing of a buffer or a buffer request, which leads the corresponding module to put a certain chunk into the requested buffer. Buffer requests are also stated in form of a chunk description where chunk-type and slots can have a special meaning. The actual semantics of a request is dependent on the module. For example, the declarative module will search a chunk that matches the chunk in the description of the request. One production rule, for instance, in the process of adding the numbers 5 and 2 could be, if the wrong \verb|addition-fact| chunk is stored in the retrieval buffer, a retrieval request will be performed, which states that the declarative module should put a chunk into the retrieval buffer, that has 5 and 2 in its argument slots and is of type \verb|addition-fact|. After the successful performance of the request, a chunk with 5 and 2 as its argument will be stored in the retrieval buffer, that also has a value for the sum.
+
+Although the term \emph{module} is used for the procedural system, it differs a lot from the other modules: In contrast to other modules, the procedural module has no own buffers, but can access the buffers of all the other modules. ``It really is just a system of mapping cortical buffers to other cortical buffers'' \cite[p. 54]{anderson_how_2007}.
+
+The procedural system can only fire one rule at once and it takes 50\,ms for a rule to fire \cite[p. 54]{anderson_how_2007}. After firing the selected rule, the next recognize cycle starts and a suitable rule will be detected and caused to fire. While that time, other modules may perform requests triggered in the action of the first rule. Sometimes, rules have to wait for results of certain modules and they cannot fire before those results are available. Those two facts illustrate how the procedural module can become a serial bottleneck in the computation process.
 
 \subsection{Goal Module}
 
+An essential part of human cognition is the ability to keep track of the current goal to achieve and to subordinate all actions to the goal \cite[p. 1041]{anderson_integrated_2004}. For complex cognitive tasks, several rules have to be applied in series and intermediate results must be stored (without changing of the environment). Another important aspect is, that complex tasks can have different subgoals that have to be achieved to achieve the main goal. For instance, if one wants to add two multi-digit numbers, he would add the columns and remember the results as intermediate results.
+
+In ACT-R, the goal module with the goal buffer is used for this purpose. 
+
+\subsubsection{Working memory}
+
+The goal module and buffer are often referred to as \emph{working memory} \cite[p. 1041]{anderson_integrated_2004}, but actually it can have another meaning as stated in \cite{anderson_working_1996}: As usual in production systems, everything that is present to the production system and can match against the production rules is part of the working memory. With this definition, all chunks in the buffers form the working memory.
+
+In this work, the term working memory will be used in this second meaning, since it discusses the topic from a computer science view and the second definition is related to production rule systems. When talking about the content of the goal buffer, this will be remarked explicitly.
+
 \subsection{Other Modules/Outside World}
+
+Since human cognition is embodied, there must be a way to interact with the outside world to simulate human cognition in realistic experiments. Therefore, ACT-R offers perceptual/motor modules like the manual module for control of the hands, the visual module for perceiving and processing the visual field or the aural module perceiving sounds in the environment.
+
+Like with every other module, communication is achieved through the buffers of those modules. 
 
 \subsection{Example}
 
@@ -82,7 +102,29 @@ more examples can be found there
 
 \section{Serial and Parallel Aspects of ACT-R}
 
+In the previous sections there were some remarks on the serial and parallel aspects of ACT-R. According to \cite[p. 68]{anderson_how_2007}, four types of parallelism and seriality can be distinguished:
+
+\begin{description}
+ \item[Within-Module Parallelism] As mentioned above, one module is able to explore a big amount of data in parallel. For example, the visual module can inspect the whole visual field or the declarative module performs a massively parallel search over all chunks.
+ \item[Within-Module Seriality] 
+ \item[Between-Module Parallelism]
+ \item[Between-Module Serialism]
+\end{description}
+
+The procedural module is the central serial bottleneck in the system, since the whole communication between modules is going through the production system and the whole computation process is controlled there. The fact that only one rule can fire at a time leads to a serial overall computation. Another serial aspect is that some computations need to wait for the results of a module request. If no other rule matches in the time while the request is performed, the whole system has to wait for this calculation to finish. After the request, the module puts the result in its buffer and the rule needing the result of the computation can fire and computation is continued.
+
 \section{Subsymbolic layer}
+
+The previously discussed aspects of the ACT-R theory are part of the so-called symbolic layer. This layer only describes discrete knowledge structures without dealing with more complex questions like: 
+
+\begin{itemize}
+\item How long does it take to retrieve a certain chunk? 
+\item Forgetting of chunks
+\item If more than one rule matches, which one will be taken?
+\item \dots
+\end{itemize}
+
+Therefore, ACT-R provides a subsymbolic layer that introduces ``neural-like activation processes that determine the availability of [\dots] symbolic structures.
 
 \subsection{Activation of Chunks}
 
@@ -96,3 +138,4 @@ latency
 
 
 \section{Learning}
+
