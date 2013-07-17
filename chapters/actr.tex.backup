@@ -14,7 +14,7 @@ On top of the provided cognitive architecture, one can specify models for specif
 
 When talking about ACT-R, one can refer to the theory or the implementation. The theory gives a view which abstracts from implementational details that may be concerned when talking about implementation \FIXME{source}. In this work, implementation always refers to the vanilla Lisp implementation that can be downloaded from \cite{actr_homepage}.
 
-In this chapter, a short overview over the theory of ACT-R is given. First, the description is informal to provide a general image of how ACT-R works. Then, some important parts of the system are defined more formally. All of the information in this chapter refers to the theory. Implementation is discussed in chapter \ref{implementation}.
+In this chapter, a short overview over the theory of ACT-R is given. First, the description is informal to provide a general image of how ACT-R works. Then, some important parts of the system are defined more formally in chapter \ref{implementation}, as soon as it is needed in the implementation. All of the information in this chapter refers to the theory. Implementation is discussed in chapter \ref{implementation}.
 
 \section{Procedural and Declarative Knowledge}
 
@@ -96,6 +96,7 @@ Like with every other module, communication is achieved through the buffers of t
 
 \subsection{Example}
 
+\FIXME{finish}
 counting
 inspired by tutorial
 more examples can be found there
@@ -110,6 +111,8 @@ In the previous sections there were some remarks on the serial and parallel aspe
  \item[Between-Module Parallelism]
  \item[Between-Module Serialism]
 \end{description}
+
+\FIXME{finish}
 
 The procedural module is the central serial bottleneck in the system, since the whole communication between modules is going through the production system and the whole computation process is controlled there. The fact that only one rule can fire at a time leads to a serial overall computation. Another serial aspect is that some computations need to wait for the results of a module request. If no other rule matches in the time while the request is performed, the whole system has to wait for this calculation to finish. After the request, the module puts the result in its buffer and the rule needing the result of the computation can fire and computation is continued.
 
@@ -136,12 +139,15 @@ At last, activation determines also how fast a chunk is being retrieved: The hig
 The activation $A_i$ of a chunk $i$ is defined as:
 
 \begin{equation}
+ \label{eq:activation_equation}
  A_i = B_i + \sum_j{W_j S_{ji}}
 \end{equation}
 
-where $B_i$ is the \emph{base-level activation} of the chunk $i$, $W_j$ the \emph{attentional weighting} of chunk $j$ and $S_ji$ the \emph{associative strength} from chunk $j$ to chunk $i$ \cite[p. 1042]{anderson_integrated_2004}, \cite[p. 33]{taatgen_modeling_2006}. Figure \ref{fig:chunk_activation} illustrates the addition-fact $5 + 2 = 7$ with the corresponding quantities introduced in the last equation.
+where $B_i$ is the \emph{base-level activation} of the chunk $i$, $W_j$ the \emph{attentional weighting} of chunk $j$ and $S_{ji}$ the \emph{associative strength} from chunk $j$ to chunk $i$ \cite[p. 1042]{anderson_integrated_2004}, \cite[p. 33]{taatgen_modeling_2006}. Figure \ref{fig:chunk_activation} illustrates the addition-fact $5 + 2 = 7$ with the corresponding quantities introduced in the last equation. Equation \eqref{eq:activation_equation} is called \emph{Activation Equation}.
 
-The values for $W_j$ reflect how many sources of activation are in the current context. A source of activation is a chunk that is referred to in the slots of a chunk in the goal buffer or in all buffers, depending on the version of the ACT-R theory \cite[p. 1042]{anderson_integrated_2004}, \cite[p. 33]{taatgen_modeling_2006}, \cite[unit 5, p. 1]{actr_tutorial}.
+The idea of this equation is, that the activation of a chunk is composed of its own base-level activation and a spreading part \FIXME{aufteilen in zwei Gleichungen wie im Tutorial: erst nur base level und dann activation spreading!!}
+
+The values for $W_j$ reflect how many sources of activation are in the current context. A source of activation is a chunk that is referred to in the slots of a chunk in the goal buffer or in all buffers, depending on the version of the ACT-R theory \cite[p. 1042]{anderson_integrated_2004}, \cite[p. 33]{taatgen_modeling_2006}, \cite[unit 5, p. 1]{actr_tutorial}. To limit the total amount of source of activation, $W_j$ is set to $\frac{1}{n}$, where $n$ is the number of sources of activation. With this equation, the total amount of activati \FIXME{finish}
 
 The base-level activation is a value associated with each chunk and depends on how often a chunk has been practiced and when the last retrieval of the chunk has been performed. Hence, $B_i$ of chunk $i$ is defined as:
 
@@ -150,11 +156,30 @@ The base-level activation is a value associated with each chunk and depends on h
 B_i = \mathrm{ln}\left(\sum_{j=1}^n{t_j^{-d}}\right)
 \end{equation}
 
-where $t_j$ is the time since the $j$th practice, $n$ the number of overall practices of the chunk and $d$ is the decay rate that describes how fast the base-level activation decreases if a chunk has not been practiced (how fast a chunk will be forgotten). Usually, $d$ is set to $0.5$ \cite[p. 1042]{anderson_integrated_2004}. 
+where $t_j$ is the time since the $j$th practice, $n$ the number of overall practices of the chunk and $d$ is the decay rate that describes how fast the base-level activation decreases if a chunk has not been practiced (how fast a chunk will be forgotten). Usually, $d$ is set to $0.5$ \cite[p. 1042]{anderson_integrated_2004}. Equation \eqref{eq:base_level_learning} is called \emph{Base-Level Learning Equation}, as it defines the adaptive learning process of the base-level value.
 
-This equation is the result of a rational analysis by Anderson and Schooler. It reflects the log odds that a chunk will reappear depending on when it has appeared in the past \cite[p. 33]{taatgen_modeling_2006}. This analysis led to the \emph{power law of practice} \cite[p. 1042]{anderson_integrated_2004}. In \cite[pp. 8--9]{anderson_implications_2000} \eqref{}
+This equation is the result of a rational analysis by Anderson and Schooler. It reflects the log odds that a chunk will reappear depending on when it has appeared in the past \cite[p. 33]{taatgen_modeling_2006}. This analysis led to the \emph{power law of practice} \cite[p. 1042]{anderson_integrated_2004}. In \cite[pp. 8--11]{anderson_implications_2000} equation \eqref{eq:base_level_learning} is motivated in more detail by describing the power law of learning/practice, the power law of forgetting and the multiplicative effect of practice and retention with some data. Shortly, it states, that if a particular fact is practiced, there is a improvement of performance which corresponds to a power law. At the same time, performance degrades with time corresponding to a power law. Additionally, they state that if a fact has been practiced a lot, it will not be forgotten for a longer time.
 
+\subsubsection{Strength of Association and Fan effect}
 
+In equation \eqref{eq:activation_equation} the strength of association $S_{ji}$ from a chunk $j$ to a chunk $i$ is used to determine the activation of a chunk $i$. In the ACT-R theory, the value of $S_{ji}$ is set to 
+
+\begin{equation}
+S_{ji} = S - \mathrm{ln}(\mathrm{fan}_j)
+\end{equation}
+
+where $\mathrm{fan}_j$ is the number of facts associated to term $j$ \cite[p. 1042]{anderson_implications_2000}. This states that the associative strength from chunk $j$ to $i$ decreases the more facts are associated to $j$.
+
+This is due to the \emph{fan effect:} The more facts a person studies about a certain concept, the more time he or she needs to retrieve a particular fact of that concept \cite[p. 186]{anderson_fan_1999}. This has been demonstrated in an experiment presented in \cite{anderson_implications_2000}, where every participant studied facts about persons and locations like:
+
+\begin{itemize}
+ \item A hippie is in the park.
+ \item A hippie is in the church.
+ \item A captain is in the bank.
+ \item \dots
+\end{itemize}
+
+\FIXME{Finish}
 
 
 motivation and effects of activation
