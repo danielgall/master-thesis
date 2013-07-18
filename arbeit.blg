@@ -6,45 +6,46 @@ Database file #1: bibliography.bib
 Warning--I didn't find a database entry for "unknown"
 Warning--to sort, need author or key in actr_homepage
 Warning--to sort, need author or key in actr_tutorial
-You've used 9 entries,
+Warning--can't use both author and editor fields in rescorla_wagner_1972
+You've used 10 entries,
             2624 wiz_defined-function locations,
-            614 strings with 5738 characters,
-and the built_in function-call counts, 3617 in all, are:
-= -- 326
-> -- 154
+            622 strings with 6014 characters,
+and the built_in function-call counts, 4100 in all, are:
+= -- 371
+> -- 173
 < -- 3
-+ -- 55
-- -- 51
-* -- 295
-:= -- 558
-add.period$ -- 9
-call.type$ -- 9
-change.case$ -- 54
-chr.to.int$ -- 9
-cite$ -- 13
-duplicate$ -- 158
-empty$ -- 307
-format.name$ -- 59
-if$ -- 753
++ -- 62
+- -- 57
+* -- 332
+:= -- 628
+add.period$ -- 10
+call.type$ -- 10
+change.case$ -- 60
+chr.to.int$ -- 10
+cite$ -- 15
+duplicate$ -- 180
+empty$ -- 349
+format.name$ -- 66
+if$ -- 860
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 17
-newline$ -- 38
-num.names$ -- 25
-pop$ -- 75
+missing$ -- 20
+newline$ -- 41
+num.names$ -- 28
+pop$ -- 84
 preamble$ -- 1
-purify$ -- 63
+purify$ -- 70
 quote$ -- 0
-skip$ -- 118
+skip$ -- 139
 stack$ -- 0
-substring$ -- 216
-swap$ -- 24
+substring$ -- 248
+swap$ -- 32
 text.length$ -- 3
 text.prefix$ -- 2
 top$ -- 0
-type$ -- 68
-warning$ -- 2
-while$ -- 34
-width$ -- 12
-write$ -- 105
-(There were 3 warnings)
+type$ -- 72
+warning$ -- 3
+while$ -- 40
+width$ -- 13
+write$ -- 117
+(There were 4 warnings)
