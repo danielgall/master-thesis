@@ -8,7 +8,7 @@ To implement consistent models of cognition, it is necessary to develop a theory
 \FIXME{move to introduction and motivation}
 
 
-Adaptive Control of Thought (ACT-R) is a cognitive architecture, that ``is capable of interacting with the outside world, has been mapped onto brain structures, and is able to learn to interact with complex dynamic tasks.'' \cite[p. 29]{taatgen_modeling_2006} 
+Adaptive Control of Thought-Rational  (ACT-R) is a cognitive architecture, that ``is capable of interacting with the outside world, has been mapped onto brain structures, and is able to learn to interact with complex dynamic tasks.'' \cite[p. 29]{taatgen_modeling_2006} 
 
 On top of the provided cognitive architecture, one can specify models for specific tasks. The cognitive architecture constrains the modeling to facilitate the modeling process. Thereby it ensures cognitive plausibility to some degree \cite[p. 29]{taatgen_modeling_2006}.
 
@@ -166,12 +166,12 @@ In ACT-R, the basic idea of activation is, that it consists of two parts: The ba
 
 \begin{equation}
 \label{eq:activation_equation}
- A_i = B_i + \sum_j{W_j S_{ji}}
+ A_i = B_i + \sum_{j \in C}{W_j S_{ji}}
 \end{equation}
 
-where $W_j$ the \emph{attentional weighting} of chunk $j$ and $S_{ji}$ the \emph{associative strength} from chunk $j$ to chunk $i$ \cite[p. 1042]{anderson_integrated_2004}, \cite[p. 33]{taatgen_modeling_2006}. Figure \ref{fig:chunk_activation} illustrates the addition-fact $5 + 2 = 7$ with the corresponding quantities introduced in the last equation. 
+where $W_j$ the \emph{attentional weighting} of chunk $j$, $S_{ji}$ the \emph{associative strength} from chunk $j$ to chunk $i$ and $C$ is the \emph{current context}, usually defined as the set of all chunks that are in a buffer \cite[p. 1042]{anderson_integrated_2004}, \cite[p. 33]{taatgen_modeling_2006}, \cite[unit 5]{actr_tutorial}. Figure \ref{fig:chunk_activation} illustrates the addition-fact $5 + 2 = 7$ with the corresponding quantities introduced in the last equation. 
 
-The values for $W_j$ reflect how many sources of activation are in the current context. A source of activation is a chunk that is referred to in the slots of a chunk in the goal buffer or in all buffers (called current context), depending on the version of the ACT-R theory \cite[p. 1042]{anderson_integrated_2004}, \cite[p. 33]{taatgen_modeling_2006}, \cite[unit 5, p. 1]{actr_tutorial}. To limit the total amount of source of activation, $W_j$ is set to $\frac{1}{n}$, where $n$ is the number of sources of activation. With this equation, the total amount of activation that can spread over declarative memory is limited, since the more chunks are in the current context, the less important becomes a particular connection between a chunk from the context with a chunk from declarative memory.
+The values for $W_j$ reflect how many sources of activation are in the current context. A source of activation is a chunk in the goal buffer or in all buffers (called current context), depending on the version of the ACT-R theory \cite[p. 1042]{anderson_integrated_2004}, \cite[p. 33]{taatgen_modeling_2006}, \cite[unit 5, p. 1]{actr_tutorial}. To limit the total amount of source of activation, $W_j$ is set to $\frac{1}{n}$, where $n$ is the number of sources of activation. With this equation, the total amount of activation that can spread over declarative memory is limited, since the more chunks are in the current context, the less important becomes a particular connection between a chunk from the context with a chunk from declarative memory.
 
 \paragraph{Strength of Association and Fan effect}
 
@@ -182,7 +182,7 @@ In equation \eqref{eq:activation_equation} the strength of association $S_{ji}$ 
 S_{ji} = S - \mathrm{ln}(\mathrm{fan}_j)
 \end{equation}
 
-where $\mathrm{fan}_j$ is the number of facts associated to term $j$ \cite[p. 1042]{anderson_implications_2000}. In more detail: $\mathrm{fan}_j$ is the number of chunks in declarative memory in which $j$ is the value of a slot plus one for chunk $j$ being associated with itself \cite[unit 5, p. 2]{actr_tutorial}.  
+where $\mathrm{fan}_j$ is the number of facts associated to term $j$ \cite[p. 1042]{anderson_implications_2000}. In more detail: ``$\mathrm{fan}_j$ is the number of chunks in declarative memory in which $j$ is the value of a slot plus one for chunk $j$ being associated with itself'' \cite[unit 5, p. 2]{actr_tutorial}.  
 
 Hence, equation \eqref{eq:assoc_strength} states that the associative strength from chunk $j$ to $i$ decreases the more facts are associated to $j$.
 
@@ -214,13 +214,13 @@ As mentioned before, the activation of a chunk affects if the chunk can be retri
 T_i = F \cdot \mathrm{e}^{-A_i}
 \end{equation}
 
-where $T_i$ is the latency of retrieving chunk $i$, $A_i$ the activation of this chunk (as defined in \eqref{eq:activation_equation}) and $F$ the \emph{latency factor} which is usually estimated to be
+where $T_i$ is the \emph{latency} of retrieving chunk $i$, $A_i$ the activation of this chunk, as defined in equation \eqref{eq:activation_equation}, and $F$ the \emph{latency factor} which is usually estimated to be
 
 \begin{equation}
 F \approx 0.35\mathrm{e}^\tau
 \end{equation}
 
-where $\tau$ is the retrieval threshold as mentioned in \ref{activation}, but $F$ can also be set individually by the modeller. Nevertheless, in \cite[p. 1042]{anderson_integrated_2004} it is stated that the relationship of the retrieval threshold and the latency factor in \eqref{eq:retrieval_latency} seems to be suitable for a lot of models.
+where $\tau$ is the retrieval threshold as mentioned in section \ref{activation}, but $F$ can also be set individually by the modeller. Nevertheless, in \cite[p. 1042]{anderson_integrated_2004} it is stated that the relationship of the retrieval threshold and the latency factor in equation \eqref{eq:retrieval_latency} seems to be suitable for a lot of models.
 
 \subsection{Production Utility}
 

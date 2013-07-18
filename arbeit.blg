@@ -1,51 +1,55 @@
 This is BibTeX, Version 0.99d (TeX Live 2012/Arch Linux)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: arbeit.aux
-The style file: amsalpha.bst
+The style file: alphadin.bst
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated wiz_functions (elt_size=8) to 6000 items from 3000.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
 Database file #1: bibliography.bib
 Warning--I didn't find a database entry for "unknown"
 Warning--to sort, need author or key in actr_homepage
 Warning--to sort, need author or key in actr_tutorial
-Warning--can't use both author and editor fields in rescorla_wagner_1972
 You've used 10 entries,
-            2624 wiz_defined-function locations,
-            622 strings with 6014 characters,
-and the built_in function-call counts, 4100 in all, are:
-= -- 371
-> -- 173
-< -- 3
-+ -- 62
-- -- 57
-* -- 332
-:= -- 628
-add.period$ -- 10
+            4793 wiz_defined-function locations,
+            962 strings with 8386 characters,
+and the built_in function-call counts, 6770 in all, are:
+= -- 681
+> -- 171
+< -- 192
++ -- 223
+- -- 69
+* -- 476
+:= -- 1109
+add.period$ -- 22
 call.type$ -- 10
-change.case$ -- 60
+change.case$ -- 50
 chr.to.int$ -- 10
-cite$ -- 15
-duplicate$ -- 180
-empty$ -- 349
-format.name$ -- 66
-if$ -- 860
+cite$ -- 14
+duplicate$ -- 195
+empty$ -- 522
+format.name$ -- 110
+if$ -- 1362
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 20
-newline$ -- 41
-num.names$ -- 28
-pop$ -- 84
+missing$ -- 42
+newline$ -- 74
+num.names$ -- 26
+pop$ -- 81
 preamble$ -- 1
 purify$ -- 70
 quote$ -- 0
-skip$ -- 139
+skip$ -- 356
 stack$ -- 0
-substring$ -- 248
-swap$ -- 32
-text.length$ -- 3
+substring$ -- 515
+swap$ -- 44
+text.length$ -- 31
 text.prefix$ -- 2
 top$ -- 0
-type$ -- 72
-warning$ -- 3
-while$ -- 40
+type$ -- 92
+warning$ -- 2
+while$ -- 53
 width$ -- 13
-write$ -- 117
-(There were 4 warnings)
+write$ -- 151
+(There were 3 warnings)
