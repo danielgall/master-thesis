@@ -11,45 +11,46 @@ Database file #1: bibliography.bib
 Warning--I didn't find a database entry for "unknown"
 Warning--to sort, need author or key in actr_homepage
 Warning--to sort, need author or key in actr_tutorial
-You've used 10 entries,
+Warning--there's no year in whitehill_understanding
+You've used 11 entries,
             4793 wiz_defined-function locations,
-            962 strings with 8386 characters,
-and the built_in function-call counts, 6770 in all, are:
-= -- 681
-> -- 171
-< -- 192
-+ -- 223
-- -- 69
-* -- 476
-:= -- 1109
-add.period$ -- 22
-call.type$ -- 10
-change.case$ -- 50
-chr.to.int$ -- 10
-cite$ -- 14
-duplicate$ -- 195
-empty$ -- 522
-format.name$ -- 110
-if$ -- 1362
+            966 strings with 8561 characters,
+and the built_in function-call counts, 7188 in all, are:
+= -- 724
+> -- 179
+< -- 200
++ -- 231
+- -- 71
+* -- 495
+:= -- 1180
+add.period$ -- 23
+call.type$ -- 11
+change.case$ -- 54
+chr.to.int$ -- 11
+cite$ -- 16
+duplicate$ -- 212
+empty$ -- 559
+format.name$ -- 116
+if$ -- 1451
 int.to.chr$ -- 1
 int.to.str$ -- 0
-missing$ -- 42
-newline$ -- 74
-num.names$ -- 26
-pop$ -- 81
+missing$ -- 45
+newline$ -- 79
+num.names$ -- 29
+pop$ -- 93
 preamble$ -- 1
-purify$ -- 70
+purify$ -- 76
 quote$ -- 0
-skip$ -- 356
+skip$ -- 378
 stack$ -- 0
-substring$ -- 515
-swap$ -- 44
-text.length$ -- 31
-text.prefix$ -- 2
+substring$ -- 533
+swap$ -- 45
+text.length$ -- 33
+text.prefix$ -- 3
 top$ -- 0
-type$ -- 92
-warning$ -- 2
-while$ -- 53
-width$ -- 13
-write$ -- 151
-(There were 3 warnings)
+type$ -- 102
+warning$ -- 3
+while$ -- 56
+width$ -- 15
+write$ -- 163
+(There were 4 warnings)

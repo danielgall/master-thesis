@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Arch Linux) (format=pdflatex 2013.7.15)  18 JUL 2013 16:53
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Arch Linux) (format=pdflatex 2013.7.15)  18 JUL 2013 18:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -846,14 +846,14 @@ LaTeX Info: Redefining \nameref on input line 184.
 \@outlinefile=\write3
 \openout3 = `arbeit.out'.
 
- <images/unilogo_bild.pdf, id=96, 199.74625pt x 199.74625pt>
+ <images/unilogo_bild.pdf, id=112, 199.74625pt x 199.74625pt>
 File: images/unilogo_bild.pdf Graphic file (type pdf)
 
 <use images/unilogo_bild.pdf>
 Package pdftex.def Info: images/unilogo_bild.pdf used on input line 199.
 (pdftex.def)             Requested size: 51.21349pt x 51.21504pt.
 
-<images/unilogo_wort.pdf, id=97, 761.34438pt x 183.18437pt>
+<images/unilogo_wort.pdf, id=113, 761.34438pt x 183.18437pt>
 File: images/unilogo_wort.pdf Graphic file (type pdf)
 
 <use images/unilogo_wort.pdf>
@@ -980,10 +980,10 @@ LaTeX Warning: Reference `fig:chunk_addition_fact' on page 5 undefined on input
  line 43.
 
 
-LaTeX Warning: Citation `unknown' on page 5 undefined on input line 45.
+LaTeX Warning: Citation `unknown' on page 5 undefined on input line 46.
 
 
-Overfull \hbox (3.01881pt too wide) in paragraph at lines 52--53
+Overfull \hbox (3.01881pt too wide) in paragraph at lines 53--54
 [][]\T1/phv/b/n/10 Definition 1. []\T1/phv/m/sl/10 (-20) The term []\T1/pcr/m/n
 /10 chunk-type(name slot1 slot2 ... slotn) \T1/phv/m/sl/10 (-20) de-fines a chu
 nk-
@@ -992,45 +992,48 @@ nk-
 [5]
 
 LaTeX Warning: Reference `fig:chunk_addition_fact' on page 6 undefined on input
- line 58.
+ line 59.
 
 [6] [7] [8]
-Underfull \vbox (badness 7273) has occurred while \output is active []
 
- [9]
-[10]
+LaTeX Warning: Reference `fig:modular_organization' on page 9 undefined on inpu
+t line 123.
 
-LaTeX Warning: Reference `fig:chunk_activation' on page 11 undefined on input l
-ine 172.
+[9] [10] [11] [12]
 
-[11]
+LaTeX Warning: Reference `fig:chunk_activation' on page 13 undefined on input l
+ine 215.
 
-LaTeX Warning: Reference `fig:fan_network' on page 12 undefined on input line 1
-98.
+[13]
+
+LaTeX Warning: Reference `fig:fan_network' on page 14 undefined on input line 2
+41.
 
 
-LaTeX Warning: Reference `fig:fans' on page 12 undefined on input line 200.
+LaTeX Warning: Reference `fig:fans' on page 14 undefined on input line 243.
 
-[12]
+[14]
 
-LaTeX Warning: Reference `fig:activation_spreading' on page 13 undefined on inp
-ut line 206.
+LaTeX Warning: Reference `fig:activation_spreading' on page 15 undefined on inp
+ut line 249.
 
-[13]) (./chapters/chr.tex
+[15]) (./chapters/chr.tex
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [14]
-[15] [16
+ [16]
+[17] [18
 
 
 ]
 Chapter 3.
-) (./chapters/sources.tex [17] [18
+) (./chapters/sources.tex [19] [20
 
 
 ]
 Appendix A.
-) [19] [20
+LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <10> not available
+(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 8.
+) [21] [22
 
 
 ] (./arbeit.bbl
@@ -1051,12 +1054,18 @@ Underfull \hbox (badness 1953) in paragraph at lines 67--75
  rpi . edu / ~rsun / folder-[]files /
  []
 
-[21
+[23
 
 
-]) [22]
+]
+Underfull \hbox (badness 2426) in paragraph at lines 86--90
+[]\T1/phv/m/sc/10 (+20) Whitehill\T1/phv/m/n/10 (+20) , Ja-cob:  Un-der-stand-i
+ng ACT-R ^^U an Out-sider's Per-spec-
+ []
+
+) [24]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 330.
- [23
+ [25
 
 
 ]
@@ -1065,20 +1074,20 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 330.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 330.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 330.
 Package rerunfilecheck Info: File `arbeit.out' has not changed.
-(rerunfilecheck)             Checksum: 7CD7AEEAFA489B8E7574B8AB00334BEF;1547.
+(rerunfilecheck)             Checksum: 481BFF8FB42FD0518962A947B53B0743;1858.
 
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 13150 strings out of 493488
- 191860 string characters out of 3146892
+ 13189 strings out of 493488
+ 192326 string characters out of 3146892
  359750 words of memory out of 3000000
- 15933 multiletter control sequences out of 15000+200000
- 61956 words of font info for 199 fonts, out of 3000000 for 9000
+ 15944 multiletter control sequences out of 15000+200000
+ 66335 words of font info for 211 fonts, out of 3000000 for 9000
  958 hyphenation exceptions out of 8191
- 38i,9n,52p,1220b,1186s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 38i,9n,52p,1287b,1190s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/publi
 c/amsfonts/cm/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/
@@ -1086,15 +1095,18 @@ cmmi5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr
 /share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texmf-di
 st/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/
 public/amsfonts/cm/cmr7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmsy10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb><
-/usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texm
-f-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texmf-dist/fonts/type1/ur
-w/helvetic/uhvb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pf
-b></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on arbeit.pdf (29 pages, 398746 bytes).
+cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></
+usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmsy9.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/
+ucrr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/sha
+re/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-dist/fonts/
+type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/u
+hvro8a.pfb>
+Output written on arbeit.pdf (31 pages, 426530 bytes).
 PDF statistics:
- 422 PDF objects out of 1000 (max. 8388607)
- 369 compressed objects within 4 object streams
- 83 named destinations out of 1000 (max. 500000)
- 27331 words of extra memory for PDF output out of 29859 (max. 10000000)
+ 483 PDF objects out of 1000 (max. 8388607)
+ 424 compressed objects within 5 object streams
+ 96 named destinations out of 1000 (max. 500000)
+ 28387 words of extra memory for PDF output out of 29859 (max. 10000000)
 

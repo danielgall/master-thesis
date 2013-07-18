@@ -6,18 +6,22 @@
 \BOOKMARK [3][-]{section*.3}{Textual Representation of Chunks}{subsection.2.1.2}% 6
 \BOOKMARK [3][-]{section*.4}{Buffers}{subsection.2.1.2}% 7
 \BOOKMARK [2][-]{subsection.2.1.3}{Procedural Knowledge}{section.2.1}% 8
-\BOOKMARK [2][-]{subsection.2.1.4}{Goal Module}{section.2.1}% 9
-\BOOKMARK [3][-]{section*.5}{Working memory}{subsection.2.1.4}% 10
-\BOOKMARK [2][-]{subsection.2.1.5}{Other Modules/Outside World}{section.2.1}% 11
-\BOOKMARK [2][-]{subsection.2.1.6}{Example}{section.2.1}% 12
-\BOOKMARK [1][-]{section.2.2}{Serial and Parallel Aspects of ACT-R}{chapter.2}% 13
-\BOOKMARK [1][-]{section.2.3}{Subsymbolic layer}{chapter.2}% 14
-\BOOKMARK [2][-]{subsection.2.3.1}{Activation of Chunks}{section.2.3}% 15
-\BOOKMARK [3][-]{section*.6}{Base-Level Activation}{subsection.2.3.1}% 16
-\BOOKMARK [3][-]{section*.7}{Activation Spreading}{subsection.2.3.1}% 17
-\BOOKMARK [3][-]{section*.9}{Latency of Retrieval}{subsection.2.3.1}% 18
-\BOOKMARK [2][-]{subsection.2.3.2}{Production Utility}{section.2.3}% 19
-\BOOKMARK [1][-]{section.2.4}{Learning}{chapter.2}% 20
-\BOOKMARK [0][-]{chapter.3}{Constraint Handling Rules}{}% 21
-\BOOKMARK [0][-]{appendix.A}{Quelltexte}{}% 22
-\BOOKMARK [0][-]{appendix*.10}{Bibliography}{}% 23
+\BOOKMARK [3][-]{section*.5}{Description of Procedural Actions}{subsection.2.1.3}% 9
+\BOOKMARK [3][-]{section*.6}{Process of Rule Selection and Execution}{subsection.2.1.3}% 10
+\BOOKMARK [2][-]{subsection.2.1.4}{Goal Module}{section.2.1}% 11
+\BOOKMARK [3][-]{section*.7}{Working memory}{subsection.2.1.4}% 12
+\BOOKMARK [2][-]{subsection.2.1.5}{Other Modules}{section.2.1}% 13
+\BOOKMARK [3][-]{section*.8}{The Outside World}{subsection.2.1.5}% 14
+\BOOKMARK [3][-]{section*.9}{The Imaginal Module}{subsection.2.1.5}% 15
+\BOOKMARK [2][-]{subsection.2.1.6}{Example}{section.2.1}% 16
+\BOOKMARK [1][-]{section.2.2}{Serial and Parallel Aspects of ACT-R}{chapter.2}% 17
+\BOOKMARK [1][-]{section.2.3}{Subsymbolic layer}{chapter.2}% 18
+\BOOKMARK [2][-]{subsection.2.3.1}{Activation of Chunks}{section.2.3}% 19
+\BOOKMARK [3][-]{section*.10}{Base-Level Activation}{subsection.2.3.1}% 20
+\BOOKMARK [3][-]{section*.11}{Activation Spreading}{subsection.2.3.1}% 21
+\BOOKMARK [3][-]{section*.13}{Latency of Retrieval}{subsection.2.3.1}% 22
+\BOOKMARK [2][-]{subsection.2.3.2}{Production Utility}{section.2.3}% 23
+\BOOKMARK [1][-]{section.2.4}{Learning}{chapter.2}% 24
+\BOOKMARK [0][-]{chapter.3}{Constraint Handling Rules}{}% 25
+\BOOKMARK [0][-]{appendix.A}{Source Codes}{}% 26
+\BOOKMARK [0][-]{appendix*.14}{Bibliography}{}% 27

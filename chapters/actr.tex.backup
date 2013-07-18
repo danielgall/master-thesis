@@ -8,7 +8,7 @@ To implement consistent models of cognition, it is necessary to develop a theory
 \FIXME{move to introduction and motivation}
 
 
-Adaptive Control of Thought (ACT-R) is a cognitive architecture, that ``is capable of interacting with the outside world, has been mapped onto brain structures, and is able to learn to interact with complex dynamic tasks.'' \cite[p. 29]{taatgen_modeling_2006} 
+Adaptive Control of Thought-Rational  (ACT-R) is a cognitive architecture, that ``is capable of interacting with the outside world, has been mapped onto brain structures, and is able to learn to interact with complex dynamic tasks.'' \cite[p. 29]{taatgen_modeling_2006} 
 
 On top of the provided cognitive architecture, one can specify models for specific tasks. The cognitive architecture constrains the modeling to facilitate the modeling process. Thereby it ensures cognitive plausibility to some degree \cite[p. 29]{taatgen_modeling_2006}.
 
@@ -42,6 +42,7 @@ Chunks can have slots that are connected to other chunks or elements. Such an el
 
 Each chunk is associated with a chunk-type that determines which slots a chunk can have. For example, the fact in figure \ref{fig:chunk_addition_fact} has the type \verb|addition-fact|. All chunks of this type must provide the slots \verb|arg1|, \verb|arg2| and \verb|sum|.
 
+\label{millers_number}
 For the chunk types there is no upper limit of slots they can define. However, Anderson et al. suggested to limit the number of slots to Miller's Number of $7 \pm 2$, for the reason of plausibility \cite{unknown}. \FIXME{Find cite}
 
 \subsubsection{Textual Representation of Chunks}
@@ -70,11 +71,39 @@ For example, the declarative module has the retrieval buffer associated with it,
 
 Procedural Knowledge in ACT-R is formulated as a set of condition-action rules. Each rule defines in its condition-part the circumstances under which it can be applied. Those conditions refer to the current chunks in the buffer. In the condition-part of a rule it is defined which kind of chunk with certain slot values must be present in which buffer for the rule to fire. For example, one rule in the process of adding the numbers 5 and 2 could have the conditions that there is a chunk of type \verb|addition-fact| in the retrieval buffer with 5 and 7 in its argument-slots and specify certain actions if this is the case.
 
-If the chunks in the buffers match all the conditions stated in a rule, it can be applied (``fired''), which leads its action-part to be performed. Actions can be changes of values in the chunks of a buffer, the clearing of a buffer or a buffer request, which leads the corresponding module to put a certain chunk into the requested buffer. Buffer requests are also stated in form of a chunk description where chunk-type and slots can have a special meaning. The actual semantics of a request is dependent on the module. For example, the declarative module will search a chunk that matches the chunk in the description of the request. One production rule, for instance, in the process of adding the numbers 5 and 2 could be, if the wrong \verb|addition-fact| chunk is stored in the retrieval buffer, a retrieval request will be performed, which states that the declarative module should put a chunk into the retrieval buffer, that has 5 and 2 in its argument slots and is of type \verb|addition-fact|. After the successful performance of the request, a chunk with 5 and 2 as its argument will be stored in the retrieval buffer, that also has a value for the sum.
+If the chunks in the buffers match all the conditions stated in a rule, it can be applied (``fired''), which leads its action-part to be performed. Actions can be changes of values in the chunks of a buffer, the clearing of a buffer or a buffer request, which leads the corresponding module to put a certain chunk into the requested buffer. Buffer requests are also stated in form of a chunk description where chunk-type and slots can have a special meaning. The actual semantics of a request is dependent on the module. For example, the declarative module will search a chunk that matches the chunk in the description of the request. One production rule, for instance, in the process of adding the numbers 5 and 2 could be, if the wrong \verb|addition-fact| chunk is stored in the retrieval buffer, a retrieval request will be performed, which states that the declarative module should put a chunk into the retrieval buffer, that has 5 and 2 in its argument slots and is of type \verb|addition-fact|. After the successful performance of the request, a chunk with 5 and 2 as its argument will be stored in the retrieval buffer, that also has a value for the sum. The actions are described in more detail in the following section.
 
 Although the term \emph{module} is used for the procedural system, it differs a lot from the other modules: In contrast to other modules, the procedural module has no own buffers, but can access the buffers of all the other modules. ``It really is just a system of mapping cortical buffers to other cortical buffers'' \cite[p. 54]{anderson_how_2007}.
 
 The procedural system can only fire one rule at once and it takes 50\,ms for a rule to fire \cite[p. 54]{anderson_how_2007}. After firing the selected rule, the next recognize cycle starts and a suitable rule will be detected and caused to fire. While that time, other modules may perform requests triggered in the action of the first rule. Sometimes, rules have to wait for results of certain modules and they cannot fire before those results are available. Those two facts illustrate how the procedural module can become a serial bottleneck in the computation process.
+
+\subsubsection{Description of Procedural Actions}
+\label{description_of_proc_actions}
+
+\FIXME{description of procedural actions}
+
+\begin{description}
+ \item[Buffer Modification:] 
+ 
+ An in-place operation, that overwrites the slot values of a chunk in a buffer with the specified values in the action of the rule.
+ 
+ \item[Buffer Request:] 
+ 
+ A buffer request will cause the corresponding module to calculate some kind of result that will be placed into the requested buffer. The input values of this computation are slot-value pairs specified in the request. For instance, the declarative module could search for a chunk that has the specified values in its slots.
+ 
+ The request is independent of the execution of the production rule and after the request has been stated by the procedural module, it can begin with the next recognize-cycle.
+ 
+ Before the request is performed, the corresponding buffer will be cleared.
+ 
+ \item[Buffer Clearing:] 
+ 
+ If a buffer is cleared, its containing chunk will be placed into the declarative memory from where it can be retrieved later on.
+\end{description}
+
+\subsubsection{Process of Rule Selection and Execution}
+
+\FIXME{describe that first, rule is executed, request stated. WHile request is working, module is free. Define the term free and busy}
+
 
 \subsection{Goal Module}
 
@@ -88,13 +117,27 @@ The goal module and buffer are often referred to as \emph{working memory} \cite[
 
 In this work, the term working memory will be used in this second meaning, since it discusses the topic from a computer science view and the second definition is related to production rule systems. When talking about the content of the goal buffer, this will be remarked explicitly.
 
-\subsection{Other Modules/Outside World}
+\subsection{Other Modules}
 
-Since human cognition is embodied, there must be a way to interact with the outside world to simulate human cognition in realistic experiments. Therefore, ACT-R offers perceptual/motor modules like the manual module for control of the hands, the visual module for perceiving and processing the visual field or the aural module perceiving sounds in the environment.
+In figure \ref{fig:modular_organization} some more modules are shown. In the following, a short description of some of those modules is given.
+
+\subsubsection{The Outside World}
+
+Since human cognition is embodied, there must be a way to interact with the outside world to simulate human cognition in realistic experiments. Therefore, ACT-R offers \emph{perceptual/motor modules} like the manual module for control of the hands, the visual module for perceiving and processing the visual field or the aural module perceiving sounds in the environment.
 
 Like with every other module, communication is achieved through the buffers of those modules. 
 
 \FIXME{describe visual module}
+
+\subsubsection{The Imaginal Module}
+
+The imaginal module is capable of creating new chunks. This is useful, if for instance the visual module produces a lot of new information in sequence (like reading a sequence of letters). The visual-object buffer can hold only one chunk at once. A solution could be, to save all the information in slots of the goal chunk. However, since a goal chunk with a large amount of slots seems to be unplausible\footnote{As described in section \ref{millers_number}, one should stick to $7 \pm 2$ slots for each chunk.} and the number of read instances would have to be known in advance due to the static chunk-type definition, the best way would be to create new knowledge elements.
+
+This task can be achieved by using the imaginal module: On a request, it creates a new chunk of the type and with the slots stated in the request and puts it into its \emph{imaginal buffer}. Since with every clearing of a buffer the chunk in that buffer is stored in declarative memory\footnote{see section \ref{description_of_proc_actions}}, a unlimited amount of data can be produced and remembered by stating retrieval requests later on.
+
+It is important to mention, that it takes the imaginal module $.2\,\mathrm{ms}$ to create a chunk. This amount of time is constant, but can be set by the modeler. Additionally, the imaginal module can only produce one chunk at a time\footnote{like every module can only handle one request at a time}.
+
+The imaginal module is described in \cite[unit 2]{actr_tutorial}.
 
 \subsection{Example}
 
@@ -109,7 +152,7 @@ In the previous sections there were some remarks on the serial and parallel aspe
 
 \begin{description}
  \item[Within-Module Parallelism:] As mentioned above, one module is able to explore a big amount of data in parallel. For example, the visual module can inspect the whole visual field or the declarative module performs a massively parallel search over all chunks.
- \item[Within-Module Seriality:] Since modules have to communicate, they have a limited amount of buffers and each of those buffers can only hold one chunk. For example, the visual module only can concentrate on one single visual object at one visual location, the declarative module only can have one single concept present, the production system can fire only one rule at a time, \dots. 
+ \item[Within-Module Seriality:] Since modules have to communicate, they have a limited amount of buffers and each of those buffers can only hold one chunk. For example, the visual module only can concentrate on one single visual object at one visual location, the declarative module only can have one single concept present, the production system can fire only one rule at a time, \dots 
  \item[Between-Module Parallelism:] Modules are independent of each other and their computations can be performed in parallel.
  \item[Between-Module Serialism:] However, if it comes to communication, everything must be exchanged via the procedural module that has access to all the buffers. Sometimes, the production system has to wait for a module to finish, since the next computation relies on this information. So, modules may have to wait for another module to finish its computation before they can start with theirs triggered by a production rule that states a request to those modules.
 \end{description}
@@ -146,11 +189,7 @@ The activation $A_i$ of a chunk $i$ is defined as:
  A_i = B_i + \Gamma
 \end{equation}
 
-where $B_i$ is the \emph{base-level activation} of the chunk $i$. $\Gamma$ is a context component that is described in chapter \ref{activation_spreading}. Equation \eqref{eq:activation_equation_simpl} is a simplified variant of the \emph{Activation Equation}.
-
-The idea of this equation is, that the activation of a chunk is composed of its own base-level activation and a spreading part \FIXME{aufteilen in zwei Gleichungen wie im Tutorial: erst nur base level und dann activation spreading!!}
-
-The values for $W_j$ reflect how many sources of activation are in the current context. A source of activation is a chunk that is referred to in the slots of a chunk in the goal buffer or in all buffers, depending on the version of the ACT-R theory \cite[p. 1042]{anderson_integrated_2004}, \cite[p. 33]{taatgen_modeling_2006}, \cite[unit 5, p. 1]{actr_tutorial}. To limit the total amount of source of activation, $W_j$ is set to $\frac{1}{n}$, where $n$ is the number of sources of activation. With this equation, the total amount of activati \FIXME{finish}
+where $B_i$ is the \emph{base-level activation} of the chunk $i$. $\Gamma$ is a context component that will be described later on. Equation \eqref{eq:activation_equation_simpl} is a simplified variant of the \emph{Activation Equation}.
 
 The base-level activation is a value associated with each chunk and depends on how often a chunk has been practiced and when the last retrieval of the chunk has been performed. Hence, $B_i$ of chunk $i$ is defined as:
 
@@ -164,18 +203,19 @@ where $t_j$ is the time since the $j$th practice, $n$ the number of overall prac
 This equation is the result of a rational analysis by Anderson and Schooler. It reflects the log odds that a chunk will reappear depending on when it has appeared in the past \cite[p. 33]{taatgen_modeling_2006}. This analysis led to the \emph{power law of practice} \cite[p. 1042]{anderson_integrated_2004}. In \cite[pp. 8--11]{anderson_implications_2000} equation \eqref{eq:base_level_learning} is motivated in more detail by describing the power law of learning/practice, the power law of forgetting and the multiplicative effect of practice and retention with some data. Shortly, it states, that if a particular fact is practiced, there is a improvement of performance which corresponds to a power law. At the same time, performance degrades with time corresponding to a power law. Additionally, they state that if a fact has been practiced a lot, it will not be forgotten for a longer time.
 
 \subsubsection{Activation Spreading}
-\label{activation_spreading}
 
-In ACT-R, the basic idea of activation is, that it consists of two parts: The base-level component described above, and a context component. Every chunk that is in the current context has a certain amount of activation that can spread over the declarative memory and enhance activation of other chunks that are somehow connected to those chunks in the context. We enhance 
+In ACT-R, the basic idea of activation is, that it consists of two parts: The base-level component described above, and a context component. Every chunk that is in the current context has a certain amount of activation that can spread over the declarative memory and enhance activation of other chunks that are somehow connected to those chunks in the context. The activation equation \eqref{eq:activation_equation_simpl} is extended as follows:
 
 \begin{equation}
 \label{eq:activation_equation}
- A_i = B_i + \sum_j{W_j S_{ji}}
+ A_i = B_i + \sum_{j \in C}{W_j S_{ji}}
 \end{equation}
 
-where $W_j$ the \emph{attentional weighting} of chunk $j$ and $S_{ji}$ the \emph{associative strength} from chunk $j$ to chunk $i$ \cite[p. 1042]{anderson_integrated_2004}, \cite[p. 33]{taatgen_modeling_2006}. Figure \ref{fig:chunk_activation} illustrates the addition-fact $5 + 2 = 7$ with the corresponding quantities introduced in the last equation. 
+where $W_j$ the \emph{attentional weighting} of chunk $j$, $S_{ji}$ the \emph{associative strength} from chunk $j$ to chunk $i$ and $C$ is the \emph{current context}, usually defined as the set of all chunks that are in a buffer \cite[p. 1042]{anderson_integrated_2004}, \cite[p. 33]{taatgen_modeling_2006}, \cite[unit 5]{actr_tutorial}. Figure \ref{fig:chunk_activation} illustrates the addition-fact $5 + 2 = 7$ with the corresponding quantities introduced in the last equation. 
 
-\subsubsection{Strength of Association and Fan effect}
+The values for $W_j$ reflect how many sources of activation are in the current context. A source of activation is a chunk in the goal buffer or in all buffers\footnote{This is called the current context: Usually it means the set of all chunks in all buffers, but there are definitions in literature, that only call the chunk in the goal buffer current context.}, depending on the version of the ACT-R theory \cite[p. 1042]{anderson_integrated_2004}, \cite[p. 33]{taatgen_modeling_2006}, \cite[unit 5, p. 1]{actr_tutorial}. To limit the total amount of source of activation, $W_j$ is set to $\frac{1}{n}$, where $n$ is the number of sources of activation. With this equation, the total amount of activation that can spread over declarative memory is limited, since the more chunks are in the current context, the less important becomes a particular connection between a chunk from the context with a chunk from declarative memory.
+
+\paragraph{Strength of Association and Fan effect}
 
 In equation \eqref{eq:activation_equation} the strength of association $S_{ji}$ from a chunk $j$ to a chunk $i$ is used to determine the activation of a chunk $i$.  In the ACT-R theory, the value of $S_{ji}$ is determined by the following rule: If chunk $j$ is not a value in the slots of chunk $i$ and $j \neq i$, then $S_{ji}$ is set to 0. Otherwise $S_{ji}$ is set to: 
 
@@ -184,7 +224,7 @@ In equation \eqref{eq:activation_equation} the strength of association $S_{ji}$ 
 S_{ji} = S - \mathrm{ln}(\mathrm{fan}_j)
 \end{equation}
 
-where $\mathrm{fan}_j$ is the number of facts associated to term $j$ \cite[p. 1042]{anderson_implications_2000}. In more detail: $\mathrm{fan}_j$ is the number of chunks in declarative memory in which $j$ is the value of a slot plus one for chunk $j$ being associated with itself \cite[unit 5, p. 2]{actr_tutorial}.  
+where $\mathrm{fan}_j$ is the number of facts associated to term $j$ \cite[p. 1042]{anderson_implications_2000}. In more detail: ``$\mathrm{fan}_j$ is the number of chunks in declarative memory in which $j$ is the value of a slot plus one for chunk $j$ being associated with itself'' \cite[unit 5, p. 2]{actr_tutorial}.  
 
 Hence, equation \eqref{eq:assoc_strength} states that the associative strength from chunk $j$ to $i$ decreases the more facts are associated to $j$.
 
@@ -205,6 +245,8 @@ The result of the experiment was, that the more facts are associated with a cert
 
 In the ACT-R theory, this result has been integrated in the calculation of the strengths of association: In equation \eqref{eq:assoc_strength} the associative strength decreases with the number of associated elements. The value $S$ is a model-dependent constant, but in many models estimated about 2 \cite[p. 1042]{anderson_integrated_2004}. Modelers should take notice of setting $S$ high enough that all associative strengths in the model are positive \cite[unit 5, p. 3]{actr_tutorial}.
 
+Figure \ref{fig:activation_spreading} illustrates the activation spreading process.
+
 \subsubsection{Latency of Retrieval}
 
 As mentioned before, the activation of a chunk affects if the chunk can be retrieved (depending on a threshold and the activation values of the other matching chunks). In addition, activation also has an effect on the retrieval time of a chunk:
@@ -214,19 +256,19 @@ As mentioned before, the activation of a chunk affects if the chunk can be retri
 T_i = F \cdot \mathrm{e}^{-A_i}
 \end{equation}
 
-where $T_i$ is the latency of retrieving chunk $i$, $A_i$ the activation of this chunk (as defined in \eqref{eq:activation_equation}) and $F$ the \emph{latency factor} which is usually estimated to be
+where $T_i$ is the \emph{latency} of retrieving chunk $i$, $A_i$ the activation of this chunk, as defined in equation \eqref{eq:activation_equation}, and $F$ the \emph{latency factor} which is usually estimated to be
 
 \begin{equation}
 F \approx 0.35\mathrm{e}^\tau
 \end{equation}
 
-where $\tau$ is the retrieval threshold as mentioned in \ref{activation}, but $F$ can also be set individually by the modeller. Nevertheless, in \cite[p. 1042]{anderson_integrated_2004} it is stated that the relationship of the retrieval threshold and the latency factor in \eqref{eq:retrieval_latency} seems to be suitable for a lot of models.
+where $\tau$ is the retrieval threshold as mentioned in section \ref{activation}, but $F$ can also be set individually by the modeller. Nevertheless, in \cite[p. 1042]{anderson_integrated_2004} it is stated that the relationship of the retrieval threshold and the latency factor in equation \eqref{eq:retrieval_latency} seems to be suitable for a lot of models.
 
 \subsection{Production Utility}
 
 For the production system, there is the subsymbolic concept of \emph{production utilities} to deal with competing strategies. For instance, if a child learns to add numbers, it may have learned different strategies to compute the result: One could be counting with the fingers and the other could be just retrieving a fact for the addition from declarative memory. If the child now has the goal to add two numbers, it somehow has to decide which strategy it will choose, since both strategies match the context.
 
-In ACT-R, production utility is a number attached to each production rule in the system. Just like with activation of chunks, the production rule with the highest utility will be chosen, if there are more than one matching rules. The utilities can be set statically by the modeler, but there are also ways that the system learns the utilities automatically by practice.
+In ACT-R, production utility is a number attached to each production rule in the system. Just like with activation of chunks, the production rule with the highest utility will be chosen, if there are more than one matching rules. The utilities can be set statically by the modeler, but they can also be learned automatically by practice.
 
 In the current version of the ACT-R theory, a reinforcement learning rule based on the Rescorla-Wagner learning rule \cite{rescorla_wagner_1972} has been introduced. The utility $U_i$ of a production rule $i$ is defined as:
 
@@ -246,4 +288,7 @@ It is important to mention that by the definition of the reward for a production
 
 
 \section{Learning}
+
+\cite[pp. 92--95]{anderson_how_2007}
+\cite[chapter 4]{whitehill_understanding}
 
