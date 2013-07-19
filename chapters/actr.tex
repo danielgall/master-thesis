@@ -71,7 +71,7 @@ For example, the declarative module has the retrieval buffer associated with it,
 
 Procedural Knowledge in ACT-R is formulated as a set of condition-action rules. Each rule defines in its condition-part the circumstances under which it can be applied. Those conditions refer to the current chunks in the buffer. In the condition-part of a rule it is defined which kind of chunk with certain slot values must be present in which buffer for the rule to fire. For example, one rule in the process of adding the numbers 5 and 2 could have the conditions that there is a chunk of type \verb|addition-fact| in the retrieval buffer with 5 and 7 in its argument-slots and specify certain actions if this is the case.
 
-If the chunks in the buffers match all the conditions stated in a rule, it can be applied (``fired''), which leads its action-part to be performed. Actions can be changes of values in the chunks of a buffer, the clearing of a buffer or a buffer request, which leads the corresponding module to put a certain chunk into the requested buffer. Buffer requests are also stated in form of a chunk description where chunk-type and slots can have a special meaning. The actual semantics of a request is dependent on the module. For example, the declarative module will search a chunk that matches the chunk in the description of the request. One production rule, for instance, in the process of adding the numbers 5 and 2 could be, if the wrong \verb|addition-fact| chunk is stored in the retrieval buffer, a retrieval request will be performed, which states that the declarative module should put a chunk into the retrieval buffer, that has 5 and 2 in its argument slots and is of type \verb|addition-fact|. After the successful performance of the request, a chunk with 5 and 2 as its argument will be stored in the retrieval buffer, that also has a value for the sum. The actions are described in more detail in the following section.
+If the chunks in the buffers match all the conditions stated in a rule, it can be applied (``fired''), which leads its action-part to be performed. Actions can be changes of values in the chunks of a buffer, the clearing of a buffer or a buffer request, which leads the corresponding module to put a certain chunk into the requested buffer. Buffer requests are also stated in form of a (partial) chunk description\footnote{A partial chunk description is just a chunk description that does not specify all slots that are available as defined in the chunk-type.} where chunk-type and slots can have a special meaning. The actual semantics of a request is dependent on the module. For example, the declarative module will search a chunk that matches the chunk in the description of the request. One production rule, for instance, in the process of adding the numbers 5 and 2 could be, if the wrong \verb|addition-fact| chunk is stored in the retrieval buffer, a retrieval request will be performed, which states that the declarative module should put a chunk into the retrieval buffer, that has 5 and 2 in its argument slots and is of type \verb|addition-fact|. After the successful performance of the request, a chunk with 5 and 2 as its argument will be stored in the retrieval buffer, that also has a value for the sum. The actions are described in more detail in the following section.
 
 Although the term \emph{module} is used for the procedural system, it differs a lot from the other modules: In contrast to other modules, the procedural module has no own buffers, but can access the buffers of all the other modules. ``It really is just a system of mapping cortical buffers to other cortical buffers'' \cite[p. 54]{anderson_how_2007}.
 
@@ -89,7 +89,7 @@ In this section, the actions that can be performed by a production rule are desc
  
  \item[Buffer Request:] 
  
- A buffer request will cause the corresponding module to calculate some kind of result that will be placed into the requested buffer. The input values of this computation are slot-value pairs specified in the request. For instance, the declarative module could search for a chunk that has the specified values in its slots.
+ A buffer request will cause the corresponding module to calculate some kind of result that will be placed into the requested buffer. The input values of this computation are given as chunks with a type and slot-value pairs specified in the request. For instance, the declarative module could search for a chunk that has the specified values in its slots.
  
  The request is independent of the execution of the production rule and after the request has been stated by the procedural module, it can begin with the next recognize-cycle.
  
@@ -99,6 +99,12 @@ In this section, the actions that can be performed by a production rule are desc
  
  If a buffer is cleared, its containing chunk will be placed into the declarative memory from where it can be retrieved later on.
 \end{description}
+
+\subsubsection{Chunks as Central Data Structure}
+
+As may have become clear in the previous sections, chunks are the central data structures in ACT-R. They are used to model factual knowledge in the declarative memory, but are also used for communication: Requests are stated as chunks that encode the input of the request, for instance a chunk pattern for a result chunk the declarative memory should retrieve. 
+
+The results of a request is a chunk placed into a buffer and even the procedural system tries to match the chunks in the buffers in the condition part and the action of a rule is specified by slot-value pairs that are basically just partial chunk descriptions. 
 
 \subsubsection{Process of Rule Selection and Execution}
 
@@ -128,7 +134,15 @@ Since human cognition is embodied, there must be a way to interact with the outs
 
 Like with every other module, communication is achieved through the buffers of those modules. 
 
-\FIXME{describe visual module}
+\paragraph{The Visual Module} The visual system of ACT-R separates vision into two parts: visual location and visual objects \cite[p. 1039]{anderson_integrated_2004}. There are two buffers for those purposes: the \emph{visual-location} buffer and the \emph{visual} buffer, which represents the visual objects \cite[unit 2]{actr_tutorial}.
+
+In the visual module it is not encoded how the light falls on the retina, but a more attentional approach has been chosen \cite[p. 1039]{anderson_integrated_2004}. 
+
+Requests to the visual-location buffer specify a series of constraints in form of slot-value pairs and the visual module puts a chunk representing the location of an object meeting those constraints into the visual-location buffer. Possible constraints are properties of objects like the color or the spatial location. The visual system can process such requests in parallel, ie. that the whole visual field is processed massively parallel and the time of finding one green object surrounded by blue objects is constant, regardless of the number of blue objects, for example. If there are more than one object meeting the constraints, then one will be chosen at random \cite[p. 1039]{anderson_integrated_2004}, \cite[p. 68]{anderson_how_2007}.
+
+Requests to the visual-object system specify a visual location and the visual module will move its attention to that location, create a new chunk representing the object at that location and put that chunk into the visual buffer \cite[unit 2, chapter 2.5.3]{actr_tutorial}.
+
+The visual system and its capabilities are described in detail in \cite[unit 2]{actr_tutorial} and also regards the implementational details of the system.
 
 \subsubsection{The Imaginal Module}
 
