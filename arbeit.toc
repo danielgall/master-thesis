@@ -26,5 +26,23 @@
 \contentsline {subsection}{\numberline {2.3.2}Production Utility}{17}{subsection.2.3.2}
 \contentsline {section}{\numberline {2.4}Learning}{18}{section.2.4}
 \contentsline {chapter}{\numberline {3}Constraint Handling Rules}{19}{chapter.3}
-\contentsline {chapter}{\numberline {A}Source Codes}{21}{appendix.A}
-\contentsline {chapter}{Bibliography}{23}{appendix*.15}
+\contentsline {chapter}{\numberline {4}Transformation of ACT-R to CHR}{21}{chapter.4}
+\contentsline {section}{\numberline {4.1}Chunks}{21}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Textual Representation of Chunks}{21}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Representation of Chunks in CHR}{22}{subsection.4.1.2}
+\contentsline {subsubsection}{Chunks}{23}{section*.15}
+\contentsline {subsubsection}{Chunk Types}{23}{section*.16}
+\contentsline {subsubsection}{Rules to Check Chunk Types}{23}{section*.17}
+\contentsline {section}{\numberline {4.2}Procedural Module}{23}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Buffer System}{23}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}Production Rules}{23}{subsection.4.2.2}
+\contentsline {section}{\numberline {4.3}Modular Organization}{23}{section.4.3}
+\contentsline {section}{\numberline {4.4}Declarative Module}{23}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Retrieval Requests}{23}{subsection.4.4.1}
+\contentsline {section}{\numberline {4.5}Timing in ACT-R}{24}{section.4.5}
+\contentsline {section}{\numberline {4.6}Subsymbolic Layer}{24}{section.4.6}
+\contentsline {subsection}{\numberline {4.6.1}Activation of Chunks}{24}{subsection.4.6.1}
+\contentsline {subsection}{\numberline {4.6.2}Production Utility}{24}{subsection.4.6.2}
+\contentsline {chapter}{\numberline {5}Compiler}{25}{chapter.5}
+\contentsline {chapter}{\numberline {A}Source Codes}{27}{appendix.A}
+\contentsline {chapter}{Bibliography}{29}{appendix*.18}

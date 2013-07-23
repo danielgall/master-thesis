@@ -160,9 +160,12 @@ The first ACT-R example model deals with the process of counting. This model rel
 
 The next step is to define the goal chunk stored in the goal buffer. In this chunk it somehow has to be encoded, that the current goal is to count. This can be modeled in ACT-R by the chunk-type. To track the current number in the counting process, the goal chunk could have a slot, that always holds the current number that has been counted to. This leads to a goal chunk as illustrated in figure \ref{fig:example_counting_goal_chunk}, where the current number is $2$. In this example we assume that the model starts with this goal chunk in the goal buffer and the first count fact has been retrieved:
 
-\parbox{76.2mm}{\textbf{goal buffer:} goal-chunk of type count\\
-\noindent\hspace*{20mm} bla\\
-\noindent\hspace*{20mm} blub}
+\parbox{100mm}{\textbf{goal buffer:} goal-chunk of type count\\
+\noindent\hspace*{20mm} current-number $2$}
+
+\parbox{100mm}{\textbf{retrieval buffer:} b of type count-fact\\
+\noindent\hspace*{20mm} first $2$\\
+\noindent\hspace*{20mm} second $3$}
 
 Now the rules to implement counting can be defined as:
 
