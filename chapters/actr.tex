@@ -1,6 +1,6 @@
 \chapter{Description of ACT-R}
 
-In computational psychology, the approach to explore human cognition is to implement detailed, computational models that enable computers to execute them and simulate human behaviour \cite{sun_introduction_2008}. By conducting the same experiments with humans and with simulations of the suggested underlying cognitive models, the plausibility of models can be checked and models can be improved gradually.
+In computational psychology, the approach to explore human cognition is to implement detailed computational models that enable computers to execute them and simulate human behaviour \cite{sun_introduction_2008}. By conducting the same experiments with humans and with simulations of the suggested underlying cognitive models, the plausibility of models can be checked and models can be improved gradually.
 
 On the other hand, psychology is experiencing a movement towards specialization \cite{anderson_integrated_2004}, ie. there are a lot of independent, highly specialized fields that lack a more global view.
 
@@ -10,7 +10,7 @@ To implement consistent models of cognition, it is necessary to develop a theory
 
 Adaptive Control of Thought-Rational  (ACT-R) is a cognitive architecture, that ``is capable of interacting with the outside world, has been mapped onto brain structures, and is able to learn to interact with complex dynamic tasks.'' \cite[p. 29]{taatgen_modeling_2006} 
 
-On top of the provided cognitive architecture, one can specify models for specific tasks. The cognitive architecture constrains the modeling to facilitate the modeling process. Thereby it ensures cognitive plausibility to some degree \cite[p. 29]{taatgen_modeling_2006}.
+On top of the provided cognitive architecture, one can specify models for specific tasks. The cognitive architecture constrains the modeling to facilitate the modeling process. Thereby it ensures cognitive plausibility to some degree, since models are built upon a highly verified theory \cite[p. 29]{taatgen_modeling_2006}.
 
 When talking about ACT-R, one can refer to the theory or the implementation. The theory gives a view which abstracts from implementational details that may be concerned when talking about implementation \FIXME{source}. In this work, implementation always refers to the vanilla Lisp implementation that can be downloaded from \cite{actr_homepage}.
 
@@ -24,9 +24,9 @@ A central idea of ACT-R is the distinction between \emph{declarative} and \emph{
 
 This approach leads to a modular organization of ACT-R with modules for each purpose needed to simulate human cognition. Figure \ref{fig:modular_organization} provides an overview of some of the default modules of ACT-R. For example, the declarative module stores the factual information (the declarative knowledge), the visual module perceives and processes the visual field, the procedural module holds the procedural information and controls the computational process. 
 
-Each module is independent from the other modules and computations can be performed massively parallel within one module. The visual module, for example, can process the entire visual field at once. Additionally, modules can perform their computations parallel to other modules, for instance: The declarative module can search a specific fact while the visual module processes the visual field.
+Each module is independent from the other modules and computations in the modules can be performed parallel to other modules, for instance: The declarative module can search a specific fact while the visual module processes the visual field.. Additionally, within one module computations are executed massively parallel, eg. the visual module can process the entire visual field at once to determine the location of a certain object, which implies the processing of a huge amount of data at a time.
 
-However, each module can perform its computation only locally and has no access to computations of other modules. To communicate, modules have associated buffers, where they can put a limited amount of information -- one primitive knowledge element -- and the procedural module can access each of these buffers. The information in a buffer could be one single fact retrieved from declarative memory or one visual object from the visual field perceived by the visual module. Information between modules is exchanged by the procedural module taking information from one buffer and putting it into another (with an optional computation on the way). This leads to a serial bottleneck in the computation, since every communication between modules has to go its way through the procedural module.
+However, each module can perform its computation only locally and has no access to computations of other modules. To communicate, modules have associated \emph{buffers}, where they can put a limited amount of information -- one primitive knowledge element -- and the procedural module can access each of these buffers. The information in a buffer could be one single fact retrieved from declarative memory or one visual object from the visual field perceived by the visual module. Information between modules is exchanged by the procedural module taking information from one buffer and putting it into another (with an optional computation on the way). This leads to a serial bottleneck in the computation, since every communication between modules has to go its way through the procedural module.
 
 In figure \ref{fig:recognize_act} the general computational process is illustrated by showing the \emph{recognize-act-cycle}: The procedural information is stored as rules that have a \emph{condition} and an \emph{action}. The condition refers to the so-called \emph{working memory}, which basically is the content of all the buffers. In the recognize-phase of the cycle, a suitable rule that matches the current state of the working memory is searched. If the condition of a rule holds, it \emph{fires} and performs its actions -- this is the act-phase of the cycle. Those actions can cause changes on the buffers that may lead to the next rule matching the current state in the next recognize-part of the cycle.
 
@@ -45,21 +45,21 @@ Each chunk is associated with a chunk-type that determines which slots a chunk c
 \label{millers_number}
 For the chunk types there is no upper limit of slots they can define. However, Anderson et al. suggested to limit the number of slots to Miller's Number of $7 \pm 2$, for the reason of plausibility \cite{unknown}. \FIXME{Find cite}
 
-\subsubsection{Textual Representation of Chunks}
-
-In the following, chunk-type and chunk definitions are given in a textual way which is based on the syntax of the standard implementation of ACT-R.
-
-\begin{definition}
-The term \verb|chunk-type(name slot1 slot2 ... slotn)| defines a chunk-type with name \verb|name| and slots with names \verb|slot1| to \verb|slotn|.
-
-The term \verb|chunk(name isa type slot1 val1 ... slotn valn)| defines a chunk of type \verb|type| with name \verb|name| and corresponding slot-value-pairs, where \verb|slot1 val1| signifies that the value of the slot \verb|slot1| is \verb|val1|. The slot-value-definitions must match the chunk-type-definition of \verb|type|.
-\end{definition}
-
-\begin{example}
- The addition-fact chunk in figure \ref{fig:chunk_addition_fact} and its chunk-type are defined as follows:\\
- \verb|chunk-type(addition-fact arg1 arg2 sum)|\\
- \verb|chunk(a isa addition-fact arg1 5 arg2 2 sum 7)|
-\end{example}
+% \subsubsection{Textual Representation of Chunks}
+% 
+% In the following, chunk-type and chunk definitions are given in a textual way which is based on the syntax of the standard implementation of ACT-R.
+% 
+% \begin{definition}
+% The term \verb|chunk-type(name slot1 slot2 ... slotn)| defines a chunk-type with name \verb|name| and slots with names \verb|slot1| to \verb|slotn|.
+% 
+% The term \verb|chunk(name isa type slot1 val1 ... slotn valn)| defines a chunk of type \verb|type| with name \verb|name| and corresponding slot-value-pairs, where \verb|slot1 val1| signifies that the value of the slot \verb|slot1| is \verb|val1|. The slot-value-definitions must match the chunk-type-definition of \verb|type|.
+% \end{definition}
+% 
+% \begin{example}
+%  The addition-fact chunk in figure \ref{fig:chunk_addition_fact} and its chunk-type are defined as follows:\\
+%  \verb|chunk-type(addition-fact arg1 arg2 sum)|\\
+%  \verb|chunk(a isa addition-fact arg1 5 arg2 2 sum 7)|
+% \end{example}
 
 \subsubsection{Buffers}
 
@@ -156,10 +156,36 @@ The imaginal module is described in \cite[unit 2]{actr_tutorial}.
 
 \subsection{Example}
 
-\FIXME{finish}
-counting
-inspired by tutorial
-more examples can be found there
+The first ACT-R example model deals with the process of counting. This model relies on count facts a person has learned, eg. "`the number after $2$ is $3$"'. To model this in ACT-R, a chunk-type for those facts has to be defined: A chunk of type \emph{count-fact} has the slots \emph{first} and \emph{second}. The chunks in figure \ref{fig:example_counting_chunks} of this type \emph{count-fact} model the facts that $3$ is the successor of $2$ and $4$ is the successor of $3$.
+
+The next step is to define the goal chunk stored in the goal buffer. In this chunk it somehow has to be encoded, that the current goal is to count. This can be modeled in ACT-R by the chunk-type. To track the current number in the counting process, the goal chunk could have a slot, that always holds the current number that has been counted to. This leads to a goal chunk as illustrated in figure \ref{fig:example_counting_goal_chunk}, where the current number is $2$. In this example we assume that the model starts with this goal chunk in the goal buffer and the first count fact has been retrieved:
+
+\parbox{100mm}{\textbf{goal buffer:} goal-chunk of type count\\
+\noindent\hspace*{20mm} current-number $2$}
+
+\parbox{100mm}{\textbf{retrieval buffer:} b of type count-fact\\
+\noindent\hspace*{20mm} first $2$\\
+\noindent\hspace*{20mm} second $3$}
+
+Now the rules to implement counting can be defined as:
+
+\begin{description}
+ \item[count-rule] If the goal is to count and the current number is $n$ and the retrieval buffer holds a chunk of type \emph{count-fact} with the \emph{first} value $n$ and the \emph{second} value $m$, then set the current number in the goal to $m$ and send a retrieval request for a chunk that has $m$ in its \emph{first} slot.
+\end{description}
+
+The rule matches the initial state: In the goal there is a chunk of type \emph{count}, that indicates that the goal is to count, the current number $n$ is $2$. In the retrieval buffer, there is a \emph{count-fact} with the \emph{first} number $n = 2$ and the \emph{second} number $m = 3$. 
+
+After applying this rule, the current number will be $3$ and the next fact in the retrieval buffer will be a \emph{count-fact} with the \emph{first} value $3$ and a value in the \emph{second} slot, which will be the next number in the counting process. This illustrates the function of module requests: The request states a (potentially partial) chunk definition and the corresponding module puts the result of the request in a fully defined chunk into its buffer. For the declarative module, the request specifies the chunk-type and some slot values which describe the chunk that the module should be looking for. The result is a fully described chunk of that type with values for all slots, that describe an actual chunk from the declarative memory. 
+
+The count-rule will be applicable as long as there are \emph{count-facts} in the declarative memory. Figure \ref{fig:example_counting_execution} illustrates the counting process.
+
+In this example, the rules have been defined in a very informal way. In the following chapters that deal with implementation, a formalization of such rules will be discussed, that defines clearly, what kinds of rules are allowed and introduces a formalism to describe such rules uniquely and less verbosely. The following chapters will refer to this example and refine it gradually.
+
+The example also uses the concept of \emph{variables}, which will be introduced more formally in chapter \ref{implementation}, when talking about implementation. Variables allow rule conditions to act like patterns that can match various system states instead of defining a rule for each state, since computation is the same regardless of the actual values in the buffers.
+
+
+\FIXME{figures}
+
 
 \section{Serial and Parallel Aspects of ACT-R}
 
@@ -271,7 +297,7 @@ As mentioned before, the activation of a chunk affects if the chunk can be retri
 T_i = F \cdot \mathrm{e}^{-A_i}
 \end{equation}
 
-where $T_i$ is the \emph{latency} of retrieving chunk $i$, $A_i$ the activation of this chunk, as defined in equation \eqref{eq:activation_equation}, and $F$ the \emph{latency factor} which is usually estimated to be
+where $T_i$ is the \emph{latency} of retrieving chunk $i$, $A_i$ the activation of this chunk, as defined in equation \eqref{eq:activation_equation}, and $F$ the \emph{latency factor}, which is usually estimated to be
 
 \begin{equation}
 F \approx 0.35\mathrm{e}^\tau
@@ -299,10 +325,9 @@ In implementations of ACT-R, rewards can be triggered by the user at any time or
 
 It is important to mention that by the definition of the reward for a production rule, rules also can get a negative reward, if their selection was too long ago. If one wants to penalize all rules since the last reward, a rule with reward 0 can be triggered, which leads to all rules applied before being rewarded with a negative amount of reward.
 
-
-
-
 \section{Learning}
+
+Learning in ACT-R can 
 
 \cite[pp. 92--95]{anderson_how_2007}
 \cite[chapter 4]{whitehill_understanding}

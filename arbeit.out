@@ -3,26 +3,25 @@
 \BOOKMARK [1][-]{section.2.1}{Procedural and Declarative Knowledge}{chapter.2}% 3
 \BOOKMARK [2][-]{subsection.2.1.1}{Modular organization}{section.2.1}% 4
 \BOOKMARK [2][-]{subsection.2.1.2}{Declarative Knowledge}{section.2.1}% 5
-\BOOKMARK [3][-]{section*.3}{Textual Representation of Chunks}{subsection.2.1.2}% 6
-\BOOKMARK [3][-]{section*.4}{Buffers}{subsection.2.1.2}% 7
-\BOOKMARK [2][-]{subsection.2.1.3}{Procedural Knowledge}{section.2.1}% 8
-\BOOKMARK [3][-]{section*.5}{Description of Procedural Actions}{subsection.2.1.3}% 9
-\BOOKMARK [3][-]{section*.6}{Chunks as Central Data Structure}{subsection.2.1.3}% 10
-\BOOKMARK [3][-]{section*.7}{Process of Rule Selection and Execution}{subsection.2.1.3}% 11
-\BOOKMARK [2][-]{subsection.2.1.4}{Goal Module}{section.2.1}% 12
-\BOOKMARK [3][-]{section*.8}{Working memory}{subsection.2.1.4}% 13
-\BOOKMARK [2][-]{subsection.2.1.5}{Other Modules}{section.2.1}% 14
-\BOOKMARK [3][-]{section*.9}{The Outside World}{subsection.2.1.5}% 15
-\BOOKMARK [3][-]{section*.11}{The Imaginal Module}{subsection.2.1.5}% 16
-\BOOKMARK [2][-]{subsection.2.1.6}{Example}{section.2.1}% 17
-\BOOKMARK [1][-]{section.2.2}{Serial and Parallel Aspects of ACT-R}{chapter.2}% 18
-\BOOKMARK [1][-]{section.2.3}{Subsymbolic layer}{chapter.2}% 19
-\BOOKMARK [2][-]{subsection.2.3.1}{Activation of Chunks}{section.2.3}% 20
-\BOOKMARK [3][-]{section*.12}{Base-Level Activation}{subsection.2.3.1}% 21
-\BOOKMARK [3][-]{section*.13}{Activation Spreading}{subsection.2.3.1}% 22
-\BOOKMARK [3][-]{section*.15}{Latency of Retrieval}{subsection.2.3.1}% 23
-\BOOKMARK [2][-]{subsection.2.3.2}{Production Utility}{section.2.3}% 24
-\BOOKMARK [1][-]{section.2.4}{Learning}{chapter.2}% 25
-\BOOKMARK [0][-]{chapter.3}{Constraint Handling Rules}{}% 26
-\BOOKMARK [0][-]{appendix.A}{Source Codes}{}% 27
-\BOOKMARK [0][-]{appendix*.16}{Bibliography}{}% 28
+\BOOKMARK [3][-]{section*.3}{Buffers}{subsection.2.1.2}% 6
+\BOOKMARK [2][-]{subsection.2.1.3}{Procedural Knowledge}{section.2.1}% 7
+\BOOKMARK [3][-]{section*.4}{Description of Procedural Actions}{subsection.2.1.3}% 8
+\BOOKMARK [3][-]{section*.5}{Chunks as Central Data Structure}{subsection.2.1.3}% 9
+\BOOKMARK [3][-]{section*.6}{Process of Rule Selection and Execution}{subsection.2.1.3}% 10
+\BOOKMARK [2][-]{subsection.2.1.4}{Goal Module}{section.2.1}% 11
+\BOOKMARK [3][-]{section*.7}{Working memory}{subsection.2.1.4}% 12
+\BOOKMARK [2][-]{subsection.2.1.5}{Other Modules}{section.2.1}% 13
+\BOOKMARK [3][-]{section*.8}{The Outside World}{subsection.2.1.5}% 14
+\BOOKMARK [3][-]{section*.10}{The Imaginal Module}{subsection.2.1.5}% 15
+\BOOKMARK [2][-]{subsection.2.1.6}{Example}{section.2.1}% 16
+\BOOKMARK [1][-]{section.2.2}{Serial and Parallel Aspects of ACT-R}{chapter.2}% 17
+\BOOKMARK [1][-]{section.2.3}{Subsymbolic layer}{chapter.2}% 18
+\BOOKMARK [2][-]{subsection.2.3.1}{Activation of Chunks}{section.2.3}% 19
+\BOOKMARK [3][-]{section*.11}{Base-Level Activation}{subsection.2.3.1}% 20
+\BOOKMARK [3][-]{section*.12}{Activation Spreading}{subsection.2.3.1}% 21
+\BOOKMARK [3][-]{section*.14}{Latency of Retrieval}{subsection.2.3.1}% 22
+\BOOKMARK [2][-]{subsection.2.3.2}{Production Utility}{section.2.3}% 23
+\BOOKMARK [1][-]{section.2.4}{Learning}{chapter.2}% 24
+\BOOKMARK [0][-]{chapter.3}{Constraint Handling Rules}{}% 25
+\BOOKMARK [0][-]{appendix.A}{Source Codes}{}% 26
+\BOOKMARK [0][-]{appendix*.15}{Bibliography}{}% 27
