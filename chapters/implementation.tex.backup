@@ -1,0 +1,182 @@
+\chapter{Transformation of ACT-R to CHR}
+
+After giving a comprehensive but at some time informal overview of the ACT-R theory, this chapter presents a possible implementation in CHR.
+
+For the implementation, some cases that are not exactly defined in theory have to be considered. Hence, every concept of the theory that is implemented in this thesis, is formalized. The implementation in form of CHR rules sticks to those formalisms and is often very similar to them.
+
+Additionally, the implementation is described incrementally, ie. first, a very minimal subset of ACT-R is presented that will be refined gradually with the progress of this chapter. In the end, an overview of the actual implementation as a result of this work is given.
+
+Some of the definitions in this chapter result directly from the theory, some of them needed a further analysis of the official ACT-R 6.0 Reference Manual \cite{actr_reference} or the tutorials \cite{actr_tutorial}. 
+
+\section{Chunks}
+
+Since chunks are the central data-structure of ACT-R, used for representation of declarative knowledge, to exchange information between modules and to state requests, this section first deals with this central part of ACT-R.
+
+\subsection{Textual Representation of Chunks}
+
+In the previous chapters, chunks always have been referred to in a graphical or in a verbose descriptive form. Hence, a formalism to represent chunks in a textual order is given at first. The definition is based on the definition of chunks in the ACT-R implementation.
+
+\begin{definition}
+A \emph{chunk-store} $\Sigma$ is a tuple $(C,E,\mathcal{T},HasSlot,Isa)$, where $C$ is a set of chunks and $E$ a set of primitive elements, with $C \cap E = \emptyset$. $V = C \cup E$ are the values of~$\Sigma$ and $\mathcal{T}$ a set of chunk-types. A chunk-type $(T,S) \in \mathcal{T}$ is a tuple with a type name $T$ and a set of slots $S$. The set of all slot-names is $\mathcal{S}$. $HasSlot \subseteq C \times \mathcal{S} \times V$ and $Isa \subseteq C \times T$ are relations and defined as follows:
+
+$c \enspace Isa \enspace T \Leftrightarrow$ chunk $c$ is of type $T$.
+
+
+$(c,s,v) \in HasSlot \Leftrightarrow v$ is the value of slot $s$ of $c$. This can also be written as $c \overset{s}{\longrightarrow} v$ and is spoken ``$c$ is connected to $v$'' or ``$v$ is in the slot $s$ of $c$''.
+
+The function $slots: C \rightarrow \mathcal{S} \times V$ is defined as $slots(c) = \{ (s,v) | (c,s,v) \in HasSlot \}$ and $slots: \mathcal{T} \rightarrow \mathcal{S}$ as $slots((T,S)) = S$.
+
+A chunk-store is \emph{type-consistent}, if $\forall(c,s,v) \in HasSlot: c \enspace Isa \enspace (T,S) \Rightarrow \exists s' \in S: s=s'$ and $\forall c \in C: \enspace c \enspace Isa \enspace (T,S) \Rightarrow \forall s \in S: \exists (c',s',v) \in HasSlot: c=c', s=s'$.
+\end{definition}
+
+
+\begin{definition}[abstract methods of a chunk store]
+\label{def:abstract_methods_chunk_store}
+The following methods can be defined over a chunk store $\Sigma = (C, E, \mathcal{T}, HasSlot, Isa)$:
+
+\begin{description}
+ \item[$\mathtt{chunk-type(name slot_1 slot_2 \dots slot_n)}$] adds the type $T = (\mathtt{name},\{\mathtt{slot1}, \dots, \mathtt{slotn}\})$ to the store, ie. $\mathcal{T'} = \mathcal{T} \cup \{T\}$. 
+ \item[$\mathtt{add-chunk(name isa type slot_1 val_1 \dots slot_n val_n)}$] adds a new chunk to the store, ie. $C' = C \cup \{ \mathtt{name} \}$, $Isa' = Isa \cup (\mathtt{name}, (\mathtt{type}, slots(\mathtt{type}))$ and $HasSlot' = \bigcup_{i = 1}^n{\mathtt{slot_i}} \cup HasSlot.$ Note, that due to the expansion of $C$, the condition that $C$ and $E$ have to be disjoint may be violated. In implementations, there should be a mechanism to restore this condition. Additionally, a valid mechanism to restore type-consistency may be introduced.
+\end{description} 
+\end{definition}
+
+\FIXME{add other methods. describe empty chunks?}
+
+\begin{example}
+ The addition-fact chunk in figure \ref{fig:chunk_addition_fact} and its chunk-type are defined as follows:\\
+ \verb|chunk-type(addition-fact arg1 arg2 sum)|\\
+ \verb|chunk(a isa addition-fact arg1 5 arg2 2 sum 7)|.
+ 
+ This leads to the following chunk-store: 
+ \begin{align*}
+ (\{a\}, \{2,5,7\},\\ 
+ \{(addition-fact, \{arg1, arg2, sum\})\},\\
+ \{(a,arg1,5), (a,arg2,5), (a,sum,7)\},\\
+ \{(a, addition-fact)\}).
+ \end{align*}
+ 
+ $slots(a) = \{(arg1,5), (arg2,2), (sum,7)\}$ and $slots((addition-fact,\{arg1, arg2, sum\}) = \{arg1, arg2, sum\}$. Hence, the store is type-consistent.
+\end{example}
+
+\begin{example}
+ \FIXME{refer to empty chunks}
+\end{example}
+
+
+\subsection{Representation of Chunks in CHR}
+
+Declarative knowledge is represented as a network of chunks, defined by the two relations $Isa$, specifying the belonging of a chunk to a type, and $HasSlot$, specifying the slot-value pairs of a chunk. Those relations can be translated directly into CHR by defining the following constraints representing the relations and sets:
+
+\begin{lstlisting}
+:- chr_constraint chunk_type(+).
+% chunk_type(ChunkTypeName)
+
+:- chr_constraint chunk_type_has_slot(+,+).
+% chunk_type_has_slot(ChunkTypeName, SlotName).
+\end{lstlisting}
+
+The \verb|chunk_type/1| constraint represents the set $\mathcal{T}$ of chunk-types in the store, but refers only to the chunk-type names. The set of slots of a chunk-type is specified by the \verb|chunk_type_has_slot/2| constraint\footnote{For a chunk-type $T \in \mathcal{T}$, with $T = (t, S)$, there exists a \texttt{chunk\_type(t)} and for every slot $s \in S$ there is a \texttt{chunk\_type\_has\_slot(t,s)} in the constraint store.}.
+
+For the chunks:
+
+\begin{lstlisting}
+:- chr_constraint chunk(+,+).
+% chunk(ChunkName, ChunkType)
+
+:- chr_constraint chunk_has_slot(+,+,+).
+% chunk_has_slot(ChunkName, SlotName, Value)
+\end{lstlisting}
+
+The \verb|chunk/2| constraint represents both the set $C$ of chunks and the $Isa$ relation, since the presence of a constraint \verb|chunk(c,t)| signifies, that chunk \verb|c| is of a type $T = (\mathtt{t},S)$.
+
+The $HasSlot$ relation is represented by the \verb|chunk_has_slot(c,s,v)| constraint, which really is just a direct translation of an element $(c,s,v) \in HasSlot$.
+
+\subsubsection{Simple Implementation of the Default Methods}
+
+To implement the methods in definition~\ref{def:abstract_methods_chunk_store}, first a data type for chunk specifications has to be introduced. From this specification the correct constraints modeling the chunk-store are added or modified.
+
+The straight-forward definition of a data type for chunk specifications is just to use the specification like in definition~\ref{def:abstract_methods_chunk_store}: Since \verb|(name isa type slot_1 val_1 \dots slot_n val_n)| is just a list in LISP and specifies a chunk uniquely, a similar Prolog term can be used:
+
+\begin{lstlisting}
+:- chr_type chunk_def ---> nil; chunk(any, any, slot_list).
+:- chr_type list(T) ---> []; [T | list(T)].
+:- chr_type slot_list == list(pair(any,any)). % a list of slot-value pairs
+:- chr_type pair(T1,T2) ---> (T1,T2).
+\end{lstlisting}
+
+This definition states that a chunk is either \verb|nil|, ie. an empty chunk, or a term \verb|chunk(Name, Type, SVP)|, where \verb|SVP| is a list of slot-value pairs. This is the direct translation of the chunk-specification used in the definition, amended by the \verb|nil| construct, that may be needed for later purposes.
+
+The default methods can be implemented as follows:
+
+\begin{lstlisting}[caption={add_chunk definition}]
+ 
+\end{lstlisting}
+
+
+
+\subsubsection{Checking Type-Consistency}
+
+\section{Procedural Module}
+
+The part of the system, where the computations are performed, is the procedural module. It is the central component, that holds all the production rules, the working memory (in the buffer system) and organizes communication between modules (through buffers and requests). In the following, all of those subcomponents of the procedural module are described.
+
+\subsection{Buffer System}
+
+The buffer system can be regarded as a chunk-store, that is enhanced by buffers. A buffer can hold only one chunk at a time. The procedural module has a set $B$ of buffers, a chunk-store $\Sigma$ and a relation between the buffers and the chunks in $\Sigma$.
+
+\begin{definition}[buffer system]
+\label{def:buffer_system}
+A buffer system is a tuple $(B,\Sigma,Holds)$, where $B$ is a set of buffers, $\Sigma = (C, E, \mathcal{T}, HasSlot, Isa)$ a type-consistent chunk-store and $Holds \subseteq B \times (C \cup \{ \mathtt{nil} \})$ a unique and complete relation, that assigns every buffer at most one chunk that it holds. If a buffer $b$ is empty, ie. it does not hold a chunk, then $(b,\mathtt{nil}) \in Holds$.
+
+A buffer system is \emph{consistent}, if every chunk that appears in $Holds$ is a member of $C$ and $\Sigma$ is consistent.
+
+A buffer system is \emph{clean}, if its chunk-store only holds chunks which appear in $Holds$.
+\end{definition}
+
+For the implementation of a buffer system, the code of a chunk-store can be extended by a \verb|buffer/2| constraint, that encodes the set $B$ and the relation $Holds$ at once, since the relation is complete by definition\footnote{$\forall b \in B \enspace \exists c \in (C \cup \{ \mathtt{nil} \}): (b,c) \in Holds$}.
+
+\subsubsection{Destructive Assignment and Consistency}
+
+The demand of $Holds$ being unique is a form of destructive assignment as described in \cite[p. 32]{fru_chr_book_2009}, ie. if a new chunk is assigned to a buffer, the old \verb|buffer| constraint is removed and a new \verb|buffer| constraint is introduced, holding the new chunk:
+
+\begin{lstlisting}
+set_buffer(b, c) \ buffer(b, _) <=> buffer(b, c).
+\end{lstlisting}
+
+This rule ensures that only one \verb|buffer| exists for each buffer in $B$.
+
+In addition, if a new chunk is introduced in a buffer, it also has to be present in the chunk-store, since the production system relies on the knowledge about the chunks in its buffers and chunks are essentially defined by their slots (\emph{consistency property} in definition~\ref{def:buffer_system}). Hence, every time a chunk is stored in a buffer, the \verb|add_chunk| method described in definition~\ref{def:abstract_methods_chunk_store} has to be called. This process is discussed later when talking about buffer requests in section~\ref{buffer_requests}.
+
+\subsection{Production Rules}
+
+grammar
+
+
+
+
+
+
+\section{Modular Organization}
+
+interface for requests
+
+\section{Declarative Module}
+
+uses chunks as defined in section ??
+
+\subsection{Retrieval Requests}
+
+interface module request
+
+
+\section{Timing in ACT-R}
+
+scheduling, define recognize-act-cycle in detail
+
+
+\section{Subsymbolic Layer}
+
+\subsection{Activation of Chunks}
+
+\subsection{Production Utility}
+
