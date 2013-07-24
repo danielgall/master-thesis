@@ -56,6 +56,12 @@
   psychology: Educational design and cognitive science} Bd.~5.
 \newblock Hillsdale, NJ : Lawrence Erlbaum Associates, 2000, S. 1--33
 
+\bibitem[Fr{\"u}09]{fru_chr_book_2009}
+\textsc{Fr{\"u}hwirth}, Thom:
+\newblock \emph{Constraint {H}andling {R}ules}.
+\newblock 2009 \url{http://www.constraint-handling-rules.org}. --
+\newblock ISBN 9780521877763
+
 \bibitem[RW72]{rescorla_wagner_1972}
 \emph{Kapitel\/} ~3.
 \newblock \,{In:\,}\textsc{Rescorla}, R.~A. ; \textsc{Wagner}, A.~W.:

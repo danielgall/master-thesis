@@ -24,22 +24,32 @@
 \BOOKMARK [1][-]{section.2.4}{Learning}{chapter.2}% 24
 \BOOKMARK [0][-]{chapter.3}{Constraint Handling Rules}{}% 25
 \BOOKMARK [0][-]{chapter.4}{Transformation of ACT-R to CHR}{}% 26
-\BOOKMARK [1][-]{section.4.1}{Chunks}{chapter.4}% 27
-\BOOKMARK [2][-]{subsection.4.1.1}{Textual Representation of Chunks}{section.4.1}% 28
+\BOOKMARK [1][-]{section.4.1}{Chunk Stores}{chapter.4}% 27
+\BOOKMARK [2][-]{subsection.4.1.1}{Formal Representation of Chunks}{section.4.1}% 28
 \BOOKMARK [2][-]{subsection.4.1.2}{Representation of Chunks in CHR}{section.4.1}% 29
-\BOOKMARK [3][-]{section*.15}{Chunks}{subsection.4.1.2}% 30
-\BOOKMARK [3][-]{section*.16}{Chunk Types}{subsection.4.1.2}% 31
-\BOOKMARK [3][-]{section*.17}{Rules to Check Chunk Types}{subsection.4.1.2}% 32
-\BOOKMARK [1][-]{section.4.2}{Procedural Module}{chapter.4}% 33
-\BOOKMARK [2][-]{subsection.4.2.1}{Buffer System}{section.4.2}% 34
-\BOOKMARK [2][-]{subsection.4.2.2}{Production Rules}{section.4.2}% 35
-\BOOKMARK [1][-]{section.4.3}{Modular Organization}{chapter.4}% 36
-\BOOKMARK [1][-]{section.4.4}{Declarative Module}{chapter.4}% 37
-\BOOKMARK [2][-]{subsection.4.4.1}{Retrieval Requests}{section.4.4}% 38
-\BOOKMARK [1][-]{section.4.5}{Timing in ACT-R}{chapter.4}% 39
-\BOOKMARK [1][-]{section.4.6}{Subsymbolic Layer}{chapter.4}% 40
-\BOOKMARK [2][-]{subsection.4.6.1}{Activation of Chunks}{section.4.6}% 41
-\BOOKMARK [2][-]{subsection.4.6.2}{Production Utility}{section.4.6}% 42
-\BOOKMARK [0][-]{chapter.5}{Compiler}{}% 43
-\BOOKMARK [0][-]{appendix.A}{Source Codes}{}% 44
-\BOOKMARK [0][-]{appendix*.18}{Bibliography}{}% 45
+\BOOKMARK [3][-]{section*.15}{Simple Implementation of the Default Methods}{subsection.4.1.2}% 30
+\BOOKMARK [3][-]{section*.16}{Checking Type-Consistency}{subsection.4.1.2}% 31
+\BOOKMARK [1][-]{section.4.2}{Procedural Module}{chapter.4}% 32
+\BOOKMARK [2][-]{subsection.4.2.1}{Buffer System}{section.4.2}% 33
+\BOOKMARK [3][-]{section*.17}{Destructive Assignment and Consistency}{subsection.4.2.1}% 34
+\BOOKMARK [3][-]{section*.18}{Buffer States}{subsection.4.2.1}% 35
+\BOOKMARK [2][-]{subsection.4.2.2}{Production Rules}{section.4.2}% 36
+\BOOKMARK [1][-]{section.4.3}{Modular Organization}{chapter.4}% 37
+\BOOKMARK [1][-]{section.4.4}{Declarative Module}{chapter.4}% 38
+\BOOKMARK [2][-]{subsection.4.4.1}{Retrieval Requests}{section.4.4}% 39
+\BOOKMARK [1][-]{section.4.5}{Timing in ACT-R}{chapter.4}% 40
+\BOOKMARK [2][-]{subsection.4.5.1}{Priority Queue}{section.4.5}% 41
+\BOOKMARK [1][-]{section.4.6}{Subsymbolic Layer}{chapter.4}% 42
+\BOOKMARK [2][-]{subsection.4.6.1}{Activation of Chunks}{section.4.6}% 43
+\BOOKMARK [2][-]{subsection.4.6.2}{Production Utility}{section.4.6}% 44
+\BOOKMARK [0][-]{chapter.5}{Compiler}{}% 45
+\BOOKMARK [0][-]{chapter.6}{Example Models}{}% 46
+\BOOKMARK [1][-]{section.6.1}{The Counting Model}{chapter.6}% 47
+\BOOKMARK [1][-]{section.6.2}{The Addition Model}{chapter.6}% 48
+\BOOKMARK [1][-]{section.6.3}{The Semantic Model}{chapter.6}% 49
+\BOOKMARK [1][-]{section.6.4}{The Fan Model}{chapter.6}% 50
+\BOOKMARK [0][-]{chapter.7}{Conclusion}{}% 51
+\BOOKMARK [1][-]{section.7.1}{Inventory: What does already work?}{chapter.7}% 52
+\BOOKMARK [1][-]{section.7.2}{Future Work}{chapter.7}% 53
+\BOOKMARK [0][-]{appendix.A}{Source Codes}{}% 54
+\BOOKMARK [0][-]{appendix*.19}{Bibliography}{}% 55

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Arch Linux) (format=pdflatex 2013.7.15)  24 JUL 2013 14:11
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Arch Linux) (format=pdflatex 2013.7.15)  24 JUL 2013 17:58
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -387,7 +387,18 @@ Package csquotes Info: Option 'babel' depreciated.
 (csquotes)             Using 'autostyle'.
 Package csquotes Info: Enabling multilingual quotes.
 )
-(/usr/share/texmf-dist/tex/latex/koma-script/scrhack.sty
+(/usr/share/texmf-dist/tex/latex/fancyvrb/fancyvrb.sty
+Package: fancyvrb 2008/02/07
+
+Style option: `fancyvrb' v2.7a, with DG/SPQR fixes, and firstline=lastline fix 
+<2008/02/07> (tvz)
+\FV@CodeLineNo=\count98
+\FV@InFile=\read1
+\FV@TabBox=\box27
+\c@FancyVerbLine=\count99
+\FV@StepNumber=\count100
+\FV@OutFile=\write3
+) (/usr/share/texmf-dist/tex/latex/koma-script/scrhack.sty
 Package: scrhack 2012/07/29 v3.11b KOMA-Script package (hacking other packages)
 
 )
@@ -414,7 +425,7 @@ Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
 (/usr/share/texmf-dist/tex/generic/oberdiek/ltxcmds.sty
 Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 )
-\Gread@gobject=\count98
+\Gread@gobject=\count101
 ))
 \Gin@req@height=\dimen104
 \Gin@req@width=\dimen105
@@ -423,7 +434,7 @@ Package: ltxcmds 2011/11/09 v1.22 LaTeX kernel commands for general use (HO)
 Package: verbatim 2003/08/22 v1.5q LaTeX2e package for verbatim enhancements
 \every@verbatim=\toks18
 \verbatim@line=\toks19
-\verbatim@in@stream=\read1
+\verbatim@in@stream=\read2
 )
 (/usr/share/texmf-dist/tex/latex/tools/tabularx.sty
 Package: tabularx 1999/01/07 v2.07 `tabularx' package (DPC)
@@ -441,7 +452,7 @@ Package: array 2008/09/09 v2.4c Tabular extension package (FMi)
 \TX@old@col=\dimen110
 \TX@target=\dimen111
 \TX@delta=\dimen112
-\TX@cols=\count99
+\TX@cols=\count102
 \TX@ftn=\toks21
 )
 (/usr/share/texmf-dist/tex/latex/subfigure/subfigure.sty
@@ -452,10 +463,10 @@ Package: subfigure 2002/03/15 v2.1.5 subfigure package
 \subfigbottomskip=\skip51
 \subfigcapmargin=\dimen114
 \subfiglabelskip=\skip52
-\c@subfigure=\count100
-\c@lofdepth=\count101
-\c@subtable=\count102
-\c@lotdepth=\count103
+\c@subfigure=\count103
+\c@lofdepth=\count104
+\c@subtable=\count105
+\c@lotdepth=\count106
 
 ****************************************
 * Local config file subfigure.cfg used *
@@ -507,30 +518,30 @@ Package: amsbsy 1999/11/29 v1.2d
 (/usr/share/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 1999/12/14 v2.01 operator names
 )
-\inf@bad=\count104
+\inf@bad=\count107
 LaTeX Info: Redefining \frac on input line 210.
-\uproot@=\count105
-\leftroot@=\count106
+\uproot@=\count108
+\leftroot@=\count109
 LaTeX Info: Redefining \overline on input line 306.
-\classnum@=\count107
-\DOTSCASE@=\count108
+\classnum@=\count110
+\DOTSCASE@=\count111
 LaTeX Info: Redefining \ldots on input line 378.
 LaTeX Info: Redefining \dots on input line 381.
 LaTeX Info: Redefining \cdots on input line 466.
-\Mathstrutbox@=\box27
-\strutbox@=\box28
+\Mathstrutbox@=\box28
+\strutbox@=\box29
 \big@size=\dimen117
 LaTeX Font Info:    Redeclaring font encoding OML on input line 566.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 567.
-\macc@depth=\count109
-\c@MaxMatrixCols=\count110
+\macc@depth=\count112
+\c@MaxMatrixCols=\count113
 \dotsspace@=\muskip11
-\c@parentequation=\count111
-\dspbrk@lvl=\count112
+\c@parentequation=\count114
+\dspbrk@lvl=\count115
 \tag@help=\toks24
-\row@=\count113
-\column@=\count114
-\maxfields@=\count115
+\row@=\count116
+\column@=\count117
+\maxfields@=\count118
 \andhelp@=\toks25
 \eqnshift@=\dimen118
 \alignsep@=\dimen119
@@ -561,29 +572,29 @@ Package: setspace 2000/12/01 6.7 Contributed and Supported LaTeX2e package
 
 Package: `setspace' 6.7 <2000/12/01>
 ) (/usr/share/texmf-dist/tex/latex/listings/listings.sty
-\lst@mode=\count116
-\lst@gtempboxa=\box29
+\lst@mode=\count119
+\lst@gtempboxa=\box30
 \lst@token=\toks34
-\lst@length=\count117
+\lst@length=\count120
 \lst@currlwidth=\dimen124
-\lst@column=\count118
-\lst@pos=\count119
+\lst@column=\count121
+\lst@pos=\count122
 \lst@lostspace=\dimen125
 \lst@width=\dimen126
-\lst@newlines=\count120
-\lst@lineno=\count121
+\lst@newlines=\count123
+\lst@lineno=\count124
 \lst@maxwidth=\dimen127
 
 (/usr/share/texmf-dist/tex/latex/listings/lstmisc.sty
 File: lstmisc.sty 2007/02/22 1.4 (Carsten Heinz)
-\c@lstnumber=\count122
-\lst@skipnumbers=\count123
-\lst@framebox=\box30
+\c@lstnumber=\count125
+\lst@skipnumbers=\count126
+\lst@framebox=\box31
 )
 (/usr/share/texmf-dist/tex/latex/listings/listings.cfg
 File: listings.cfg 2007/02/22 1.4 listings configuration
 ))
-Package scrhack Info: loading listings hack on input line 43.
+Package scrhack Info: loading listings hack on input line 45.
 
 (/usr/share/texmf-dist/tex/latex/koma-script/listings.hak
 File: listings.hak 2012/07/29 v3.11b KOMA-Script hacking package listings
@@ -600,11 +611,11 @@ Package: colortbl 2012/02/13 v1.0a Color table columns (DPC)
 (/usr/share/texmf-dist/tex/latex/microtype/microtype.sty
 Package: microtype 2013/03/13 v2.5 Micro-typographical refinements (RS)
 \MT@toks=\toks36
-\MT@count=\count124
+\MT@count=\count127
 LaTeX Info: Redefining \textls on input line 771.
 \MT@outer@kern=\dimen128
 LaTeX Info: Redefining \textmicrotypecontext on input line 1290.
-\MT@listname@count=\count125
+\MT@listname@count=\count128
 
 (/usr/share/texmf-dist/tex/latex/microtype/microtype-pdftex.def
 File: microtype-pdftex.def 2013/03/13 v2.5 Definitions specific to pdftex (RS)
@@ -674,15 +685,15 @@ Package: auxhook 2011/03/04 v1.3 Hooks for auxiliary files (HO)
 Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
 )
 \@linkdim=\dimen129
-\Hy@linkcounter=\count126
-\Hy@pagecounter=\count127
+\Hy@linkcounter=\count129
+\Hy@pagecounter=\count130
 
 (/usr/share/texmf-dist/tex/latex/hyperref/pd1enc.def
 File: pd1enc.def 2012/11/06 v6.83m Hyperref: PDFDocEncoding definition (HO)
 Now handling font encoding PD1 ...
 ... no UTF-8 mapping file for font encoding PD1
 )
-\Hy@SavedSpaceFactor=\count128
+\Hy@SavedSpaceFactor=\count131
 
 (/usr/share/texmf-dist/tex/latex/latexconfig/hyperref.cfg
 File: hyperref.cfg 2002/06/06 v1.2 hyperref configuration of TeXLive
@@ -694,10 +705,10 @@ Package hyperref Info: Plain pages OFF on input line 4458.
 Package hyperref Info: Backreferencing OFF on input line 4463.
 Package hyperref Info: Implicit mode ON; LaTeX internals redefined.
 Package hyperref Info: Bookmarks ON on input line 4688.
-\c@Hy@tempcnt=\count129
+\c@Hy@tempcnt=\count132
 LaTeX Info: Redefining \url on input line 5041.
 \XeTeXLinkMargin=\dimen130
-\Fld@menulength=\count130
+\Fld@menulength=\count133
 \Field@Width=\dimen131
 \Fld@charsize=\dimen132
 Package hyperref Info: Hyper figures OFF on input line 6295.
@@ -709,21 +720,21 @@ Package hyperref Info: Link coloring with OCG OFF on input line 6320.
 Package hyperref Info: PDF/A mode OFF on input line 6325.
 LaTeX Info: Redefining \ref on input line 6365.
 LaTeX Info: Redefining \pageref on input line 6369.
-\Hy@abspage=\count131
-\c@Item=\count132
-\c@Hfootnote=\count133
+\Hy@abspage=\count134
+\c@Item=\count135
+\c@Hfootnote=\count136
 )
 Package scrhack Info: hyperref hack deactivated because of
 (scrhack)             detection of hyperref version, that doesn't
-(scrhack)             need that hack, on input line 47.
+(scrhack)             need that hack, on input line 49.
 
 
 Package hyperref Message: Driver (autodetected): hpdftex.
 
 (/usr/share/texmf-dist/tex/latex/hyperref/hpdftex.def
 File: hpdftex.def 2012/11/06 v6.83m Hyperref driver for pdfTeX
-\Fld@listcount=\count134
-\c@bookmark@seq@number=\count135
+\Fld@listcount=\count137
+\c@bookmark@seq@number=\count138
 
 (/usr/share/texmf-dist/tex/latex/oberdiek/rerunfilecheck.sty
 Package: rerunfilecheck 2011/04/15 v1.7 Rerun checks for auxiliary files (HO)
@@ -732,9 +743,9 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip63
 )
-\c@definition=\count136
-\c@example=\count137
-Package hyperref Info: Option `colorlinks' set `false' on input line 92.
+\c@definition=\count139
+\c@example=\count140
+Package hyperref Info: Option `colorlinks' set `false' on input line 94.
 
 (/usr/share/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2004/09/05 1.3 listings language file
@@ -742,7 +753,7 @@ File: lstlang1.sty 2004/09/05 1.3 listings language file
 (/usr/share/texmf-dist/tex/latex/listings/lstlang2.sty
 File: lstlang2.sty 2004/09/05 1.3 listings language file
 )
-LaTeX Font Info:    Try loading font information for T1+phv on input line 158.
+LaTeX Font Info:    Try loading font information for T1+phv on input line 160.
 
 (/usr/share/texmf-dist/tex/latex/psnfss/t1phv.fd
 File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
@@ -763,39 +774,39 @@ Package typearea Info: These are the values describing the layout:
 (typearea)              \topskip        = 10.0pt
 (typearea)              \footskip       = 42.0pt
 (typearea)              \baselineskip   = 12.0pt
-(typearea)              on input line 158.
+(typearea)              on input line 160.
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
  (./arbeit.aux)
 \openout1 = `arbeit.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 184.
-LaTeX Font Info:    ... okay on input line 184.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 184.
-LaTeX Font Info:    ... okay on input line 184.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 184.
-LaTeX Font Info:    ... okay on input line 184.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 184.
-LaTeX Font Info:    ... okay on input line 184.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 184.
-LaTeX Font Info:    ... okay on input line 184.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 184.
-LaTeX Font Info:    ... okay on input line 184.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 184.
-LaTeX Font Info:    ... okay on input line 184.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 186.
+LaTeX Font Info:    ... okay on input line 186.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 186.
+LaTeX Font Info:    ... okay on input line 186.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 186.
+LaTeX Font Info:    ... okay on input line 186.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 186.
+LaTeX Font Info:    ... okay on input line 186.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 186.
+LaTeX Font Info:    ... okay on input line 186.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 186.
+LaTeX Font Info:    ... okay on input line 186.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 186.
+LaTeX Font Info:    ... okay on input line 186.
 
 (/usr/share/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count138
+\scratchcounter=\count141
 \scratchdimen=\dimen133
-\scratchbox=\box31
-\nofMPsegments=\count139
-\nofMParguments=\count140
+\scratchbox=\box32
+\nofMPsegments=\count142
+\nofMParguments=\count143
 \everyMPshowfont=\toks37
-\MPscratchCnt=\count141
+\MPscratchCnt=\count144
 \MPscratchDim=\dimen134
-\MPnumerator=\count142
-\makeMPintoPDFobject=\count143
+\MPnumerator=\count145
+\makeMPintoPDFobject=\count146
 \everyMPtoPDFconversion=\toks38
 ) (/usr/share/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
@@ -812,9 +823,9 @@ G,.JBIG2,.JB2,.eps]
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-\c@lstlisting=\count144
-Package scrhack Info: undefining \float@addtolists on input line 184.
-LaTeX Info: Redefining \microtypecontext on input line 184.
+\c@lstlisting=\count147
+Package scrhack Info: undefining \float@addtolists on input line 186.
+LaTeX Info: Redefining \microtypecontext on input line 186.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -828,8 +839,8 @@ Package microtype Info: Loading generic settings for font family
 (microtype)             `phv' (encoding: T1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-\AtBeginShipoutBox=\box32
-Package hyperref Info: Link coloring OFF on input line 184.
+\AtBeginShipoutBox=\box33
+Package hyperref Info: Link coloring OFF on input line 186.
 
 (/usr/share/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -837,38 +848,38 @@ Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
 (/usr/share/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
-\c@section@level=\count145
+\c@section@level=\count148
 )
-LaTeX Info: Redefining \ref on input line 184.
-LaTeX Info: Redefining \pageref on input line 184.
-LaTeX Info: Redefining \nameref on input line 184.
+LaTeX Info: Redefining \ref on input line 186.
+LaTeX Info: Redefining \pageref on input line 186.
+LaTeX Info: Redefining \nameref on input line 186.
  (./arbeit.out) (./arbeit.out)
-\@outlinefile=\write3
-\openout3 = `arbeit.out'.
+\@outlinefile=\write4
+\openout4 = `arbeit.out'.
 
- <images/unilogo_bild.pdf, id=184, 199.74625pt x 199.74625pt>
+ <images/unilogo_bild.pdf, id=225, 199.74625pt x 199.74625pt>
 File: images/unilogo_bild.pdf Graphic file (type pdf)
 
 <use images/unilogo_bild.pdf>
-Package pdftex.def Info: images/unilogo_bild.pdf used on input line 199.
+Package pdftex.def Info: images/unilogo_bild.pdf used on input line 201.
 (pdftex.def)             Requested size: 51.21349pt x 51.21504pt.
 
-<images/unilogo_wort.pdf, id=185, 761.34438pt x 183.18437pt>
+<images/unilogo_wort.pdf, id=226, 761.34438pt x 183.18437pt>
 File: images/unilogo_wort.pdf Graphic file (type pdf)
 
 <use images/unilogo_wort.pdf>
-Package pdftex.def Info: images/unilogo_wort.pdf used on input line 201.
+Package pdftex.def Info: images/unilogo_wort.pdf used on input line 203.
 (pdftex.def)             Requested size: 212.84969pt x 51.21504pt.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <8> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 206.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 208.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <20.74> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 212.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 214.
 
 (/usr/share/texmf-dist/tex/latex/microtype/mt-cmr.cfg
 File: mt-cmr.cfg 2011/04/09 v2.1 microtype config. file: Computer Modern Roman 
 (RS)
 )
-LaTeX Font Info:    Try loading font information for U+msa on input line 212.
+LaTeX Font Info:    Try loading font information for U+msa on input line 214.
 
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
@@ -876,7 +887,7 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 (/usr/share/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 212.
+LaTeX Font Info:    Try loading font information for U+msb on input line 214.
 
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -889,14 +900,14 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./images/unilogo_bild.pdf>
  <./images/unilogo_wort.pdf>]
-LaTeX Font Info:    Try loading font information for OMS+phv on input line 263.
+LaTeX Font Info:    Try loading font information for OMS+phv on input line 265.
 
  (/usr/share/texmf-dist/tex/latex/psnfss/omsphv.fd
 File: omsphv.fd 
 )
 LaTeX Font Info:    Font shape `OMS/phv/m/n' in size <9> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 263.
-LaTeX Font Info:    Try loading font information for T1+pcr on input line 269.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 265.
+LaTeX Font Info:    Try loading font information for T1+pcr on input line 271.
 
 (/usr/share/texmf-dist/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
@@ -906,7 +917,7 @@ Package microtype Info: Loading generic settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <9> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 271.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 273.
  (./chapters/abstract.tex
 [2
 
@@ -923,10 +934,10 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <17.28> not available
 
 ]
 Package tocbasic Info: character protrusion at toc deactivated on input line 28
-1.
+3.
  (./arbeit.toc [5])
-\tf@toc=\write4
-\openout4 = `arbeit.toc'.
+\tf@toc=\write5
+\openout5 = `arbeit.toc'.
 
  [6] (./chapters/introduction.tex
 Chapter 1.
@@ -941,55 +952,55 @@ Chapter 1.
 ]
 Chapter 2.
 
-Overfull \hbox (74.73378pt too wide) in paragraph at lines 7--9
+Overfull \hbox (74.73378pt too wide) in paragraph at lines 8--10
 [][][][][][] [][][][][][] 
  []
 
 
-LaTeX Warning: Reference `implementation' on page 3 undefined on input line 17.
+LaTeX Warning: Reference `implementation' on page 3 undefined on input line 18.
 
 
 
-LaTeX Warning: Reference `implementation' on page 3 undefined on input line 17.
+LaTeX Warning: Reference `implementation' on page 3 undefined on input line 18.
 
 
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 19.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 20.
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 21.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 22.
 [3]
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 23.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 24.
 
 
 LaTeX Warning: Reference `fig:modular_organization' on page 4 undefined on inpu
-t line 25.
+t line 26.
 
 
 LaTeX Warning: Reference `fig:recognize_act' on page 4 undefined on input line 
-31.
+32.
 
 [4]
 
 LaTeX Warning: Reference `fig:chunk_addition_fact' on page 5 undefined on input
- line 41.
+ line 42.
 
 
 LaTeX Warning: Reference `fig:chunk_addition_fact' on page 5 undefined on input
- line 43.
+ line 44.
 
 
-LaTeX Warning: Citation `unknown' on page 5 undefined on input line 46.
+LaTeX Warning: Citation `unknown' on page 5 undefined on input line 47.
 
 [5] [6] [7] [8]
 
 LaTeX Warning: Reference `fig:modular_organization' on page 9 undefined on inpu
-t line 115.
+t line 116.
 
 [9]
 
 LaTeX Warning: Reference `fig:example_counting_chunks' on page 10 undefined on 
-input line 145.
+input line 146.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -997,33 +1008,33 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  [10]
 
 LaTeX Warning: Reference `fig:example_counting_goal_chunk' on page 11 undefined
- on input line 147.
+ on input line 148.
 
 
 LaTeX Warning: Reference `fig:example_counting_execution' on page 11 undefined 
-on input line 166.
+on input line 167.
 
 [11]
 
 LaTeX Warning: Reference `implementation' on page 12 undefined on input line 17
-0.
+1.
 
 [12] [13] [14]
 
 LaTeX Warning: Reference `fig:chunk_activation' on page 15 undefined on input l
-ine 241.
+ine 242.
 
 [15]
 
 LaTeX Warning: Reference `fig:fan_network' on page 16 undefined on input line 2
-67.
+68.
 
 
-LaTeX Warning: Reference `fig:fans' on page 16 undefined on input line 269.
+LaTeX Warning: Reference `fig:fans' on page 16 undefined on input line 270.
 
 
 LaTeX Warning: Reference `fig:activation_spreading' on page 16 undefined on inp
-ut line 275.
+ut line 276.
 
 
 Underfull \vbox (badness 1708) has occurred while \output is active []
@@ -1039,41 +1050,167 @@ Chapter 3.
 
 ]
 Chapter 4.
+
+LaTeX Warning: Citation `actr_reference' on page 21 undefined on input line 9.
+
+[21]
 LaTeX Font Info:    Font shape `T1/phv/bx/it' in size <10> not available
-(Font)              Font shape `T1/phv/b/it' tried instead on input line 30.
+(Font)              Font shape `T1/phv/b/it' tried instead on input line 38.
 LaTeX Font Info:    Font shape `T1/phv/b/it' in size <10> not available
-(Font)              Font shape `T1/phv/b/sl' tried instead on input line 30.
+(Font)              Font shape `T1/phv/b/sl' tried instead on input line 38.
 Package microtype Info: Loading generic settings for font family
 (microtype)             `cmtt' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
-[21]
-Overfull \hbox (0.76874pt too wide) in paragraph at lines 31--32
+
+Overfull \hbox (0.76874pt too wide) in paragraph at lines 39--40
 []\T1/phv/m/sl/10 adds a new chunk to the store, ie. $\OML/cmm/m/it/10 C[] \OT1
 /cmr/m/n/10 =
  []
 
 
 LaTeX Warning: Reference `fig:chunk_addition_fact' on page 22 undefined on inpu
-t line 38.
+t line 46.
 
 
-Underfull \vbox (badness 1472) has occurred while \output is active []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [22]
-[23]) (./chapters/compiler.tex [24]
+LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <10> not available
+(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 72.
+
+[23]
+Overfull \hbox (24.51604pt too wide) in paragraph at lines 98--99
+\T1/phv/m/n/10 (-20) ca-tion like in def-i-ni-tion []4.2[]: Since []\T1/pcr/m/n
+/10 (name isa type slot_1 val_1 \dots slot_n val_n)
+ []
+
+
+Overfull \hbox (45.6659pt too wide) in paragraph at lines 103--104
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (64.7588pt too wide) in paragraph at lines 107--108
+[]\T1/phv/m/n/10 (-20) This def-i-ni-tion states that a chunk is ei-ther []\T1/
+pcr/m/n/10 nil\T1/phv/m/n/10 (-20) , ie. an empty chunk, or a term []\T1/pcr/m/
+n/10 chunk(Name, Type, SVP)\T1/phv/m/n/10 (-20) ,
+ []
+
+[24] [25]
+
+LaTeX Warning: Reference `buffer_requests' on page 26 undefined on input line 1
+62.
+
+LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <10> not available
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 173.
+
+Overfull \hbox (9.66553pt too wide) in paragraph at lines 173--174
+[][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (51.66595pt too wide) in paragraph at lines 174--175
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (9.66553pt too wide) in paragraph at lines 175--176
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (69.66614pt too wide) in paragraph at lines 176--177
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (261.66809pt too wide) in paragraph at lines 177--178
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
+] 
+ []
+
+
+Overfull \hbox (21.66565pt too wide) in paragraph at lines 181--182
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (69.66614pt too wide) in paragraph at lines 184--185
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+[26]
+Overfull \hbox (57.66602pt too wide) in paragraph at lines 188--189
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (27.66571pt too wide) in paragraph at lines 193--194
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (51.66595pt too wide) in paragraph at lines 194--195
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (177.66724pt too wide) in paragraph at lines 195--196
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (111.66656pt too wide) in paragraph at lines 205--206
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (177.66724pt too wide) in paragraph at lines 207--208
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (201.66748pt too wide) in paragraph at lines 208--209
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (141.66687pt too wide) in paragraph at lines 211--212
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (225.66772pt too wide) in paragraph at lines 212--213
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
+][][][][] 
+ []
+
+
+Underfull \vbox (badness 7814) has occurred while \output is active []
+
+ [27])
+(./chapters/compiler.tex [28]
 Chapter 5.
-) (./chapters/sources.tex [25
+) (./chapters/example_models.tex [29
 
 
-] [26
+] [30
+
+
+]
+Chapter 6.
+) (./chapters/conclusion.tex [31] [32
+
+
+]
+Chapter 7.
+) (./chapters/sources.tex [33] [34
 
 
 ]
 Appendix A.
-LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <10> not available
-(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 8.
-) [27] [28
+) [35] [36
 
 
 ] (./arbeit.bbl
@@ -1096,71 +1233,80 @@ ile /
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 67--75
+Underfull \hbox (badness 1496) in paragraph at lines 60--64
+[]\T1/phv/m/sc/10 (+20) Frühwirth\T1/phv/m/n/10 (+20) , Thom:  \T1/phv/m/sl/10 
+Con-straint Han-dling Rules\T1/phv/m/n/10 (+20) .  2009 []$\T1/pcr/m/n/10 http 
+: / / www .
+ []
+
+[37
+
+
+]
+Underfull \hbox (badness 10000) in paragraph at lines 73--81
 []\T1/phv/m/sc/10 (+20) Sun\T1/phv/m/n/10 (+20) , Ron:  In-tro-duc-tion to Com-
 pu-ta-tional Cog-ni-tive Mod-el-ing.
  []
 
 
-Underfull \hbox (badness 1953) in paragraph at lines 67--75
+Underfull \hbox (badness 1953) in paragraph at lines 73--81
 \T1/phv/m/n/10 (+20) Version:2008.  []$\T1/pcr/m/n/10 http : / / www . cogsci .
  rpi . edu / ~rsun / folder-[]files /
  []
 
-[29
 
-
-]
-Underfull \hbox (badness 2426) in paragraph at lines 86--90
+Underfull \hbox (badness 2426) in paragraph at lines 92--96
 []\T1/phv/m/sc/10 (+20) Whitehill\T1/phv/m/n/10 (+20) , Ja-cob:  Un-der-stand-i
 ng ACT-R ^^U an Out-sider's Per-spec-
  []
 
-) [30]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 332.
- [31
+) [38]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 336.
+ [39
 
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 332.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 336.
  (./arbeit.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 332.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 332.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 336.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 336.
 Package rerunfilecheck Info: File `arbeit.out' has not changed.
-(rerunfilecheck)             Checksum: 95C518D2FD57B9593868929A581D53AB;3075.
+(rerunfilecheck)             Checksum: 31C3DCA6A5B2D816766548B167687C48;3769.
 
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 13240 strings out of 493488
- 193276 string characters out of 3146892
- 360808 words of memory out of 3000000
- 15982 multiletter control sequences out of 15000+200000
- 67947 words of font info for 198 fonts, out of 3000000 for 9000
+ 13832 strings out of 493488
+ 201992 string characters out of 3146892
+ 398191 words of memory out of 3000000
+ 16470 multiletter control sequences out of 15000+200000
+ 69525 words of font info for 204 fonts, out of 3000000 for 9000
  958 hyphenation exceptions out of 8191
- 38i,9n,52p,1463b,1190s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 38i,9n,52p,1463b,1859s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/publi
 c/amsfonts/cm/cmmi10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/
 cmmi5.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi7.pfb></usr
-/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texmf-di
-st/fonts/type1/public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/
-public/amsfonts/cm/cmr7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/
-cm/cmr8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></
-usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texmf
--dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmsy9.pfb></usr/share/texmf-dist/fonts/type1/public/amsfo
-nts/cm/cmtt10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.p
-fb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></usr/share/texmf-
-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/texmf-dist/fonts/type1/urw
-/helvetic/uhvb8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb
-></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on arbeit.pdf (37 pages, 463106 bytes).
+/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texmf-di
+st/fonts/type1/public/amsfonts/cm/cmmi9.pfb></usr/share/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmr10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmr7.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></u
+sr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/texmf
+-dist/fonts/type1/public/amsfonts/cm/cmsy7.pfb></usr/share/texmf-dist/fonts/typ
+e1/public/amsfonts/cm/cmsy8.pfb></usr/share/texmf-dist/fonts/type1/public/amsfo
+nts/cm/cmsy9.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt10.p
+fb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmtt8.pfb></usr/share/
+texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb></usr/share/texmf-dist/fonts/type
+1/urw/courier/ucrr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrro8a
+.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/tex
+mf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-dist/fonts/type1/
+urw/helvetic/uhvro8a.pfb>
+Output written on arbeit.pdf (45 pages, 504622 bytes).
 PDF statistics:
- 627 PDF objects out of 1000 (max. 8388607)
- 559 compressed objects within 6 object streams
- 124 named destinations out of 1000 (max. 500000)
- 30579 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 821 PDF objects out of 1000 (max. 8388607)
+ 741 compressed objects within 8 object streams
+ 215 named destinations out of 1000 (max. 500000)
+ 32707 words of extra memory for PDF output out of 35830 (max. 10000000)
 
