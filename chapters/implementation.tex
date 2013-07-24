@@ -1,6 +1,6 @@
 \chapter{Transformation of ACT-R to CHR}
 
-After having given a comprehensive but at some time informal overview of the ACT-R theory in chapter \ref{actr_description}, this chapter presents a possible implementation of the described concepts of the ACT-R theory in CHR.
+After the comprehensive but at some point informal overview of the ACT-R theory in chapter \ref{actr_description}, this chapter presents a possible implementation of the described concepts of the ACT-R theory in CHR.
 
 For the implementation, some special cases and details that are not exactly defined in theory have to be considered. Hence, some concepts of the theory that are implemented in this work are formalized first. The implementation in form of CHR rules sticks to those formalisms and is often very similar to them.
 
@@ -16,13 +16,16 @@ Since chunks are the central data-structure of ACT-R, used for representation of
 
 In the previous chapters, chunks always have been referred to in a graphical or in a verbose descriptive form. Hence, a formalism to represent chunks in a textual order is given at first. The definition is based on the definition of chunks in the ACT-R implementation.
 
-\begin{definition}
-A \emph{chunk-store} $\Sigma$ is a tuple $(C,E,\mathcal{T},HasSlot,Isa)$, where $C$ is a set of chunks and $E$ a set of primitive elements, with $C \cap E = \emptyset$. $V = C \cup E$ are the values of~$\Sigma$ and $\mathcal{T}$ a set of chunk-types. A chunk-type $(T,S) \in \mathcal{T}$ is a tuple with a type name $T$ and a set of slots $S$. The set of all slot-names is $\mathcal{S}$. $HasSlot \subseteq C \times \mathcal{S} \times V$ and $Isa \subseteq C \times T$ are relations and defined as follows:
+\begin{definition}[chunk-store]
+A \emph{chunk-store} $\Sigma$ is a tuple $(C,E,\mathcal{T},HasSlot,Isa)$, where $C$ is a set of chunks and $E$ a set of primitive elements, with $C \cap E = \emptyset$. $V = C \cup E$ are the \emph{values} of~$\Sigma$ and $\mathcal{T}$ a set of chunk-types. A chunk-type $(T,S) \in \mathcal{T}$ is a tuple with a type name $T$ and a set of slots $S$. The set of all slot-names is $\mathcal{S}$. 
 
-$c \enspace Isa \enspace T \Leftrightarrow$ chunk $c$ is of type $T$.
+$HasSlot \subseteq C \times \mathcal{S} \times V$ and $Isa \subseteq C \times T$ are relations and defined as follows:
 
+\begin{itemize}
+ \item $c \enspace Isa \enspace T \Leftrightarrow$ chunk $c$ is of type $T$.
+ \item $(c,s,v) \in HasSlot \Leftrightarrow v$ is the value of slot $s$ of $c$. This can also be written as $c \overset{s}{\longrightarrow} v$ and is spoken ``$c$ is connected to $v$'' or ``$v$ is in the slot $s$ of $c$''.
+\end{itemize}
 
-$(c,s,v) \in HasSlot \Leftrightarrow v$ is the value of slot $s$ of $c$. This can also be written as $c \overset{s}{\longrightarrow} v$ and is spoken ``$c$ is connected to $v$'' or ``$v$ is in the slot $s$ of $c$''.
 
 The function $slots: C \rightarrow \mathcal{S} \times V$ is defined as $slots(c) = \{ (s,v) | (c,s,v) \in HasSlot \}$ and $slots: \mathcal{T} \rightarrow \mathcal{S}$ as $slots((T,S)) = S$.
 
@@ -140,7 +143,7 @@ The buffer system can be regarded as a chunk-store, that is enhanced by buffers.
 
 \begin{definition}[buffer system]
 \label{def:buffer_system}
-A buffer system is a tuple $(B,\Sigma,Holds)$, where $B$ is a set of buffers, $\Sigma = (C, E, \mathcal{T}, HasSlot, Isa)$ a type-consistent chunk-store and $Holds \subseteq B \times (C \cup \{ \mathtt{nil} \})$ a unique and complete relation, that assigns every buffer at most one chunk that it holds. If a buffer $b$ is empty, ie. it does not hold a chunk, then $(b,\mathtt{nil}) \in Holds$.
+A \emph{buffer system} is a tuple $(B,\Sigma,Holds)$, where $B$ is a set of buffers, $\Sigma = (C, E, \mathcal{T}, HasSlot, Isa)$ a type-consistent chunk-store and $Holds \subseteq B \times (C \cup \{ \mathtt{nil} \})$ a unique and complete relation, that assigns every buffer at most one chunk that it holds. If a buffer $b$ is empty, ie. it does not hold a chunk, then $(b,\mathtt{nil}) \in Holds$.
 
 A buffer system is \emph{consistent}, if every chunk that appears in $Holds$ is a member of $C$ and $\Sigma$ is consistent.
 
