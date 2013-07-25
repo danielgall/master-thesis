@@ -19,7 +19,7 @@ In the previous chapters, chunks always have been referred to in a graphical or 
 \begin{definition}[chunk-store]
 A \emph{chunk-store} $\Sigma$ is a tuple $(C,E,\mathcal{T},HasSlot,Isa)$, where $C$ is a set of chunks and $E$ a set of primitive elements, with $C \cap E = \emptyset$. $V = C \cup E$ are the \emph{values} of~$\Sigma$ and $\mathcal{T}$ a set of chunk-types. A chunk-type $(T,S) \in \mathcal{T}$ is a tuple with a type name $T$ and a set of slots $S$. The set of all slot-names is $\mathcal{S}$. 
 
-$HasSlot \subseteq C \times \mathcal{S} \times V$ and $Isa \subseteq C \times T$ are relations and defined as follows:
+$HasSlot \subseteq C \times \mathcal{S} \times V$ and $Isa \subseteq C \times T$ are relations and are defined as follows:
 
 \begin{itemize}
  \item $c \enspace Isa \enspace T \Leftrightarrow$ chunk $c$ is of type $T$.
@@ -39,7 +39,7 @@ The following methods can be defined over a chunk store $\Sigma = (C, E, \mathca
 
 \begin{description}
  \item[$\mathtt{chunk-type(name slot_1 slot_2 \dots slot_n)}$] adds the type $T = (\mathtt{name},\{\mathtt{slot1}, \dots, \mathtt{slotn}\})$ to the store, ie. $\mathcal{T'} = \mathcal{T} \cup \{T\}$. 
- \item[$\mathtt{add-chunk(name isa type slot_1 val_1 \dots slot_n val_n)}$] adds a new chunk to the store, ie. $C' = C \cup \{ \mathtt{name} \}$, $Isa' = Isa \cup (\mathtt{name}, (\mathtt{type}, slots(\mathtt{type}))$ and $HasSlot' = \bigcup_{i = 1}^n{\mathtt{slot_i}} \cup HasSlot.$ Note, that due to the expansion of $C$, the condition that $C$ and $E$ have to be disjoint may be violated. In implementations, there should be a mechanism to restore this condition. Additionally, a valid mechanism to restore type-consistency may be introduced.
+ \item[$\mathtt{add-chunk(name isa type slot_1 val_1 \dots slot_n val_n)}$] adds a new chunk to the store, ie. $C' = C \cup \{ \mathtt{name} \}$, $Isa' = Isa \cup (\mathtt{name}, (\mathtt{type}, slots(\mathtt{type}))$ and $HasSlot' = \bigcup_{i = 1}^n{\mathtt{(slot_i,val_i)}} \cup HasSlot.$ Note, that due to the expansion of $C$, the condition that $C$ and $E$ have to be disjoint may be violated. In implementations, there should be a mechanism to restore this condition. Additionally, a valid mechanism to restore type-consistency may be introduced.
 \end{description} 
 \end{definition}
 
@@ -103,7 +103,8 @@ The straight-forward definition of a data type for chunk specifications is just 
 \begin{lstlisting}
 :- chr_type chunk_def ---> nil; chunk(any, any, slot_list).
 :- chr_type list(T) ---> []; [T | list(T)].
-:- chr_type slot_list == list(pair(any,any)). % a list of slot-value pairs
+% a list of slot-value pairs
+:- chr_type slot_list == list(pair(any,any)).
 :- chr_type pair(T1,T2) ---> (T1,T2).
 \end{lstlisting}
 

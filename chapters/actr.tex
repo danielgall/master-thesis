@@ -17,6 +17,8 @@ When talking about ACT-R, one can refer to the theory or the implementation. The
 
 In this chapter, a short overview over the theory of ACT-R is given. First, the description is informal to provide a general image of how ACT-R works. Then, some important parts of the system are defined more formally in chapter \ref{implementation}, as soon as it is needed in the implementation. All of the information in this chapter refers to the theory. Implementation is discussed in chapter \ref{implementation}.
 
+A lot of the information in this chapter is based on \cite{anderson_how_2007}, \cite{anderson_integrated_2004} and \cite{taatgen_modeling_2006}, where a much more comprehensive discussion of the ACT-R theory including complex examples, referrings to the neuro-biology and the reasons why this particular modeling of human cognition has been chosen. In this work, only the basic concepts of ACT-R are presented.
+
 \section{Procedural and Declarative Knowledge}
 
 A central idea of ACT-R is the distinction between \emph{declarative} and \emph{procedural knowledge.} The declarative knowledge consists of simple facts, whereas the procedural knowledge contains information on what to do with those facts.
@@ -188,6 +190,7 @@ In the previous sections there were some remarks on the serial and parallel aspe
 The procedural module is the central serial bottleneck in the system, since the whole communication between modules is going through the production system and the whole computation process is controlled there. The fact that only one rule can fire at a time leads to a serial overall computation. Another serial aspect is that some computations need to wait for the results of a module request. If no other rule matches in the time while the request is performed, the whole system has to wait for this calculation to finish. After the request, the module puts the result in its buffer and the rule needing the result of the computation can fire and computation is continued.
 
 \section{Subsymbolic layer}
+\label{subsymbolic_layer}
 
 The previously discussed aspects of the ACT-R theory are part of the so-called symbolic layer. This layer only describes discrete knowledge structures without dealing with more complex questions like: 
 
@@ -209,6 +212,7 @@ Additionally, a very low chunk activation can prevent a chunk of being retrieved
 At last, activation determines also how fast a chunk is being retrieved: The higher the activation, the shorter the retrieval time.
 
 \subsubsection{Base-Level Activation}
+\label{base_level_activation}
 
 The activation $A_i$ of a chunk $i$ is defined as:
 
@@ -301,6 +305,7 @@ In ACT-R, production utility is a number attached to each production rule in the
 In the current version of the ACT-R theory, a reinforcement learning rule based on the Rescorla-Wagner learning rule \cite{rescorla_wagner_1972} has been introduced. The utility $U_i$ of a production rule $i$ is defined as:
 
 \begin{equation}
+\label{eq:utility_learning}
 U_i(n) = U_i(n - 1) + \alpha \left(R_i(n) - U_i(n - 1)\right)
 \end{equation}
 
@@ -314,8 +319,39 @@ It is important to mention that by the definition of the reward for a production
 
 \section{Learning}
 
-Learning in ACT-R can 
+Learning in ACT-R can be divided into four types depending on the involvement of the symbolic or subsymbolic layer and the declarative or the procedural module. Table~\ref{tab:learning_types} names the four types that are described in this section.
 
-\cite[pp. 92--95]{anderson_how_2007}
+\begin{table}[hbt]
+\caption{ACT-R's Taxonomy of Learning \cite[pp. 92--95]{anderson_how_2007}}
+\begin{center}
+\begin{tabular}{|lll|}
+\hline
+ & Declarative & Procedural\\
+\hline
+Symbolic & Fact learning & Skill acquisition\\
+Subsymbolic & Strengthening & Conditioning\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+
+\subsection{Symbolic Layer}
+
+Symbolic learning somehow influences the objects of the symbolic layer, ie. chunks and production rules, in a way that new objects are created or objects are merged. Those learning possibilities are described in the following.
+
+\subsubsection{Fact Learning}
+
+
+
+\subsubsection{Skill acquisition}
+
+\subsection{Subsymbolic Layer}
+
+The concepts introduced in section~\ref{subsymbolic_layer} are a kind of learning: The practice of particular facts strengthens the chunks encoding this fact and chunks that are not practiced are forgotten over time\footnote{This is the concept of base-level learning as described in section~\ref{base_level_activation}}. Additionally, associative weights are learned from the current context. These processes adapt to the problems a particular human mind is confronted with and work autonomously.
+
+The same is valid for production rules: Over time, the experience tells us, which strategies might be successful in certain situations and which are not. This process is also called \emph{conditioning} and described in equation~\eqref{eq:utility_learning}.
+
+
 \cite[chapter 4]{whitehill_understanding}
 

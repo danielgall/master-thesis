@@ -1,4 +1,5 @@
 \chapter{Description of ACT-R}
+\label{actr_description}
 
 In computational psychology, the approach to explore human cognition is to implement detailed computational models that enable computers to execute them and simulate human behaviour \cite{sun_introduction_2008}. By conducting the same experiments with humans and with simulations of the suggested underlying cognitive models, the plausibility of models can be checked and models can be improved gradually.
 
@@ -45,21 +46,7 @@ Each chunk is associated with a chunk-type that determines which slots a chunk c
 \label{millers_number}
 For the chunk types there is no upper limit of slots they can define. However, Anderson et al. suggested to limit the number of slots to Miller's Number of $7 \pm 2$, for the reason of plausibility \cite{unknown}. \FIXME{Find cite}
 
-% \subsubsection{Textual Representation of Chunks}
-% 
-% In the following, chunk-type and chunk definitions are given in a textual way which is based on the syntax of the standard implementation of ACT-R.
-% 
-% \begin{definition}
-% The term \verb|chunk-type(name slot1 slot2 ... slotn)| defines a chunk-type with name \verb|name| and slots with names \verb|slot1| to \verb|slotn|.
-% 
-% The term \verb|chunk(name isa type slot1 val1 ... slotn valn)| defines a chunk of type \verb|type| with name \verb|name| and corresponding slot-value-pairs, where \verb|slot1 val1| signifies that the value of the slot \verb|slot1| is \verb|val1|. The slot-value-definitions must match the chunk-type-definition of \verb|type|.
-% \end{definition}
-% 
-% \begin{example}
-%  The addition-fact chunk in figure \ref{fig:chunk_addition_fact} and its chunk-type are defined as follows:\\
-%  \verb|chunk-type(addition-fact arg1 arg2 sum)|\\
-%  \verb|chunk(a isa addition-fact arg1 5 arg2 2 sum 7)|
-% \end{example}
+
 
 \subsubsection{Buffers}
 
@@ -201,6 +188,7 @@ In the previous sections there were some remarks on the serial and parallel aspe
 The procedural module is the central serial bottleneck in the system, since the whole communication between modules is going through the production system and the whole computation process is controlled there. The fact that only one rule can fire at a time leads to a serial overall computation. Another serial aspect is that some computations need to wait for the results of a module request. If no other rule matches in the time while the request is performed, the whole system has to wait for this calculation to finish. After the request, the module puts the result in its buffer and the rule needing the result of the computation can fire and computation is continued.
 
 \section{Subsymbolic layer}
+\label{subsymbolic_layer}
 
 The previously discussed aspects of the ACT-R theory are part of the so-called symbolic layer. This layer only describes discrete knowledge structures without dealing with more complex questions like: 
 
@@ -222,6 +210,7 @@ Additionally, a very low chunk activation can prevent a chunk of being retrieved
 At last, activation determines also how fast a chunk is being retrieved: The higher the activation, the shorter the retrieval time.
 
 \subsubsection{Base-Level Activation}
+\label{base_level_activation}
 
 The activation $A_i$ of a chunk $i$ is defined as:
 
@@ -314,6 +303,7 @@ In ACT-R, production utility is a number attached to each production rule in the
 In the current version of the ACT-R theory, a reinforcement learning rule based on the Rescorla-Wagner learning rule \cite{rescorla_wagner_1972} has been introduced. The utility $U_i$ of a production rule $i$ is defined as:
 
 \begin{equation}
+\label{utility_learning}
 U_i(n) = U_i(n - 1) + \alpha \left(R_i(n) - U_i(n - 1)\right)
 \end{equation}
 
@@ -327,7 +317,33 @@ It is important to mention that by the definition of the reward for a production
 
 \section{Learning}
 
-Learning in ACT-R can 
+Learning in ACT-R can be divided into four types depending on the involvement of the symbolic or subsymbolic layer and the declarative or the procedural module. Table~\ref{tab:learning_types} names the four types that are described in this section.
+
+\begin{center}
+\begin{tabular}{|lll|}[hbt]
+\hline
+ & Declarative & Procedural\\
+\hline
+Symbolic & Fact learning & Skill acquisition\\
+Subsymbolic & Strengthening & Conditioning\\
+\hline
+\end{tabular}
+\end{center}
+
+
+\subsection{Symbolic Layer}
+
+\subsubsection{Fact Learning}
+
+\subsubsection{Skill acquisition}
+
+\subsection{Subsymbolic Layer}
+
+The concepts introduced in section~\ref{subsymbolic_layer} are a kind of learning: The practice of particular facts strengthens the chunks encoding this fact and chunks that are not practiced are forgotten over time\footnote{This is the concept of base-level learning as described in section~\ref{base_level_activation}}. This process adapts to the problems a particular human mind is confronted with and works autonomously.
+
+The same is valid for production rules: Over time, the experience tells us, which strategies might be successful in certain situations and which are not. This process is also called \emph{conditioning} and described in equation~\eqref{eq:utility_learning}.
+
+\subsection{Conditioning}
 
 \cite[pp. 92--95]{anderson_how_2007}
 \cite[chapter 4]{whitehill_understanding}
