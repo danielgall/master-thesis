@@ -453,7 +453,7 @@ Note, that slot tests with modifiers other than \verb|=| do not bind variables, 
 As with normal slot tests, it is important to mention that if there are several tests on the same slot, the \verb|chunk_has_slot| constraint must appear only once on the LHS of the CHR rule, since every slot-value pair is unique in the constraint store. Ie., if the first slot test of a particular slot appears on the LHS of the ACT-R rule, a \verb|chunk_has_slot| constraint has to be added to the LHS of the CHR rule. For every other occurrence of this slot in a slot test, only guard checks are added.
 
 \begin{example}
-To clarify the matching concept of ACT-R, here are some examples and their behaviour:
+To clarify the details of the matching concept in ACT-R, here are some examples and their behaviour:
 
 \begin{lstlisting}
 =buffer>

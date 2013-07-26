@@ -45,29 +45,29 @@
 \contentsline {subsubsection}{The Right Hand Side of a Rule}{30}{section*.22}
 \contentsline {subsubsection}{Direct Translation of Buffer Tests}{31}{section*.23}
 \contentsline {subsection}{\numberline {4.2.3}Translation of Buffer Queries}{33}{subsection.4.2.3}
-\contentsline {subsubsection}{The Production Rule Grammar}{33}{section*.24}
-\contentsline {subsubsection}{Bound and Unbound Variables}{34}{section*.25}
-\contentsline {subsubsection}{Slot Modifiers}{34}{section*.26}
-\contentsline {subsubsection}{Empty Slots}{35}{section*.27}
-\contentsline {subsubsection}{Outputs}{36}{section*.28}
-\contentsline {section}{\numberline {4.3}Modular Organization}{36}{section.4.3}
-\contentsline {section}{\numberline {4.4}Declarative Module}{36}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}Retrieval Requests}{36}{subsection.4.4.1}
-\contentsline {subsection}{\numberline {4.4.2}Chunk Merging}{36}{subsection.4.4.2}
-\contentsline {section}{\numberline {4.5}Timing in ACT-R}{36}{section.4.5}
-\contentsline {subsection}{\numberline {4.5.1}Priority Queue}{37}{subsection.4.5.1}
-\contentsline {section}{\numberline {4.6}Subsymbolic Layer}{37}{section.4.6}
-\contentsline {subsection}{\numberline {4.6.1}Activation of Chunks}{37}{subsection.4.6.1}
-\contentsline {subsection}{\numberline {4.6.2}Production Utility}{37}{subsection.4.6.2}
-\contentsline {chapter}{\numberline {5}Compiler}{39}{chapter.5}
-\contentsline {chapter}{\numberline {6}Example Models}{41}{chapter.6}
-\contentsline {section}{\numberline {6.1}The Counting Model}{41}{section.6.1}
-\contentsline {section}{\numberline {6.2}The Addition Model}{41}{section.6.2}
-\contentsline {section}{\numberline {6.3}The Semantic Model}{41}{section.6.3}
-\contentsline {section}{\numberline {6.4}The Fan Model}{41}{section.6.4}
-\contentsline {chapter}{\numberline {7}Conclusion}{43}{chapter.7}
-\contentsline {section}{\numberline {7.1}Inventory: What does already work?}{43}{section.7.1}
-\contentsline {section}{\numberline {7.2}Future Work}{43}{section.7.2}
-\contentsline {chapter}{\numberline {A}Source Codes}{45}{appendix.A}
-\contentsline {chapter}{\numberline {B}Grammar for Production Rules}{47}{appendix.B}
-\contentsline {chapter}{Bibliography}{49}{appendix*.29}
+\contentsline {subsubsection}{The Production Rule Grammar}{34}{section*.24}
+\contentsline {subsubsection}{Bound and Unbound Variables}{35}{section*.25}
+\contentsline {subsubsection}{Slot Modifiers}{35}{section*.26}
+\contentsline {subsubsection}{Empty Slots}{37}{section*.27}
+\contentsline {subsubsection}{Outputs}{38}{section*.28}
+\contentsline {section}{\numberline {4.3}Modular Organization}{38}{section.4.3}
+\contentsline {section}{\numberline {4.4}Declarative Module}{38}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Retrieval Requests}{38}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}Chunk Merging}{38}{subsection.4.4.2}
+\contentsline {section}{\numberline {4.5}Timing in ACT-R}{38}{section.4.5}
+\contentsline {subsection}{\numberline {4.5.1}Priority Queue}{39}{subsection.4.5.1}
+\contentsline {section}{\numberline {4.6}Subsymbolic Layer}{39}{section.4.6}
+\contentsline {subsection}{\numberline {4.6.1}Activation of Chunks}{39}{subsection.4.6.1}
+\contentsline {subsection}{\numberline {4.6.2}Production Utility}{39}{subsection.4.6.2}
+\contentsline {chapter}{\numberline {5}Compiler}{41}{chapter.5}
+\contentsline {chapter}{\numberline {6}Example Models}{43}{chapter.6}
+\contentsline {section}{\numberline {6.1}The Counting Model}{43}{section.6.1}
+\contentsline {section}{\numberline {6.2}The Addition Model}{43}{section.6.2}
+\contentsline {section}{\numberline {6.3}The Semantic Model}{43}{section.6.3}
+\contentsline {section}{\numberline {6.4}The Fan Model}{43}{section.6.4}
+\contentsline {chapter}{\numberline {7}Conclusion}{45}{chapter.7}
+\contentsline {section}{\numberline {7.1}Inventory: What does already work?}{45}{section.7.1}
+\contentsline {section}{\numberline {7.2}Future Work}{45}{section.7.2}
+\contentsline {chapter}{\numberline {A}Source Codes}{47}{appendix.A}
+\contentsline {chapter}{\numberline {B}Grammar for Production Rules}{49}{appendix.B}
+\contentsline {chapter}{Bibliography}{51}{appendix*.29}

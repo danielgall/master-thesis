@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Arch Linux) (format=pdflatex 2013.7.15)  26 JUL 2013 18:02
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Arch Linux) (format=pdflatex 2013.7.15)  26 JUL 2013 22:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1104,23 +1104,19 @@ Isa[] \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 Isa \OMS/cmsy/m/n/10 [ \OT1/cmr/m/n/10
 
 
 LaTeX Warning: Reference `fig:chunk_addition_fact' on page 24 undefined on inpu
-t line 49.
+t line 51.
 
-
-Underfull \vbox (badness 3989) has occurred while \output is active []
-
- [24]
+[24]
 LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <10> not available
-(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 75.
-
-[25]
-Overfull \hbox (24.51604pt too wide) in paragraph at lines 101--102
+(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 77.
+ [25]
+Overfull \hbox (24.51604pt too wide) in paragraph at lines 107--108
 \T1/phv/m/n/10 (-20) ca-tion like in def-i-ni-tion []4.2[]: Since []\T1/pcr/m/n
 /10 (name isa type slot_1 val_1 \dots slot_n val_n)
  []
 
 
-Overfull \hbox (64.7588pt too wide) in paragraph at lines 111--112
+Overfull \hbox (64.7588pt too wide) in paragraph at lines 117--118
 []\T1/phv/m/n/10 (-20) This def-i-ni-tion states that a chunk is ei-ther []\T1/
 pcr/m/n/10 nil\T1/phv/m/n/10 (-20) , ie. an empty chunk, or a term []\T1/pcr/m/
 n/10 chunk(Name, Type, SVP)\T1/phv/m/n/10 (-20) ,
@@ -1129,93 +1125,110 @@ n/10 chunk(Name, Type, SVP)\T1/phv/m/n/10 (-20) ,
 [26] [27]
 
 LaTeX Warning: Reference `buffer_requests' on page 28 undefined on input line 1
-69.
+75.
 
-[28] [29] [30] [31] [32]
+[28] [29]
 
-LaTeX Warning: Citation `actr_reference' on page 33 undefined on input line 367
+LaTeX Warning: Citation `actr_reference' on page 30 undefined on input line 205
+.
+
+[30] [31] [32]
+Overfull \hbox (251.25174pt too wide) in paragraph at lines 326--328
+[][][][][][][] [][][][][][] 
+ []
+
+[33]
+
+LaTeX Warning: Citation `actr_reference' on page 34 undefined on input line 380
 .
 
 LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <10> not available
-(Font)              Font shape `T1/pcr/b/n' tried instead on input line 371.
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 384.
 
-Overfull \hbox (39.66583pt too wide) in paragraph at lines 372--373
+Overfull \hbox (39.66583pt too wide) in paragraph at lines 385--386
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (33.66577pt too wide) in paragraph at lines 374--375
+Overfull \hbox (33.66577pt too wide) in paragraph at lines 387--388
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
-[33]
-Overfull \hbox (21.66565pt too wide) in paragraph at lines 377--378
+
+Overfull \hbox (21.66565pt too wide) in paragraph at lines 390--391
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (69.66614pt too wide) in paragraph at lines 380--381
+Overfull \hbox (69.66614pt too wide) in paragraph at lines 393--394
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (57.66602pt too wide) in paragraph at lines 384--385
+Overfull \hbox (57.66602pt too wide) in paragraph at lines 397--398
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (177.66724pt too wide) in paragraph at lines 391--392
+Overfull \hbox (177.66724pt too wide) in paragraph at lines 404--405
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
-
-Overfull \hbox (225.66772pt too wide) in paragraph at lines 396--397
+[34]
+Overfull \hbox (225.66772pt too wide) in paragraph at lines 409--410
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ] 
  []
 
 
-Overfull \hbox (225.66772pt too wide) in paragraph at lines 397--398
+Overfull \hbox (225.66772pt too wide) in paragraph at lines 410--411
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][] 
  []
 
-[34]
+[35]
 
-LaTeX Warning: Citation `actr_reference' on page 35 undefined on input line 436
+LaTeX Warning: Citation `actr_reference' on page 36 undefined on input line 449
 .
 
+[36]
+Overfull \hbox (27.69756pt too wide) in paragraph at lines 501--502
+[]\T1/phv/m/sl/10 will match all chunks which have the same value in []\T1/pcr/
+m/n/10 spam \T1/phv/m/sl/10 and []\T1/pcr/m/n/10 ham\T1/phv/m/sl/10 . [][][][][
+][] 
+ []
 
-LaTeX Warning: Citation `actr_reference' on page 35 undefined on input line 442
+
+LaTeX Warning: Citation `actr_reference' on page 37 undefined on input line 508
 .
 
-[35]) (./chapters/compiler.tex [36] [37] [38
+[37]) (./chapters/compiler.tex [38] [39] [40
 
 
 ]
 Chapter 5.
-) (./chapters/example_models.tex [39] [40
+) (./chapters/example_models.tex [41] [42
 
 
 ]
 Chapter 6.
-) (./chapters/conclusion.tex [41] [42
+) (./chapters/conclusion.tex [43] [44
 
 
 ]
 Chapter 7.
-) (./chapters/sources.tex [43] [44
+) (./chapters/sources.tex [45] [46
 
 
 ]
 Appendix A.
-) (./chapters/production_grammar.tex [45] [46
+) (./chapters/production_grammar.tex [47] [48
 
 
 ]
 Appendix B.
 
-LaTeX Warning: Citation `actr_reference' on page 47 undefined on input line 3.
+LaTeX Warning: Citation `actr_reference' on page 49 undefined on input line 3.
 
 
 Overfull \hbox (9.66553pt too wide) in paragraph at lines 6--7
@@ -1273,7 +1286,7 @@ Overfull \hbox (177.66724pt too wide) in paragraph at lines 28--29
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
-[47]
+[49]
 Overfull \hbox (111.66656pt too wide) in paragraph at lines 38--39
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
@@ -1299,7 +1312,7 @@ Overfull \hbox (225.66772pt too wide) in paragraph at lines 45--46
 ][][][][] 
  []
 
-) [48] (./arbeit.bbl
+) [50] (./arbeit.bbl
 Underfull \hbox (badness 1024) in paragraph at lines 26--29
 []\T1/phv/m/sl/10 The ACT-R Tu-to-rial\T1/phv/m/n/10 (+20) .  []$\T1/pcr/m/n/10
  http : / / act-[]r . psy . cmu . edu / actr6 / units . zip$[]\T1/phv/m/n/10 (+
@@ -1325,7 +1338,7 @@ Con-straint Han-dling Rules\T1/phv/m/n/10 (+20) .  2009 []$\T1/pcr/m/n/10 http
 : / / www .
  []
 
-[49
+[51
 
 
 
@@ -1348,9 +1361,9 @@ Underfull \hbox (badness 2426) in paragraph at lines 92--96
 ng ACT-R ^^U an Out-sider's Per-spec-
  []
 
-) [50]
+) [52]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 341.
- [51
+ [53
 
 
 ]
@@ -1366,13 +1379,13 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 14287 strings out of 493488
- 208339 string characters out of 3146892
+ 14327 strings out of 493488
+ 208892 string characters out of 3146892
  408868 words of memory out of 3000000
- 16776 multiletter control sequences out of 15000+200000
+ 16781 multiletter control sequences out of 15000+200000
  66825 words of font info for 203 fonts, out of 3000000 for 9000
  958 hyphenation exceptions out of 8191
- 38i,9n,72p,1463b,1953s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 38i,9n,72p,1463b,1859s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-dist/fon
 ts/type1/public/ccicons/ccicons.pfb></usr/share/texmf-dist/fonts/type1/public/a
 msfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmm
@@ -1392,10 +1405,10 @@ r8a.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/
 texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-dist/fonts/typ
 e1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvr
 o8a.pfb>
-Output written on arbeit.pdf (59 pages, 540627 bytes).
+Output written on arbeit.pdf (61 pages, 548853 bytes).
 PDF statistics:
- 1110 PDF objects out of 1200 (max. 8388607)
- 1011 compressed objects within 11 object streams
- 350 named destinations out of 1000 (max. 500000)
+ 1159 PDF objects out of 1200 (max. 8388607)
+ 1058 compressed objects within 11 object streams
+ 385 named destinations out of 1000 (max. 500000)
  32315 words of extra memory for PDF output out of 35830 (max. 10000000)
 
