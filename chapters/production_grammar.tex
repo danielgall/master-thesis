@@ -1,0 +1,48 @@
+\chapter{Grammar for Production Rules}
+
+The complete grammar for production rules as defined in \cite{actr_reference}:
+
+\begin{lstlisting}
+production-definition ::= p-name {doc-string} condition* ==> action*
+p-name ::= a symbol that serves as the name of the production for reference
+doc-string ::= a string which can be used to document the production
+condition ::= [ buffer-test | query | eval | binding | multiple-value-binding]
+action ::= [buffer-modification | request | buffer-clearing | modification-request | buffer-overwrite | eval |
+binding | multiple-value-binding | output | !stop!]
+buffer-test ::= =buffer-name> isa chunk-type slot-test*
+buffer-name ::= a symbol which is the name of a buffer
+chunk-type ::= a symbol which is the name of a chunk-type in the model
+slot-test ::= {slot-modifier} slot-name slot-value
+slot-modifier ::= [= | - | < | > | <= | >=]
+slot-name ::= a symbol which names a possible slot in the specified chunk-type
+slot-value ::= a variable or any Lisp value
+query ::= ?buffer-name> query-test*
+query-test ::= {-} queried-item query-value
+queried-item ::= a symbol which names a valid query for the specified buffer
+query-value ::= a bound-variable or any Lisp value
+buffer-modification ::= =buffer-name> slot-value-pair*
+slot-value-pair ::= slot-name bound-slot-value
+bound-slot-value ::= a bound variable or any Lisp value
+request ::= +buffer-name> [direct-value | isa chunk-type request-spec*]
+request-spec ::= {slot-modifier} [slot-name | request-parameter] slot-value
+request-parameter ::= a Lisp keyword naming a request parameter provided by the buffer specified
+direct-value ::= a variable or Lisp symbol
+buffer-clearing ::= -buffer-name>
+modification-request ::= +buffer-name> slot-value-pair*
+buffer-overwrite ::= =buffer-name> direct-value
+variable ::= a symbol which starts with the character =
+eval ::= [!eval! | !safe-eval!] form
+binding ::= [!bind! | !safe-bind!] variable form
++
+multiple-value-binding ::= !mv-bind! (variable ) form
+output ::= !output! [ output-value | ( format-string format-args*) | (output-value*)]
+output-value ::= any Lisp value or a bound-variable
+format-string ::= a Lisp string which may contain format specific parameter processing character
+format-args ::= any Lisp values, including bound-variables, which will be processed by the preceding
+format-string
+bound-variable
+ ::= a variable which is used in the buffer-test conditions of the production (including a
+variable which names the buffer that is tested in a buffer-test or dynamic-buffer-test) or is bound with
+an explicit binding in the production
+form ::= a valid Lisp form
+\end{lstlisting}
