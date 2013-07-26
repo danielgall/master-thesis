@@ -39,7 +39,9 @@ The following methods can be defined over a chunk store $\Sigma = (C, E, \mathca
 
 \begin{description}
  \item[$\mathtt{chunk-type(name slot_1 slot_2 \dots slot_n)}$] adds the type $T = (\mathtt{name},\{\mathtt{slot1}, \dots, \mathtt{slotn}\})$ to the store, ie. $\mathcal{T'} = \mathcal{T} \cup \{T\}$. 
- \item[$\mathtt{add-chunk(name isa type slot_1 val_1 \dots slot_n val_n)}$] adds a new chunk to the store, ie. $C' = C \cup \{ \mathtt{name} \}$, $Isa' = Isa \cup (\mathtt{name}, (\mathtt{type}, slots(\mathtt{type}))$ and $HasSlot' = \bigcup_{i = 1}^n{\mathtt{(slot_i,val_i)}} \cup HasSlot.$ Note, that due to the expansion of $C$, the condition that $C$ and $E$ have to be disjoint may be violated. In implementations, there should be a mechanism to restore this condition. Additionally, a valid mechanism to restore type-consistency may be introduced.
+ \item[$\mathtt{add-chunk(name isa type slot_1 val_1 \dots slot_n val_n)}$] adds a new chunk to the store, ie. $C' = C \cup \{ \mathtt{name} \}$, $Isa' = Isa \cup (\mathtt{name}, (\mathtt{type}, slots(\mathtt{type}))$ and $HasSlot' = \bigcup_{i = 1}^n{\mathtt{(slot_i,val_i)}} \cup HasSlot.$ Note, that due to the expansion of $C$, the condition that $C$ and $E$ have to be disjoint may be violated. To fix this violation, the element can be removed from $E$: $E' = (E \cup C) - (E \cap C).$ 
+ 
+ Additionally, a valid mechanism to restore type-consistency may be introduced: It might happen, that not all slots are specified in the \verb|add-chunk| method. Since it is claimed by the definition of $HasSlot$ that for all slots $s$ of a chunk $c$ there must be a $(c,s,v) \in HasSlot$, in implementations the unspecified slots are initialized as empty slots, represented by the empty value \verb|nil|.
 \end{description} 
 \end{definition}
 
@@ -93,6 +95,10 @@ For the chunks:
 The \verb|chunk/2| constraint represents both the set $C$ of chunks and the $Isa$ relation, since the presence of a constraint \verb|chunk(c,t)| signifies, that chunk \verb|c| is of a type $T = (\mathtt{t},S)$.
 
 The $HasSlot$ relation is represented by the \verb|chunk_has_slot(c,s,v)| constraint, which really is just a direct translation of an element $(c,s,v) \in HasSlot$.
+
+Note that all values in the just presented constraints have to be ground. This is a demand claimed by the original ACT-R implementation and makes sense, since each value in a slot of a chunk is a real, ground value and the concept of variables does not have an advantage in this context, because every element that can be stored in the brain is known by the brain.
+
+Additionally, from the definition of a chunk store it is known, that the $HasSlot$ and the $Isa$ relations have to be left-complete. \FIXME{correct expression! correct definitions!} Therefore, for every chunk \verb|c| in the store, exactly one \verb|isa(c,t)| constraint has to be in the store. For each \verb|chunk_type_has_slot(t,s)| constraint, a \verb|chunk_has_slot(c,s,v)| constraint has to be defined. If one wants to express, that a chunk has an empty slot, he might use \verb|nil| for the value to indicate that. Note that \verb|nil| must not be a chunk name or chunk-type name.
 
 \subsubsection{Simple Implementation of the Default Methods}
 
@@ -196,6 +202,8 @@ Generally, a condition is either a \emph{buffer test}, ie. a specification of sl
 
 The LHS of a rule may contain bound or unbound variables: \verb|=varname| is a variable with name \verb|varname|.
 
+If the chunks in the buffers pass all buffer tests specified by the rule, the rule can fire, ie. its right hand side will be applied. The LHS is a conjunction of buffer tests, ie. there is no specific order for the tests \cite[p. 165]{actr_reference}.
+
 \begin{example}[counting example -- left hand side]
 The left hand side of the counting rule specified in the example in section~\ref{example_counting} could be defined as follows:
 
@@ -279,7 +287,11 @@ An ACT-R production rule of the form
 ... )
 \end{verbatim}
 
-can be translated directly to a CHR rule:
+states formally, that:
+
+If $buffer1 Holds c \wedge c Isa type1 \wedge slot_{1,1}=val_{1,1} \wedge \dots$ \FIXME{extend} is true, then the rule matches and the RHS should be performed.
+
+This can be directly translated into a CHR rule:
 
 \begin{verbatim}
 name @
@@ -302,7 +314,7 @@ This rule checks the buffer system for the existence of a buffer specified in th
 
 If the values in the slot tests are variables, they can be directly translated to Prolog variables.
 
-The CHR rule only fires, if all the checked buffers hold chunks that meet the requirements specified in the slot tests:
+The CHR rule only fires, if all the checked buffers hold chunks that meet the requirements specified in the slot tests of the ACT-R rule. Since those slot-tests are just a conjunction of relation-membership tests and the CHR rule is a translation of these tests into constraints, both are equivalent. In detail: \FIXME{geht besser}
 
 \begin{itemize}
  \item If a checked buffer \verb|b| holds no chunk, the constraint \verb|buffer(b,nil)| will be present, but the chunk store will not hold any of the required \verb|chunk| or \verb|chunk_has_slot| constraints and the rule will not fire.
@@ -312,6 +324,7 @@ The CHR rule only fires, if all the checked buffers hold chunks that meet the re
 \end{itemize}
 
 \FIXME{ist die begründung schlüssig? evtl section über variablen hier einfügen}
+\FIXME{add some words about double chunk checks}
 
 \begin{example}[counting example in CHR -- simple]
 The production rule in example~\ref{ex:counting} can be translated to:
@@ -408,7 +421,106 @@ In ACT-R, slot-tests can be preceded by \emph{slot modifiers}. Those modifiers a
 
 If no slot modifier is specified in a slot test, the default modifier \verb|=| is used, that states that the chunk in the specified buffer must have the specified value in the specified slot. This default semantics has been used in the previous sections when translating simple ACT-R rules to CHR and is performed automatically by the matching of CHR.
 
+To translate the other slot modifiers to CHR, another CHR mechanism can be used: Guards. Since the allowed modifiers are all default built-in constraints\footnote{ie. Prolog predicates}, a slot test with a modifier
+
+\begin{lstlisting}
+...
+=buffer>
+  ...
+  ~slot  val
+...
+==>
+\end{lstlisting}
+
+where \verb|~| stands for a modifier in \{ \verb|=,-,<,>,<=,>=| \}can be translated as follows:
+
+\begin{lstlisting}
+buffer(buffer,C),
+  ...
+  chunk_has_slot(C,slot,V),
+  ...
+==>
+  V # val |
+  ...
+\end{lstlisting}
+
+where \verb|#| is the placeholder for the built-in constraint that computes the test specified by \verb|~| and \verb|V| is a fresh variable that has not been used in the rule, yet.
+
+For arithmetic slot modifiers the values being compared have to be numbers. If a value is not a number, the arithmetic test will fail and the rule cannot be applied \cite{actr_reference}.
+
+Note, that slot tests with modifiers other than \verb|=| do not bind variables, but only perform simple checks, like it is with guards in CHR. If \verb|val| is an unbound variable and is never bound to a value on LHS, the default implementation throws a warning, and the rule will not match. Therefore, to handle this case, the rule translation scheme has to be amended with an additional guard check \verb|ground(Val)|, where \verb|Val| is the Prolog variable that replaces each occurrence of the variable \verb|val|.
+
+As with normal slot tests, it is important to mention that if there are several tests on the same slot, the \verb|chunk_has_slot| constraint must appear only once on the LHS of the CHR rule, since every slot-value pair is unique in the constraint store. Ie., if the first slot test of a particular slot appears on the LHS of the ACT-R rule, a \verb|chunk_has_slot| constraint has to be added to the LHS of the CHR rule. For every other occurrence of this slot in a slot test, only guard checks are added.
+
+\begin{example}
+To clarify the matching concept of ACT-R, here are some examples and their behaviour:
+
+\begin{lstlisting}
+=buffer>
+  isa    foo
+  -spam  =bar
+\end{lstlisting}
+
+will throw a warning when loading the model. When running it, the rule will never fire, since no chunk value will match the inequality to the unbound variable \verb|bar|.
+
+\begin{lstlisting}
+=buffer>
+  isa    foo
+  -spam  =bar
+  eggs   =bar
+\end{lstlisting}
+
+will fire, if there is a chunk whose value in \verb|eggs| is different from the value in \verb|spam|.
+
+\begin{lstlisting}
+=buffer>
+  isa    foo
+  spam  =bar
+  spam  =eggs
+\end{lstlisting}
+
+matches for every value of the spam slot. The translation to CHR is:
+
+\begin{lstlisting}
+buffer(buffer,C),
+  chunk(C,foo),
+  chunk_has_slot(C,spam,Bar),
+==>
+  Bar=Eggs |
+  ...
+\end{lstlisting}
+
+\begin{lstlisting}
+=buffer>
+  isa    foo
+  spam  =bar
+  spam  =eggs
+  ham   =eggs
+\end{lstlisting}
+
+will match all chunks which have the same value in \verb|spam| and \verb|ham|. \FIXME{CHR translation???}
+
+\end{example}
+
+
 \subsubsection{Empty Slots}
+
+An important special case in the semantics of ACT-R production rules is, that if there is a slot test specified, then a potential chunk only matches, if it really has a value in this slot. Chunks that have \verb|nil| in a slot specified in a buffer test, will not match the test. Hence, variables can not be used to test if two slots have the same value and the value is \verb|nil|, since every positive slot test involving \verb|nil| fails automatically \cite[p. 164, section ``Variables'', last sentence]{actr_reference}.
+
+In CHR this special case can be handled, by adding a guard for each variable occurring in a positive slot-test checking that this variable does not equal \verb|nil|.
+
+For negated slot tests, this is not the case: 
+
+\begin{lstlisting}
+=buffer>
+  isa    foo
+  spam   =bar
+  -eggs  =bar
+\end{lstlisting}
+
+will also match chunks with an empty \verb|eggs| slot, if their \verb|spam| slot is not empty.
+
+
 
 \subsubsection{Outputs}
 
