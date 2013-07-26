@@ -17,16 +17,15 @@ Since chunks are the central data-structure of ACT-R, used for representation of
 In the previous chapters, chunks always have been referred to in a graphical or in a verbose descriptive form. Hence, a formalism to represent chunks in a textual order is given at first. The definition is based on the definition of chunks in the ACT-R implementation.
 
 \begin{definition}[chunk-store]
-A \emph{chunk-store} $\Sigma$ is a tuple $(C,E,\mathcal{T},HasSlot,Isa)$, where $C$ is a set of chunks and $E$ a set of primitive elements, with $C \cap E = \emptyset$. 
+A \emph{chunk-store} $\Sigma$ is a tuple $(C,E,\mathcal{T},HasSlot,Isa)$, where $C$ is a set of chunks and $E$ a set of primitive elements, with $C \cap E = \emptyset$. $V = C \cup E$ are the \emph{values} of~$\Sigma$ and $\mathcal{T}$ a set of chunk-types. A chunk-type $(T,S) \in \mathcal{T}$ is a tuple with a type name $T$ and a set of slots $S$. The set of all slot-names is $\mathcal{S}$. 
 
-$V = C \cup E$ are the \emph{values} of~$\Sigma$ and $\mathcal{T}$ a set of chunk-types. A chunk-type $(T,S) \in \mathcal{T}$ is a tuple with a type name $T$ and a set of slots $S$. The set of all slot-names is $\mathcal{S}$. 
+$HasSlot \subseteq C \times \mathcal{S} \times V$ and $Isa \subseteq C \times T$ are relations and are defined as follows:
 
-$HasSlot \subseteq C \times \mathcal{S} \times V$ and $Isa \subseteq C \times T$ are relations and defined as follows:
+\begin{itemize}
+ \item $c \enspace Isa \enspace T \Leftrightarrow$ chunk $c$ is of type $T$.
+ \item $(c,s,v) \in HasSlot \Leftrightarrow v$ is the value of slot $s$ of $c$. This can also be written as $c \overset{s}{\longrightarrow} v$ and is spoken ``$c$ is connected to $v$'' or ``$v$ is in the slot $s$ of $c$''.
+\end{itemize}
 
-$c \enspace Isa \enspace T \Leftrightarrow$ chunk $c$ is of type $T$.
-
-
-$(c,s,v) \in HasSlot \Leftrightarrow v$ is the value of slot $s$ of $c$. This can also be written as $c \overset{s}{\longrightarrow} v$ and is spoken ``$c$ is connected to $v$'' or ``$v$ is in the slot $s$ of $c$''.
 
 The function $slots: C \rightarrow \mathcal{S} \times V$ is defined as $slots(c) = \{ (s,v) | (c,s,v) \in HasSlot \}$ and $slots: \mathcal{T} \rightarrow \mathcal{S}$ as $slots((T,S)) = S$.
 
@@ -40,7 +39,7 @@ The following methods can be defined over a chunk store $\Sigma = (C, E, \mathca
 
 \begin{description}
  \item[$\mathtt{chunk-type(name slot_1 slot_2 \dots slot_n)}$] adds the type $T = (\mathtt{name},\{\mathtt{slot1}, \dots, \mathtt{slotn}\})$ to the store, ie. $\mathcal{T'} = \mathcal{T} \cup \{T\}$. 
- \item[$\mathtt{add-chunk(name isa type slot_1 val_1 \dots slot_n val_n)}$] adds a new chunk to the store, ie. $C' = C \cup \{ \mathtt{name} \}$, $Isa' = Isa \cup (\mathtt{name}, (\mathtt{type}, slots(\mathtt{type}))$ and $HasSlot' = \bigcup_{i = 1}^n{\mathtt{slot_i}} \cup HasSlot.$ Note, that due to the expansion of $C$, the condition that $C$ and $E$ have to be disjoint may be violated. In implementations, there should be a mechanism to restore this condition. Additionally, a valid mechanism to restore type-consistency may be introduced.
+ \item[$\mathtt{add-chunk(name isa type slot_1 val_1 \dots slot_n val_n)}$] adds a new chunk to the store, ie. $C' = C \cup \{ \mathtt{name} \}$, $Isa' = Isa \cup (\mathtt{name}, (\mathtt{type}, slots(\mathtt{type}))$ and $HasSlot' = \bigcup_{i = 1}^n{\mathtt{(slot_i,val_i)}} \cup HasSlot.$ Note, that due to the expansion of $C$, the condition that $C$ and $E$ have to be disjoint may be violated. In implementations, there should be a mechanism to restore this condition. Additionally, a valid mechanism to restore type-consistency may be introduced.
 \end{description} 
 \end{definition}
 
@@ -104,7 +103,8 @@ The straight-forward definition of a data type for chunk specifications is just 
 \begin{lstlisting}
 :- chr_type chunk_def ---> nil; chunk(any, any, slot_list).
 :- chr_type list(T) ---> []; [T | list(T)].
-:- chr_type slot_list == list(pair(any,any)). % a list of slot-value pairs
+% a list of slot-value pairs
+:- chr_type slot_list == list(pair(any,any)).
 :- chr_type pair(T1,T2) ---> (T1,T2).
 \end{lstlisting}
 
@@ -154,6 +154,7 @@ A buffer system is \emph{clean}, if its chunk-store only holds chunks which appe
 For the implementation of a buffer system, the code of a chunk-store can be extended by a \verb|buffer/2| constraint, that encodes the set $B$ and the relation $Holds$ at once, since the relation is complete by definition\footnote{$\forall b \in B \enspace \exists c \in (C \cup \{ \mathtt{nil} \}): (b,c) \in Holds$}.
 
 \subsubsection{Destructive Assignment and Consistency}
+\label{destructive_assignment}
 
 The demand of $Holds$ being unique is a form of destructive assignment as described in \cite[p. 32]{fru_chr_book_2009}, ie. if a new chunk is assigned to a buffer, the old \verb|buffer| constraint is removed and a new \verb|buffer| constraint is introduced, holding the new chunk:
 
@@ -163,23 +164,214 @@ set_buffer(b, c) \ buffer(b, _) <=> buffer(b, c).
 
 This rule ensures that only one \verb|buffer| exists for each buffer in $B$.
 
+At the beginning of the program, a \verb|buffer| constraint has to be added for all the available buffers of the modules. This problem is discussed at a later point. \FIXME{add reference}
+
 In addition, if a new chunk is introduced in a buffer, it also has to be present in the chunk-store, since the production system relies on the knowledge about the chunks in its buffers and chunks are essentially defined by their slots (\emph{consistency property} in definition~\ref{def:buffer_system}). Hence, every time a chunk is stored in a buffer, the \verb|add_chunk| method described in definition~\ref{def:abstract_methods_chunk_store} has to be called. This process is discussed later when talking about buffer requests in section~\ref{buffer_requests}.
 
 \subsubsection{Buffer States}
 
-Another formal detail of the buffer system is that buffers can have various states.
+Another formal detail of the buffer system is that buffers can have various states: \emph{busy}, \emph{free} and \emph{error}. A module is busy, if it is completing a request and free otherwise.
+
+Since a module can only handle one request at a time and requests may need a certain time (like the retrieval request for example), the procedural module could state another request to a busy module. This is called \emph{jamming} which leads to error messages and should be avoided. One technique to avoid module jamming is to \emph{query} the buffer state in the conditional part of a production rule \cite[unit 2, p. 9]{actr_tutorial}. The possibility to query buffer states is discussed in the next section.
+
+A buffer's state is set to \emph{error}, if a request was unsuccessful because of an invalid request specification or, in case of the declarative module for instance, a chunk that could not be found.
+
+In CHR, a buffer state can be represented by a \verb|buffer_state(b,s)| constraint, which signifies that buffer \verb|b| has the state \verb|s|. Since every buffer has exactly one state all the time, it is required, that for every buffer there is such a constraint and it is ensured, that only one \verb|buffer_state| constraint is present for each buffer. This can be achieved by the destructive assignment method described in section~\ref{destructive_assignment}. 
+
+At the beginning of the program, when a buffer is created (a \verb|buffer| constraint is placed into the store), a corresponding \verb|buffer_state| constraint has to be added. The initial state can be set to \verb|free|, since no request is being computed at the time of creation.
 
 \subsection{Production Rules}
 
-grammar
+Production rules consist of a \emph{condition} part and an \emph{action} part. Syntactically, in ACT-R the condition is separated from the action by \verb|==>|. Additionally, each production rule has a name. Thus, a rule is defined by:
+
+\begin{verbatim}
+(p name condition* ==> action*)
+\end{verbatim}
+
+The condition part is also called the \emph{left hand side} of a rule (LHS) and the action part is called \emph{right hand side} (RHS).
+
+\subsubsection{The Left Hand Side of a Rule}
+
+Generally, a condition is either a \emph{buffer test}, ie. a specification of slot-value pairs that are checked against the chunk in the specified buffer or a \emph{buffer query}, ie. a check of the state of a buffer's module (either busy, free or error). A buffer test on the LHS of a rule is indicated by a \verb|=| followed by the buffer name of the tested buffer; a query is indicated by a \verb|?| in front of the buffer name.
+
+The LHS of a rule may contain bound or unbound variables: \verb|=varname| is a variable with name \verb|varname|.
+
+\begin{example}[counting example -- left hand side]
+The left hand side of the counting rule specified in the example in section~\ref{example_counting} could be defined as follows:
 
 \begin{lstlisting}
-production-definition ::= p-name {doc-string} condition* ==> action*
-p-name ::= a symbol that serves as the name of the production for reference
-doc-string ::= a string which can be used to document the production
-condition ::= [ buffer-test | query | eval | binding | multiple-value-binding]
-action ::= [buffer-modification | request | buffer-clearing | modification-request | buffer-overwrite | eval |
-binding | multiple-value-binding | output | !stop!]
+(p count-rule
+  =goal> 
+    isa    count
+    number =n
+  =retrieval>
+    isa    count-fact
+    first  =n
+    second =m
+==>
+  ... )
+\end{lstlisting}
+
+The condition part consists of two buffer tests:
+
+\begin{enumerate}
+ \item The goal buffer is tested for a chunk of type \verb|count| and a slot with name \verb|number|. The value of the slot is bound to the variable \verb|=n|.
+ \item The retrieval buffer is tested for a chunk of type \verb|count-fact| that has the variable \verb|=n| in its \verb|first| slot (with the same value as the \verb|number| slot of the chunk in the goal buffer, since \verb|=n| has been bound to that value), and another value in its second slot which is bound to the variable \verb|=m|.
+\end{enumerate}
+
+\end{example}
+
+\subsubsection{The Right Hand Side of a Rule}
+
+For the right hand side of a rule the following actions are allowed:
+
+\begin{description}
+ \item[Buffer Modification] 
+ \item[Buffer Request]
+ \item[Buffer Clearing]
+\end{description}
+
+
+\begin{example}[counting example]
+\label{ex:counting}
+The counting rule specified in the example in section~\ref{example_counting} could be defined as follows:
+
+\begin{lstlisting}
+(p count-rule
+  =goal> 
+    isa    count
+    number =n
+  =retrieval>
+    isa    count-fact
+    first  =n
+    second =m
+==>
+  =goal>
+    number =m
+  +retrieval>
+    isa    count-fact
+    first  =m
+)
+\end{lstlisting}
+
+\FIXME{add description}
+
+\end{example}
+
+\subsubsection{Direct Translation of Buffer Tests}
+
+An ACT-R production rule of the form
+
+\begin{verbatim}
+(p name
+  =buffer1>
+    isa    type1
+    slot11 val11
+    ...
+    slot1n val1n
+  ...
+  =bufferk>
+    isa    typek
+    slotk1 valk1
+    ...
+    slotkm valkm
+==>
+... )
+\end{verbatim}
+
+can be translated directly to a CHR rule:
+
+\begin{verbatim}
+name @
+  buffer(buffer1,C1),
+  chunk(C1,type1),
+  chunk_has_slot(C1,slot11,val11),
+  ...
+  chunk_has_slot(C1,slot1n,val1n),
+  ...
+  buffer(bufferk,Ck),
+  chunk(Ck,typek),
+  chunk_has_slot(Ck,slotk1,valk1),
+  ...
+  chunk_has_slot(Ck,slotkm,valkm)
+==>
+  ...
+\end{verbatim}
+
+This rule checks the buffer system for the existence of a buffer specified in the request holding a certain chunk and then checks the chunk store of the buffer system for that chunk with the type and slots specified in the ACT-R rule.
+
+If the values in the slot tests are variables, they can be directly translated to Prolog variables.
+
+The CHR rule only fires, if all the checked buffers hold chunks that meet the requirements specified in the slot tests:
+
+\begin{itemize}
+ \item If a checked buffer \verb|b| holds no chunk, the constraint \verb|buffer(b,nil)| will be present, but the chunk store will not hold any of the required \verb|chunk| or \verb|chunk_has_slot| constraints and the rule will not fire.
+ \item If a checked buffer \verb|b| holds a chunk, but the chunk does not meet one of the requirements in its slots, the rule does not fire.
+ \item The rule only fires, if for all checked buffers there are valid \verb|buffer|, \verb|chunk| and \verb|chunk_has_slot| constraints present that meet all the requirements specified by the ACT-R rule.
+ \item Variables on the LHS of a rule are bound to the values of the actual constraints that are tried for the matching. This corresponds to the semantics of a ACT-R production rule with variables on the LHS.
+\end{itemize}
+
+\FIXME{ist die begründung schlüssig? evtl section über variablen hier einfügen}
+
+\begin{example}[counting example in CHR -- simple]
+The production rule in example~\ref{ex:counting} can be translated to:
+
+\begin{lstlisting}
+count-rule @
+  buffer(goal,C1), 
+    chunk(C1,count),
+    chunk_has_slot(number,N),
+  buffer(retrieval,C2),
+    chunk(C2,count-fact),
+    chunk_has_slot(first,N),
+    chunk_has_slot(second,M)
+==>
+  buffer_change(goal    number =m
+  +retrieval>
+    isa    count-fact
+    first  =m
+)
+\end{lstlisting}
+
+\end{example}
+
+
+\subsection{Translation of Buffer Queries}
+
+A buffer query
+
+\begin{lstlisting}
+...
+?buffer>
+  state  bstate 
+...
+==> ...
+\end{lstlisting}
+
+on the LHS of a production rule can be translated to the following CHR rule head:
+
+\begin{lstlisting}
+...
+buffer_state(buffer,bstate) 
+...
+==> ...
+\end{lstlisting}
+
+
+
+
+
+
+\subsubsection{The Production Rule Grammar}
+
+The discussed concepts lead to the following grammar for production rules, which is a simplified version of the actual grammar used in the original ACT-R implementation \cite[p. 162]{actr_reference}. 
+
+
+\begin{lstlisting}
+production-definition ::= (p name condition* ==> action*)
+name ::= a symbol that serves as the name of the production for reference
+condition ::= [ buffer-test | query ]
+action ::= [buffer-modification | request | buffer-clearing | output | ]
 buffer-test ::= =buffer-name> isa chunk-type slot-test*
 buffer-name ::= a symbol which is the name of a buffer
 chunk-type ::= a symbol which is the name of a chunk-type in the model
@@ -194,29 +386,31 @@ query-value ::= a bound-variable or any Lisp value
 buffer-modification ::= =buffer-name> slot-value-pair*
 slot-value-pair ::= slot-name bound-slot-value
 bound-slot-value ::= a bound variable or any Lisp value
-request ::= +buffer-name> [direct-value | isa chunk-type request-spec*]
-request-spec ::= {slot-modifier} [slot-name | request-parameter] slot-value
+request ::= +buffer-name> isa chunk-type request-spec*
+request-spec ::= {slot-modifier} slot-name slot-value
 request-parameter ::= a Lisp keyword naming a request parameter provided by the buffer specified
-direct-value ::= a variable or Lisp symbol
 buffer-clearing ::= -buffer-name>
-modification-request ::= +buffer-name> slot-value-pair*
-buffer-overwrite ::= =buffer-name> direct-value
 variable ::= a symbol which starts with the character =
-eval ::= [!eval! | !safe-eval!] form
-binding ::= [!bind! | !safe-bind!] variable form
-+
-multiple-value-binding ::= !mv-bind! (variable ) form
-output ::= !output! [ output-value | ( format-string format-args*) | (output-value*)]
+output ::= !output! [ output-value ]
 output-value ::= any Lisp value or a bound-variable
-format-string ::= a Lisp string which may contain format specific parameter processing character
-format-args ::= any Lisp values, including bound-variables, which will be processed by the preceding
-format-string
-bound-variable
- ::= a variable which is used in the buffer-test conditions of the production (including a
+bound-variable ::= a variable which is used in the buffer-test conditions of the production (including a
 variable which names the buffer that is tested in a buffer-test or dynamic-buffer-test) or is bound with
 an explicit binding in the production
-form ::= a valid Lisp form
 \end{lstlisting}
+
+Some of the details in this grammar that have not been discussed yet are presented in the following.
+
+\subsubsection{Bound and Unbound Variables}
+
+\subsubsection{Slot Modifiers}
+
+In ACT-R, slot-tests can be preceded by \emph{slot modifiers}. Those modifiers allow to specify tests like inequality (\verb|-|) or arithmetic comparisons (\verb|<, >, <=, >=|) of the slot value of a chunk with the specified variable or value. Since the slots in a chunk store are always fully defined with ground values, those tests are decidable.
+
+If no slot modifier is specified in a slot test, the default modifier \verb|=| is used, that states that the chunk in the specified buffer must have the specified value in the specified slot. This default semantics has been used in the previous sections when translating simple ACT-R rules to CHR and is performed automatically by the matching of CHR.
+
+\subsubsection{Empty Slots}
+
+\subsubsection{Outputs}
 
 
 
@@ -227,11 +421,13 @@ interface for requests
 
 \section{Declarative Module}
 
-uses chunks as defined in section ??
+uses chunks as defined in section ??: dm is a chunk store that implements the module interface. 
 
 \subsection{Retrieval Requests}
 
 interface module request
+
+\subsection{Chunk Merging}
 
 
 \section{Timing in ACT-R}

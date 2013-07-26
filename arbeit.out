@@ -13,7 +13,7 @@
 \BOOKMARK [2][-]{subsection.2.1.5}{Other Modules}{section.2.1}% 13
 \BOOKMARK [3][-]{section*.8}{The Outside World}{subsection.2.1.5}% 14
 \BOOKMARK [3][-]{section*.10}{The Imaginal Module}{subsection.2.1.5}% 15
-\BOOKMARK [2][-]{subsection.2.1.6}{Example}{section.2.1}% 16
+\BOOKMARK [2][-]{subsection.2.1.6}{Example: Counting}{section.2.1}% 16
 \BOOKMARK [1][-]{section.2.2}{Serial and Parallel Aspects of ACT-R}{chapter.2}% 17
 \BOOKMARK [1][-]{section.2.3}{Subsymbolic layer}{chapter.2}% 18
 \BOOKMARK [2][-]{subsection.2.3.1}{Activation of Chunks}{section.2.3}% 19
@@ -38,22 +38,33 @@
 \BOOKMARK [3][-]{section*.19}{Destructive Assignment and Consistency}{subsection.4.2.1}% 38
 \BOOKMARK [3][-]{section*.20}{Buffer States}{subsection.4.2.1}% 39
 \BOOKMARK [2][-]{subsection.4.2.2}{Production Rules}{section.4.2}% 40
-\BOOKMARK [1][-]{section.4.3}{Modular Organization}{chapter.4}% 41
-\BOOKMARK [1][-]{section.4.4}{Declarative Module}{chapter.4}% 42
-\BOOKMARK [2][-]{subsection.4.4.1}{Retrieval Requests}{section.4.4}% 43
-\BOOKMARK [1][-]{section.4.5}{Timing in ACT-R}{chapter.4}% 44
-\BOOKMARK [2][-]{subsection.4.5.1}{Priority Queue}{section.4.5}% 45
-\BOOKMARK [1][-]{section.4.6}{Subsymbolic Layer}{chapter.4}% 46
-\BOOKMARK [2][-]{subsection.4.6.1}{Activation of Chunks}{section.4.6}% 47
-\BOOKMARK [2][-]{subsection.4.6.2}{Production Utility}{section.4.6}% 48
-\BOOKMARK [0][-]{chapter.5}{Compiler}{}% 49
-\BOOKMARK [0][-]{chapter.6}{Example Models}{}% 50
-\BOOKMARK [1][-]{section.6.1}{The Counting Model}{chapter.6}% 51
-\BOOKMARK [1][-]{section.6.2}{The Addition Model}{chapter.6}% 52
-\BOOKMARK [1][-]{section.6.3}{The Semantic Model}{chapter.6}% 53
-\BOOKMARK [1][-]{section.6.4}{The Fan Model}{chapter.6}% 54
-\BOOKMARK [0][-]{chapter.7}{Conclusion}{}% 55
-\BOOKMARK [1][-]{section.7.1}{Inventory: What does already work?}{chapter.7}% 56
-\BOOKMARK [1][-]{section.7.2}{Future Work}{chapter.7}% 57
-\BOOKMARK [0][-]{appendix.A}{Source Codes}{}% 58
-\BOOKMARK [0][-]{appendix*.21}{Bibliography}{}% 59
+\BOOKMARK [3][-]{section*.21}{The Left Hand Side of a Rule}{subsection.4.2.2}% 41
+\BOOKMARK [3][-]{section*.22}{The Right Hand Side of a Rule}{subsection.4.2.2}% 42
+\BOOKMARK [3][-]{section*.23}{Direct Translation of Buffer Tests}{subsection.4.2.2}% 43
+\BOOKMARK [2][-]{subsection.4.2.3}{Translation of Buffer Queries}{section.4.2}% 44
+\BOOKMARK [3][-]{section*.24}{The Production Rule Grammar}{subsection.4.2.3}% 45
+\BOOKMARK [3][-]{section*.25}{Bound and Unbound Variables}{subsection.4.2.3}% 46
+\BOOKMARK [3][-]{section*.26}{Slot Modifiers}{subsection.4.2.3}% 47
+\BOOKMARK [3][-]{section*.27}{Empty Slots}{subsection.4.2.3}% 48
+\BOOKMARK [3][-]{section*.28}{Outputs}{subsection.4.2.3}% 49
+\BOOKMARK [1][-]{section.4.3}{Modular Organization}{chapter.4}% 50
+\BOOKMARK [1][-]{section.4.4}{Declarative Module}{chapter.4}% 51
+\BOOKMARK [2][-]{subsection.4.4.1}{Retrieval Requests}{section.4.4}% 52
+\BOOKMARK [2][-]{subsection.4.4.2}{Chunk Merging}{section.4.4}% 53
+\BOOKMARK [1][-]{section.4.5}{Timing in ACT-R}{chapter.4}% 54
+\BOOKMARK [2][-]{subsection.4.5.1}{Priority Queue}{section.4.5}% 55
+\BOOKMARK [1][-]{section.4.6}{Subsymbolic Layer}{chapter.4}% 56
+\BOOKMARK [2][-]{subsection.4.6.1}{Activation of Chunks}{section.4.6}% 57
+\BOOKMARK [2][-]{subsection.4.6.2}{Production Utility}{section.4.6}% 58
+\BOOKMARK [0][-]{chapter.5}{Compiler}{}% 59
+\BOOKMARK [0][-]{chapter.6}{Example Models}{}% 60
+\BOOKMARK [1][-]{section.6.1}{The Counting Model}{chapter.6}% 61
+\BOOKMARK [1][-]{section.6.2}{The Addition Model}{chapter.6}% 62
+\BOOKMARK [1][-]{section.6.3}{The Semantic Model}{chapter.6}% 63
+\BOOKMARK [1][-]{section.6.4}{The Fan Model}{chapter.6}% 64
+\BOOKMARK [0][-]{chapter.7}{Conclusion}{}% 65
+\BOOKMARK [1][-]{section.7.1}{Inventory: What does already work?}{chapter.7}% 66
+\BOOKMARK [1][-]{section.7.2}{Future Work}{chapter.7}% 67
+\BOOKMARK [0][-]{appendix.A}{Source Codes}{}% 68
+\BOOKMARK [0][-]{appendix.B}{Grammar for Production Rules}{}% 69
+\BOOKMARK [0][-]{appendix*.29}{Bibliography}{}% 70

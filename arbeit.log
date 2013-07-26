@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Arch Linux) (format=pdflatex 2013.7.15)  25 JUL 2013 18:52
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Arch Linux) (format=pdflatex 2013.7.15)  26 JUL 2013 18:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -869,14 +869,14 @@ LaTeX Info: Redefining \nameref on input line 187.
 \@outlinefile=\write4
 \openout4 = `arbeit.out'.
 
- <images/unilogo_bild.pdf, id=241, 199.74625pt x 199.74625pt>
+ <images/unilogo_bild.pdf, id=285, 199.74625pt x 199.74625pt>
 File: images/unilogo_bild.pdf Graphic file (type pdf)
 
 <use images/unilogo_bild.pdf>
 Package pdftex.def Info: images/unilogo_bild.pdf used on input line 202.
 (pdftex.def)             Requested size: 51.21349pt x 51.21504pt.
 
-<images/unilogo_wort.pdf, id=242, 761.34438pt x 183.18437pt>
+<images/unilogo_wort.pdf, id=286, 761.34438pt x 183.18437pt>
 File: images/unilogo_wort.pdf Graphic file (type pdf)
 
 <use images/unilogo_wort.pdf>
@@ -930,8 +930,6 @@ Package microtype Info: Loading generic settings for font family
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    Font shape `U/ccicons/m/n' will be
 (Font)              scaled to size 9.0pt on input line 273.
-LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <9> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 276.
  (./chapters/abstract.tex
 [2
 
@@ -952,16 +950,17 @@ Package tocbasic Info: character protrusion at toc deactivated on input line 28
  (./arbeit.toc
 Underfull \vbox (badness 1648) has occurred while \output is active []
 
- [5])
+ [5]
+[6])
 \tf@toc=\write5
 \openout5 = `arbeit.toc'.
 
+ [7] [8
 
-[6] (./chapters/introduction.tex
+
+] (./chapters/introduction.tex
 Chapter 1.
 ) (./chapters/actr.tex [1
-
-
 
 
 ] [2
@@ -1028,43 +1027,43 @@ Underfull \vbox (badness 2662) has occurred while \output is active []
  [10]
 
 LaTeX Warning: Reference `fig:example_counting_chunks' on page 11 undefined on 
-input line 148.
+input line 149.
 
 
 LaTeX Warning: Reference `fig:example_counting_goal_chunk' on page 11 undefined
- on input line 150.
+ on input line 151.
 
 [11]
 
 LaTeX Warning: Reference `fig:example_counting_execution' on page 12 undefined 
-on input line 169.
+on input line 170.
 
 
 LaTeX Warning: Reference `implementation' on page 12 undefined on input line 17
-3.
+4.
 
 [12] [13] [14]
 
 LaTeX Warning: Reference `fig:chunk_activation' on page 15 undefined on input l
-ine 246.
+ine 247.
 
 [15]
 
 LaTeX Warning: Reference `fig:fan_network' on page 16 undefined on input line 2
-72.
+73.
 
 
-LaTeX Warning: Reference `fig:fans' on page 16 undefined on input line 274.
+LaTeX Warning: Reference `fig:fans' on page 16 undefined on input line 275.
 
 [16]
 
 LaTeX Warning: Reference `fig:activation_spreading' on page 17 undefined on inp
-ut line 280.
+ut line 281.
 
 [17]
 
 LaTeX Warning: Reference `tab:learning_types' on page 18 undefined on input lin
-e 322.
+e 323.
 
 [18]) (./chapters/chr.tex [19] [20]
 Chapter 3.
@@ -1130,120 +1129,177 @@ n/10 chunk(Name, Type, SVP)\T1/phv/m/n/10 (-20) ,
 [26] [27]
 
 LaTeX Warning: Reference `buffer_requests' on page 28 undefined on input line 1
-66.
+69.
+
+[28] [29] [30] [31] [32]
+
+LaTeX Warning: Citation `actr_reference' on page 33 undefined on input line 367
+.
 
 LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <10> not available
-(Font)              Font shape `T1/pcr/b/n' tried instead on input line 177.
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 371.
 
-Overfull \hbox (9.66553pt too wide) in paragraph at lines 177--178
-[][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+Overfull \hbox (39.66583pt too wide) in paragraph at lines 372--373
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (51.66595pt too wide) in paragraph at lines 178--179
+Overfull \hbox (33.66577pt too wide) in paragraph at lines 374--375
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+[33]
+Overfull \hbox (21.66565pt too wide) in paragraph at lines 377--378
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (69.66614pt too wide) in paragraph at lines 380--381
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (9.66553pt too wide) in paragraph at lines 179--180
-[][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+Overfull \hbox (57.66602pt too wide) in paragraph at lines 384--385
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (69.66614pt too wide) in paragraph at lines 180--181
-[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+Overfull \hbox (177.66724pt too wide) in paragraph at lines 391--392
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (261.66809pt too wide) in paragraph at lines 181--182
+Overfull \hbox (225.66772pt too wide) in paragraph at lines 396--397
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ] 
  []
 
 
-Overfull \hbox (21.66565pt too wide) in paragraph at lines 185--186
-[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (69.66614pt too wide) in paragraph at lines 188--189
-[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-[28]
-Overfull \hbox (57.66602pt too wide) in paragraph at lines 192--193
-[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (27.66571pt too wide) in paragraph at lines 197--198
-[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (51.66595pt too wide) in paragraph at lines 198--199
-[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (177.66724pt too wide) in paragraph at lines 199--200
-[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (111.66656pt too wide) in paragraph at lines 209--210
-[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (177.66724pt too wide) in paragraph at lines 211--212
-[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (201.66748pt too wide) in paragraph at lines 212--213
-[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (141.66687pt too wide) in paragraph at lines 215--216
-[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
- []
-
-
-Overfull \hbox (225.66772pt too wide) in paragraph at lines 216--217
+Overfull \hbox (225.66772pt too wide) in paragraph at lines 397--398
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][] 
  []
 
+[34]
 
-Underfull \vbox (badness 7814) has occurred while \output is active []
+LaTeX Warning: Citation `actr_reference' on page 35 undefined on input line 436
+.
 
- [29])
-(./chapters/compiler.tex [30]
+
+LaTeX Warning: Citation `actr_reference' on page 35 undefined on input line 442
+.
+
+[35]) (./chapters/compiler.tex [36] [37] [38
+
+
+]
 Chapter 5.
-) (./chapters/example_models.tex [31
-
-
-] [32
+) (./chapters/example_models.tex [39] [40
 
 
 ]
 Chapter 6.
-) (./chapters/conclusion.tex [33] [34
+) (./chapters/conclusion.tex [41] [42
 
 
 ]
 Chapter 7.
-) (./chapters/sources.tex [35] [36
+) (./chapters/sources.tex [43] [44
 
 
 ]
 Appendix A.
-) [37] [38
+) (./chapters/production_grammar.tex [45] [46
 
 
-] (./arbeit.bbl
+]
+Appendix B.
+
+LaTeX Warning: Citation `actr_reference' on page 47 undefined on input line 3.
+
+
+Overfull \hbox (9.66553pt too wide) in paragraph at lines 6--7
+[][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (51.66595pt too wide) in paragraph at lines 7--8
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (9.66553pt too wide) in paragraph at lines 8--9
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (69.66614pt too wide) in paragraph at lines 9--10
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (261.66809pt too wide) in paragraph at lines 10--11
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
+] 
+ []
+
+
+Overfull \hbox (21.66565pt too wide) in paragraph at lines 14--15
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (69.66614pt too wide) in paragraph at lines 17--18
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (57.66602pt too wide) in paragraph at lines 21--22
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (27.66571pt too wide) in paragraph at lines 26--27
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (51.66595pt too wide) in paragraph at lines 27--28
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (177.66724pt too wide) in paragraph at lines 28--29
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+[47]
+Overfull \hbox (111.66656pt too wide) in paragraph at lines 38--39
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (177.66724pt too wide) in paragraph at lines 40--41
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (201.66748pt too wide) in paragraph at lines 41--42
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (141.66687pt too wide) in paragraph at lines 44--45
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+
+Overfull \hbox (225.66772pt too wide) in paragraph at lines 45--46
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
+][][][][] 
+ []
+
+) [48] (./arbeit.bbl
 Underfull \hbox (badness 1024) in paragraph at lines 26--29
 []\T1/phv/m/sl/10 The ACT-R Tu-to-rial\T1/phv/m/n/10 (+20) .  []$\T1/pcr/m/n/10
  http : / / act-[]r . psy . cmu . edu / actr6 / units . zip$[]\T1/phv/m/n/10 (+
@@ -1269,7 +1325,9 @@ Con-straint Han-dling Rules\T1/phv/m/n/10 (+20) .  2009 []$\T1/pcr/m/n/10 http
 : / / www .
  []
 
-[39
+[49
+
+
 
 
 ]
@@ -1290,31 +1348,31 @@ Underfull \hbox (badness 2426) in paragraph at lines 92--96
 ng ACT-R ^^U an Out-sider's Per-spec-
  []
 
-) [40]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 340.
- [41
+) [50]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 341.
+ [51
 
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 340.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 341.
  (./arbeit.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 340.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 340.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 341.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 341.
 Package rerunfilecheck Info: File `arbeit.out' has not changed.
-(rerunfilecheck)             Checksum: 9E9C67450AEBABE8BB42A7195E267307;4046.
+(rerunfilecheck)             Checksum: 6560996DE5DD380B3434AE1725C802F6;4880.
 
 
 LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 14126 strings out of 493488
- 206048 string characters out of 3146892
- 403868 words of memory out of 3000000
- 16743 multiletter control sequences out of 15000+200000
- 69555 words of font info for 205 fonts, out of 3000000 for 9000
+ 14287 strings out of 493488
+ 208339 string characters out of 3146892
+ 408868 words of memory out of 3000000
+ 16776 multiletter control sequences out of 15000+200000
+ 66825 words of font info for 203 fonts, out of 3000000 for 9000
  958 hyphenation exceptions out of 8191
- 38i,9n,72p,1463b,1859s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 38i,9n,72p,1463b,1953s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-dist/fon
 ts/type1/public/ccicons/ccicons.pfb></usr/share/texmf-dist/fonts/type1/public/a
 msfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmm
@@ -1334,10 +1392,10 @@ r8a.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/
 texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-dist/fonts/typ
 e1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvr
 o8a.pfb>
-Output written on arbeit.pdf (47 pages, 516044 bytes).
+Output written on arbeit.pdf (59 pages, 540627 bytes).
 PDF statistics:
- 869 PDF objects out of 1000 (max. 8388607)
- 785 compressed objects within 8 object streams
- 224 named destinations out of 1000 (max. 500000)
- 32739 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 1110 PDF objects out of 1200 (max. 8388607)
+ 1011 compressed objects within 11 object streams
+ 350 named destinations out of 1000 (max. 500000)
+ 32315 words of extra memory for PDF output out of 35830 (max. 10000000)
 
