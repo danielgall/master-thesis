@@ -8,13 +8,27 @@ Additionally, the implementation is described incrementally, ie. first, a very m
 
 Some of the definitions in this chapter result directly from the theory, some of them needed a further analysis of the official ACT-R 6.0 Reference Manual \cite{actr_reference} or the tutorials \cite{actr_tutorial}. 
 
+\section{Declarative and Procedural Knowledge}
+
+The basic idea of the implementation is to represent declarative knowledge, working memory etc. as constraints and to translate the production rules to CHR rules. This approach leads to a very compact and direct translation of ACT-R models to Constraint Handling Rules.
+
+In addition to the production rules there will be rules that implement parts of the framework of ACT-R, for example rules that implement basic chunk operations like modifying or deleting chunks from declarative memory or a buffer. Those parts of the system are described as well as the central data structures and the translation.
+
+First, a formalization of declarative knowledge in form of chunk networks and their implementation in CHR is given. Then, the working memory -- also referred to as the buffer system -- is explored and the implementation is discussed. After those definitions of the basic data structures of ACT-R, the procedural system is described including the translation of ACT-R production rules to CHR rules using the previously defined data structures.
+
+Furthermore, the reproduction of ACT-Rs modular architecture is shown and the implementation of the declarative module is presented.
+
+After this overview of the basic concepts of ACT-R, the description goes into more detail about timing issues and the subsymbolic layer.
+
 \section{Chunk Stores}
 
-Since chunks are the central data-structure of ACT-R, used for representation of declarative knowledge, to exchange information between modules and to state requests, this section first deals with this central part of ACT-R.
+Since chunks are the central data-structure of ACT-R used for representation of declarative knowledge and to exchange information between modules and to state requests, this section first deals with this central part of ACT-R.
 
 \subsection{Formal Representation of Chunks}
 
-In the previous chapters, chunks always have been referred to in a graphical or in a verbose descriptive form. Hence, a formalism to represent chunks in a textual order is given at first. The definition is based on the definition of chunks in the ACT-R implementation.
+In multiple parts of ACT-R it is necessary to store chunks and then operate on then. Hence, the abstract data structure of such a chunk store is defined.
+
+Since chunk stores have been referred to as networks in the previous chapters, the general idea of this definition of a chunk store bases upon a relation that represents such a network.
 
 \begin{definition}[chunk-store]
 A \emph{chunk-store} $\Sigma$ is a tuple $(C,E,\mathcal{T},HasSlot,Isa)$, where $C$ is a set of chunks and $E$ a set of primitive elements, with $C \cap E = \emptyset$. $V = C \cup E$ are the \emph{values} of~$\Sigma$ and $\mathcal{T}$ a set of chunk-types. A chunk-type $(T,S) \in \mathcal{T}$ is a tuple with a type name $T$ and a set of slots $S$. The set of all slot-names is $\mathcal{S}$. 
@@ -31,7 +45,6 @@ The function $slots: C \rightarrow \mathcal{S} \times V$ is defined as $slots(c)
 
 A chunk-store is \emph{type-consistent}, if $\forall(c,s,v) \in HasSlot: c \enspace Isa \enspace (T,S) \Rightarrow \exists s' \in S: s=s'$ and $\forall c \in C: \enspace c \enspace Isa \enspace (T,S) \Rightarrow \forall s \in S: \exists (c',s',v) \in HasSlot: c=c', s=s'$.
 \end{definition}
-
 
 \begin{definition}[abstract methods of a chunk store]
 \label{def:abstract_methods_chunk_store}
@@ -101,6 +114,7 @@ Note that all values in the just presented constraints have to be ground. This i
 Additionally, from the definition of a chunk store it is known, that the $HasSlot$ and the $Isa$ relations have to be left-complete. \FIXME{correct expression! correct definitions!} Therefore, for every chunk \verb|c| in the store, exactly one \verb|isa(c,t)| constraint has to be in the store. For each \verb|chunk_type_has_slot(t,s)| constraint, a \verb|chunk_has_slot(c,s,v)| constraint has to be defined. If one wants to express, that a chunk has an empty slot, he might use \verb|nil| for the value to indicate that. Note that \verb|nil| must not be a chunk name or chunk-type name.
 
 \subsubsection{Simple Implementation of the Default Methods}
+\label{chunk_specification}
 
 To implement the methods in definition~\ref{def:abstract_methods_chunk_store}, first a data type for chunk specifications has to be introduced. From this specification the correct constraints modeling the chunk-store are added or modified.
 
@@ -599,15 +613,67 @@ The request provides the following result:
 
 This interface will be extended later on.
 
+\subsection{Components of the Implementation}
+
+uml component diagram + discussion
+
+
+
 \section{Declarative Module}
 
-uses chunks as defined in section ??: dm is a chunk store that implements the module interface. 
+The Declarative Module is a \emph{chunk store}, that additionally implements the \emph{module} interface. Therefore some rules to handle requests that find certain chunks in the chunk store have to be implemented. 
 
 \subsection{Retrieval Requests}
+
+A retrieval request gets an incomplete chunk specification as input and returns a chunk, whose slots match the provided chunk pattern.
+
+The chunk patterns are transmitted in form of chunk specifications as defined in section~\ref{chunk_specification}. Since those specifications may be incomplete, variables are considered as place-holders for values in the result. The result always is a complete and ground chunk specification, because every chunk in a chunk store has to be defined completely; empty slots are indicated by the value nil.
+
+\begin{example}
+In this example some possible requests are discussed.
+
+\begin{enumerate}
+ \item Request:
+\begin{lstlisting}
+chunk(foo,bar,_)        
+\end{lstlisting}
+
+A chunk with name \verb|foo|, type \verb|bar| and arbitrary slot values is requested.
+
+ \item Request:
+\begin{lstlisting}
+chunk(_,bar,_)        
+\end{lstlisting}
+
+This request is satisfied by every chunk of type \verb|bar|.
+
+ \item Request:
+\begin{lstlisting}
+chunk(_,t,[(foo,bar),(spam,eggs)])        
+\end{lstlisting}
+
+The most common case of requests is a specification of the type and a (possibly incomplete) number of slot-value pairs for that type. If a type does not provide a specified slot, the request is invalid and no chunk will be returned.
+
+\end{enumerate}
+
+\end{example}
+
+
+\begin{lstlisting}
+module_request(retrieval,chunk(Name,Type,Slots),ResChunk,ResState) <=> 
+  find_chunk(Name,Type,Slots),
+  collect_matches(Res),
+  first(Res,Chunk),
+  return_chunk(Chunk,ResChunk),
+  get_state(ResChunk,ResState).
+\end{lstlisting}
+
 
 interface module request
 
 \subsection{Chunk Merging}
+
+\section{Initialization}
 
 
 \section{Timing in ACT-R}
@@ -615,6 +681,10 @@ interface module request
 scheduling, define recognize-act-cycle in detail
 
 \subsection{Priority Queue}
+
+\subsection{Timing on the Symbolic Layer}
+
+\section{Configuration}
 
 
 \section{Subsymbolic Layer}

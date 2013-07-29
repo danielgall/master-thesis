@@ -31,45 +31,50 @@
 \contentsline {subsection}{\numberline {2.4.2}Subsymbolic Layer}{19}{subsection.2.4.2}
 \contentsline {chapter}{\numberline {3}Constraint Handling Rules}{21}{chapter.3}
 \contentsline {chapter}{\numberline {4}Transformation of ACT-R to CHR}{23}{chapter.4}
-\contentsline {section}{\numberline {4.1}Chunk Stores}{23}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Formal Representation of Chunks}{23}{subsection.4.1.1}
-\contentsline {subsection}{\numberline {4.1.2}Representation of Chunks in CHR}{25}{subsection.4.1.2}
-\contentsline {subsubsection}{Simple Implementation of the Default Methods}{26}{section*.17}
-\contentsline {subsubsection}{Checking Type-Consistency}{27}{section*.18}
-\contentsline {section}{\numberline {4.2}Procedural Module}{27}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Buffer System}{27}{subsection.4.2.1}
-\contentsline {subsubsection}{Destructive Assignment and Consistency}{28}{section*.19}
-\contentsline {subsubsection}{Buffer States}{28}{section*.20}
-\contentsline {subsection}{\numberline {4.2.2}Production Rules}{29}{subsection.4.2.2}
-\contentsline {subsubsection}{The Left Hand Side of a Rule}{29}{section*.21}
-\contentsline {subsubsection}{The Right Hand Side of a Rule}{30}{section*.22}
-\contentsline {subsubsection}{Direct Translation of Buffer Tests}{31}{section*.23}
-\contentsline {subsection}{\numberline {4.2.3}Translation of Buffer Queries}{33}{subsection.4.2.3}
-\contentsline {subsubsection}{The Production Rule Grammar}{34}{section*.24}
-\contentsline {subsubsection}{Bound and Unbound Variables}{35}{section*.25}
-\contentsline {subsubsection}{Slot Modifiers}{35}{section*.26}
-\contentsline {subsubsection}{Empty Slots}{37}{section*.27}
-\contentsline {subsubsection}{Outputs}{38}{section*.28}
-\contentsline {section}{\numberline {4.3}Modular Organization}{38}{section.4.3}
-\contentsline {subsection}{\numberline {4.3.1}Prolog Modules}{38}{subsection.4.3.1}
-\contentsline {subsection}{\numberline {4.3.2}Interface for Module Requests}{39}{subsection.4.3.2}
-\contentsline {section}{\numberline {4.4}Declarative Module}{40}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}Retrieval Requests}{40}{subsection.4.4.1}
-\contentsline {subsection}{\numberline {4.4.2}Chunk Merging}{41}{subsection.4.4.2}
-\contentsline {section}{\numberline {4.5}Timing in ACT-R}{41}{section.4.5}
-\contentsline {subsection}{\numberline {4.5.1}Priority Queue}{41}{subsection.4.5.1}
-\contentsline {section}{\numberline {4.6}Subsymbolic Layer}{41}{section.4.6}
-\contentsline {subsection}{\numberline {4.6.1}Activation of Chunks}{41}{subsection.4.6.1}
-\contentsline {subsection}{\numberline {4.6.2}Production Utility}{41}{subsection.4.6.2}
-\contentsline {chapter}{\numberline {5}Compiler}{43}{chapter.5}
-\contentsline {chapter}{\numberline {6}Example Models}{45}{chapter.6}
-\contentsline {section}{\numberline {6.1}The Counting Model}{45}{section.6.1}
-\contentsline {section}{\numberline {6.2}The Addition Model}{45}{section.6.2}
-\contentsline {section}{\numberline {6.3}The Semantic Model}{45}{section.6.3}
-\contentsline {section}{\numberline {6.4}The Fan Model}{45}{section.6.4}
-\contentsline {chapter}{\numberline {7}Conclusion}{47}{chapter.7}
-\contentsline {section}{\numberline {7.1}Inventory: What does already work?}{47}{section.7.1}
-\contentsline {section}{\numberline {7.2}Future Work}{47}{section.7.2}
-\contentsline {chapter}{\numberline {A}Source Codes}{49}{appendix.A}
-\contentsline {chapter}{\numberline {B}Grammar for Production Rules}{51}{appendix.B}
-\contentsline {chapter}{Bibliography}{53}{appendix*.29}
+\contentsline {section}{\numberline {4.1}Declarative and Procedural Knowledge}{23}{section.4.1}
+\contentsline {section}{\numberline {4.2}Chunk Stores}{24}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Formal Representation of Chunks}{24}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.2}Representation of Chunks in CHR}{26}{subsection.4.2.2}
+\contentsline {subsubsection}{Simple Implementation of the Default Methods}{27}{section*.17}
+\contentsline {subsubsection}{Checking Type-Consistency}{28}{section*.18}
+\contentsline {section}{\numberline {4.3}Procedural Module}{28}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Buffer System}{28}{subsection.4.3.1}
+\contentsline {subsubsection}{Destructive Assignment and Consistency}{29}{section*.19}
+\contentsline {subsubsection}{Buffer States}{29}{section*.20}
+\contentsline {subsection}{\numberline {4.3.2}Production Rules}{30}{subsection.4.3.2}
+\contentsline {subsubsection}{The Left Hand Side of a Rule}{30}{section*.21}
+\contentsline {subsubsection}{The Right Hand Side of a Rule}{31}{section*.22}
+\contentsline {subsubsection}{Direct Translation of Buffer Tests}{32}{section*.23}
+\contentsline {subsection}{\numberline {4.3.3}Translation of Buffer Queries}{34}{subsection.4.3.3}
+\contentsline {subsubsection}{The Production Rule Grammar}{35}{section*.24}
+\contentsline {subsubsection}{Bound and Unbound Variables}{36}{section*.25}
+\contentsline {subsubsection}{Slot Modifiers}{36}{section*.26}
+\contentsline {subsubsection}{Empty Slots}{38}{section*.27}
+\contentsline {subsubsection}{Outputs}{39}{section*.28}
+\contentsline {section}{\numberline {4.4}Modular Organization}{39}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Prolog Modules}{39}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}Interface for Module Requests}{40}{subsection.4.4.2}
+\contentsline {subsection}{\numberline {4.4.3}Components of the Implementation}{41}{subsection.4.4.3}
+\contentsline {section}{\numberline {4.5}Declarative Module}{41}{section.4.5}
+\contentsline {subsection}{\numberline {4.5.1}Retrieval Requests}{41}{subsection.4.5.1}
+\contentsline {subsection}{\numberline {4.5.2}Chunk Merging}{42}{subsection.4.5.2}
+\contentsline {section}{\numberline {4.6}Initialization}{42}{section.4.6}
+\contentsline {section}{\numberline {4.7}Timing in ACT-R}{42}{section.4.7}
+\contentsline {subsection}{\numberline {4.7.1}Priority Queue}{43}{subsection.4.7.1}
+\contentsline {subsection}{\numberline {4.7.2}Timing on the Symbolic Layer}{43}{subsection.4.7.2}
+\contentsline {section}{\numberline {4.8}Configuration}{43}{section.4.8}
+\contentsline {section}{\numberline {4.9}Subsymbolic Layer}{43}{section.4.9}
+\contentsline {subsection}{\numberline {4.9.1}Activation of Chunks}{43}{subsection.4.9.1}
+\contentsline {subsection}{\numberline {4.9.2}Production Utility}{43}{subsection.4.9.2}
+\contentsline {chapter}{\numberline {5}Compiler}{45}{chapter.5}
+\contentsline {chapter}{\numberline {6}Example Models}{47}{chapter.6}
+\contentsline {section}{\numberline {6.1}The Counting Model}{47}{section.6.1}
+\contentsline {section}{\numberline {6.2}The Addition Model}{47}{section.6.2}
+\contentsline {section}{\numberline {6.3}The Semantic Model}{47}{section.6.3}
+\contentsline {section}{\numberline {6.4}The Fan Model}{47}{section.6.4}
+\contentsline {chapter}{\numberline {7}Conclusion}{49}{chapter.7}
+\contentsline {section}{\numberline {7.1}Inventory: What does already work?}{49}{section.7.1}
+\contentsline {section}{\numberline {7.2}Future Work}{49}{section.7.2}
+\contentsline {chapter}{\numberline {A}Source Codes}{51}{appendix.A}
+\contentsline {chapter}{\numberline {B}Grammar for Production Rules}{53}{appendix.B}
+\contentsline {chapter}{Bibliography}{55}{appendix*.29}
