@@ -514,11 +514,10 @@ For negated slot tests, this is not the case:
 \begin{lstlisting}
 =buffer>
   isa    foo
-  spam   =bar
-  -eggs  =bar
+  -spam  4
 \end{lstlisting}
 
-will also match chunks with an empty \verb|eggs| slot, if their \verb|spam| slot is not empty.
+matches also a chunk with an empty \verb|spam| slot (\verb|nil| in its \verb|spam| slot).
 
 
 
@@ -527,9 +526,78 @@ will also match chunks with an empty \verb|eggs| slot, if their \verb|spam| slot
 
 
 
+
+
 \section{Modular Organization}
 
-interface for requests
+The term \emph{module} is highly overloaded: In ACT-R it describes independent parts of human cognition, whereas in the world of programming the term is used in a slightly different manner. In the following, implementational modules will always be named explicitly as \emph{Prolog modules}.
+
+Nevertheless, the modular organization of ACT-R with its independent modules, can be implemented by defining a Prolog module for each ACT-R module\footnote{and adding some modules around them}. In the following, the concept of Prolog modules is explained.
+
+\subsection{Prolog Modules}
+
+Defining a new module creates a new namespace for all CHR constraints and Prolog predicates, which is illustrated in the following example:
+
+\begin{example}[Prolog Modules and CHR]
+
+In this example, two modules \verb|mod1| and \verb|mod2| are defined, with partially overlapping constraints. \verb|mod2| exports the constraint \verb|c|. In the following, the behaviour an interaction of the modules is explored.
+
+\begin{lstlisting}[caption={Definition of Module 1},label=lst:mod1]
+:- module(mod1,[]).
+:- use_module(library(chr)).
+
+:- use_module(mod2).
+
+:- chr_constraint a/0, b/0.
+
+a <=> c.
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Definition of Module 2},label=lst:mod2]
+:- module(mod2,[c/0]).
+:- use_module(library(chr)).
+
+:- use_module(mod1).
+
+:- chr_constraint a/0, b/0, c/0. 
+
+a <=> b.
+b <=> mod1:a.
+\end{lstlisting}
+
+
+In this definition, two new modules \verb|mod1| and \verb|mod2| are created and only the \verb|c| constraint of \verb|mod2| is exported, indicated by the lists in the module definitions.
+
+The CHR constraint \verb|a| in listing~\ref{lst:mod1} is internally represented as \verb|mod1:a|, so it lives in its own namespace and does not pollute other namespaces. The constraint can appear on the right hand side of rules of other modules, but has to be called explicitly with its full namespace identifier. In line~8 of listing~\ref{lst:mod2}, the presence of the local \verb|a| constraint leads the rule to fire and \verb|mod2:a| is replaced by \verb|mod2:b|, which leads the rule in line~9 to fire and replaces the local \verb|mod2:b| constraint by an external \verb|mod1:a| constraint. So, external constraints can be called by their complete identifiers.
+
+However, on the left hand side of a rule, only the constraints local to the current module can appear. 
+
+Exported constraints can only appear once in a program, since they can be called without their namespace definition, which is demonstrated in line~8 of listing~\ref{lst:mod1}, where \verb|mod2:c| is called in \verb|mod1| without referring to \verb|mod2| explicitly.
+\end{example}
+
+\subsection{Interface for Module Requests}
+
+The architecture of ACT-R provides an infrastructure for the procedural module to state requests to all the other modules. To implement this concept as general as possible, an interface has to be defined, which allows the adding of new modules to the system by just implementing this interface.
+
+\begin{lstlisting}[caption={Simple Interface Module},label=lst:interface_module]
+module_request(+BufName,+Chunk,-ResChunk,-ResState)
+\end{lstlisting}
+
+The arguments of such a request are:
+
+\begin{description}
+ \item[BufName] The name of the requested buffer, eg. \verb|retrieval|.
+ \item[Chunk] A chunk specification that represents the arguments of the request. The form of the allowed chunk specifications and the semantics of the request are module-dependent. For example: \verb|chunk(_,t,[(foo,bar),(spam,eggs)])| could describe a chunk, that should be retrieved from declarative memory.
+\end{description}
+
+The request provides the following result:
+
+\begin{description}
+ \item[ResChunk] The resulting chunk in form of a chunk specification. The actual result and its semantics depend on the particular module.
+ \item[ResState] The state of the buffer after the request. For example, if no matching chunk could be retrieved from declarative memory, the state would be \verb|error|.
+\end{description}
+
+This interface will be extended later on.
 
 \section{Declarative Module}
 

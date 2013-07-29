@@ -51,23 +51,25 @@
 \contentsline {subsubsection}{Empty Slots}{37}{section*.27}
 \contentsline {subsubsection}{Outputs}{38}{section*.28}
 \contentsline {section}{\numberline {4.3}Modular Organization}{38}{section.4.3}
-\contentsline {section}{\numberline {4.4}Declarative Module}{38}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}Retrieval Requests}{38}{subsection.4.4.1}
-\contentsline {subsection}{\numberline {4.4.2}Chunk Merging}{38}{subsection.4.4.2}
-\contentsline {section}{\numberline {4.5}Timing in ACT-R}{38}{section.4.5}
-\contentsline {subsection}{\numberline {4.5.1}Priority Queue}{39}{subsection.4.5.1}
-\contentsline {section}{\numberline {4.6}Subsymbolic Layer}{39}{section.4.6}
-\contentsline {subsection}{\numberline {4.6.1}Activation of Chunks}{39}{subsection.4.6.1}
-\contentsline {subsection}{\numberline {4.6.2}Production Utility}{39}{subsection.4.6.2}
-\contentsline {chapter}{\numberline {5}Compiler}{41}{chapter.5}
-\contentsline {chapter}{\numberline {6}Example Models}{43}{chapter.6}
-\contentsline {section}{\numberline {6.1}The Counting Model}{43}{section.6.1}
-\contentsline {section}{\numberline {6.2}The Addition Model}{43}{section.6.2}
-\contentsline {section}{\numberline {6.3}The Semantic Model}{43}{section.6.3}
-\contentsline {section}{\numberline {6.4}The Fan Model}{43}{section.6.4}
-\contentsline {chapter}{\numberline {7}Conclusion}{45}{chapter.7}
-\contentsline {section}{\numberline {7.1}Inventory: What does already work?}{45}{section.7.1}
-\contentsline {section}{\numberline {7.2}Future Work}{45}{section.7.2}
-\contentsline {chapter}{\numberline {A}Source Codes}{47}{appendix.A}
-\contentsline {chapter}{\numberline {B}Grammar for Production Rules}{49}{appendix.B}
-\contentsline {chapter}{Bibliography}{51}{appendix*.29}
+\contentsline {subsection}{\numberline {4.3.1}Prolog Modules}{38}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}Interface for Module Requests}{39}{subsection.4.3.2}
+\contentsline {section}{\numberline {4.4}Declarative Module}{40}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Retrieval Requests}{40}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}Chunk Merging}{41}{subsection.4.4.2}
+\contentsline {section}{\numberline {4.5}Timing in ACT-R}{41}{section.4.5}
+\contentsline {subsection}{\numberline {4.5.1}Priority Queue}{41}{subsection.4.5.1}
+\contentsline {section}{\numberline {4.6}Subsymbolic Layer}{41}{section.4.6}
+\contentsline {subsection}{\numberline {4.6.1}Activation of Chunks}{41}{subsection.4.6.1}
+\contentsline {subsection}{\numberline {4.6.2}Production Utility}{41}{subsection.4.6.2}
+\contentsline {chapter}{\numberline {5}Compiler}{43}{chapter.5}
+\contentsline {chapter}{\numberline {6}Example Models}{45}{chapter.6}
+\contentsline {section}{\numberline {6.1}The Counting Model}{45}{section.6.1}
+\contentsline {section}{\numberline {6.2}The Addition Model}{45}{section.6.2}
+\contentsline {section}{\numberline {6.3}The Semantic Model}{45}{section.6.3}
+\contentsline {section}{\numberline {6.4}The Fan Model}{45}{section.6.4}
+\contentsline {chapter}{\numberline {7}Conclusion}{47}{chapter.7}
+\contentsline {section}{\numberline {7.1}Inventory: What does already work?}{47}{section.7.1}
+\contentsline {section}{\numberline {7.2}Future Work}{47}{section.7.2}
+\contentsline {chapter}{\numberline {A}Source Codes}{49}{appendix.A}
+\contentsline {chapter}{\numberline {B}Grammar for Production Rules}{51}{appendix.B}
+\contentsline {chapter}{Bibliography}{53}{appendix*.29}

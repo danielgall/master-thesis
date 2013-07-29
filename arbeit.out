@@ -48,23 +48,25 @@
 \BOOKMARK [3][-]{section*.27}{Empty Slots}{subsection.4.2.3}% 48
 \BOOKMARK [3][-]{section*.28}{Outputs}{subsection.4.2.3}% 49
 \BOOKMARK [1][-]{section.4.3}{Modular Organization}{chapter.4}% 50
-\BOOKMARK [1][-]{section.4.4}{Declarative Module}{chapter.4}% 51
-\BOOKMARK [2][-]{subsection.4.4.1}{Retrieval Requests}{section.4.4}% 52
-\BOOKMARK [2][-]{subsection.4.4.2}{Chunk Merging}{section.4.4}% 53
-\BOOKMARK [1][-]{section.4.5}{Timing in ACT-R}{chapter.4}% 54
-\BOOKMARK [2][-]{subsection.4.5.1}{Priority Queue}{section.4.5}% 55
-\BOOKMARK [1][-]{section.4.6}{Subsymbolic Layer}{chapter.4}% 56
-\BOOKMARK [2][-]{subsection.4.6.1}{Activation of Chunks}{section.4.6}% 57
-\BOOKMARK [2][-]{subsection.4.6.2}{Production Utility}{section.4.6}% 58
-\BOOKMARK [0][-]{chapter.5}{Compiler}{}% 59
-\BOOKMARK [0][-]{chapter.6}{Example Models}{}% 60
-\BOOKMARK [1][-]{section.6.1}{The Counting Model}{chapter.6}% 61
-\BOOKMARK [1][-]{section.6.2}{The Addition Model}{chapter.6}% 62
-\BOOKMARK [1][-]{section.6.3}{The Semantic Model}{chapter.6}% 63
-\BOOKMARK [1][-]{section.6.4}{The Fan Model}{chapter.6}% 64
-\BOOKMARK [0][-]{chapter.7}{Conclusion}{}% 65
-\BOOKMARK [1][-]{section.7.1}{Inventory: What does already work?}{chapter.7}% 66
-\BOOKMARK [1][-]{section.7.2}{Future Work}{chapter.7}% 67
-\BOOKMARK [0][-]{appendix.A}{Source Codes}{}% 68
-\BOOKMARK [0][-]{appendix.B}{Grammar for Production Rules}{}% 69
-\BOOKMARK [0][-]{appendix*.29}{Bibliography}{}% 70
+\BOOKMARK [2][-]{subsection.4.3.1}{Prolog Modules}{section.4.3}% 51
+\BOOKMARK [2][-]{subsection.4.3.2}{Interface for Module Requests}{section.4.3}% 52
+\BOOKMARK [1][-]{section.4.4}{Declarative Module}{chapter.4}% 53
+\BOOKMARK [2][-]{subsection.4.4.1}{Retrieval Requests}{section.4.4}% 54
+\BOOKMARK [2][-]{subsection.4.4.2}{Chunk Merging}{section.4.4}% 55
+\BOOKMARK [1][-]{section.4.5}{Timing in ACT-R}{chapter.4}% 56
+\BOOKMARK [2][-]{subsection.4.5.1}{Priority Queue}{section.4.5}% 57
+\BOOKMARK [1][-]{section.4.6}{Subsymbolic Layer}{chapter.4}% 58
+\BOOKMARK [2][-]{subsection.4.6.1}{Activation of Chunks}{section.4.6}% 59
+\BOOKMARK [2][-]{subsection.4.6.2}{Production Utility}{section.4.6}% 60
+\BOOKMARK [0][-]{chapter.5}{Compiler}{}% 61
+\BOOKMARK [0][-]{chapter.6}{Example Models}{}% 62
+\BOOKMARK [1][-]{section.6.1}{The Counting Model}{chapter.6}% 63
+\BOOKMARK [1][-]{section.6.2}{The Addition Model}{chapter.6}% 64
+\BOOKMARK [1][-]{section.6.3}{The Semantic Model}{chapter.6}% 65
+\BOOKMARK [1][-]{section.6.4}{The Fan Model}{chapter.6}% 66
+\BOOKMARK [0][-]{chapter.7}{Conclusion}{}% 67
+\BOOKMARK [1][-]{section.7.1}{Inventory: What does already work?}{chapter.7}% 68
+\BOOKMARK [1][-]{section.7.2}{Future Work}{chapter.7}% 69
+\BOOKMARK [0][-]{appendix.A}{Source Codes}{}% 70
+\BOOKMARK [0][-]{appendix.B}{Grammar for Production Rules}{}% 71
+\BOOKMARK [0][-]{appendix*.29}{Bibliography}{}% 72
