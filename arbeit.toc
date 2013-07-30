@@ -136,36 +136,50 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Representation of the Queue}{48}{section*.33}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.7.2}Timing on the Symbolic Layer}{50}{subsection.4.7.2}
+\contentsline {subsubsection}{Special Operation for ACT-R}{50}{section*.34}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.8}Configuration}{50}{section.4.8}
+\contentsline {subsection}{\numberline {4.7.2}Scheduler}{50}{subsection.4.7.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.9}Subsymbolic Layer}{50}{section.4.9}
+\contentsline {subsubsection}{Current Time}{51}{section*.35}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.9.1}Activation of Chunks}{50}{subsection.4.9.1}
+\contentsline {subsubsection}{Recognize-Act Cycle}{51}{section*.36}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.9.2}Production Utility}{50}{subsection.4.9.2}
+\contentsline {paragraph}{Start Next Cycle}{52}{section*.37}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {5}Compiler}{51}{chapter.5}
+\contentsline {paragraph}{Call an Event}{52}{section*.38}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {6}Example Models}{53}{chapter.6}
+\contentsline {paragraph}{Changing the Buffer System}{53}{section*.39}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.1}The Counting Model}{53}{section.6.1}
+\contentsline {paragraph}{Production Rules}{53}{section*.40}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.2}The Addition Model}{53}{section.6.2}
+\contentsline {section}{\numberline {4.8}Configuration}{54}{section.4.8}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.3}The Semantic Model}{53}{section.6.3}
+\contentsline {section}{\numberline {4.9}Subsymbolic Layer}{54}{section.4.9}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.4}The Fan Model}{53}{section.6.4}
+\contentsline {subsection}{\numberline {4.9.1}Activation of Chunks}{54}{subsection.4.9.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {7}Conclusion}{55}{chapter.7}
+\contentsline {subsection}{\numberline {4.9.2}Production Utility}{54}{subsection.4.9.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {7.1}Inventory: What does already work?}{55}{section.7.1}
+\contentsline {chapter}{\numberline {5}Compiler}{55}{chapter.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {7.2}Future Work}{55}{section.7.2}
+\contentsline {chapter}{\numberline {6}Example Models}{57}{chapter.6}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {A}Source Codes}{57}{appendix.A}
+\contentsline {section}{\numberline {6.1}The Counting Model}{57}{section.6.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {B}Grammar for Production Rules}{59}{appendix.B}
+\contentsline {section}{\numberline {6.2}The Addition Model}{57}{section.6.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{Bibliography}{61}{appendix*.34}
+\contentsline {section}{\numberline {6.3}The Semantic Model}{57}{section.6.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {6.4}The Fan Model}{57}{section.6.4}
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {7}Conclusion}{59}{chapter.7}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {7.1}Inventory: What does already work?}{59}{section.7.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {7.2}Future Work}{59}{section.7.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {A}Source Codes}{61}{appendix.A}
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {B}Grammar for Production Rules}{63}{appendix.B}
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{Bibliography}{65}{appendix*.41}

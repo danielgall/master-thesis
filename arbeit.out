@@ -63,20 +63,23 @@
 \BOOKMARK [2][-]{subsection.4.7.1}{Priority Queue}{section.4.7}% 63
 \BOOKMARK [3][-]{section*.32}{Objects}{subsection.4.7.1}% 64
 \BOOKMARK [3][-]{section*.33}{Representation of the Queue}{subsection.4.7.1}% 65
-\BOOKMARK [2][-]{subsection.4.7.2}{Timing on the Symbolic Layer}{section.4.7}% 66
-\BOOKMARK [1][-]{section.4.8}{Configuration}{chapter.4}% 67
-\BOOKMARK [1][-]{section.4.9}{Subsymbolic Layer}{chapter.4}% 68
-\BOOKMARK [2][-]{subsection.4.9.1}{Activation of Chunks}{section.4.9}% 69
-\BOOKMARK [2][-]{subsection.4.9.2}{Production Utility}{section.4.9}% 70
-\BOOKMARK [0][-]{chapter.5}{Compiler}{}% 71
-\BOOKMARK [0][-]{chapter.6}{Example Models}{}% 72
-\BOOKMARK [1][-]{section.6.1}{The Counting Model}{chapter.6}% 73
-\BOOKMARK [1][-]{section.6.2}{The Addition Model}{chapter.6}% 74
-\BOOKMARK [1][-]{section.6.3}{The Semantic Model}{chapter.6}% 75
-\BOOKMARK [1][-]{section.6.4}{The Fan Model}{chapter.6}% 76
-\BOOKMARK [0][-]{chapter.7}{Conclusion}{}% 77
-\BOOKMARK [1][-]{section.7.1}{Inventory: What does already work?}{chapter.7}% 78
-\BOOKMARK [1][-]{section.7.2}{Future Work}{chapter.7}% 79
-\BOOKMARK [0][-]{appendix.A}{Source Codes}{}% 80
-\BOOKMARK [0][-]{appendix.B}{Grammar for Production Rules}{}% 81
-\BOOKMARK [0][-]{appendix*.34}{Bibliography}{}% 82
+\BOOKMARK [3][-]{section*.34}{Special Operation for ACT-R}{subsection.4.7.1}% 66
+\BOOKMARK [2][-]{subsection.4.7.2}{Scheduler}{section.4.7}% 67
+\BOOKMARK [3][-]{section*.35}{Current Time}{subsection.4.7.2}% 68
+\BOOKMARK [3][-]{section*.36}{Recognize-Act Cycle}{subsection.4.7.2}% 69
+\BOOKMARK [1][-]{section.4.8}{Configuration}{chapter.4}% 70
+\BOOKMARK [1][-]{section.4.9}{Subsymbolic Layer}{chapter.4}% 71
+\BOOKMARK [2][-]{subsection.4.9.1}{Activation of Chunks}{section.4.9}% 72
+\BOOKMARK [2][-]{subsection.4.9.2}{Production Utility}{section.4.9}% 73
+\BOOKMARK [0][-]{chapter.5}{Compiler}{}% 74
+\BOOKMARK [0][-]{chapter.6}{Example Models}{}% 75
+\BOOKMARK [1][-]{section.6.1}{The Counting Model}{chapter.6}% 76
+\BOOKMARK [1][-]{section.6.2}{The Addition Model}{chapter.6}% 77
+\BOOKMARK [1][-]{section.6.3}{The Semantic Model}{chapter.6}% 78
+\BOOKMARK [1][-]{section.6.4}{The Fan Model}{chapter.6}% 79
+\BOOKMARK [0][-]{chapter.7}{Conclusion}{}% 80
+\BOOKMARK [1][-]{section.7.1}{Inventory: What does already work?}{chapter.7}% 81
+\BOOKMARK [1][-]{section.7.2}{Future Work}{chapter.7}% 82
+\BOOKMARK [0][-]{appendix.A}{Source Codes}{}% 83
+\BOOKMARK [0][-]{appendix.B}{Grammar for Production Rules}{}% 84
+\BOOKMARK [0][-]{appendix*.41}{Bibliography}{}% 85

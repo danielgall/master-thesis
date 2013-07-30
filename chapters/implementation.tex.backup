@@ -791,6 +791,8 @@ Additionally, for the simulation it may be interesting to explore how much time 
 
 Those aspects cannot be implemented easily using the current approach with phase constraints. Hence, the idea of introducing a central scheduling unit is a possible solution of those requirements: The unit has a serialized ordered list of events with particular timings. If a new event is scheduled, the time it is executed must be known. The scheduling unit inserts the event at the right position of the list preserving the ordered time condition. Figure~\ref{fig:scheduler} illustrates this approach.
 
+The system just removes such events from the queue and executes them, which leads to new events in the queue. The queue organizes the right order of the events.
+
 With this approach, the simulation of a parallel execution of ACT-R can be achieved: Each buffer action on the RHS of a rule just schedules an event that actually performs the action at a specified time (the current time plus its duration). 
 
 The heart of the scheduler is a \emph{priority queue} which is described in the next section.
@@ -822,12 +824,12 @@ q(1,0,e1) --> q(3,7,e2)
 q(3,7,e2) --> q(3,2,e3)
 \end{lstlisting}
 
-This queue achieves the ordered time-priority condition, since the queue objects are in the correct order according to their times and priorities.
+This queue achieves the ordered time-priority condition, since the queue objects are in the correct order according to their times and priorities. It is also consistent in a sense that it has no gaps and no object has more than one successor.
 
 In general, there can be defined some rules to make such a queue consistent, ie. every object only has one successor and the queue achieves the time-priority condition:
 
 \begin{lstlisting}
-A --> A <=> A \== s | true.
+A --> A <=> true.
 
 _ --> s <=> false.
 
@@ -858,12 +860,12 @@ Note that two objects are considered the same, iff. their time, priority and eve
 Another important property is, that the list does not have any gaps, so it must be possible to track the queue from every element backwards to the start symbol. This condition is not achieved by the rules above, but since a priority queue only offers two mechanisms to modify it, a lot of those problems can be avoided:
 
 \begin{description}
- \item[add_q(Time,Priority,Event)] Enqueues an object with the specified properties. Ie., a new \verb|q(Time,Priority,Event)| object will be created and the following constraint will be added: \verb|s --> q(Time,Priority,Event)|. The rules stated above will lead to a linear, serialized list achieving the time-priority condition without gaps.
-\begin{lstlistng}
+ \item[add\_q(Time,Priority,Event)] Enqueues an object with the specified properties. Ie., a new \verb|q(Time,Priority,Event)| object will be created and the following constraint will be added: \verb|s --> q(Time,Priority,Event)|. The rules presented above will lead to a linear, serialized list achieving the time-priority condition without gaps.
+\begin{lstlisting}
 add_q(Time,Priority,Evt) <=>
   s --> q(Time,Priority,Evt).
-\end{lstlistng}
- \item[de_q(X)] Dequeues the first element of the queue according to the time-priority condition and binds its value to \verb|X|.
+\end{lstlisting}
+ \item[de\_q(X)] Dequeues the first element of the queue according to the time-priority condition and binds its value to \verb|X|.
 \begin{lstlisting}
 de_q(X), s --> A, A --> B <=>
   X = A,
@@ -875,13 +877,136 @@ de_q(X), s --> A <=>
 de_q(X) <=> X = nil.
 \end{lstlisting}
 
-The first object just is the successor of \verb|s|, since the list has been constructed preserving the correct order and the property, that everything starts at \verb|s|. If the first object has a successor, this object is the new first object.
+The first object just is the successor of \verb|s|, since the list has been constructed preserving the correct order and the property, that everything starts at \verb|s|. If the first object has a successor, this object is the new first object. If there are no order constraints left, the queue is empty and \verb|de_q| returns \verb|nil|.
 
+\end{description}
+
+\subsubsection{Special Operation for ACT-R}
+
+In this implementation, another default method is added to the priority queue: 
+
+\begin{description}
+ \item[after_next_event(E)] Adds the event \verb|E| to the queue, after the first event without destroying the consistency and the time-priority condition of the queue.
 \end{description}
 
 
 
-\subsection{Timing on the Symbolic Layer}
+
+\subsection{Scheduler}
+
+The scheduler component is a own module that manages events by feeding a priority queue and controls the recognize-act cycle. It also holds the current time of the system. 
+
+\subsubsection{Current Time}
+
+The current time can be saved in a \verb|now/1| constraint. It is important that there is only one such constraint and that time increases monotonically.
+
+Other modules can access the time only by a \verb|get_now/1| that only returns the current time saved in the \verb|now/1| constraint. The current time cannot be set from outside, but is determined by the last event dequeued from the priority queue.
+
+\subsubsection{Recognize-Act Cycle}
+
+As described before, the procedural module can only fire one rule at a time. When executing the RHS of a rule, all its actions are added to the scheduler with the time point when their execution is finished. For example: If on the RHS of the firing rule a retrieval request has to be performed, an event will be added to the priority queue with the time $Now + Duration$, so the chunk retrieved from the declarative memory will be written to the retrieval buffer at this time point.
+
+After all events of the RHS have been added to the scheduler, the procedural module is free again and therefore the next rule can fire. The event of firing will be added to the priority queue as well by the \verb|fire| constraint at the end of each production rule. The rule will be added at the current time point, but with low priority, since it has to be ensured, that every action of the previously executed rule has been performed yet (in the sense that a corresponding event has been added at the specified time point). In many cases, no other rule will be applicable at this time, because most of the meaningful production rules have to wait for the results of the production rule before. 
+
+Many of the buffer actions are performed immediately, so an event with the current time point is added for the buffer modifications or clearings. They are performed in a certain order defined by their priority as shown in table~\ref{tab:action_priorities}. The request actions are performed at last, but they perform a buffer clearing immediately and then start their calculation which can take some time. 
+
+If no rule is applicable, the next time that a rule could be applicable is after having performed the next event. So, the next \verb|fire| event is scheduled directly after the first event in the queue. This simulates the behaviour that the procedural module stays ready to fire the next rule, without polling at every time point if a rule is applicable, but only reacting on changes to the buffer system. 
+
+
+The next enumeration summarizes the recognize-act cycle with a scheduler:
+
+\begin{enumerate}
+ \item The next event is removed from the queue, the current time is set to the time of the event and the event is performed.
+ \begin{enumerate}
+ \item The dequeued event is a \verb|fire| constraint: The rule that matches all its condition is performed and removes the \verb|fire| constraint.
+ \item The actions of the rule are scheduled in the queue. Modifications and Clearings have the current time point, requests have a time point in the future depending on the module.
+ \item The last action of the rule is to add a \verb|fire| constraint to the queue with the current time point and a low priority. This simulates that the procedural module is free again, after all in-place actions of a rule have been fired.
+ \item There are two possibilities:
+ \begin{enumerate}
+  \item \emph{The next rule matches:} It will be performed like the last rule.
+  \item \emph{No rule matches:} The next time, it could be possible that a rule can fire, is when something in the buffers changed. This only can happen, after the next event has been performed. So the next \verb|fire| event will be added to the queue by \verb|after_next_event| which has been described above.
+ \end{enumerate}
+  \end{enumerate}
+ \item Go to point 1. This is performed until there are no events in the queue.
+\end{enumerate}
+
+
+The following parts are necessary to implement this cycle:
+
+\paragraph{Start Next Cycle} 
+
+The constraint \verb|nextcyc| leads the system to remove the next event from queue and perform it. Performing is done by a \verb|call_event| constraint:
+
+\begin{lstlisting}
+% After an event has been performed, nextcyc is triggered. 
+%This leads to the next event in the queue to be performed.
+nextcyc <=> de_q(Evt), call_event(Evt).
+\end{lstlisting}
+
+\paragraph{Call an Event} 
+
+Event calling just takes a queue element and sets the current time to the time of the event and performs a Prolog \verb|call|. Additionally, a message is printed to the screen. After the event has been executed, the next cycle is initiated.
+
+If the queue element is \verb|nil| (so no event has been in the queue), the computation is finished and the current time is removed.
+
+\begin{lstlisting}
+% no event in queue -> do nothing and remove current time
+call_event(nil) \ now(_) <=> write('No more events in queue. End of computation.'),nl.
+
+call_event(q(Time,Priority,Evt)), now(Now) <=> 
+  Now =< Time | 
+  now(Time),
+  write(Now:Priority),
+  write(' ... '),write('calling event: '), write(Evt),nl,
+  call(Evt),
+  nextcyc.
+\end{lstlisting}
+
+\paragraph{Changing the Buffer System}
+
+For each buffer action, add a \verb|do_buffer_action| constraint, that actually performs the code specified in the former action. Modify the action as follows:
+
+\begin{lstlisting}
+% Schedule buffer_action
+buffer_action(BufName, Chunk) <=> 
+  get_now(Now),
+  Time is Now + Duration, 
+  add_q(Time, Priority, do_buffer_action(BufName, Chunk)). 
+\end{lstlisting}
+
+with reasonable values for \verb|Duration| and \verb|Priority|.
+
+\paragraph{Production Rules}
+
+As in the last version of the production system, each rule has the following structure:
+
+\begin{lstlisting}
+rule @
+  {conditions} \ fire <=> {actions}, schedule_fire.
+\end{lstlisting}
+
+where schedule fire is defined as:
+
+\begin{lstlisting}
+schedule_fire <=> 
+  get_now(Now),
+  add_q(Now,0,fire).
+\end{lstlisting}
+
+As last production rule, there has to be a rule:
+
+\begin{lstlisting}
+no-rule @ 
+  fire <=> no_rule.
+\end{lstlisting}
+
+which removes the fire constraint if still present and states that no rule has been fired (since the fire constraint is still present). In this case, a new \verb|fire| event is scheduled after the next event:
+
+\begin{lstlisting}
+no_rule <=> 
+  write('No rule matches -> Schedule next conflict resolution event'),nl,
+  after_next_event(do_conflict_resolution).
+\end{lstlisting}
 
 \section{Configuration}
 
