@@ -133,7 +133,42 @@ This definition states that a chunk is either \verb|nil|, ie. an empty chunk, or
 The default methods can be implemented as follows:
 
 \begin{lstlisting}[caption={rules for \texttt{add\_chunk}}]
- 
+% empty chunk will not be added
+add_chunk(nil) <=> true.
+  
+% initialize all slots with nil
+add_chunk(chunk(Name,Type, _)), chunk_type_has_slot(Type,S) ==> 
+  chunk_has_slot(Name,S,nil).
+
+% chunk has been initialized with empty slots -> actually add chunk
+add_chunk(chunk(Name,Type, Slots)) <=>
+  do_add_chunk(chunk(Name,Type,Slots)).
+\end{lstlisting}
+
+First, all \verb|chunk_type_has_slot| constraints are added to the store and initialized with \verb|nil| as slot value. This leads to complete chunk specifications that are consistent to the type as demanded by a type-consistent chunk-store.
+
+If all slots have been initialized, \verb|do_add_chunk| performs the actual setting of the real slot values:
+  
+\begin{lstlisting}  
+% base case
+do_add_chunk(chunk(Name, Type, [])) <=> chunk(Name, Type). 
+
+ % overwrite slots with empty values
+chunk(V,_) \ do_add_chunk(chunk(Name, Type, [(S,V)|Rest])), chunk_has_slot(Name,S,nil)  <=>
+  chunk_has_slot(Name, S,V), 
+  do_add_chunk(chunk(Name,Type,Rest)).
+  
+do_add_chunk(chunk(Name, Type, [(S,V)|Rest])), chunk_has_slot(Name,S,nil)  <=> % overwrite slots with empty values
+  V == nil | % do not add chunk(nil,chunk)
+  chunk_has_slot(Name, S,V), 
+  do_add_chunk(chunk(Name,Type,Rest)).  
+  
+do_add_chunk(chunk(Name, Type, [(S,V)|Rest])), chunk_has_slot(Name,S,nil)  <=> % overwrite slots with empty values
+  V \== nil |
+  chunk_has_slot(Name, S,V), 
+  chunk(V,chunk), % no chunk for slot value found => add chunk of type chunk 
+  
+do_add_chunk(_) <=> false.
 \end{lstlisting}
 \FIXME{add very simple solution}
 
@@ -886,11 +921,25 @@ The first object just is the successor of \verb|s|, since the list has been cons
 In this implementation, another default method is added to the priority queue: 
 
 \begin{description}
- \item[after_next_event(E)] Adds the event \verb|E| to the queue, after the first event without destroying the consistency and the time-priority condition of the queue.
+ \item[after\_next\_event(E)] Adds the event \verb|E| to the queue, after the first event without destroying the consistency and the time-priority condition of the queue.
 \end{description}
 
+To implement this method, the time and priorities have to be set such that the time-priority condition does hold:
 
+\begin{lstlisting}
+s --> q(Time,P1,E1) \ after_next_event(Evt) <=> 
+  NP1 is P1 + 2, % increase priority of first event, so it still has highest priority
+  P is P1 + 1, % priority of event that is added, ensured that it is higher than of the former second event (because it is P1+1)
+  de_q(_), % remove head of queue
+  add_q(Time,NP1,E1), % add head of queue again with new priority. Will be first again, because it has old prio (which is higher than prio of all successors)
+  add_q(Time,P,Evt). % add new event. Will be < than Prio of head but it is ensured that it is higher than prio of second event
+\end{lstlisting}
 
+If the first event is \verb|q(Time,P1,E1)| and a new event \verb|Evt| has to be added after this event, the times of the two events are the same, the priority of the first event is \verb|P1 + 2| and the priority of the new event is \verb|P1 + 1|. The first event is removed from the queue and would be added with its new priority to the queue again, as it is with the new event. 
+
+This is correct: The first event will be the first event again, because its old priority was higher than any other priority at that time point and since the new priority is even higher than that, no other event from the queue will have a higher priority. The new event also has a higher priority than every other event in the queue, but a lower priority than the first event, so it will be added after the first event.
+
+By the \verb|de_q| and \verb|add_q| actions it is ensured, that no garbage of the old event remains in the queue and the events are added correctly through a official method of the queue.
 
 \subsection{Scheduler}
 
@@ -913,7 +962,7 @@ Many of the buffer actions are performed immediately, so an event with the curre
 If no rule is applicable, the next time that a rule could be applicable is after having performed the next event. So, the next \verb|fire| event is scheduled directly after the first event in the queue. This simulates the behaviour that the procedural module stays ready to fire the next rule, without polling at every time point if a rule is applicable, but only reacting on changes to the buffer system. 
 
 
-The next enumeration summarizes the recognize-act cycle with a scheduler:
+The following enumeration summarizes the recognize-act cycle with a scheduler:
 
 \begin{enumerate}
  \item The next event is removed from the queue, the current time is set to the time of the event and the event is performed.
