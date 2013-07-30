@@ -9,7 +9,7 @@ To implement consistent models of cognition, it is necessary to develop a theory
 \FIXME{move to introduction and motivation}
 
 
-Adaptive Control of Thought-Rational  (ACT-R) is a cognitive architecture, that ``is capable of interacting with the outside world, has been mapped onto brain structures, and is able to learn to interact with complex dynamic tasks.'' \cite[p. 29]{taatgen_modeling_2006} 
+Adaptive Control of Thought-Rational  (ACT-R) is a cognitive architecture, that ``is capable of interacting with the outside world, has been mapped onto brain structures, and is able to learn to interact with complex dynamic tasks.'' \cite[29]{taatgen_modeling_2006} 
 
 On top of the provided cognitive architecture, one can specify models for specific tasks. The cognitive architecture constrains the modeling to facilitate the modeling process. Thereby it ensures cognitive plausibility to some degree, since models are built upon a highly verified theory \cite[p. 29]{taatgen_modeling_2006}.
 
@@ -17,7 +17,7 @@ When talking about ACT-R, one can refer to the theory or the implementation. The
 
 In this chapter, a short overview over the theory of ACT-R is given. First, the description is informal to provide a general image of how ACT-R works. Then, some important parts of the system are defined more formally in chapter \ref{implementation}, as soon as it is needed in the implementation. All of the information in this chapter refers to the theory. Implementation is discussed in chapter \ref{implementation}.
 
-A lot of the information in this chapter is based on \cite{anderson_how_2007}, \cite{anderson_integrated_2004} and \cite{taatgen_modeling_2006}, where a much more comprehensive discussion of the ACT-R theory including complex examples, referrings to the neuro-biology and the reasons why this particular modeling of human cognition has been chosen. In this work, only the basic concepts of ACT-R are presented.
+A lot of the information in this chapter is based on \cite{anderson_how_2007, anderson_integrated_2004, taatgen_modeling_2006}, where a much more comprehensive discussion of the ACT-R theory including complex examples, referrings to the neuro-biology and the reasons why this particular modeling of human cognition has been chosen. In this work, only the basic concepts of ACT-R are presented.
 
 \section{Procedural and Declarative Knowledge}
 
@@ -127,7 +127,7 @@ Like with every other module, communication is achieved through the buffers of t
 
 In the visual module it is not encoded how the light falls on the retina, but a more attentional approach has been chosen \cite[p. 1039]{anderson_integrated_2004}. 
 
-Requests to the visual-location buffer specify a series of constraints in form of slot-value pairs and the visual module puts a chunk representing the location of an object meeting those constraints into the visual-location buffer. Possible constraints are properties of objects like the color or the spatial location. The visual system can process such requests in parallel, ie. that the whole visual field is processed massively parallel and the time of finding one green object surrounded by blue objects is constant, regardless of the number of blue objects, for example. If there are more than one object meeting the constraints, then one will be chosen at random \cite[p. 1039]{anderson_integrated_2004}, \cite[p. 68]{anderson_how_2007}.
+Requests to the visual-location buffer specify a series of constraints in form of slot-value pairs and the visual module puts a chunk representing the location of an object meeting those constraints into the visual-location buffer. Possible constraints are properties of objects like the color or the spatial location. The visual system can process such requests in parallel, ie. that the whole visual field is processed massively parallel and the time of finding one green object surrounded by blue objects is constant, regardless of the number of blue objects, for example. If there are more than one object meeting the constraints, then one will be chosen at random \cite[1039]{anderson_integrated_2004}, \cite[68]{anderson_how_2007}.
 
 Requests to the visual-object system specify a visual location and the visual module will move its attention to that location, create a new chunk representing the object at that location and put that chunk into the visual buffer \cite[unit 2, chapter 2.5.3]{actr_tutorial}.
 
@@ -233,7 +233,7 @@ B_i = \mathrm{ln}\left(\sum_{j=1}^n{t_j^{-d}}\right)
 
 where $t_j$ is the time since the $j$th practice, $n$ the number of overall practices of the chunk and $d$ is the decay rate that describes how fast the base-level activation decreases if a chunk has not been practiced (how fast a chunk will be forgotten). Usually, $d$ is set to $0.5$ \cite[p. 1042]{anderson_integrated_2004}. Equation \eqref{eq:base_level_learning} is called \emph{Base-Level Learning Equation}, as it defines the adaptive learning process of the base-level value.
 
-This equation is the result of a rational analysis by Anderson and Schooler. It reflects the log odds that a chunk will reappear depending on when it has appeared in the past \cite[p. 33]{taatgen_modeling_2006}. This analysis led to the \emph{power law of practice} \cite[p. 1042]{anderson_integrated_2004}. In \cite[pp. 8--11]{anderson_implications_2000} equation \eqref{eq:base_level_learning} is motivated in more detail by describing the power law of learning/practice, the power law of forgetting and the multiplicative effect of practice and retention with some data. Shortly, it states, that if a particular fact is practiced, there is a improvement of performance which corresponds to a power law. At the same time, performance degrades with time corresponding to a power law. Additionally, they state that if a fact has been practiced a lot, it will not be forgotten for a longer time.
+This equation is the result of a rational analysis by Anderson and Schooler. It reflects the log odds that a chunk will reappear depending on when it has appeared in the past \cite[33]{taatgen_modeling_2006}. This analysis led to the \emph{power law of practice} \cite[1042]{anderson_integrated_2004}. In \cite[8--11]{anderson_implications_2000} equation \eqref{eq:base_level_learning} is motivated in more detail by describing the power law of learning/practice, the power law of forgetting and the multiplicative effect of practice and retention with some data. Shortly, it states, that if a particular fact is practiced, there is a improvement of performance which corresponds to a power law. At the same time, performance degrades with time corresponding to a power law. Additionally, they state that if a fact has been practiced a lot, it will not be forgotten for a longer time.
 
 \subsubsection{Activation Spreading}
 
@@ -244,9 +244,9 @@ In ACT-R, the basic idea of activation is, that it consists of two parts: The ba
  A_i = B_i + \sum_{j \in C}{W_j S_{ji}}
 \end{equation}
 
-where $W_j$ the \emph{attentional weighting} of chunk $j$, $S_{ji}$ the \emph{associative strength} from chunk $j$ to chunk $i$ and $C$ is the \emph{current context}, usually defined as the set of all chunks that are in a buffer \cite[p. 1042]{anderson_integrated_2004}, \cite[p. 33]{taatgen_modeling_2006}, \cite[unit 5]{actr_tutorial}. Figure \ref{fig:chunk_activation} illustrates the addition-fact $5 + 2 = 7$ with the corresponding quantities introduced in the last equation. 
+where $W_j$ the \emph{attentional weighting} of chunk $j$, $S_{ji}$ the \emph{associative strength} from chunk $j$ to chunk $i$ and $C$ is the \emph{current context}, usually defined as the set of all chunks that are in a buffer \cite[1042]{anderson_integrated_2004}, \cite[p. 33]{taatgen_modeling_2006}, \cite[unit 5]{actr_tutorial}. Figure \ref{fig:chunk_activation} illustrates the addition-fact $5 + 2 = 7$ with the corresponding quantities introduced in the last equation. 
 
-The values for $W_j$ reflect how many sources of activation are in the current context. A source of activation is a chunk in the goal buffer or in all buffers\footnote{This is called the current context: Usually it means the set of all chunks in all buffers, but there are definitions in literature, that only call the chunk in the goal buffer current context.}, depending on the version of the ACT-R theory \cite[p. 1042]{anderson_integrated_2004}, \cite[p. 33]{taatgen_modeling_2006}, \cite[unit 5, p. 1]{actr_tutorial}. To limit the total amount of source of activation, $W_j$ is set to $\frac{1}{n}$, where $n$ is the number of sources of activation. With this equation, the total amount of activation that can spread over declarative memory is limited, since the more chunks are in the current context, the less important becomes a particular connection between a chunk from the context with a chunk from declarative memory.
+The values for $W_j$ reflect how many sources of activation are in the current context. A source of activation is a chunk in the goal buffer or in all buffers\footnote{This is called the current context: Usually it means the set of all chunks in all buffers, but there are definitions in literature, that only call the chunk in the goal buffer current context.}, depending on the version of the ACT-R theory \cite[p. 1042]{anderson_integrated_2004}, \cite[33]{taatgen_modeling_2006}, \cite[unit 5, p. 1]{actr_tutorial}. To limit the total amount of source of activation, $W_j$ is set to $\frac{1}{n}$, where $n$ is the number of sources of activation. With this equation, the total amount of activation that can spread over declarative memory is limited, since the more chunks are in the current context, the less important becomes a particular connection between a chunk from the context with a chunk from declarative memory.
 
 \paragraph{Strength of Association and Fan effect}
 
@@ -257,11 +257,11 @@ In equation \eqref{eq:activation_equation} the strength of association $S_{ji}$ 
 S_{ji} = S - \mathrm{ln}(\mathrm{fan}_j)
 \end{equation}
 
-where $\mathrm{fan}_j$ is the number of facts associated to term $j$ \cite[p. 1042]{anderson_implications_2000}. In more detail: ``$\mathrm{fan}_j$ is the number of chunks in declarative memory in which $j$ is the value of a slot plus one for chunk $j$ being associated with itself'' \cite[unit 5, p. 2]{actr_tutorial}.  
+where $\mathrm{fan}_j$ is the number of facts associated to term $j$ \cite[1042]{anderson_implications_2000}. In more detail: ``$\mathrm{fan}_j$ is the number of chunks in declarative memory in which $j$ is the value of a slot plus one for chunk $j$ being associated with itself'' \cite[unit 5, p. 2]{actr_tutorial}.  
 
 Hence, equation \eqref{eq:assoc_strength} states that the associative strength from chunk $j$ to $i$ decreases the more facts are associated to $j$.
 
-This is due to the \emph{fan effect:} The more facts a person studies about a certain concept, the more time he or she needs to retrieve a particular fact of that concept \cite[p. 186]{anderson_fan_1999}. This has been demonstrated in an experiment presented in \cite{anderson_fan_1999}, where every participant studied facts about persons and locations like:
+This is due to the \emph{fan effect:} The more facts a person studies about a certain concept, the more time he or she needs to retrieve a particular fact of that concept \cite[186]{anderson_fan_1999}. This has been demonstrated in an experiment presented in \cite{anderson_fan_1999}, where every participant studied facts about persons and locations like:
 
 \begin{itemize}
  \item A hippie is in the park.
@@ -272,11 +272,11 @@ This is due to the \emph{fan effect:} The more facts a person studies about a ce
 
 For every person the participants studied either one, two or three facts. Afterwards, they were asked to identify targets, that are sentences they studied, and foils, sentences constructed from the same persons and locations, but that were not in the original set of sentences. Figure \ref{fig:fan_network} represents an example chunk network of the studied sentences (based on \cite[fig. 1]{anderson_fan_1999}.
 
-``The term \emph{fan} refers to the number of facts associated with a particular concept'' \cite[p. 186]{anderson_fan_1999}. In figure \ref{fig:fans}, some facts are shown with their fan, $S_{ji}$ and $B_i$ values.
+``The term \emph{fan} refers to the number of facts associated with a particular concept'' \cite[186]{anderson_fan_1999}. In figure \ref{fig:fans}, some facts are shown with their fan, $S_{ji}$ and $B_i$ values.
 
 The result of the experiment was, that the more facts are associated with a certain concept, the higher was the retrieval time for a particular fact about that concept.
 
-In the ACT-R theory, this result has been integrated in the calculation of the strengths of association: In equation \eqref{eq:assoc_strength} the associative strength decreases with the number of associated elements. The value $S$ is a model-dependent constant, but in many models estimated about 2 \cite[p. 1042]{anderson_integrated_2004}. Modelers should take notice of setting $S$ high enough that all associative strengths in the model are positive \cite[unit 5, p. 3]{actr_tutorial}.
+In the ACT-R theory, this result has been integrated in the calculation of the strengths of association: In equation \eqref{eq:assoc_strength} the associative strength decreases with the number of associated elements. The value $S$ is a model-dependent constant, but in many models estimated about 2 \cite[1042]{anderson_integrated_2004}. Modelers should take notice of setting $S$ high enough that all associative strengths in the model are positive \cite[unit 5, p. 3]{actr_tutorial}.
 
 Figure \ref{fig:activation_spreading} illustrates the activation spreading process.
 
@@ -295,7 +295,7 @@ where $T_i$ is the \emph{latency} of retrieving chunk $i$, $A_i$ the activation 
 F \approx 0.35\mathrm{e}^\tau
 \end{equation}
 
-where $\tau$ is the retrieval threshold as mentioned in section \ref{activation}, but $F$ can also be set individually by the modeller. Nevertheless, in \cite[p. 1042]{anderson_integrated_2004} it is stated that the relationship of the retrieval threshold and the latency factor in equation \eqref{eq:retrieval_latency} seems to be suitable for a lot of models.
+where $\tau$ is the retrieval threshold as mentioned in section \ref{activation}, but $F$ can also be set individually by the modeller. Nevertheless, in \cite[1042]{anderson_integrated_2004} it is stated that the relationship of the retrieval threshold and the latency factor in equation \eqref{eq:retrieval_latency} seems to be suitable for a lot of models.
 
 \subsection{Production Utility}
 
@@ -310,9 +310,9 @@ In the current version of the ACT-R theory, a reinforcement learning rule based 
 U_i(n) = U_i(n - 1) + \alpha \left(R_i(n) - U_i(n - 1)\right)
 \end{equation}
 
-where $\alpha$ is the \emph{learning rate} which is usually set around .2 and $R_i(n)$ is the reward the production rule $i$ receives at its $n$th application \cite[pp. 160--161]{anderson_how_2007}. This leads to the utility of a production rule being gradually adjusted to the average reward the rule receives \cite[pp. 6--7]{actr_tutorial}. 
+where $\alpha$ is the \emph{learning rate} which is usually set around .2 and $R_i(n)$ is the reward the production rule $i$ receives at its $n$th application \cite[160--161]{anderson_how_2007}. This leads to the utility of a production rule being gradually adjusted to the average reward the rule receives \cite[6--7]{actr_tutorial}. 
 
-Usually, rewards can occur at every time and it is not clear which production rule will be strengthened by the reward. In \cite[p. 161]{anderson_how_2007} an example is described, where a monkey receives a squirt of juice a second after he presses a button. The question now is, which production rule is rewarded, since between the reward and the firing of a rule there always is a break. In ACT-R, every production that has been fired since the last reward event will be rewarded, but the more time lies between the reward and the firing of the rule, the less is the reward this particular rule receives. The reward for a rule is defined as the amount of external reward minus the the time from the rule to the reward. This implies, that the reward has to be measured in units of time, eg., how much time is a monkey willing to spend to get a squirt of juice? \cite[p. 161]{anderson_how_2007}
+Usually, rewards can occur at every time and it is not clear which production rule will be strengthened by the reward. In \cite[161]{anderson_how_2007} an example is described, where a monkey receives a squirt of juice a second after he presses a button. The question now is, which production rule is rewarded, since between the reward and the firing of a rule there always is a break. In ACT-R, every production that has been fired since the last reward event will be rewarded, but the more time lies between the reward and the firing of the rule, the less is the reward this particular rule receives. The reward for a rule is defined as the amount of external reward minus the the time from the rule to the reward. This implies, that the reward has to be measured in units of time, eg., how much time is a monkey willing to spend to get a squirt of juice? \cite[161]{anderson_how_2007}
 
 In implementations of ACT-R, rewards can be triggered by the user at any time or can be associated with special production rules that model the successful achievement of a goal (they check, if the current state is a wanted state and then trigger a reward, so every rule that has led to the successful state will be rewarded).
 
@@ -323,7 +323,7 @@ It is important to mention that by the definition of the reward for a production
 Learning in ACT-R can be divided into four types depending on the involvement of the symbolic or subsymbolic layer and the declarative or the procedural module. Table~\ref{tab:learning_types} names the four types that are described in this section.
 
 \begin{table}[hbt]
-\caption{ACT-R's Taxonomy of Learning \cite[pp. 92--95]{anderson_how_2007}}
+\caption{ACT-R's Taxonomy of Learning \cite[92--95]{anderson_how_2007}}
 \begin{center}
 \begin{tabular}{|l|ll|}
 \hline

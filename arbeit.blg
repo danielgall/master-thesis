@@ -1,59 +1,66 @@
 This is BibTeX, Version 0.99d (TeX Live 2012/Arch Linux)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: arbeit.aux
-The style file: alphadin.bst
+The style file: biblatex.bst
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
 Reallocated singl_function (elt_size=8) to 100 items from 50.
 Reallocated singl_function (elt_size=8) to 100 items from 50.
 Reallocated wiz_functions (elt_size=8) to 6000 items from 3000.
 Reallocated singl_function (elt_size=8) to 100 items from 50.
 Reallocated singl_function (elt_size=8) to 100 items from 50.
-Database file #1: bibliography.bib
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Database file #1: arbeit-blx.bib
+Database file #2: bibliography.bib
 Warning--string name "cup" is undefined
 --line 489 of file bibliography.bib
 Warning--I didn't find a database entry for "unknown"
 Warning--I didn't find a database entry for "actr_reference"
-Warning--to sort, need author or key in actr_homepage
-Warning--to sort, need author or key in actr_tutorial
-Warning--there's no year in whitehill_understanding
-You've used 12 entries,
-            4793 wiz_defined-function locations,
-            973 strings with 8696 characters,
-and the built_in function-call counts, 7725 in all, are:
-= -- 781
-> -- 187
-< -- 208
-+ -- 238
-- -- 73
-* -- 531
-:= -- 1266
-add.period$ -- 24
-call.type$ -- 12
-change.case$ -- 58
-chr.to.int$ -- 12
-cite$ -- 17
-duplicate$ -- 229
-empty$ -- 610
-format.name$ -- 122
-if$ -- 1570
-int.to.chr$ -- 1
-int.to.str$ -- 0
-missing$ -- 49
-newline$ -- 85
-num.names$ -- 32
-pop$ -- 99
+Biblatex version: 2.5
+Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated wiz_functions (elt_size=8) to 9000 items from 6000.
+You've used 13 entries,
+            6019 wiz_defined-function locations,
+            1223 strings with 11864 characters,
+and the built_in function-call counts, 54464 in all, are:
+= -- 2003
+> -- 3215
+< -- 666
++ -- 2182
+- -- 2160
+* -- 3507
+:= -- 4456
+add.period$ -- 0
+call.type$ -- 13
+change.case$ -- 314
+chr.to.int$ -- 210
+cite$ -- 28
+duplicate$ -- 5439
+empty$ -- 4945
+format.name$ -- 773
+if$ -- 10809
+int.to.chr$ -- 0
+int.to.str$ -- 35
+missing$ -- 0
+newline$ -- 428
+num.names$ -- 643
+pop$ -- 3830
 preamble$ -- 1
-purify$ -- 82
+purify$ -- 313
 quote$ -- 0
-skip$ -- 397
+skip$ -- 2702
 stack$ -- 0
-substring$ -- 589
-swap$ -- 48
-text.length$ -- 36
-text.prefix$ -- 4
-top$ -- 0
-type$ -- 108
-warning$ -- 3
-while$ -- 60
-width$ -- 16
-write$ -- 177
-(There were 6 warnings)
+substring$ -- 2008
+swap$ -- 1989
+text.length$ -- 474
+text.prefix$ -- 17
+top$ -- 1
+type$ -- 482
+warning$ -- 0
+while$ -- 407
+width$ -- 0
+write$ -- 414
+(There were 3 warnings)

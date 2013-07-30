@@ -627,37 +627,112 @@ The Declarative Module is a \emph{chunk store}, that additionally implements the
 
 A retrieval request gets an incomplete chunk specification as input and returns a chunk, whose slots match the provided chunk pattern.
 
+\subsubsection{Chunk Patterns}
+
 The chunk patterns are transmitted in form of chunk specifications as defined in section~\ref{chunk_specification}. Since those specifications may be incomplete, variables are considered as place-holders for values in the result. The result always is a complete and ground chunk specification, because every chunk in a chunk store has to be defined completely; empty slots are indicated by the value nil.
 
 \begin{example}
 In this example some possible requests are discussed.
 
 \begin{enumerate}
- \item 
+ \item Request:
 \begin{lstlisting}
 chunk(foo,bar,_)        
 \end{lstlisting}
 
 A chunk with name \verb|foo|, type \verb|bar| and arbitrary slot values is requested.
 
- \item 
+ \item Request:
 \begin{lstlisting}
 chunk(_,bar,_)        
 \end{lstlisting}
 
 This request is satisfied by every chunk of type \verb|bar|.
 
- \item 
+ \item Request:
 \begin{lstlisting}
 chunk(_,t,[(foo,bar),(spam,eggs)])        
 \end{lstlisting}
 
-The most common case of requests is 
+The most common case of requests is a specification of the type and a (possibly incomplete) number of slot-value pairs for that type. If a type does not provide a specified slot, the request is invalid and no chunk will be returned.
 
 \end{enumerate}
 
 \end{example}
 
+\subsubsection{Finding Chunks}
+
+In this section, a CHR constraint \verb|find_chunk/3| will be defined, that produces a \verb|match_set/1| constraint for each chunk that matches a specified pattern. Eventually, the match set will be collected and returned.
+
+\begin{lstlisting}
+find_chunk(N1,T1,Ss), chunk(N2,T2) ==> 
+  unifiable((N1,T1),(N2,T2),_), 
+  nonvar(Ss) | 
+  test_slots(N2,Ss), 
+  match_set([N2]).
+  
+find_chunk(N1,T1,Ss), chunk(N2,T2) ==> 
+  unifiable((N1,T1),(N2,T2),_), 
+  var(Ss) | 
+  test_slots(N2,[]), 
+  match_set([N2]).
+
+find_chunk(_,_,_) <=> true.
+\end{lstlisting}
+
+First, for each chunk in the store, whose name and type is unifiable with the specified name and type, will be part of the initial match set. If in the chunk specification the name and type are variables, each chunk will match. For the unification test, the \verb|unifiable/3| predicate of Prolog is used, because the unification should not be performed but only tested. 
+
+If name and type match the pattern, then the slots have to be tested.
+
+The rule in line~7 is for chunk specifications that do not specify the slots. In this case, no slots have to be tested. If all chunks have been tested or no chunk matches at all, the process is finished (rule in line ~13).
+
+After adding each matching candidate to the match set, whose name and type have already been checked, the match set is pruned from chunks that have non-matching slot values:
+
+\begin{lstlisting}
+test_slots(_,[]) <=> true.
+
+chunk_has_slot(N,S,V1), match_set([N]) 
+\ test_slots(N,[(S,V2)|Ss]) <=> 
+  unifiable(V1,V2,_) | 
+  test_slots(N,Ss).
+
+chunk_has_slot(N,S,V1) 
+\ test_slots(N,[(S,V2)|_]), match_set([N]) <=> 
+    \+unifiable(V1,V2,_) | 
+    true.
+
+test_slots(N,_) \ match_set([N]) <=> true.
+\end{lstlisting}
+
+The first rule is the base case, where no slots have to be tested any more and the test is finished and has been successful.
+
+In line~3, the rule applies, if there is at least one slot \verb|(S,V2)| that has to be tested and a $Isa$ relation of the kind \verb|N| $\xrightarrow[]{\mathtt{S}}$ \verb|V1| with the slot \verb|S| to be tested, that is still in the match set, so no conflicting slot has been found yet. If the values \verb|V1| and \verb|V2| are unifiable, ie. the both are the same constant or at least one is a variable, then the test passes and the chunk \verb|N| remains in the match set and the rest of the slot tests are performed.
+
+The second rule is applied, if the guard of the first rule did not hold, so the values \verb|V1| and \verb|V2| are not unifiable, but there is a connection \verb|N| $\xrightarrow[]{\mathtt{S}}$ \verb|V1| and in the request it has been specified that the value of slot \verb|S| has to be \verb|V2|. In this case, \verb|V1| $\neq$ \verb|V2|, so the test fails and the chunk \verb|N| has to be removed from the match set, since one of its slots does not match.
+
+If both of the first two rules cannot be applied, the chunk does not provide a slot that, however, has been specified in the request. Hence, the chunk does not match. \FIXME{make simpagation rule to simplification rule?}
+
+If those rules have been applied exhaustively, only the matching chunks will remain in the match set: If there would be an outstanding slot test, one of the rules would be applicable and the chunk would be removed from the match set, if the test fails (and the test would also be removed, because it has been performed). If the test is successful, the chunk will remain part of the match set, but the test will be removed. So the match set is correct and complete.
+
+However, since the match set is distributed over a set of \verb|match_set| constraints, it would be desirable to collect all those matches in one set. This can be triggered by a \verb|collect_matches/1| constraint, that gets the complete match set in its arguments:
+
+\begin{lstlisting}
+collect_matches(_) \ match_set(L1), match_set(L2) <=> 
+  append(L1,L2,L), 
+  match_set(L).
+  
+collect_matches(Res), match_set(L) <=> Res=L.
+
+collect_matches(Res) <=> Res=[].
+\end{lstlisting}
+
+The first rule merges two match sets to one singe merge set containing a list with all the chunks of the former sets, if the \verb|collect_matches| trigger is present. 
+
+In the second rule, if no two match sets are in the store, the result of the \verb|collect_matches| operation is the match set. The same applies for the last rule, where no match set is in the store and therefore the result is empty.
+
+Note, that this implies, that the rules have to be applied from top to bottom, left to right\footnote{This is called the refined operational semantics of CHR}.
+
+The symbolic layer does not implement any rule for which chunk will be returned, if there are more than one in the match set. In this implementation, the first chunk in the list is chosen. The module request is now implemented as follows:
 
 \begin{lstlisting}
 module_request(retrieval,chunk(Name,Type,Slots),ResChunk,ResState) <=> 
@@ -667,6 +742,8 @@ module_request(retrieval,chunk(Name,Type,Slots),ResChunk,ResState) <=>
   return_chunk(Chunk,ResChunk),
   get_state(ResChunk,ResState).
 \end{lstlisting}
+
+where \verb|first(L,E)| gets a list \verb|L| and returns its first element \verb|E|.
 
 
 interface module request
