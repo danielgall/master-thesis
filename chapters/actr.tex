@@ -96,6 +96,7 @@ As may have become clear in the previous sections, chunks are the central data s
 The results of a request is a chunk placed into a buffer and even the procedural system tries to match the chunks in the buffers in the condition part and the action of a rule is specified by slot-value pairs that are basically just partial chunk descriptions. 
 
 \subsubsection{Process of Rule Selection and Execution}
+\label{process_of_rule_selection_and_execution}
 
 As stated above, the procedural module can execute only one rule at a time. If no rule has been selected to fire and is in progress, the procedural module is \emph{free} and therefore can select a matching rule according to the recognize-act-cycle. If the rule has been selected, the module is \emph{busy} and cannot choose another rule to fire. Between selection and firing of a rule the module has to wait $50\,\mathrm{ms}$. Then all in-place actions of the rule like modifying or clearing a buffer are performed. Afterwards, the requests are stated and the module is free. However, the requested modules most likely will take a certain time to perform the request. During this time the procedural module can select and fire the next matching rule nevertheless.
 
@@ -178,6 +179,7 @@ The example also uses the concept of \emph{variables}, which will be introduced 
 
 
 \section{Serial and Parallel Aspects of ACT-R}
+\label{serial_parallel_aspects}
 
 In the previous sections there were some remarks on the serial and parallel aspects of ACT-R. According to \cite[p. 68]{anderson_how_2007}, four types of parallelism and seriality can be distinguished:
 

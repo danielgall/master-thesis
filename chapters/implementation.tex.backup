@@ -10,7 +10,7 @@ Some of the definitions in this chapter result directly from the theory, some of
 
 \section{Declarative and Procedural Knowledge}
 
-The basic idea of the implementation is to represent declarative knowledge, working memory etc. as constraints and to translate the production rules to CHR rules. This approach leads to a very compact and direct translation of ACT-R models to Constraint Handling Rules.
+The basic idea of the implementation is to represent declarative knowledge, working memory etc. as constraints and to translate the ACT-R production rules to CHR rules. This approach leads to a very compact and direct translation of ACT-R models to Constraint Handling Rules.
 
 In addition to the production rules there will be rules that implement parts of the framework of ACT-R, for example rules that implement basic chunk operations like modifying or deleting chunks from declarative memory or a buffer. Those parts of the system are described as well as the central data structures and the translation.
 
@@ -427,6 +427,8 @@ an explicit binding in the production
 
 Some of the details in this grammar that have not been discussed yet are presented in the following.
 
+\subsubsection{The Order of Rule Applications}
+
 \subsubsection{Bound and Unbound Variables}
 
 \subsubsection{Slot Modifiers}
@@ -537,16 +539,36 @@ matches also a chunk with an empty \verb|spam| slot (\verb|nil| in its \verb|spa
 
 \subsubsection{Outputs}
 
+The production system of ACT-R also provides methods to produce side-effects. In this work, only a subset of those methods is concerned: the outputs. Outputs can appear on the right hand side of an ACT-R rule:
 
+\begin{lstlisting}
+=buffer>
+  isa  foo
+==>
+  !output! (a1 a2 a3)
+\end{lstlisting}
 
+The argument of such an output call is a list of Lisp-symbols, so it is possible to hand variables or terms.
 
+This mechanism can be translated to Prolog directly:
 
+\begin{lstlisting}
+output([]) :-
+  nl.
+output([X|Xs]) :-
+  write(X),
+  output(Xs).
+\end{lstlisting}
+
+The \verb|X| have to be Prolog terms.
+
+In ACT-R, function calls like \verb|!eval!| or \verb|!bind!| are allowed, but they are ignored in this work.
 
 \section{Modular Organization}
 
 The term \emph{module} is highly overloaded: In ACT-R it describes independent parts of human cognition, whereas in the world of programming the term is used in a slightly different manner. In the following, implementational modules will always be named explicitly as \emph{Prolog modules}.
 
-Nevertheless, the modular organization of ACT-R with its independent modules, can be implemented by defining a Prolog module for each ACT-R module\footnote{and adding some modules around them}. In the following, the concept of Prolog modules is explained.
+Nevertheless, the modular organization of ACT-R with its independent modules can be implemented by defining a Prolog module for each ACT-R module and adding some other modules around them. In the following, the concept of Prolog modules is explained.
 
 \subsection{Prolog Modules}
 
@@ -706,7 +728,7 @@ test_slots(N,_) \ match_set([N]) <=> true.
 
 The first rule is the base case, where no slots have to be tested any more and the test is finished and has been successful.
 
-In line~3, the rule applies, if there is at least one slot \verb|(S,V2)| that has to be tested and a $Isa$ relation of the kind \verb|N| $\xrightarrow[]{\mathtt{S}}$ \verb|V1| with the slot \verb|S| to be tested, that is still in the match set, so no conflicting slot has been found yet. If the values \verb|V1| and \verb|V2| are unifiable, ie. the both are the same constant or at least one is a variable, then the test passes and the chunk \verb|N| remains in the match set and the rest of the slot tests are performed.
+In line~3, the rule applies, if there is at least one slot \verb|(S,V2)| that has to be tested and a $HasSlot$ relation of the kind \verb|N| $\xrightarrow[]{\mathtt{S}}$ \verb|V1| with the slot \verb|S| to be tested, that is still in the match set, so no conflicting slot has been found yet. If the values \verb|V1| and \verb|V2| are unifiable, ie. the both are the same constant or at least one is a variable, then the test passes and the chunk \verb|N| remains in the match set and the rest of the slot tests are performed.
 
 The second rule is applied, if the guard of the first rule did not hold, so the values \verb|V1| and \verb|V2| are not unifiable, but there is a connection \verb|N| $\xrightarrow[]{\mathtt{S}}$ \verb|V1| and in the request it has been specified that the value of slot \verb|S| has to be \verb|V2|. In this case, \verb|V1| $\neq$ \verb|V2|, so the test fails and the chunk \verb|N| has to be removed from the match set, since one of its slots does not match.
 
@@ -743,21 +765,121 @@ module_request(retrieval,chunk(Name,Type,Slots),ResChunk,ResState) <=>
   get_state(ResChunk,ResState).
 \end{lstlisting}
 
-where \verb|first(L,E)| gets a list \verb|L| and returns its first element \verb|E|.
+where \verb|first(L,E)| gets a list \verb|L| and returns its first element \verb|E| or \verb|nil|, if the list was empty.
 
+With \verb|return_chunk/2| and \verb|get_state/2|, the actual results of the request are computed:
 
-interface module request
+By now, the variable \verb|Chunk| holds the name of the chunk to return, but in the specification of the module request, a complete chunk specification is demanded. \verb|return_chunk/2| is defined as a default method of a chunk store and gets a chunk name as its first argument and returns a chunk specification created from the values in the chunk store as its second argument. \FIXME{add return chunk to default methods of chunk store}
+
+The resulting state of the request is computed as follows: If the result chunk is \verb|nil|, then no chunk was in the match set, so the state of the declarative module will be \verb|error|. In any other case, the state is \verb|free| after the request has been performed.
 
 \subsection{Chunk Merging}
 
 \section{Initialization}
 
+In the examples the models had to be run by stating complex queries which create all necessary buffers and add all chunk types and chunks to the declarative memory manually. In the original ACT-R implementation, the command \verb|run| is used to run a model. This behaviour can be transferred to the CHR implementation easily by adding a \verb|run| constraint and a rule for this constraint, that performs all the initialization work.
+
+\FIXME{modify count example from above}
 
 \section{Timing in ACT-R}
 
-scheduling, define recognize-act-cycle in detail
+So far, the execution order of the production rules has been controlled by the \verb|fire| constraint -- a phase constraint that simulated the occupation of the production system while a rule is executed.
+
+However, certain buffer actions like buffer requests may take some time until they are finished. The procedural system is free to fire the next rule after all actions have been started\footnote{see chapters \ref{serial_parallel_aspects} and \ref{process_of_rule_selection_and_execution}} and the requests are performed in parallel to that.
+
+Additionally, for the simulation it may be interesting to explore how much time certain actions have taken, especially when it comes to the subsymbolic layer.
+
+Those aspects cannot be implemented easily using the current approach with phase constraints. Hence, the idea of introducing a central scheduling unit is a possible solution of those requirements: The unit has a serialized ordered list of events with particular timings. If a new event is scheduled, the time it is executed must be known. The scheduling unit inserts the event at the right position of the list preserving the ordered time condition. Figure~\ref{fig:scheduler} illustrates this approach.
+
+With this approach, the simulation of a parallel execution of ACT-R can be achieved: Each buffer action on the RHS of a rule just schedules an event that actually performs the action at a specified time (the current time plus its duration). 
+
+The heart of the scheduler is a \emph{priority queue} which is described in the next section.
 
 \subsection{Priority Queue}
+
+A \emph{priority queue} is an abstract data structure that serves objects by their priority. It provides the following abstract methods:
+
+\begin{description}
+ \item[enqueue with priority] An object with a particular priority is inserted to the queue. 
+ \item[dequeue highest priority] The object with the highest priority is removed from the queue and returned.
+\end{description}
+
+\subsubsection{Objects}
+
+In the implementation of the scheduler, the priority queue holds objects \verb|q(Time,Priority,Event)|. The priority of such a queue object is composed from the \verb|Time| and the \verb|Priority|. The order between the elements is defined as follows:
+
+\begin{definition}[ordered time-priority condition]
+\verb|q(T1,P1,E1)| $\prec$ \verb|q(T2,P2,E2)|, if \verb|T1| $<$ \verb|T2|. In the case that \verb|T1 = T2|, then \verb|q(T1,P1,E1)| $\prec$ \verb|q(T2,P2,E2)| if \verb|P1| $>$ \verb|P2|. So, events with smaller times will be returned first. If two events appear at the same time, it is possible to define a priority and the event with the higher priority will be returned first. 
+\end{definition}
+
+\subsubsection{Representation of the Queue}
+
+The representation of the priority queue is inspired by \cite[38\psqq]{fru_chr_book_2009}: An order constraint \verb|A --> B| is introduced, which states that \verb|A| will be returned before \verb|B| (or \verb|B| is the direct successor of \verb|A|). The beginning of the queue will be defined by a start symbol \verb|s|, so the first real element is the successor of s. A possible queue could be:
+
+\begin{lstlisting}
+s         --> q(1,0,e1)
+q(1,0,e1) --> q(3,7,e2)
+q(3,7,e2) --> q(3,2,e3)
+\end{lstlisting}
+
+This queue achieves the ordered time-priority condition, since the queue objects are in the correct order according to their times and priorities.
+
+In general, there can be defined some rules to make such a queue consistent, ie. every object only has one successor and the queue achieves the time-priority condition:
+
+\begin{lstlisting}
+A --> A <=> A \== s | true.
+
+_ --> s <=> false.
+
+A --> B, A --> C <=>
+  leq(B,C) |
+  A --> B,
+  B --> C.
+\end{lstlisting}
+
+The first rule states, that if an object is its own successor, this information can be deleted. The second rule states, that nothing can be the predecessor of the start symbol. The last rule is the most important one: If one object has two successors, then these connections have to be divided into two connections according to the defined time-priority condition. This condition can be implemented as follows:
+
+\begin{lstlisting}
+leq(s,_).
+
+% Time1 < Time2 -> event with time1 first, priority does not matter
+leq(q(Time1,_,_), q(Time2,_,_)) :- 
+  Time1 < Time2.
+
+% same time: event with higher priority first
+leq(q(Time,Priority1,_), q(Time,Priority2,_)) :- 
+  Priority1 >= Priority2.
+\end{lstlisting}
+
+The first predicate states that the start symbol is is less than every other object. The other two rules implement the time-priority condition directly.
+
+Note that two objects are considered the same, iff. their time, priority and event are syntactically the same. If an object is altered in one of the \verb|-->| constraints, it has to be edited in every other occurrence in the   list to avoid gaps.
+
+Another important property is, that the list does not have any gaps, so it must be possible to track the queue from every element backwards to the start symbol. This condition is not achieved by the rules above, but since a priority queue only offers two mechanisms to modify it, a lot of those problems can be avoided:
+
+\begin{description}
+ \item[add_q(Time,Priority,Event)] Enqueues an object with the specified properties. Ie., a new \verb|q(Time,Priority,Event)| object will be created and the following constraint will be added: \verb|s --> q(Time,Priority,Event)|. The rules stated above will lead to a linear, serialized list achieving the time-priority condition without gaps.
+\begin{lstlistng}
+add_q(Time,Priority,Evt) <=>
+  s --> q(Time,Priority,Evt).
+\end{lstlistng}
+ \item[de_q(X)] Dequeues the first element of the queue according to the time-priority condition and binds its value to \verb|X|.
+\begin{lstlisting}
+de_q(X), s --> A, A --> B <=>
+  X = A,
+  s --> B.
+
+de_q(X), s --> A <=>
+  X = A.  
+  
+de_q(X) <=> X = nil.
+\end{lstlisting}
+
+The first object just is the successor of \verb|s|, since the list has been constructed preserving the correct order and the property, that everything starts at \verb|s|. If the first object has a successor, this object is the new first object.
+
+\end{description}
+
+
 
 \subsection{Timing on the Symbolic Layer}
 
