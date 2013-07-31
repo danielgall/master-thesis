@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Arch Linux) (format=pdflatex 2013.7.15)  31 JUL 2013 11:22
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Arch Linux) (format=pdflatex 2013.7.15)  31 JUL 2013 14:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1442,13 +1442,7 @@ chunk/3 \T1/phv/m/n/10 (-20) will be de-fined, that pro-duces a []\T1/pcr/m/n/1
 0 match_set/1
  []
 
-[45]
-Overfull \hbox (164.91412pt too wide) in paragraph at lines 799--800
-\T1/phv/m/n/10 (-20) has been spec-i-fied in the re-quest. Hence, the chunk doe
-s not match. [][][][][][] 
- []
-
-[46]
+[45] [46]
 Overfull \hbox (21.86157pt too wide) in paragraph at lines 803--804
 \T1/phv/m/n/10 (-20) de-sir-able to col-lect all those matches in one set. This
  can be trig-gered by a []\T1/pcr/m/n/10 collect_matches/1
@@ -1460,93 +1454,137 @@ Overfull \hbox (21.66565pt too wide) in paragraph at lines 824--825
  []
 
 [47] [48]
-
-LaTeX Warning: Reference `fig:scheduler' on page 49 undefined on input line 856
-.
-
-
-Overfull \hbox (37.65947pt too wide) in paragraph at lines 875--876
-\T1/phv/m/n/10 (-20) In the im-ple-men-ta-tion of the sched-uler, the pri-or-it
-y queue holds ob-jects []\T1/pcr/m/n/10 q(Time,Priority,Event)\T1/phv/m/n/10 (-
-20) .
+Overfull \hbox (45.6659pt too wide) in paragraph at lines 866--867
+[][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Underfull \vbox (badness 7685) has occurred while \output is active []
-
- [49]
-[50]
-Overfull \hbox (3.66547pt too wide) in paragraph at lines 911--912
-[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+Overfull \hbox (87.66632pt too wide) in paragraph at lines 875--876
+[][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
-[51]
-Overfull \hbox (111.66656pt too wide) in paragraph at lines 960--961
+
+Overfull \hbox (333.66882pt too wide) in paragraph at lines 878--879
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
+][][][] 
+ []
+
+
+Overfull \hbox (315.66864pt too wide) in paragraph at lines 881--882
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
+][][][] 
+ []
+
+
+Overfull \hbox (327.66876pt too wide) in paragraph at lines 888--889
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+[49]
+Overfull \hbox (75.6662pt too wide) in paragraph at lines 902--903
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
 
  []
 
 
-Overfull \hbox (369.66919pt too wide) in paragraph at lines 961--962
+Overfull \hbox (87.66632pt too wide) in paragraph at lines 914--915
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
+][] 
+ []
+
+
+Overfull \hbox (340.8917pt too wide) in paragraph at lines 917--918
+\T1/phv/m/n/10 (-20) search of this chunk. [][][][][][] 
+ []
+
+
+LaTeX Warning: Citation 'actr_reference' on page 50 undefined on input line 919
+.
+
+[50]
+
+LaTeX Warning: Reference `fig:scheduler' on page 51 undefined on input line 935
+.
+
+[51]
+Overfull \hbox (37.65947pt too wide) in paragraph at lines 954--955
+\T1/phv/m/n/10 (-20) In the im-ple-men-ta-tion of the sched-uler, the pri-or-it
+y queue holds ob-jects []\T1/pcr/m/n/10 q(Time,Priority,Event)\T1/phv/m/n/10 (-
+20) .
+ []
+
+[52]
+Overfull \hbox (3.66547pt too wide) in paragraph at lines 990--991
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+ []
+
+[53]
+Overfull \hbox (111.66656pt too wide) in paragraph at lines 1039--1040
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
+
+ []
+
+
+Overfull \hbox (369.66919pt too wide) in paragraph at lines 1040--1041
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (543.67096pt too wide) in paragraph at lines 963--964
+Overfull \hbox (543.67096pt too wide) in paragraph at lines 1042--1043
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (363.66913pt too wide) in paragraph at lines 964--965
+Overfull \hbox (363.66913pt too wide) in paragraph at lines 1043--1044
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
-[52]
+[54] [55]
 
-LaTeX Warning: Reference `tab:action_priorities' on page 53 undefined on input 
-line 989.
+LaTeX Warning: Reference `tab:action_priorities' on page 56 undefined on input 
+line 1068.
 
-[53] [54]
-Overfull \hbox (117.66663pt too wide) in paragraph at lines 1032--1034
+[56]
+Overfull \hbox (117.66663pt too wide) in paragraph at lines 1111--1113
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][] 
  []
 
-[55]
-Overfull \hbox (39.66583pt too wide) in paragraph at lines 1085--1086
+[57]
+Overfull \hbox (39.66583pt too wide) in paragraph at lines 1164--1165
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
-) (./chapters/compiler.tex [56]
+) (./chapters/compiler.tex [58] [59] [60
+
+
+]
 Chapter 5.
-) (./chapters/example_models.tex [57
-
-
-] [58
+) (./chapters/example_models.tex [61] [62
 
 
 ]
 Chapter 6.
-) (./chapters/conclusion.tex [59] [60
+) (./chapters/conclusion.tex [63] [64
 
 
 ]
 Chapter 7.
-) (./chapters/sources.tex [61] [62
+) (./chapters/sources.tex [65] [66
 
 
 ]
 Appendix A.
-) (./chapters/production_grammar.tex [63] [64
+) (./chapters/production_grammar.tex [67] [68
 
 
 ]
 Appendix B.
 
-LaTeX Warning: Citation 'actr_reference' on page 65 undefined on input line 3.
+LaTeX Warning: Citation 'actr_reference' on page 69 undefined on input line 3.
 
 
 Overfull \hbox (9.66553pt too wide) in paragraph at lines 6--7
@@ -1604,7 +1642,7 @@ Overfull \hbox (177.66724pt too wide) in paragraph at lines 28--29
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
-[65]
+[69]
 Overfull \hbox (111.66656pt too wide) in paragraph at lines 38--39
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
@@ -1630,7 +1668,7 @@ Overfull \hbox (225.66772pt too wide) in paragraph at lines 45--46
 ][][][][] 
  []
 
-) [66]
+) [70]
 Overfull \hbox (9.34848pt too wide) in paragraph at lines 343--343
 \T1/phv/m/sc/10 (-20) url\T1/phv/m/n/10 (-20) : []$\T1/pcr/m/n/10 http : / / ww
 w . researchgate . net / publication / 2605305 _ Working _
@@ -1642,14 +1680,14 @@ Overfull \hbox (49.7708pt too wide) in paragraph at lines 343--343
 f50d532cd825c1 .
  []
 
-[67
+[71
 
 
 
 
-] [68]
+] [72]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 359.
- [69
+ [73
 
 
 ]
@@ -1673,10 +1711,10 @@ Package logreq Info: Writing requests to 'arbeit.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 19032 strings out of 493488
- 290720 string characters out of 3146892
- 704262 words of memory out of 3000000
- 21189 multiletter control sequences out of 15000+200000
+ 19086 strings out of 493488
+ 291502 string characters out of 3146892
+ 705262 words of memory out of 3000000
+ 21202 multiletter control sequences out of 15000+200000
  67168 words of font info for 208 fonts, out of 3000000 for 9000
  958 hyphenation exceptions out of 8191
  39i,12n,72p,1463b,3235s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1699,10 +1737,10 @@ r8a.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/
 texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-dist/fonts/typ
 e1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvr
 o8a.pfb>
-Output written on arbeit.pdf (77 pages, 605493 bytes).
+Output written on arbeit.pdf (81 pages, 613511 bytes).
 PDF statistics:
- 1620 PDF objects out of 1728 (max. 8388607)
- 1499 compressed objects within 15 object streams
- 633 named destinations out of 1000 (max. 500000)
+ 1685 PDF objects out of 1728 (max. 8388607)
+ 1559 compressed objects within 16 object streams
+ 674 named destinations out of 1000 (max. 500000)
  32443 words of extra memory for PDF output out of 35830 (max. 10000000)
 

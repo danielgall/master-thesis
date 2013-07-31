@@ -140,7 +140,7 @@ The default methods can be implemented as follows:
 
 This method creates a the chunks and elements of the chunk store. The set $E$ of elements is minimal, ie. only elements that appear in the slots of a chunk but are not chunks themselves are members of $E$. However, the set $E$ is never constructed explicitly, but represented by chunks of the special type \verb|chunk| that provides no slots. So each value in the slot of a chunk that is added to the store and that is not an element of the chunk store yet, gets its own chunk of type \verb|chunk|. As soon as a chunk with the name of such a primitive element is added to the store, the chunk of type \verb|chunk| is removed from the store.
 
-\begin{lstlisting}[caption={rules for \texttt{add\_chunk}}]
+\begin{lstlisting}[caption={Rules for \texttt{add\_chunk}}, label=lst:add_chunk_rules]
 % empty chunk will not be added
 add_chunk(nil) <=> true.
   
@@ -157,25 +157,25 @@ First, all \verb|chunk_type_has_slot| constraints are added to the store and ini
 
 If all slots have been initialized, \verb|do_add_chunk| performs the actual setting of the real slot values:
   
-\begin{lstlisting}  
+\begin{lstlisting}[caption={Additional rules for adding chunks}]  
 % base case
 do_add_chunk(chunk(Name, Type, [])) <=> chunk(Name, Type). 
 
 % overwrite slots with empty values
 chunk(V,_) \ do_add_chunk(chunk(Name, Type, [(S,V)|Rest])), chunk_has_slot(Name,S,nil)  <=>
-  chunk_has_slot(Name, S,V), 
+  chunk_has_slot(Name,S,V), 
   do_add_chunk(chunk(Name,Type,Rest)).
 
 % overwrite slots with empty values  
 do_add_chunk(chunk(Name, Type, [(S,V)|Rest])), chunk_has_slot(Name,S,nil)  <=> 
   V == nil | % do not add chunk(nil,chunk)
-  chunk_has_slot(Name, S,V), 
+  chunk_has_slot(Name,S,V), 
   do_add_chunk(chunk(Name,Type,Rest)).  
 
 % overwrite slots with empty values  
 do_add_chunk(chunk(Name, Type, [(S,V)|Rest])), chunk_has_slot(Name,S,nil)  <=> 
   V \== nil |
-  chunk_has_slot(Name, S,V), 
+  chunk_has_slot(Name,S,V), 
   chunk(V,chunk), % no chunk for slot value found => add chunk of type chunk 
   
 do_add_chunk(_) <=> false.
@@ -187,10 +187,13 @@ The second rule deals with the case, that a slot-value pair has to be added with
 
 The next rule ensures that the helper chunk specification \verb|nil| will not get a chunk in the store, even if it is in the slots of a chunk.
 
+Otherwise, if the value of the slot to be added is not \verb|nil|, the next rule can fire and the slot with the actual value will replace the previously \verb|nil|-initialized slot with the actual value. Additionally, since the first rule obviously did not fire for this constellation, \verb|V| is a value different from \verb|nil| that does not have a chunk in the store. Hence, it must be a primitive element. Thus a new chunk of type \verb|chunk| is added to the store for this value.
 
+If no rule matches, the user tried to create a chunk with slots that are not specified in the chunk-type. This leads to an error.
 
+On top of the rules in listing~\ref{lst:add_chunk_rules}, there must be added a rule that deletes a primitive element (ie. a chunk of type \verb|chunk|), if the user introduces a real chunk with the name of this element:
 
-\begin{lstlisting}
+\begin{lstlisting}[caption={Clean up primitive elements}]  
 % delete chunk of Type chunk, if real chunk is added
 add_chunk(chunk(Name,_,_)) \ chunk(Name,Type) <=> 
   Type == chunk |
@@ -198,7 +201,9 @@ add_chunk(chunk(Name,_,_)) \ chunk(Name,Type) <=>
 \end{lstlisting}
 
 
-\FIXME{add very simple solution}
+\paragraph{add\_chunk\_type}
+
+The following rules create a new chunk type:
 
 \begin{lstlisting}[caption={rules for \texttt{add\_chunk\_type}}]
 add_chunk_type(CT, []) <=> 
@@ -207,10 +212,6 @@ add_chunk_type(CT, [S|Ss]) <=>
   chunk_type_has_slot(CT, S), 
   add_chunk_type(CT, Ss).
 \end{lstlisting}
-
-\FIXME{add duplicate handling}
-
-
 
 
 \subsubsection{Checking Type-Consistency}
@@ -832,11 +833,77 @@ where \verb|first(L,E)| gets a list \verb|L| and returns its first element \verb
 
 With \verb|return_chunk/2| and \verb|get_state/2|, the actual results of the request are computed:
 
-By now, the variable \verb|Chunk| holds the name of the chunk to return, but in the specification of the module request, a complete chunk specification is demanded. \verb|return_chunk/2| is defined as a default method of a chunk store and gets a chunk name as its first argument and returns a chunk specification created from the values in the chunk store as its second argument. \FIXME{add return chunk to default methods of chunk store}
+By now, the variable \verb|Chunk| holds the name of the chunk to return, but in the specification of the module request, a complete chunk specification is demanded. \verb|return_chunk/2| is defined as a default method of a chunk store that gets a chunk name as its first argument and returns a chunk specification created from the values in the chunk store as its second argument. \FIXME{add return chunk to default methods of chunk store}
 
 The resulting state of the request is computed as follows: If the result chunk is \verb|nil|, then no chunk was in the match set, so the state of the declarative module will be \verb|error|. In any other case, the state is \verb|free| after the request has been performed.
 
 \subsection{Chunk Merging}
+
+An important technique used in ACT-R's declarative memory module, is the chunk merging: If a chunk enters the chunk store and all of its slots and values are the same as of a chunk already in the store, then those two chunks get merged. The merged chunk can be called with both names.
+
+If a chunk entering the declarative memory has the same name as a chunk in that already is in the store, the new chunk gets a new name and if its slots are the same as the slots of the old chunk, they will be merged and the new name will be deleted.
+
+\begin{lstlisting}
+chunk(Name,Type) \ add_chunk(chunk(Name,Type,Slots)) <=>
+  Type \== chunk |
+  add_chunk(chunk(Name:new,Type,Slots)).
+
+% first check, if identical chunk exists
+add_chunk(chunk(C,T,S)) ==> 
+  T \== chunk | 
+  check_identical_chunks(chunk(C,T,S)).
+\end{lstlisting}
+
+The rules are added before the empty slot initialization in listing~\ref{lst:add_chunk_rules}. The first rule handles the case where a chunk with a already allocated name is added to the store. Then it gets a new name (which basically is just the old name extended by \verb|:new|, and tries to add this new chunk to the memory. 
+
+The second rule adds a identity check for each chunk to be added except for primitive elements, since their slots are identical for every name, because every primitive element has no slots. Nevertheless they have to be distinguishable by their names and therefore cannot be merged.
+
+The identity check is implemented as follows:
+
+\begin{lstlisting}
+check_identical_chunks(nil) <=> true.
+
+chunk(NameOld,Type), check_identical_chunks(chunk(NameNew,Type,Slots)) ==> 
+  check_identical_chunks(chunk(NameNew,Type,Slots),NameOld).
+  
+check_identical_chunks(_) <=> true.
+\end{lstlisting}
+
+The rule in line~3 adds for each identity check and each chunk in the store a pairwise identity check which is performed by the following rules:
+
+\begin{lstlisting}
+chunk(NameOld, Type) \ check_identical_chunks(chunk(NameNew,Type,[]),NameOld) <=> 
+  identical(NameOld,NameNew).
+  
+chunk(NameOld, Type), chunk_has_slot(NameOld, S, V) \ check_identical_chunks(chunk(NameNew,Type,[(S,V)|Rest]),NameOld) <=> 
+  check_identical_chunks(chunk(NameNew,Type,Rest),NameOld).
+  
+chunk(NameOld, Type), chunk_has_slot(NameOld, S, VOld) \ check_identical_chunks(chunk(_,Type,[(S,VNew)|_]),NameOld) <=> 
+  VOld \== VNew |
+  true.
+    
+remove_duplicates @ identical(N,N) <=> true.
+
+% abort checking for identical chunks if one has been found
+cleanup_identical_chunk_check @ identical(NameOld,NameNew) \ check_identical_chunks(chunk(NameNew,_,_),NameOld) <=> true.
+\end{lstlisting}
+
+The first rule is the base case, where no slots have to be tested any more. Then the chunks are identical and an \verb|identical/2| constraint is added to the store for those two chunks.
+
+The next rule applies for an identity check for a slot-value pair that is successful, whereas the third rule handles the opposite case and aborts the check for this pair of chunks without adding an \verb|identical| constraint.
+
+In the fourth rule redundant information is removed and the lust rule aborts the identity check as soon as one matching chunk has been found.
+
+Note that this implementation assumes that the chunk specification of the chunk entering the declarative memory is complete. If it is not complete, the correct semantics of the adding is that all unspecified slots are empty so their values equal \verb|nil|. Nevertheless, this implementation would merge the chunk with a chunk that has values in those unspecified slots. This could be improved by completing the chunk specifications before checking for identical chunks in the store.
+
+For the easier use of the identical constraint at other points, transitive identities can be reduced to the only real chunk in the store (the one with the \verb|chunk| constraint):
+
+\begin{lstlisting}
+reduce @ chunk(C1,_), identical(C1,C2) \ identical(C2,C3) <=> identical(C1,C3).
+\end{lstlisting}
+
+
+
 
 \section{Initialization}
 
@@ -1070,7 +1137,7 @@ schedule_fire <=>
   add_q(Now,0,fire).
 \end{lstlisting}
 
-As last production rule, there has to be a rule:
+As the last production rule, there has to be:
 
 \begin{lstlisting}
 no-rule @ 
