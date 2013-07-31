@@ -113,6 +113,10 @@ Note that all values in the just presented constraints have to be ground. This i
 
 Additionally, from the definition of a chunk store it is known, that the $HasSlot$ and the $Isa$ relations have to be left-complete. \FIXME{correct expression! correct definitions!} Therefore, for every chunk \verb|c| in the store, exactly one \verb|isa(c,t)| constraint has to be in the store. For each \verb|chunk_type_has_slot(t,s)| constraint, a \verb|chunk_has_slot(c,s,v)| constraint has to be defined. If one wants to express, that a chunk has an empty slot, he might use \verb|nil| for the value to indicate that. Note that \verb|nil| must not be a chunk name or chunk-type name.
 
+\subsubsection{Distinction of Elements and Chunks}
+
+A chunk store distinguishes between a set of chunks $C$ and a set of elements $E$. For implementational reasons it can be helpful if there are only chunks in the system, because elements just behave like chunks with no slots. Hence, a chunk-type \verb|chunk| with no slots will be added automatically to the store. Each element $e \in E$ and added as a chunk of type \verb|chunk| to the set of chunks $C$. After this operation $E = \emptyset$, and for every former element $e$ of $E$: $e \in C$, $(e,(chunk,\emptyset)) \in Isa$.
+
 \subsubsection{Simple Implementation of the Default Methods}
 \label{chunk_specification}
 
@@ -131,6 +135,10 @@ The straight-forward definition of a data type for chunk specifications is just 
 This definition states that a chunk is either \verb|nil|, ie. an empty chunk, or a term \verb|chunk(Name, Type, SVP)|, where \verb|SVP| is a list of slot-value pairs. This is the direct translation of the chunk-specification used in the definition, amended by the \verb|nil| construct, that may be needed for later purposes.
 
 The default methods can be implemented as follows:
+
+\paragraph{add\_chunk}
+
+This method creates a the chunks and elements of the chunk store. The set $E$ of elements is minimal, ie. only elements that appear in the slots of a chunk but are not chunks themselves are members of $E$. However, the set $E$ is never constructed explicitly, but represented by chunks of the special type \verb|chunk| that provides no slots. So each value in the slot of a chunk that is added to the store and that is not an element of the chunk store yet, gets its own chunk of type \verb|chunk|. As soon as a chunk with the name of such a primitive element is added to the store, the chunk of type \verb|chunk| is removed from the store.
 
 \begin{lstlisting}[caption={rules for \texttt{add\_chunk}}]
 % empty chunk will not be added
@@ -153,23 +161,43 @@ If all slots have been initialized, \verb|do_add_chunk| performs the actual sett
 % base case
 do_add_chunk(chunk(Name, Type, [])) <=> chunk(Name, Type). 
 
- % overwrite slots with empty values
+% overwrite slots with empty values
 chunk(V,_) \ do_add_chunk(chunk(Name, Type, [(S,V)|Rest])), chunk_has_slot(Name,S,nil)  <=>
   chunk_has_slot(Name, S,V), 
   do_add_chunk(chunk(Name,Type,Rest)).
-  
-do_add_chunk(chunk(Name, Type, [(S,V)|Rest])), chunk_has_slot(Name,S,nil)  <=> % overwrite slots with empty values
+
+% overwrite slots with empty values  
+do_add_chunk(chunk(Name, Type, [(S,V)|Rest])), chunk_has_slot(Name,S,nil)  <=> 
   V == nil | % do not add chunk(nil,chunk)
   chunk_has_slot(Name, S,V), 
   do_add_chunk(chunk(Name,Type,Rest)).  
-  
-do_add_chunk(chunk(Name, Type, [(S,V)|Rest])), chunk_has_slot(Name,S,nil)  <=> % overwrite slots with empty values
+
+% overwrite slots with empty values  
+do_add_chunk(chunk(Name, Type, [(S,V)|Rest])), chunk_has_slot(Name,S,nil)  <=> 
   V \== nil |
   chunk_has_slot(Name, S,V), 
   chunk(V,chunk), % no chunk for slot value found => add chunk of type chunk 
   
 do_add_chunk(_) <=> false.
 \end{lstlisting}
+
+The first rule is the base case, where no slots have to be added any more. Then, as a last step the actual \verb|chunk| constraint of the chunk that is added to the store is created.
+
+The second rule deals with the case, that a slot-value pair has to be added with a value that is already described by a chunk. Then the \verb|nil|-initialized slot of this chunk is removed and replaced by another slot containing the actual value.
+
+The next rule ensures that the helper chunk specification \verb|nil| will not get a chunk in the store, even if it is in the slots of a chunk.
+
+
+
+
+\begin{lstlisting}
+% delete chunk of Type chunk, if real chunk is added
+add_chunk(chunk(Name,_,_)) \ chunk(Name,Type) <=> 
+  Type == chunk |
+  true.
+\end{lstlisting}
+
+
 \FIXME{add very simple solution}
 
 \begin{lstlisting}[caption={rules for \texttt{add\_chunk\_type}}]
@@ -967,7 +995,7 @@ The following enumeration summarizes the recognize-act cycle with a scheduler:
 \begin{enumerate}
  \item The next event is removed from the queue, the current time is set to the time of the event and the event is performed.
  \begin{enumerate}
- \item The dequeued event is a \verb|fire| constraint: The rule that matches all its condition is performed and removes the \verb|fire| constraint.
+ \item The dequeued event is a \verb|fire| constraint: The rule that matches all its conditions is fired and removes the \verb|fire| constraint.
  \item The actions of the rule are scheduled in the queue. Modifications and Clearings have the current time point, requests have a time point in the future depending on the module.
  \item The last action of the rule is to add a \verb|fire| constraint to the queue with the current time point and a low priority. This simulates that the procedural module is free again, after all in-place actions of a rule have been fired.
  \item There are two possibilities:
@@ -1023,7 +1051,7 @@ buffer_action(BufName, Chunk) <=>
   add_q(Time, Priority, do_buffer_action(BufName, Chunk)). 
 \end{lstlisting}
 
-with reasonable values for \verb|Duration| and \verb|Priority|.
+with appropriate values for \verb|Duration| and \verb|Priority|.
 
 \paragraph{Production Rules}
 
