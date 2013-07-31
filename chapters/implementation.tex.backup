@@ -31,7 +31,7 @@ In multiple parts of ACT-R it is necessary to store chunks and then operate on t
 Since chunk stores have been referred to as networks in the previous chapters, the general idea of this definition of a chunk store bases upon a relation that represents such a network.
 
 \begin{definition}[chunk-store]
-A \emph{chunk-store} $\Sigma$ is a tuple $(C,E,\mathcal{T},HasSlot,Isa)$, where $C$ is a set of chunks and $E$ a set of primitive elements, with $C \cap E = \emptyset$. $V = C \cup E$ are the \emph{values} of~$\Sigma$ and $\mathcal{T}$ a set of chunk-types. A chunk-type $(T,S) \in \mathcal{T}$ is a tuple with a type name $T$ and a set of slots $S$. The set of all slot-names is $\mathcal{S}$. 
+A \emph{chunk-store} $\Sigma$ is a tuple $(C,E,\mathcal{T},HasSlot,Isa)$, where $C$ is a set of chunks and $E$ a set of primitive elements, with $C \cap E = \emptyset$. $V = C \cup E \cup \{ \mathtt{nil} \}$ are the \emph{values} of~$\Sigma$ and $\mathcal{T}$ a set of chunk-types. A chunk-type $(T,S) \in \mathcal{T}$ is a tuple with a type name $T$ and a set of slots $S$. The set of all slot-names is $\mathcal{S}$. 
 
 $HasSlot \subseteq C \times \mathcal{S} \times V$ and $Isa \subseteq C \times T$ are relations and are defined as follows:
 
@@ -39,6 +39,8 @@ $HasSlot \subseteq C \times \mathcal{S} \times V$ and $Isa \subseteq C \times T$
  \item $c \enspace Isa \enspace T \Leftrightarrow$ chunk $c$ is of type $T$.
  \item $(c,s,v) \in HasSlot \Leftrightarrow v$ is the value of slot $s$ of $c$. This can also be written as $c \overset{s}{\longrightarrow} v$ and is spoken ``$c$ is connected to $v$'' or ``$v$ is in the slot $s$ of $c$''.
 \end{itemize}
+
+The two relations have to be right-unique and left-total, so each chunk has to have exactly one type and each chunk has to have exactly one value for each slot.
 
 
 The function $slots: C \rightarrow \mathcal{S} \times V$ is defined as $slots(c) = \{ (s,v) | (c,s,v) \in HasSlot \}$ and $slots: \mathcal{T} \rightarrow \mathcal{S}$ as $slots((T,S)) = S$.
@@ -61,6 +63,7 @@ The following methods can be defined over a chunk store $\Sigma = (C, E, \mathca
 \FIXME{add other methods. describe empty chunks?}
 
 \begin{example}
+ \label{ex:addition_fact_formal}
  The addition-fact chunk in figure \ref{fig:chunk_addition_fact} and its chunk-type are defined as follows:\\
  \verb|chunk-type(addition-fact arg1 arg2 sum)|\\
  \verb|add-chunk(a isa addition-fact arg1 5 arg2 2 sum 7)|.
@@ -69,7 +72,7 @@ The following methods can be defined over a chunk store $\Sigma = (C, E, \mathca
  \begin{align*}
  (\{a\}, \{2,5,7\},\\ 
  \{(addition-fact, \{arg1, arg2, sum\})\},\\
- \{(a,arg1,5), (a,arg2,5), (a,sum,7)\},\\
+ \{(a,arg1,5), (a,arg2,2), (a,sum,7)\},\\
  \{(a, addition-fact)\}).
  \end{align*}
  
@@ -113,9 +116,51 @@ Note that all values in the just presented constraints have to be ground. This i
 
 Additionally, from the definition of a chunk store it is known, that the $HasSlot$ and the $Isa$ relations have to be left-complete. \FIXME{correct expression! correct definitions!} Therefore, for every chunk \verb|c| in the store, exactly one \verb|isa(c,t)| constraint has to be in the store. For each \verb|chunk_type_has_slot(t,s)| constraint, a \verb|chunk_has_slot(c,s,v)| constraint has to be defined. If one wants to express, that a chunk has an empty slot, he might use \verb|nil| for the value to indicate that. Note that \verb|nil| must not be a chunk name or chunk-type name.
 
+\begin{example}
+\label{ex:addition_fact_chr}
+The chunk and chunk-type in example~\ref{ex:addition_fact_formal} are represented as:
+
+\begin{lstlisting}
+chunk_type(addition-fact)
+chunk_type_has_slot(addition-fact,arg1)
+chunk_type_has_slot(addition-fact,arg2)
+chunk_type_has_slot(addition-fact,sum)
+
+chunk(a,addition-fact)
+chunk_has_slot(a,arg1,5)
+chunk_has_slot(a,arg2,2)
+chunk_has_slot(a,sum,7)
+\end{lstlisting}
+\end{example}
+
+
 \subsubsection{Distinction of Elements and Chunks}
 
 A chunk store distinguishes between a set of chunks $C$ and a set of elements $E$. For implementational reasons it can be helpful if there are only chunks in the system, because elements just behave like chunks with no slots. Hence, a chunk-type \verb|chunk| with no slots will be added automatically to the store. Each element $e \in E$ and added as a chunk of type \verb|chunk| to the set of chunks $C$. After this operation $E = \emptyset$, and for every former element $e$ of $E$: $e \in C$, $(e,(chunk,\emptyset)) \in Isa$.
+
+\begin{example}
+The chunk representation from example~\ref{ex:addition_fact_chr} is changed to:
+
+\begin{lstlisting}
+chunk_type(addition-fact)
+chunk_type_has_slot(addition-fact,arg1)
+chunk_type_has_slot(addition-fact,arg2)
+chunk_type_has_slot(addition-fact,sum)
+
+chunk_type(chunk)
+
+chunk(a,addition-fact)
+chunk_has_slot(a,arg1,5)
+chunk_has_slot(a,arg2,2)
+chunk_has_slot(a,sum,7)
+
+chunk(5,chunk)
+chunk(2,chunk)
+chunk(7,chunk)
+\end{lstlisting}
+
+\end{example}
+
 
 \subsubsection{Simple Implementation of the Default Methods}
 \label{chunk_specification}
@@ -230,7 +275,7 @@ The buffer system can be regarded as a chunk-store, that is enhanced by buffers.
 \label{def:buffer_system}
 A \emph{buffer system} is a tuple $(B,\Sigma,Holds)$, where $B$ is a set of buffers, $\Sigma = (C, E, \mathcal{T}, HasSlot, Isa)$ a type-consistent chunk-store and $Holds \subseteq B \times (C \cup \{ \mathtt{nil} \})$ a unique and complete relation, that assigns every buffer at most one chunk that it holds. If a buffer $b$ is empty, ie. it does not hold a chunk, then $(b,\mathtt{nil}) \in Holds$.
 
-A buffer system is \emph{consistent}, if every chunk that appears in $Holds$ is a member of $C$ and $\Sigma$ is consistent.
+A buffer system is \emph{consistent}, if every chunk that appears in $Holds$ is a member of $C$ and $\Sigma$ is a type-consistent chunk-store.
 
 A buffer system is \emph{clean}, if its chunk-store only holds chunks which appear in $Holds$.
 \end{definition}
@@ -794,9 +839,9 @@ The first rule is the base case, where no slots have to be tested any more and t
 
 In line~3, the rule applies, if there is at least one slot \verb|(S,V2)| that has to be tested and a $HasSlot$ relation of the kind \verb|N| $\xrightarrow[]{\mathtt{S}}$ \verb|V1| with the slot \verb|S| to be tested, that is still in the match set, so no conflicting slot has been found yet. If the values \verb|V1| and \verb|V2| are unifiable, ie. the both are the same constant or at least one is a variable, then the test passes and the chunk \verb|N| remains in the match set and the rest of the slot tests are performed.
 
-The second rule is applied, if the guard of the first rule did not hold, so the values \verb|V1| and \verb|V2| are not unifiable, but there is a connection \verb|N| $\xrightarrow[]{\mathtt{S}}$ \verb|V1| and in the request it has been specified that the value of slot \verb|S| has to be \verb|V2|. In this case, \verb|V1| $\neq$ \verb|V2|, so the test fails and the chunk \verb|N| has to be removed from the match set, since one of its slots does not match.
+The second rule in line~8 applied if the guard of the first rule did not hold, so the values \verb|V1| and \verb|V2| are not unifiable, but there is a connection \verb|N| $\xrightarrow[]{\mathtt{S}}$ \verb|V1| and in the request it has been specified that the value of slot \verb|S| has to be \verb|V2|. In this case, \verb|V1| $\neq$ \verb|V2|, so the test fails and the chunk \verb|N| has to be removed from the match set, since one of its slots does not match.
 
-If both of the first two rules cannot be applied, the chunk does not provide a slot that, however, has been specified in the request. Hence, the chunk does not match. \FIXME{make simpagation rule to simplification rule?}
+If the last two rules cannot be applied, the chunk does not provide a slot that, however, has been specified in the request. Hence, the chunk does not match and the last rule therefore deletes it from the match set. \FIXME{make simpagation rule to simplification rule?}
 
 If those rules have been applied exhaustively, only the matching chunks will remain in the match set: If there would be an outstanding slot test, one of the rules would be applicable and the chunk would be removed from the match set, if the test fails (and the test would also be removed, because it has been performed). If the test is successful, the chunk will remain part of the match set, but the test will be removed. So the match set is correct and complete.
 
@@ -902,8 +947,21 @@ For the easier use of the identical constraint at other points, transitive ident
 reduce @ chunk(C1,_), identical(C1,C2) \ identical(C2,C3) <=> identical(C1,C3).
 \end{lstlisting}
 
+Additionally, the newly created names can be deleted if the chunk was identical to another chunk with a real name, since the new nomenclature was only store internal, so only the original name must be kept:
 
+\begin{lstlisting}
+identical(C,C:new) <=> true.
+\end{lstlisting}
 
+In the declarative module, the chunk search must be extended to find merged chunks by both names. This can be achieved as follows:
+
+\begin{lstlisting}
+identical(C1,C2) \ find_chunk(C2,T2.Ss2)  <=> ground(C2) | find_chunk(C1,T2,Ss2).
+\end{lstlisting}
+
+so the chunk search of a chunk that is only a pointer to another chunk can be reduced to the search of this chunk. \FIXME{maybe this can cause problems if a production rule refers to a particular name and gets a chunk with the name of its brother..}
+
+The process of chunk merging is described in \cite[??]{actr_reference}. The treating of identical names is not described there, but has been tested in the original implementation: ACT-R handles those identical names similarly to this approach by adding a sequential number to the identical name. For example, the chunk with name \verb|a| would be called \verb|a-0| if there already was a chunk \verb|a| in the store.
 
 \section{Initialization}
 
@@ -946,7 +1004,7 @@ In the implementation of the scheduler, the priority queue holds objects \verb|q
 
 \subsubsection{Representation of the Queue}
 
-The representation of the priority queue is inspired by \cite[38\psqq]{fru_chr_book_2009}: An order constraint \verb|A --> B| is introduced, which states that \verb|A| will be returned before \verb|B| (or \verb|B| is the direct successor of \verb|A|). The beginning of the queue will be defined by a start symbol \verb|s|, so the first real element is the successor of s. A possible queue could be:
+The representation of the priority queue is inspired by \cite[38\psqq]{fru_chr_book_2009}: An order constraint \verb|A --> B| is introduced, which states that \verb|A| will be returned before \verb|B| (or \verb|B| is the direct successor of \verb|A|). The beginning of the queue will be defined by a start symbol \verb|s|, so the first real element is the successor of \verb|s|. A possible queue could be:
 
 \begin{lstlisting}
 s         --> q(1,0,e1)

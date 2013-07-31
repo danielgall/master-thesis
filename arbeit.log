@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Arch Linux) (format=pdflatex 2013.7.15)  31 JUL 2013 14:21
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Arch Linux) (format=pdflatex 2013.7.15)  31 JUL 2013 17:48
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1218,15 +1218,15 @@ Underfull \vbox (badness 3838) has occurred while \output is active []
 Underfull \vbox (badness 1043) has occurred while \output is active []
 
  [6]
-[7] [8]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [7]
+[8]
 
 LaTeX Warning: Reference `fig:modular_organization' on page 9 undefined on inpu
 t line 119.
 
-[9]
-Underfull \vbox (badness 2662) has occurred while \output is active []
-
- [10]
+[9] [10]
 
 LaTeX Warning: Reference `fig:example_counting_chunks' on page 11 undefined on 
 input line 150.
@@ -1280,23 +1280,24 @@ Chapter 4.
 
 LaTeX Warning: Citation 'actr_reference' on page 23 undefined on input line 9.
 
-[23] [24]
-LaTeX Font Info:    Font shape `T1/phv/bx/it' in size <10> not available
-(Font)              Font shape `T1/phv/b/it' tried instead on input line 54.
-LaTeX Font Info:    Font shape `T1/phv/b/it' in size <10> not available
-(Font)              Font shape `T1/phv/b/sl' tried instead on input line 54.
+[23]
 Package microtype Info: Loading generic settings for font family
 (microtype)             `cmtt' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
+ [24]
+LaTeX Font Info:    Font shape `T1/phv/bx/it' in size <10> not available
+(Font)              Font shape `T1/phv/b/it' tried instead on input line 56.
+LaTeX Font Info:    Font shape `T1/phv/b/it' in size <10> not available
+(Font)              Font shape `T1/phv/b/sl' tried instead on input line 56.
 
-Overfull \hbox (0.76874pt too wide) in paragraph at lines 55--56
+Overfull \hbox (0.76874pt too wide) in paragraph at lines 57--58
 []\T1/phv/m/sl/10 adds a new chunk to the store, ie. $\OML/cmm/m/it/10 C[] \OT1
 /cmr/m/n/10 =
  []
 
 
-Overfull \hbox (4.71693pt too wide) in paragraph at lines 55--56
+Overfull \hbox (4.71693pt too wide) in paragraph at lines 57--58
 \OML/cmm/m/it/10 C \OMS/cmsy/m/n/10 [ f[]g$\T1/phv/m/sl/10 , $\OML/cmm/m/it/10 
 Isa[] \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 Isa \OMS/cmsy/m/n/10 [ \OT1/cmr/m/n/10
  ([]\OML/cmm/m/it/10 ; \OT1/cmr/m/n/10 ([]\OML/cmm/m/it/10 ; slots\OT1/cmr/m/n/
@@ -1306,264 +1307,270 @@ Isa[] \OT1/cmr/m/n/10 = \OML/cmm/m/it/10 Isa \OMS/cmsy/m/n/10 [ \OT1/cmr/m/n/10
 
 
 LaTeX Warning: Reference `fig:chunk_addition_fact' on page 25 undefined on inpu
-t line 64.
+t line 67.
 
 [25]
 LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <10> not available
-(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 90.
- [26]
-Overfull \hbox (24.51604pt too wide) in paragraph at lines 125--126
+(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 93.
+ [26] [27]
+Overfull \hbox (24.51604pt too wide) in paragraph at lines 172--173
 \T1/phv/m/n/10 (-20) ca-tion like in def-i-ni-tion []4.2[]: Since []\T1/pcr/m/n
 /10 (name isa type slot_1 val_1 \dots slot_n val_n)
  []
 
 
-Overfull \hbox (64.7588pt too wide) in paragraph at lines 135--136
+Overfull \hbox (64.7588pt too wide) in paragraph at lines 182--183
 []\T1/phv/m/n/10 (-20) This def-i-ni-tion states that a chunk is ei-ther []\T1/
 pcr/m/n/10 nil\T1/phv/m/n/10 (-20) , ie. an empty chunk, or a term []\T1/pcr/m/
 n/10 chunk(Name, Type, SVP)\T1/phv/m/n/10 (-20) ,
  []
 
-[27]
-LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <10> not available
-(Font)              Font shape `T1/pcr/b/n' tried instead on input line 145.
 
-Overfull \hbox (3.66547pt too wide) in paragraph at lines 151--152
+Underfull \vbox (badness 1939) has occurred while \output is active []
+
+ [28]
+LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <10> not available
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 192.
+
+Overfull \hbox (3.66547pt too wide) in paragraph at lines 198--199
 [][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (129.66675pt too wide) in paragraph at lines 165--166
+Overfull \hbox (129.66675pt too wide) in paragraph at lines 212--213
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][]
  []
 
-[28]
-Overfull \hbox (51.66595pt too wide) in paragraph at lines 170--171
+
+Overfull \hbox (51.66595pt too wide) in paragraph at lines 217--218
+[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
+ []
+
+[29]
+Overfull \hbox (51.66595pt too wide) in paragraph at lines 223--224
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
  []
 
 
-Overfull \hbox (51.66595pt too wide) in paragraph at lines 176--177
-[][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][]
- []
-
-
-Overfull \hbox (57.66602pt too wide) in paragraph at lines 179--181
+Overfull \hbox (57.66602pt too wide) in paragraph at lines 226--228
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
-[29] [30]
+[30] [31]
 
-LaTeX Warning: Reference `buffer_requests' on page 31 undefined on input line 2
-53.
+LaTeX Warning: Reference `fig:buffer_system' on page 32 undefined on input line
+ 300.
 
-[31] [32]
+[32] [33]
 
-LaTeX Warning: Citation 'actr_reference' on page 33 undefined on input line 283
+LaTeX Warning: Citation 'actr_reference' on page 34 undefined on input line 332
 .
 
-[33] [34] [35]
-Overfull \hbox (251.25174pt too wide) in paragraph at lines 404--406
+[34] [35] [36]
+Overfull \hbox (251.25174pt too wide) in paragraph at lines 453--455
 [][][][][][][] [][][][][][] 
  []
 
-[36]
+[37]
 
-LaTeX Warning: Citation 'actr_reference' on page 37 undefined on input line 458
+LaTeX Warning: Citation 'actr_reference' on page 38 undefined on input line 507
 .
 
 
-Overfull \hbox (39.66583pt too wide) in paragraph at lines 463--464
+Overfull \hbox (39.66583pt too wide) in paragraph at lines 512--513
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (33.66577pt too wide) in paragraph at lines 465--466
+Overfull \hbox (33.66577pt too wide) in paragraph at lines 514--515
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (21.66565pt too wide) in paragraph at lines 468--469
+Overfull \hbox (21.66565pt too wide) in paragraph at lines 517--518
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (69.66614pt too wide) in paragraph at lines 471--472
+Overfull \hbox (69.66614pt too wide) in paragraph at lines 520--521
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (57.66602pt too wide) in paragraph at lines 475--476
+Overfull \hbox (57.66602pt too wide) in paragraph at lines 524--525
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (177.66724pt too wide) in paragraph at lines 482--483
+Overfull \hbox (177.66724pt too wide) in paragraph at lines 531--532
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
-[37]
-Overfull \hbox (225.66772pt too wide) in paragraph at lines 487--488
+
+Overfull \hbox (225.66772pt too wide) in paragraph at lines 536--537
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ] 
  []
 
 
-Overfull \hbox (225.66772pt too wide) in paragraph at lines 488--489
+Overfull \hbox (225.66772pt too wide) in paragraph at lines 537--538
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][] 
  []
 
-[38]
+[38] [39]
 
-LaTeX Warning: Citation 'actr_reference' on page 39 undefined on input line 529
+LaTeX Warning: Citation 'actr_reference' on page 40 undefined on input line 578
 .
 
-[39]
-Overfull \hbox (27.69756pt too wide) in paragraph at lines 581--582
+[40]
+Overfull \hbox (27.69756pt too wide) in paragraph at lines 630--631
 []\T1/phv/m/sl/10 will match all chunks which have the same value in []\T1/pcr/
 m/n/10 spam \T1/phv/m/sl/10 and []\T1/pcr/m/n/10 ham\T1/phv/m/sl/10 . [][][][][
 ][] 
  []
 
 
-LaTeX Warning: Citation 'actr_reference' on page 40 undefined on input line 588
+LaTeX Warning: Citation 'actr_reference' on page 41 undefined on input line 637
 .
 
-[40]
-Underfull \vbox (badness 4096) has occurred while \output is active []
-
- [41]
-[42] [43] [44]
-Overfull \hbox (14.90367pt too wide) in paragraph at lines 751--752
+[41] [42] [43] [44] [45]
+Overfull \hbox (14.90367pt too wide) in paragraph at lines 800--801
 \T1/phv/m/n/10 (-20) In this sec-tion, a CHR con-straint []\T1/pcr/m/n/10 find_
 chunk/3 \T1/phv/m/n/10 (-20) will be de-fined, that pro-duces a []\T1/pcr/m/n/1
 0 match_set/1
  []
 
-[45] [46]
-Overfull \hbox (21.86157pt too wide) in paragraph at lines 803--804
+[46] [47]
+Overfull \hbox (21.86157pt too wide) in paragraph at lines 852--853
 \T1/phv/m/n/10 (-20) de-sir-able to col-lect all those matches in one set. This
  can be trig-gered by a []\T1/pcr/m/n/10 collect_matches/1
  []
 
 
-Overfull \hbox (21.66565pt too wide) in paragraph at lines 824--825
+Overfull \hbox (21.66565pt too wide) in paragraph at lines 873--874
 [][][][][][][][][][][][][][][][][][][][][][] 
  []
 
-[47] [48]
-Overfull \hbox (45.6659pt too wide) in paragraph at lines 866--867
+[48] [49]
+Overfull \hbox (45.6659pt too wide) in paragraph at lines 915--916
 [][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (87.66632pt too wide) in paragraph at lines 875--876
+Overfull \hbox (87.66632pt too wide) in paragraph at lines 924--925
 [][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (333.66882pt too wide) in paragraph at lines 878--879
+Overfull \hbox (333.66882pt too wide) in paragraph at lines 927--928
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][] 
  []
 
 
-Overfull \hbox (315.66864pt too wide) in paragraph at lines 881--882
+Overfull \hbox (315.66864pt too wide) in paragraph at lines 930--931
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][] 
  []
 
 
-Overfull \hbox (327.66876pt too wide) in paragraph at lines 888--889
+Overfull \hbox (327.66876pt too wide) in paragraph at lines 937--938
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
-[49]
-Overfull \hbox (75.6662pt too wide) in paragraph at lines 902--903
+[50]
+Overfull \hbox (75.6662pt too wide) in paragraph at lines 951--952
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
 
  []
 
 
-Overfull \hbox (87.66632pt too wide) in paragraph at lines 914--915
+Overfull \hbox (87.66632pt too wide) in paragraph at lines 963--964
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][] 
  []
 
 
-Overfull \hbox (340.8917pt too wide) in paragraph at lines 917--918
+Overfull \hbox (340.8917pt too wide) in paragraph at lines 966--967
 \T1/phv/m/n/10 (-20) search of this chunk. [][][][][][] 
  []
 
 
-LaTeX Warning: Citation 'actr_reference' on page 50 undefined on input line 919
-.
-
-[50]
-
-LaTeX Warning: Reference `fig:scheduler' on page 51 undefined on input line 935
+LaTeX Warning: Citation 'actr_reference' on page 51 undefined on input line 968
 .
 
 [51]
-Overfull \hbox (37.65947pt too wide) in paragraph at lines 954--955
+
+LaTeX Warning: Reference `fig:scheduler' on page 52 undefined on input line 984
+.
+
+
+Underfull \vbox (badness 3514) has occurred while \output is active []
+
+ [52]
+Overfull \hbox (37.65947pt too wide) in paragraph at lines 1003--1004
 \T1/phv/m/n/10 (-20) In the im-ple-men-ta-tion of the sched-uler, the pri-or-it
 y queue holds ob-jects []\T1/pcr/m/n/10 q(Time,Priority,Event)\T1/phv/m/n/10 (-
 20) .
  []
 
-[52]
-Overfull \hbox (3.66547pt too wide) in paragraph at lines 990--991
+[53]
+Overfull \hbox (3.66547pt too wide) in paragraph at lines 1039--1040
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
-[53]
-Overfull \hbox (111.66656pt too wide) in paragraph at lines 1039--1040
+[54]
+Overfull \hbox (111.66656pt too wide) in paragraph at lines 1088--1089
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
 
  []
 
 
-Overfull \hbox (369.66919pt too wide) in paragraph at lines 1040--1041
+Overfull \hbox (369.66919pt too wide) in paragraph at lines 1089--1090
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (543.67096pt too wide) in paragraph at lines 1042--1043
+Overfull \hbox (543.67096pt too wide) in paragraph at lines 1091--1092
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 
-Overfull \hbox (363.66913pt too wide) in paragraph at lines 1043--1044
+Overfull \hbox (363.66913pt too wide) in paragraph at lines 1092--1093
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
-[54] [55]
+[55] [56]
 
-LaTeX Warning: Reference `tab:action_priorities' on page 56 undefined on input 
-line 1068.
+LaTeX Warning: Reference `tab:action_priorities' on page 57 undefined on input 
+line 1117.
 
-[56]
-Overfull \hbox (117.66663pt too wide) in paragraph at lines 1111--1113
+[57]
+Overfull \hbox (117.66663pt too wide) in paragraph at lines 1160--1162
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][][
 ][][] 
  []
 
-[57]
-Overfull \hbox (39.66583pt too wide) in paragraph at lines 1164--1165
+[58]
+Overfull \hbox (39.66583pt too wide) in paragraph at lines 1213--1214
 [][][][][][][][][][][][][][][][][][][][][][][][][][][][][] 
  []
 
-) (./chapters/compiler.tex [58] [59] [60
+) (./chapters/compiler.tex
+Underfull \vbox (badness 2111) has occurred while \output is active []
 
-
-]
+ [59]
+[60]
 Chapter 5.
-) (./chapters/example_models.tex [61] [62
+) (./chapters/example_models.tex [61
+
+
+] [62
 
 
 ]
@@ -1711,13 +1718,13 @@ Package logreq Info: Writing requests to 'arbeit.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 19086 strings out of 493488
- 291502 string characters out of 3146892
+ 19121 strings out of 493488
+ 292008 string characters out of 3146892
  705262 words of memory out of 3000000
- 21202 multiletter control sequences out of 15000+200000
+ 21208 multiletter control sequences out of 15000+200000
  67168 words of font info for 208 fonts, out of 3000000 for 9000
  958 hyphenation exceptions out of 8191
- 39i,12n,72p,1463b,3235s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 39i,12n,72p,1463b,3239s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-dist/fon
 ts/type1/public/ccicons/ccicons.pfb></usr/share/texmf-dist/fonts/type1/public/a
 msfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmm
@@ -1737,10 +1744,10 @@ r8a.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/
 texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-dist/fonts/typ
 e1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvr
 o8a.pfb>
-Output written on arbeit.pdf (81 pages, 613511 bytes).
+Output written on arbeit.pdf (81 pages, 616496 bytes).
 PDF statistics:
- 1685 PDF objects out of 1728 (max. 8388607)
- 1559 compressed objects within 16 object streams
- 674 named destinations out of 1000 (max. 500000)
+ 1723 PDF objects out of 1728 (max. 8388607)
+ 1597 compressed objects within 16 object streams
+ 703 named destinations out of 1000 (max. 500000)
  32443 words of extra memory for PDF output out of 35830 (max. 10000000)
 

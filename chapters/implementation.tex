@@ -31,7 +31,7 @@ In multiple parts of ACT-R it is necessary to store chunks and then operate on t
 Since chunk stores have been referred to as networks in the previous chapters, the general idea of this definition of a chunk store bases upon a relation that represents such a network.
 
 \begin{definition}[chunk-store]
-A \emph{chunk-store} $\Sigma$ is a tuple $(C,E,\mathcal{T},HasSlot,Isa)$, where $C$ is a set of chunks and $E$ a set of primitive elements, with $C \cap E = \emptyset$. $V = C \cup E$ are the \emph{values} of~$\Sigma$ and $\mathcal{T}$ a set of chunk-types. A chunk-type $(T,S) \in \mathcal{T}$ is a tuple with a type name $T$ and a set of slots $S$. The set of all slot-names is $\mathcal{S}$. 
+A \emph{chunk-store} $\Sigma$ is a tuple $(C,E,\mathcal{T},HasSlot,Isa)$, where $C$ is a set of chunks and $E$ a set of primitive elements, with $C \cap E = \emptyset$. $V = C \cup E \cup \{ \mathtt{nil} \}$ are the \emph{values} of~$\Sigma$ and $\mathcal{T}$ a set of chunk-types. A chunk-type $(T,S) \in \mathcal{T}$ is a tuple with a type name $T$ and a set of slots $S$. The set of all slot-names is $\mathcal{S}$. 
 
 $HasSlot \subseteq C \times \mathcal{S} \times V$ and $Isa \subseteq C \times T$ are relations and are defined as follows:
 
@@ -39,6 +39,8 @@ $HasSlot \subseteq C \times \mathcal{S} \times V$ and $Isa \subseteq C \times T$
  \item $c \enspace Isa \enspace T \Leftrightarrow$ chunk $c$ is of type $T$.
  \item $(c,s,v) \in HasSlot \Leftrightarrow v$ is the value of slot $s$ of $c$. This can also be written as $c \overset{s}{\longrightarrow} v$ and is spoken ``$c$ is connected to $v$'' or ``$v$ is in the slot $s$ of $c$''.
 \end{itemize}
+
+The two relations have to be right-unique and left-total, so each chunk has to have exactly one type and each chunk has to have exactly one value for each slot.
 
 
 The function $slots: C \rightarrow \mathcal{S} \times V$ is defined as $slots(c) = \{ (s,v) | (c,s,v) \in HasSlot \}$ and $slots: \mathcal{T} \rightarrow \mathcal{S}$ as $slots((T,S)) = S$.
@@ -61,6 +63,7 @@ The following methods can be defined over a chunk store $\Sigma = (C, E, \mathca
 \FIXME{add other methods. describe empty chunks?}
 
 \begin{example}
+ \label{ex:addition_fact_formal}
  The addition-fact chunk in figure \ref{fig:chunk_addition_fact} and its chunk-type are defined as follows:\\
  \verb|chunk-type(addition-fact arg1 arg2 sum)|\\
  \verb|add-chunk(a isa addition-fact arg1 5 arg2 2 sum 7)|.
@@ -69,7 +72,7 @@ The following methods can be defined over a chunk store $\Sigma = (C, E, \mathca
  \begin{align*}
  (\{a\}, \{2,5,7\},\\ 
  \{(addition-fact, \{arg1, arg2, sum\})\},\\
- \{(a,arg1,5), (a,arg2,5), (a,sum,7)\},\\
+ \{(a,arg1,5), (a,arg2,2), (a,sum,7)\},\\
  \{(a, addition-fact)\}).
  \end{align*}
  
@@ -109,13 +112,57 @@ The \verb|chunk/2| constraint represents both the set $C$ of chunks and the $Isa
 
 The $HasSlot$ relation is represented by the \verb|chunk_has_slot(c,s,v)| constraint, which really is just a direct translation of an element $(c,s,v) \in HasSlot$.
 
-Note that all values in the just presented constraints have to be ground. This is a demand claimed by the original ACT-R implementation and makes sense, since each value in a slot of a chunk is a real, ground value and the concept of variables does not have an advantage in this context, because every element that can be stored in the brain is known by the brain.
+Note that all values in the just presented constraints have to be ground. This is a demand claimed by the original ACT-R implementation and makes sense, since each value in a slot of a chunk is a real, ground value and the concept of variables does not have an advantage in this context, because every element that can be stored in the brain is assumed to be known by the brain.
 
 Additionally, from the definition of a chunk store it is known, that the $HasSlot$ and the $Isa$ relations have to be left-complete. \FIXME{correct expression! correct definitions!} Therefore, for every chunk \verb|c| in the store, exactly one \verb|isa(c,t)| constraint has to be in the store. For each \verb|chunk_type_has_slot(t,s)| constraint, a \verb|chunk_has_slot(c,s,v)| constraint has to be defined. If one wants to express, that a chunk has an empty slot, he might use \verb|nil| for the value to indicate that. Note that \verb|nil| must not be a chunk name or chunk-type name.
+
+\begin{example}
+\label{ex:addition_fact_chr}
+The chunk and chunk-type in example~\ref{ex:addition_fact_formal} are represented as:
+
+\begin{lstlisting}
+chunk_type(addition-fact)
+chunk_type_has_slot(addition-fact,arg1)
+chunk_type_has_slot(addition-fact,arg2)
+chunk_type_has_slot(addition-fact,sum)
+
+chunk(a,addition-fact)
+chunk_has_slot(a,arg1,5)
+chunk_has_slot(a,arg2,2)
+chunk_has_slot(a,sum,7)
+\end{lstlisting}
+\end{example}
+
 
 \subsubsection{Distinction of Elements and Chunks}
 
 A chunk store distinguishes between a set of chunks $C$ and a set of elements $E$. For implementational reasons it can be helpful if there are only chunks in the system, because elements just behave like chunks with no slots. Hence, a chunk-type \verb|chunk| with no slots will be added automatically to the store. Each element $e \in E$ and added as a chunk of type \verb|chunk| to the set of chunks $C$. After this operation $E = \emptyset$, and for every former element $e$ of $E$: $e \in C$, $(e,(chunk,\emptyset)) \in Isa$.
+
+So $E$ is represented now by $\{ c \in C | c Isa (chunk,\emptyset)$ in the implementation.
+
+\begin{example}
+The chunk representation from example~\ref{ex:addition_fact_chr} is changed to:
+
+\begin{lstlisting}
+chunk_type(addition-fact)
+chunk_type_has_slot(addition-fact,arg1)
+chunk_type_has_slot(addition-fact,arg2)
+chunk_type_has_slot(addition-fact,sum)
+
+chunk_type(chunk)
+
+chunk(a,addition-fact)
+chunk_has_slot(a,arg1,5)
+chunk_has_slot(a,arg2,2)
+chunk_has_slot(a,sum,7)
+
+chunk(5,chunk)
+chunk(2,chunk)
+chunk(7,chunk)
+\end{lstlisting}
+
+\end{example}
+
 
 \subsubsection{Simple Implementation of the Default Methods}
 \label{chunk_specification}
@@ -138,7 +185,7 @@ The default methods can be implemented as follows:
 
 \paragraph{add\_chunk}
 
-This method creates a the chunks and elements of the chunk store. The set $E$ of elements is minimal, ie. only elements that appear in the slots of a chunk but are not chunks themselves are members of $E$. However, the set $E$ is never constructed explicitly, but represented by chunks of the special type \verb|chunk| that provides no slots. So each value in the slot of a chunk that is added to the store and that is not an element of the chunk store yet, gets its own chunk of type \verb|chunk|. As soon as a chunk with the name of such a primitive element is added to the store, the chunk of type \verb|chunk| is removed from the store.
+This method creates the chunks and elements of the chunk store. The set $E$ of elements is minimal, ie. only elements that appear in the slots of a chunk but are not chunks themselves are members of $E$. However, the set $E$ is never constructed explicitly, but represented by chunks of the special type \verb|chunk| that provides no slots. So each value in the slot of a chunk that is added to the store and that is not an element of the chunk store yet, gets its own chunk of type \verb|chunk|. As soon as a chunk with the name of such a primitive element is added to the store, the chunk of type \verb|chunk| is removed from the store.
 
 \begin{lstlisting}[caption={Rules for \texttt{add\_chunk}}, label=lst:add_chunk_rules]
 % empty chunk will not be added
@@ -230,7 +277,7 @@ The buffer system can be regarded as a chunk-store, that is enhanced by buffers.
 \label{def:buffer_system}
 A \emph{buffer system} is a tuple $(B,\Sigma,Holds)$, where $B$ is a set of buffers, $\Sigma = (C, E, \mathcal{T}, HasSlot, Isa)$ a type-consistent chunk-store and $Holds \subseteq B \times (C \cup \{ \mathtt{nil} \})$ a unique and complete relation, that assigns every buffer at most one chunk that it holds. If a buffer $b$ is empty, ie. it does not hold a chunk, then $(b,\mathtt{nil}) \in Holds$.
 
-A buffer system is \emph{consistent}, if every chunk that appears in $Holds$ is a member of $C$ and $\Sigma$ is consistent.
+A buffer system is \emph{consistent}, if every chunk that appears in $Holds$ is a member of $C$ and $\Sigma$ is a type-consistent chunk-store.
 
 A buffer system is \emph{clean}, if its chunk-store only holds chunks which appear in $Holds$.
 \end{definition}
@@ -240,17 +287,19 @@ For the implementation of a buffer system, the code of a chunk-store can be exte
 \subsubsection{Destructive Assignment and Consistency}
 \label{destructive_assignment}
 
-The demand of $Holds$ being unique is a form of destructive assignment as described in \cite[p. 32]{fru_chr_book_2009}, ie. if a new chunk is assigned to a buffer, the old \verb|buffer| constraint is removed and a new \verb|buffer| constraint is introduced, holding the new chunk:
+The demand of $Holds$ being right-unique\footnote{$\forall b \in B \enspace \forall c, d \in (C \cup \{ \mathtt{nil} \}): (b,c), (b,d) \in Holds \Rightarrow b = c$} is a form of destructive assignment as described in \cite[p. 32]{fru_chr_book_2009}, ie. if a new chunk is assigned to a buffer, the old \verb|buffer| constraint is removed and a new \verb|buffer| constraint is introduced, holding the new chunk:
 
 \begin{lstlisting}
-set_buffer(b, c) \ buffer(b, _) <=> buffer(b, c).
+set_buffer(B, C) \ buffer(B, _) <=> buffer(B, C).
 \end{lstlisting}
 
-This rule ensures that only one \verb|buffer| exists for each buffer in $B$.
+This rule ensures that only one \verb|buffer| constraint exists for each buffer in $B$.
 
 At the beginning of the program, a \verb|buffer| constraint has to be added for all the available buffers of the modules. This problem is discussed at a later point. \FIXME{add reference}
 
-In addition, if a new chunk is introduced in a buffer, it also has to be present in the chunk-store, since the production system relies on the knowledge about the chunks in its buffers and chunks are essentially defined by their slots (\emph{consistency property} in definition~\ref{def:buffer_system}). Hence, every time a chunk is stored in a buffer, the \verb|add_chunk| method described in definition~\ref{def:abstract_methods_chunk_store} has to be called. This process is discussed later when talking about buffer requests in section~\ref{buffer_requests}.
+In addition, if a new chunk is put into a buffer, it also has to be present in the chunk-store, since the production system relies on the knowledge about the chunks in its buffers and chunks are essentially defined by their slots (\emph{consistency property} in definition~\ref{def:buffer_system}). Hence, every time a chunk is stored in a buffer, the \verb|add_chunk| method described in definition~\ref{def:abstract_methods_chunk_store} has to be called. However, the chunks in the slots are not loaded, since they are not present for working memory. They only appear as primitive elements in the chunk-store. Figure~\ref{fig:buffer_system}
+
+%This process is discussed later when talking about buffer requests in section~\ref{buffer_requests}.
 
 \subsubsection{Buffer States}
 

@@ -64,7 +64,7 @@ If the chunks in the buffers match all the conditions stated in a rule, it can b
 
 Although the term \emph{module} is used for the procedural system, it differs a lot from the other modules: In contrast to other modules, the procedural module has no own buffers, but can access the buffers of all the other modules. ``It really is just a system of mapping cortical buffers to other cortical buffers'' \cite[p. 54]{anderson_how_2007}.
 
-The procedural system can only fire one rule at once and it takes 50\,ms for a rule to fire \cite[p. 54]{anderson_how_2007}. After firing the selected rule, the next recognize cycle starts and a suitable rule will be detected and caused to fire. While that time, other modules may perform requests triggered in the action of the first rule. Sometimes, rules have to wait for results of certain modules and they cannot fire before those results are available. Those two facts illustrate how the procedural module can become a serial bottleneck in the computation process.
+The procedural system can only fire one rule at once and it takes 50\,ms for a rule to fire \cite[p. 54]{anderson_how_2007}. After firing the selected rule, the next recognize cycle starts and a suitable rule will be detected and caused to fire. During this time, other modules may perform requests triggered in the action of the first rule. Sometimes, rules have to wait for results of certain modules and they cannot fire before those results are available. Those two facts illustrate how the procedural module can become a serial bottleneck in the computation process.
 
 \subsubsection{Description of Procedural Actions}
 \label{description_of_proc_actions}
