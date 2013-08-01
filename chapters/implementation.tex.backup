@@ -65,20 +65,22 @@ The following methods can be defined over a chunk store $\Sigma = (C, E, \mathca
 
 \begin{description}
  \item[\texttt{chunk-type(name slot\textsubscript{1} slot\textsubscript{2} ... slot\textsubscript{n})}] adds the type $T = (\mathtt{name},\{\mathtt{slot_1}, \dots, \mathtt{slot_n}\})$ to the store, ie. $\mathcal{T'} = \mathcal{T} \cup \{T\}$. 
- \item[\texttt{add-chunk(name isa type slot\textsubscript{1} val\textsubscript{1} ... slot\textsubscript{n} val\textsubscript{n})}] adds a new chunk to the store, ie. $C' = C \cup \{ \mathtt{name} \}$, $Isa' = Isa \cup (\mathtt{name}, (\mathtt{type}, slots(\mathtt{type}))$ and $HasSlot' = \bigcup_{i = 1}^n{\mathtt{(slot_i,val_i)}} \cup HasSlot.$ Note, that due to the expansion of $C$, the condition that $C$ and $E$ have to be disjoint may be violated. To fix this violation, the element can be removed from $E$: $E' = (E \cup C) - (E \cap C).$ 
+ \item[\texttt{add-chunk(name isa type slot\textsubscript{1} val\textsubscript{1} ... slot\textsubscript{n} val\textsubscript{n})}] adds a new chunk to the store, ie. $C' = C \cup \{ \mathtt{name} \}$, $Isa' = Isa \cup (\mathtt{name}, (\mathtt{type}, slots(\mathtt{type}))$ and $HasSlot' = \bigcup_{i = 1}^n{\mathtt{(name,slot_i,val_i)}} \cup HasSlot.$ Note, that due to the expansion of $C$, the condition that $C$ and $E$ have to be disjoint may be violated. To fix this violation, the element can be removed from $E$: $E' = (E \cup C) - (E \cap C).$ 
  
- Additionally, a valid mechanism to restore type-consistency may be introduced: It might happen, that not all slots are specified in the \verb|add-chunk| method. Since it is claimed by the definition of $HasSlot$ that for all slots $s$ of a chunk $c$ there must be a $(c,s,v) \in HasSlot$, in implementations the unspecified slots are initialized as empty slots, represented by the empty value \verb|nil|.
+ Additionally, a valid mechanism to restore type-consistency may be introduced: It might happen, that not all slots are specified in the call of the \verb|add-chunk| method. Since it is claimed by the definition of $HasSlot$ that for all slots $s$ of a chunk $c$ there must be a $(c,s,v) \in HasSlot$, in implementations the unspecified slots are initialized as empty slots, represented by the empty value \verb|nil|. Furthermore, slots specified in the call of the method that are not a member of the chunk's type should cause an error to preserve type-consistency.
   \item[\texttt{alter-slot(name slot\textsubscript{1} val\textsubscript{1} ... slot\textsubscript{n} val\textsubscript{n})}] changes the slot values of a chunk identified by its name. Only existing slots can be altered.
   \item[\texttt{remove-chunk(name)}] removes the chunk with the given name from $C$ and all of its occurrences in $Isa$ and $HasSlot$.
-  \item[\texttt{return-chunk(chunk-name,chunk-specification)}] gets a chunk name as input and returns a chunk specification, ie. the name and all slot-value pairs of this chunk in the store.
+  \item[\texttt{return-chunk(name)}] gets a chunk name as input and returns a chunk specification, ie. the name, type and all slot-value pairs of this chunk in the store.
 \end{description} 
 \end{definition}
 
 \begin{example}
  \label{ex:addition_fact_formal}
  The addition-fact chunk in figure \ref{fig:chunk_addition_fact} and its chunk-type are defined as follows:\\
- \verb|chunk-type(addition-fact arg1 arg2 sum)|\\
- \verb|add-chunk(a isa addition-fact arg1 5 arg2 2 sum 7)|.
+\begin{lstlisting}
+chunk-type(addition-fact arg1 arg2 sum)
+add-chunk(a isa addition-fact arg1 5 arg2 2 sum 7)
+\end{lstlisting}
  
  This leads to the following chunk-store: 
  \begin{align*}
@@ -269,7 +271,7 @@ add_chunk_type(CT, [S|Ss]) <=>
 
 \paragraph{alter\_slot}
 
-This method replaces the value of an existing slot for a given chunk.
+This method replaces the value of an existing slot for a given chunk, but only if it is a valid slot for the chunk-type of the altered chunk.
 
 \begin{lstlisting}
 alter_slot(Chunk,Slot,Value), chunk_has_slot(Chunk,Slot,_) <=>
@@ -315,7 +317,7 @@ In the last rule, the process terminates, if no other rule can fire any more. Th
 
 \subsubsection{Checking Consistency and Type-Consistency}
 
-At the moment, there are no rules that check the consistency of the chunk store. However, if the default methods for adding chunks are used, a type-consistent store is built automatically, since for every chunk has exactly one chunk-type\footnote{left-totality and right-uniqueness of $Isa$} and all slots from its chunk-type are described and only those slots are described (satisfies type-consistency). Additionally, there are no two different slot descriptions for the same chunk and every chunk in the store is described\footnote{left-totality of $HasSlot$} (satisfies the definition of a chunk-store).
+At the moment, there are no rules that check the consistency of the chunk store. However, if the default methods for adding chunks are used, a type-consistent store is built automatically, since for every chunk has exactly one chunk-type\footnote{left-totality and right-uniqueness of $Isa$} and all slots from its chunk-type are described and only those slots are described (satisfies type-consistency). Additionally, there are no two different slot descriptions for the same chunk and every chunk in the store is described\footnote{This is demanded by the type-consistency: Since $Isa$ is left-total, every chunk is in the $Isa$ relation. Type-consisteny demands, that every chunk in the $Isa$ relation has a value for all slots of its type.} (satisfies the definition of a chunk-store).
 
 Rules for checking those constraints could be added easily to the implementation.
 
@@ -329,7 +331,7 @@ The buffer system can be regarded as a chunk-store, that is enhanced by buffers.
 
 \begin{definition}[buffer system]
 \label{def:buffer_system}
-A \emph{buffer system} is a tuple $(B,\Sigma,Holds)$, where $B$ is a set of buffers, $\Sigma = (C, E, \mathcal{T}, HasSlot, Isa)$ a type-consistent chunk-store and $Holds \subseteq B \times (C \cup \{ \mathtt{nil} \})$ a unique and complete relation, that assigns every buffer at most one chunk that it holds. If a buffer $b$ is empty, ie. it does not hold a chunk, then $(b,\mathtt{nil}) \in Holds$.
+A \emph{buffer system} is a tuple $(B,\Sigma,Holds)$, where $B$ is a set of buffers, $\Sigma = (C, E, \mathcal{T}, HasSlot, Isa)$ a type-consistent chunk-store and $Holds \subseteq B \times (C \cup \{ \mathtt{nil} \})$ a right-unique and left-total relation, that assigns every buffer at most one chunk that it holds. If a buffer $b$ is empty, ie. it does not hold a chunk, then $(b,\mathtt{nil}) \in Holds$.
 
 A buffer system is \emph{consistent}, if every chunk that appears in $Holds$ is a member of $C$ and $\Sigma$ is a type-consistent chunk-store.
 
@@ -349,7 +351,7 @@ set_buffer(B, C) \ buffer(B, _) <=> buffer(B, C).
 
 This rule ensures that only one \verb|buffer| constraint exists for each buffer in $B$.
 
-At the beginning of the program, a \verb|buffer| constraint has to be added for all the available buffers of the modules. This problem is discussed at a later point. \FIXME{add reference}
+At the beginning of the program, a \verb|buffer| constraint has to be added for all the available buffers of the modules. This problem is discussed in section~\ref{initialization}.
 
 In addition, if a new chunk is put into a buffer, it also has to be present in the chunk-store, since the production system relies on the knowledge about the chunks in its buffers and chunks are essentially defined by their slots (\emph{consistency property} in definition~\ref{def:buffer_system}). Hence, every time a chunk is stored in a buffer, the \verb|add_chunk| method described in definition~\ref{def:abstract_methods_chunk_store} has to be called. However, the chunks in the slots are not loaded, since they are not present for working memory. They only appear as primitive elements in the chunk-store. Figure~\ref{fig:buffer_system}
 
@@ -451,47 +453,47 @@ The counting rule specified in the example in section~\ref{example_counting} cou
 
 An ACT-R production rule of the form
 
-\begin{verbatim}
+\begin{lstlisting}[mathescape]
 (p name
-  =buffer1>
-    isa    type1
-    slot11 val11
+  =buffer$_\mathtt{1}$>
+    isa    type$_1$
+    slot$_\mathtt{1,1}$  val$_\mathtt{1,1}$
     ...
-    slot1n val1n
+    slot$_\mathtt{1,n}$  val$_\mathtt{1,n}$
   ...
-  =bufferk>
-    isa    typek
-    slotk1 valk1
+  =buffer$_\mathtt{k}$>
+    isa    type$_\mathtt{k}$
+    slot$_\mathtt{k,1}$  val$_\mathtt{k,1}$
     ...
-    slotkm valkm
+    slot$_\mathtt{k,m}$  val$_\mathtt{k,m}$
 ==>
 ... )
-\end{verbatim}
+\end{lstlisting}
 
 states formally, that:
 
-If $buffer1 Holds c \wedge c Isa type1 \wedge slot_{1,1}=val_{1,1} \wedge \dots$ \FIXME{extend} is true, then the rule matches and the RHS should be performed.
+If $buffer_1 \enspace Holds \enspace c_1 \enspace \wedge \enspace c \enspace Isa \enspace type_1 \enspace \wedge \enspace c_1 \xrightarrow{slot_{1,1}} val_{1,1} \enspace \wedge \enspace \dots \enspace \wedge \enspace buffer_k \enspace Holds \enspace c_k \enspace \wedge \enspace c_k \enspace Isa \enspace type_k \enspace \wedge \enspace \dots$ is true, then the rule matches and the RHS should be performed.
 
 This can be directly translated into a CHR rule:
 
-\begin{verbatim}
+\begin{lstlisting}[mathescape]
 name @
-  buffer(buffer1,C1),
-  chunk(C1,type1),
-  chunk_has_slot(C1,slot11,val11),
+  buffer(buffer$_\mathtt{1}$,C$_\mathtt{1}$),
+  chunk(C$_\mathtt{1}$,type1),
+  chunk_has_slot(C$_\mathtt{1}$,slot$_\mathtt{1,1}$,val$_\mathtt{1,1}$),
   ...
-  chunk_has_slot(C1,slot1n,val1n),
+  chunk_has_slot(C$_\mathtt{1}$,slot$_\mathtt{1,n}$,val$_\mathtt{1,n}$),
   ...
-  buffer(bufferk,Ck),
-  chunk(Ck,typek),
-  chunk_has_slot(Ck,slotk1,valk1),
+  buffer(bufferk,C$_\mathtt{k}$),
+  chunk(C$_\mathtt{k}$,type$_\mathtt{k}$),
+  chunk_has_slot(C$_\mathtt{k}$,slot$_\mathtt{k,1}$,val$_\mathtt{k,1}$),
   ...
-  chunk_has_slot(Ck,slotkm,valkm)
+  chunk_has_slot(C$_\mathtt{k}$,slot$_\mathtt{k,m}$,val$_\mathtt{k,m}$)
 ==>
   ...
-\end{verbatim}
+\end{lstlisting}
 
-This rule checks the buffer system for the existence of a buffer specified in the request holding a certain chunk and then checks the chunk store of the buffer system for that chunk with the type and slots specified in the ACT-R rule.
+This rule checks the buffer system for the existence of a buffer holding a particular chunk and then checks the chunk store of the buffer system for that chunk with the type and slots specified in the ACT-R rule. The rule is a propagation rule, because the information of the chunk-store should not be removed.
 
 If the values in the slot tests are variables, they can be directly translated to Prolog variables.
 
@@ -505,7 +507,6 @@ The CHR rule only fires, if all the checked buffers hold chunks that meet the re
 \end{itemize}
 
 \FIXME{ist die begründung schlüssig? evtl section über variablen hier einfügen}
-\FIXME{add some words about double chunk checks}
 
 \begin{example}[counting example in CHR -- simple]
 The production rule in example~\ref{ex:counting} can be translated to:
@@ -546,26 +547,19 @@ on the LHS of a production rule can be translated to the following CHR rule head
 
 \begin{lstlisting}
 ...
-buffer_state(buffer,bstate) 
-...
-==> ...
+buffer_state(buffer,bstate) ... ==> ...
 \end{lstlisting}
-
-
-
-
-
 
 \subsubsection{The Production Rule Grammar}
 
 The discussed concepts lead to the following grammar for production rules, which is a simplified version of the actual grammar used in the original ACT-R implementation \cite[p. 162]{actr_reference}. 
 
 
-\begin{lstlisting}
+\begin{lstlisting}{caption={The ACT-R production rule grammar} label=lst:production_rule_grammar}
 production-definition ::= (p name condition* ==> action*)
 name ::= a symbol that serves as the name of the production for reference
 condition ::= [ buffer-test | query ]
-action ::= [buffer-modification | request | buffer-clearing | output | ]
+action ::= [buffer-modification | request | buffer-clearing | output ]
 buffer-test ::= =buffer-name> isa chunk-type slot-test*
 buffer-name ::= a symbol which is the name of a buffer
 chunk-type ::= a symbol which is the name of a chunk-type in the model
@@ -581,7 +575,7 @@ buffer-modification ::= =buffer-name> slot-value-pair*
 slot-value-pair ::= slot-name bound-slot-value
 bound-slot-value ::= a bound variable or any Lisp value
 request ::= +buffer-name> isa chunk-type request-spec*
-request-spec ::= {slot-modifier} slot-name slot-value
+request-spec ::= {slot-modifier} slot-value-pair
 request-parameter ::= a Lisp keyword naming a request parameter provided by the buffer specified
 buffer-clearing ::= -buffer-name>
 variable ::= a symbol which starts with the character =
@@ -597,10 +591,59 @@ Some of the details in this grammar that have not been discussed yet are present
 \subsubsection{The Order of Rule Applications}
 
 \subsubsection{Bound and Unbound Variables}
+\label{bound_and_unbound_variables}
+
+According to the ACT-R production rule grammar in listing~\ref{lst:production_rule_grammar}, unbound variables can only appear on the left hand side of a rule. Hence, no new variables are introduced on the right hand side. Since all the elements in the buffer store are completely described and ground, every variable on the LHS of a rule will be bound to a ground value. This simplifies the rule selection and application process a lot, since every value of the calculation is known after the matching. This enables simple implementations of arithmetic tests, for example (see section~\ref{slot_modifiers}).
 
 \subsubsection{Double Chunk Checks}
 
+A problem that has not been addressed yet, is that ACT-R allows buffer tests like the following:
+
+\begin{lstlisting}
+=buffer>
+  isa  foo
+  bar  spam
+  bar  spam
+\end{lstlisting}
+
+In the logical reading, this would signify that $buffer \enspace Holds \enspace c \enspace \wedge \enspace c \enspace Isa \enspace foo \enspace \wedge \enspace c \xrightarrow{bar} spam \enspace \wedge \enspace c \xrightarrow{bar} spam$ which is equivalent to the test with only one test for the \verb|bar| slot.
+
+However, in CHR the following rule resulting from the simple translation scheme would not match:
+
+\begin{lstlisting}
+buffer(buffer,C),
+chunk(C,foo),
+chunk_has_slot(C,bar,spam),
+chunk_has_slot(C,bar,spam)
+\end{lstlisting}
+
+Because there are no two identical \verb|chunk_has_slot| constraints in the store, the rule could not fire. When translating such a rule, the second test has to be eliminated.
+
+However, this does not the trick for all possible cases. For example, suppose a test
+
+\begin{lstlisting}
+=buffer>
+  isa  foo
+  bar  spam
+  bar  =x
+\end{lstlisting}
+
+where the second test refers to a variable (or even both tests are variables). This problem could be solved by adding a guard to the rule from the simple translation:
+
+\begin{lstlisting}
+buffer(buffer,C),
+chunk(C,foo),
+chunk_has_slot(C,bar,spam)
+==> spam == X
+\end{lstlisting}
+
+Since \verb|X| must be bound after the matching\footnote{see section~\ref{bound_and_unbound_variables}}, the test will always give the correct result. This also works for the first example, where the test would be \verb|spam == spam|, which is always true and hence could be reduced to the rule with the second test eliminated and no guard\footnote{true guards can always be reduced}.
+
+
+
+
 \subsubsection{Slot Modifiers}
+\label{slot_modifiers}
 
 In ACT-R, slot-tests can be preceded by \emph{slot modifiers}. Those modifiers allow to specify tests like inequality (\verb|-|) or arithmetic comparisons (\verb|<, >, <=, >=|) of the slot value of a chunk with the specified variable or value. Since the slots in a chunk store are always fully defined with ground values, those tests are decidable.
 
@@ -617,7 +660,7 @@ To translate the other slot modifiers to CHR, another CHR mechanism can be used:
 ==>
 \end{lstlisting}
 
-where \verb|~| stands for a modifier in \{ \verb|=,-,<,>,<=,>=| \}can be translated as follows:
+where \verb|~| stands for one of the modifiers in \{ \verb|=,-,<,>,<=,>=| \} can be translated as follows:
 
 \begin{lstlisting}
 buffer(buffer,C),
@@ -633,7 +676,7 @@ where \verb|#| is the placeholder for the built-in constraint that computes the 
 
 For arithmetic slot modifiers the values being compared have to be numbers. If a value is not a number, the arithmetic test will fail and the rule cannot be applied \cite{actr_reference}.
 
-Note, that slot tests with modifiers other than \verb|=| do not bind variables, but only perform simple checks, like it is with guards in CHR. If \verb|val| is an unbound variable and is never bound to a value on LHS, the default implementation throws a warning, and the rule will not match. Therefore, to handle this case, the rule translation scheme has to be amended with an additional guard check \verb|ground(Val)|, where \verb|Val| is the Prolog variable that replaces each occurrence of the variable \verb|val|.
+Note, that slot tests with modifiers other than \verb|=| do not bind variables, but only perform simple checks, like it is with guards in CHR. If \verb|val| is an unbound variable and is never bound to a value on LHS, the default implementation throws a warning, and the rule will not match. Therefore, to handle this case, the rule translation scheme has to be extended by an additional guard check \verb|ground(Val)|, where \verb|Val| is the Prolog variable that replaces each occurrence of the variable \verb|val|.
 
 As with normal slot tests, it is important to mention that if there are several tests on the same slot, the \verb|chunk_has_slot| constraint must appear only once on the LHS of the CHR rule, since every slot-value pair is unique in the constraint store. Ie., if the first slot test of a particular slot appears on the LHS of the ACT-R rule, a \verb|chunk_has_slot| constraint has to be added to the LHS of the CHR rule. For every other occurrence of this slot in a slot test, only guard checks are added.
 
@@ -687,6 +730,13 @@ will match all chunks which have the same value in \verb|spam| and \verb|ham|. \
 
 \end{example}
 
+\paragraph{Relation to Negation-as-Absence}
+
+Negation-as-absence as described in \cite[147\psqq]{fru_chr_book_2009} is a concept provided by many production rule systems. It enables the programmer to negate a fact in the sense that the fact is not in the store and therefore the rule is applicable -- so the programmer asks for the absence of a particular fact.
+
+At the first glance, the slot modifiers seem to implement this concept, but this is not the case: All negated slot tests in ACT-R can be reduced to simple built-in guard checks, because the chunks in the store are always described completely and the values are ground, so simple built-in checks work automatically. This also works for invalid slot-tests that ask for slots which are not offered by the chunk-type they ask for. Then there will never be a constraint matching the head of the rule due to type consistency.
+
+With these restrictions, ACT-R avoids the problems that come with negation-as-absence as they are explained in \cite[147\psqq]{fru_chr_book_2009} and the translation of such tests to CHR is very simple.
 
 \subsubsection{Empty Slots}
 
@@ -784,7 +834,7 @@ Exported constraints can only appear once in a program, since they can be called
 
 The architecture of ACT-R provides an infrastructure for the procedural module to state requests to all the other modules. To implement this concept as general as possible, an interface has to be defined, which allows the adding of new modules to the system by just implementing this interface.
 
-\begin{lstlisting}[caption={Simple Interface Module},label=lst:interface_module]
+\begin{lstlisting}[caption={Simple Interface ``Module''},label=lst:interface_module]
 module_request(+BufName,+Chunk,-ResChunk,-ResState)
 \end{lstlisting}
 
@@ -1024,6 +1074,7 @@ so the chunk search of a chunk that is only a pointer to another chunk can be re
 The process of chunk merging is described in \cite[??]{actr_reference}. The treating of identical names is not described there, but has been tested in the original implementation: ACT-R handles those identical names similarly to this approach by adding a sequential number to the identical name. For example, the chunk with name \verb|a| would be called \verb|a-0| if there already was a chunk \verb|a| in the store.
 
 \section{Initialization}
+\label{initialization}
 
 In the examples the models had to be run by stating complex queries which create all necessary buffers and add all chunk types and chunks to the declarative memory manually. In the original ACT-R implementation, the command \verb|run| is used to run a model. This behaviour can be transferred to the CHR implementation easily by adding a \verb|run| constraint and a rule for this constraint, that performs all the initialization work.
 
@@ -1056,7 +1107,7 @@ A \emph{priority queue} is an abstract data structure that serves objects by the
 
 \subsubsection{Objects}
 
-In the implementation of the scheduler, the priority queue holds objects \verb|q(Time,Priority,Event)|. The priority of such a queue object is composed from the \verb|Time| and the \verb|Priority|. The order between the elements is defined as follows:
+In the implementation of the scheduler, the priority queue contains objects of the form \verb|q(Time,Priority,Event)|. The priority of such a queue object is composed from the \verb|Time| and the \verb|Priority|. The order between the elements is defined as follows:
 
 \begin{definition}[ordered time-priority condition]
 \verb|q(T1,P1,E1)| $\prec$ \verb|q(T2,P2,E2)|, if \verb|T1| $<$ \verb|T2|. In the case that \verb|T1 = T2|, then \verb|q(T1,P1,E1)| $\prec$ \verb|q(T2,P2,E2)| if \verb|P1| $>$ \verb|P2|. So, events with smaller times will be returned first. If two events appear at the same time, it is possible to define a priority and the event with the higher priority will be returned first. 
