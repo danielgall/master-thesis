@@ -48,6 +48,8 @@ backend=bibtex
 %%
 \usepackage{fancyvrb}
 \usepackage{ccicons}
+\usepackage{enumitem}
+\setlist{nolistsep}
 
 \usepackage{scrhack}
 \usepackage{graphicx}
@@ -128,13 +130,25 @@ backend=bibtex
 
 
 %%
+%% Eigene Farben
+%%
+\definecolor{Gray}{rgb}{0.80784, 0.86667, 0.90196} %dunkelblau
+\definecolor{Lightgray}{rgb}{0.9176, 0.95, 0.95686} %hellblau
+\definecolor{Akzent}{rgb}{0.6627, 0.63529, 0.55294} %akzentfarbe
+
+%%
 %% Einstellungen für Codelistings
 %%
 \lstset{
     language=Prolog,
     showstringspaces=false,
-    frame=single,
+    frame=L,%TB,%single
+    %backgroundcolor=\color{Lightgray},
+    breaklines=true,
+    breakatwhitespace=true,
+    xleftmargin=20pt,
     numbers=left,
+    aboveskip=\parskip,
     basicstyle=\ttfamily,
     numberstyle=\tiny
 }
@@ -154,14 +168,6 @@ backend=bibtex
 %% Eigene Makros
 %%
 \newcommand{\FIXME}[1]{\colorbox{yellow}{\bf FIXME: #1}}
-
-
-%%
-%% Eigene Farben
-%%
-\definecolor{Gray}{rgb}{0.80784, 0.86667, 0.90196} %dunkelblau
-\definecolor{Lightgray}{rgb}{0.9176, 0.95, 0.95686} %hellblau
-\definecolor{Akzent}{rgb}{0.6627, 0.63529, 0.55294} %akzentfarbe
 
 
 %%

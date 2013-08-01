@@ -1,4 +1,4 @@
-\chapter{Transformation of ACT-R to CHR}
+\chapter{Implementation of ACT-R in CHR}
 
 After the comprehensive but at some point informal overview of the ACT-R theory in chapter \ref{actr_description}, this chapter presents a possible implementation of the described concepts of the ACT-R theory in CHR.
 
@@ -31,7 +31,7 @@ In multiple parts of ACT-R it is necessary to store chunks and then operate on t
 Since chunk stores have been referred to as networks in the previous chapters, the general idea of this definition of a chunk store bases upon a relation that represents such a network.
 
 \begin{definition}[chunk-store]
-A \emph{chunk-store} $\Sigma$ is a tuple $(C,E,\mathcal{T},HasSlot,Isa)$, where $C$ is a set of chunks and $E$ a set of primitive elements, with $C \cap E = \emptyset$. $V = C \cup E \cup \{ \mathtt{nil} \}$ are the \emph{values} of~$\Sigma$ and $\mathcal{T}$ a set of chunk-types. A chunk-type $(T,S) \in \mathcal{T}$ is a tuple with a type name $T$ and a set of slots $S$. The set of all slot-names is $\mathcal{S}$. 
+A \emph{chunk-store} $\Sigma$ is a tuple $(C,E,\mathcal{T},HasSlot,Isa)$, where $C$ is a set of chunks and $E$ a set of primitive elements, with $C \cap E = \emptyset$. $V = C \cup E \cup \{ \mathtt{nil} \}$ are the \emph{values} of~$\Sigma$ and $\mathcal{T}$ a set of chunk-types. A chunk-type $T = (t,S) \in \mathcal{T}$ is a tuple with a \emph{unique}\footnote{$\forall (t,S), (t',S') \in \mathcal{T}: t = t' \Rightarrow S = S'$ } type name $t$ and a set of slots $S$. The set of all slot-names is $\mathcal{S}$. 
 
 $HasSlot \subseteq C \times \mathcal{S} \times V$ and $Isa \subseteq C \times T$ are relations and are defined as follows:
 
@@ -40,33 +40,47 @@ $HasSlot \subseteq C \times \mathcal{S} \times V$ and $Isa \subseteq C \times T$
  \item $(c,s,v) \in HasSlot \Leftrightarrow v$ is the value of slot $s$ of $c$. This can also be written as $c \overset{s}{\longrightarrow} v$ and is spoken ``$c$ is connected to $v$'' or ``$v$ is in the slot $s$ of $c$''.
 \end{itemize}
 
-The two relations have to be right-unique and left-total, so each chunk has to have exactly one type and each chunk has to have exactly one value for each slot.
+The $Isa$ relation has to be right-unique and left-total, so each chunk has to have exactly one type.
+
+% The following function is defined:
+% 
+% \begin{align*}
+%  %\item $slots: C \rightarrow \mathcal{S} \times V$ \\
+%  %$slots(c) = \{ (s,v) | (c,s,v) \in HasSlot \}$ 
+%  slots: \mathcal{T} \rightarrow \mathcal{S} &\\
+%        slots((t,S)) = S&
+% \end{align*}
 
 
-The function $slots: C \rightarrow \mathcal{S} \times V$ is defined as $slots(c) = \{ (s,v) | (c,s,v) \in HasSlot \}$ and $slots: \mathcal{T} \rightarrow \mathcal{S}$ as $slots((T,S)) = S$.
+A chunk-store is \emph{type-consistent}, iff $\forall (c,(t,S)) \in Isa: \forall s \in S \enspace \exists ! (c,s,v) \in HasSlot$. So every chunk must have exactly one value for each slot of its type and only describe slots of its type. Empty slots are represented by the value \verb|nil|. Since every chunk has exactly one type, this is valid for all chunks in the store.
 
-A chunk-store is \emph{type-consistent}, if $\forall(c,s,v) \in HasSlot: c \enspace Isa \enspace (T,S) \Rightarrow \exists s' \in S: s=s'$ and $\forall c \in C: \enspace c \enspace Isa \enspace (T,S) \Rightarrow \forall s \in S: \exists (c',s',v) \in HasSlot: c=c', s=s'$.
+%iff $\forall(c,s,v) \in HasSlot: c \enspace Isa \enspace (T,S) \Rightarrow \exists s' \in S: s=s'$ and $\forall c \in C: \enspace c \enspace Isa \enspace (T,S) \Rightarrow \forall s \in S: \exists (c',s',v) \in HasSlot: c=c', s=s'$. 
+
 \end{definition}
+
 
 \begin{definition}[abstract methods of a chunk store]
 \label{def:abstract_methods_chunk_store}
 The following methods can be defined over a chunk store $\Sigma = (C, E, \mathcal{T}, HasSlot, Isa)$:
 
 \begin{description}
- \item[$\mathtt{chunk-type(name slot_1 slot_2 \dots slot_n)}$] adds the type $T = (\mathtt{name},\{\mathtt{slot1}, \dots, \mathtt{slotn}\})$ to the store, ie. $\mathcal{T'} = \mathcal{T} \cup \{T\}$. 
- \item[$\mathtt{add-chunk(name isa type slot_1 val_1 \dots slot_n val_n)}$] adds a new chunk to the store, ie. $C' = C \cup \{ \mathtt{name} \}$, $Isa' = Isa \cup (\mathtt{name}, (\mathtt{type}, slots(\mathtt{type}))$ and $HasSlot' = \bigcup_{i = 1}^n{\mathtt{(slot_i,val_i)}} \cup HasSlot.$ Note, that due to the expansion of $C$, the condition that $C$ and $E$ have to be disjoint may be violated. To fix this violation, the element can be removed from $E$: $E' = (E \cup C) - (E \cap C).$ 
+ \item[\texttt{chunk-type(name slot\textsubscript{1} slot\textsubscript{2} ... slot\textsubscript{n})}] adds the type $T = (\mathtt{name},\{\mathtt{slot_1}, \dots, \mathtt{slot_n}\})$ to the store, ie. $\mathcal{T'} = \mathcal{T} \cup \{T\}$. 
+ \item[\texttt{add-chunk(name isa type slot\textsubscript{1} val\textsubscript{1} ... slot\textsubscript{n} val\textsubscript{n})}] adds a new chunk to the store, ie. $C' = C \cup \{ \mathtt{name} \}$, $Isa' = Isa \cup (\mathtt{name}, (\mathtt{type}, slots(\mathtt{type}))$ and $HasSlot' = \bigcup_{i = 1}^n{\mathtt{(name,slot_i,val_i)}} \cup HasSlot.$ Note, that due to the expansion of $C$, the condition that $C$ and $E$ have to be disjoint may be violated. To fix this violation, the element can be removed from $E$: $E' = (E \cup C) - (E \cap C).$ 
  
- Additionally, a valid mechanism to restore type-consistency may be introduced: It might happen, that not all slots are specified in the \verb|add-chunk| method. Since it is claimed by the definition of $HasSlot$ that for all slots $s$ of a chunk $c$ there must be a $(c,s,v) \in HasSlot$, in implementations the unspecified slots are initialized as empty slots, represented by the empty value \verb|nil|.
+ Additionally, a valid mechanism to restore type-consistency may be introduced: It might happen, that not all slots are specified in the call of the \verb|add-chunk| method. Since it is claimed by the definition of $HasSlot$ that for all slots $s$ of a chunk $c$ there must be a $(c,s,v) \in HasSlot$, in implementations the unspecified slots are initialized as empty slots, represented by the empty value \verb|nil|. Furthermore, slots specified in the call of the method that are not a member of the chunk's type should cause an error to preserve type-consistency.
+  \item[\texttt{alter-slot(name slot\textsubscript{1} val\textsubscript{1} ... slot\textsubscript{n} val\textsubscript{n})}] changes the slot values of a chunk identified by its name. Only existing slots can be altered.
+  \item[\texttt{remove-chunk(name)}] removes the chunk with the given name from $C$ and all of its occurrences in $Isa$ and $HasSlot$.
+  \item[\texttt{return-chunk(name)}] gets a chunk name as input and returns a chunk specification, ie. the name, type and all slot-value pairs of this chunk in the store.
 \end{description} 
 \end{definition}
-
-\FIXME{add other methods. describe empty chunks?}
 
 \begin{example}
  \label{ex:addition_fact_formal}
  The addition-fact chunk in figure \ref{fig:chunk_addition_fact} and its chunk-type are defined as follows:\\
- \verb|chunk-type(addition-fact arg1 arg2 sum)|\\
- \verb|add-chunk(a isa addition-fact arg1 5 arg2 2 sum 7)|.
+\begin{lstlisting}
+chunk-type(addition-fact arg1 arg2 sum)
+add-chunk(a isa addition-fact arg1 5 arg2 2 sum 7)
+\end{lstlisting}
  
  This leads to the following chunk-store: 
  \begin{align*}
@@ -78,11 +92,6 @@ The following methods can be defined over a chunk store $\Sigma = (C, E, \mathca
  
  $slots(a) = \{(arg1,5), (arg2,2), (sum,7)\}$ and $slots((addition-fact,\{arg1, arg2, sum\}) = \{arg1, arg2, sum\}$. Hence, the store is type-consistent.
 \end{example}
-
-\begin{example}
- \FIXME{refer to empty chunks}
-\end{example}
-
 
 \subsection{Representation of Chunks in CHR}
 
@@ -260,10 +269,57 @@ add_chunk_type(CT, [S|Ss]) <=>
   add_chunk_type(CT, Ss).
 \end{lstlisting}
 
+\paragraph{alter\_slot}
 
-\subsubsection{Checking Type-Consistency}
+This method replaces the value of an existing slot for a given chunk, but only if it is a valid slot for the chunk-type of the altered chunk.
 
-\FIXME{missing}
+\begin{lstlisting}
+alter_slot(Chunk,Slot,Value), chunk_has_slot(Chunk,Slot,_) <=>
+  chunk_has_slot(Chunk,Slot,Value).
+  
+alter_slot(Chunk,Slot,Value) <=>
+  false.
+\end{lstlisting}
+
+The first rule replaces the existing \verb|chunk_has_slot| constraint by a new one. This is called \emph{destructive assignment} as described in \cite[32]{fru_chr_book_2009}. The second rule only matches, if the first did not match (due to the refined operational semantics of CHR). This is only the case, if it is tried to alter a slot with a non-existing \verb|chunk_has_slot| constraint. However, since the chunk descriptions are complete, the slot cannot be valid for the type of the chunk and the altering has to fail.
+
+\paragraph{remove\_chunk}
+
+This method removes all occurrences of a chunk.
+
+\begin{lstlisting}
+remove_chunk(Name) \ chunk(Name, _) <=> true.
+remove_chunk(Name) \ chunk_has_slot(Name, _, _) <=> true.
+remove_chunk(_) <=> true.
+\end{lstlisting}
+
+\paragraph{return\_chunk}
+
+This method creates a chunk specification as defined in section~\ref{chunk_specification} from the chunk name of a chunk in the store.
+
+\begin{lstlisting}[caption={rules for \texttt{return\_chunk}}]
+chunk(ChunkName, ChunkType) \ return_chunk(ChunkName,Res) <=> 
+  var(Res) | 
+  build_chunk_list(chunk(ChunkName, ChunkType, []),Res).
+
+chunk_has_slot(ChunkName, S, V) \ build_chunk_list(chunk(ChunkName, ChunkType, L), Res) <=> 
+  \+member((S,V),L) | 
+  build_chunk_list(chunk(ChunkName, ChunkType, [(S,V)|L]),Res).
+  
+build_chunk_list(X,Res) <=> Res=X.
+\end{lstlisting}
+
+The first rule creates the initial chunk specification with name and type set, but without any slot specification. This initial representation is handed to the \verb|build_chunk_list| constraint.
+
+The second rule adds a slot-value pair from the store to the list of slot-value pairs in the specification and builds the next chunk specification from this new representation.
+
+In the last rule, the process terminates, if no other rule can fire any more. Then the result is bound to the handed specification.
+
+\subsubsection{Checking Consistency and Type-Consistency}
+
+At the moment, there are no rules that check the consistency of the chunk store. However, if the default methods for adding chunks are used, a type-consistent store is built automatically, since for every chunk has exactly one chunk-type\footnote{left-totality and right-uniqueness of $Isa$} and all slots from its chunk-type are described and only those slots are described (satisfies type-consistency). Additionally, there are no two different slot descriptions for the same chunk and every chunk in the store is described\footnote{left-totality of $HasSlot$} (satisfies the definition of a chunk-store).
+
+Rules for checking those constraints could be added easily to the implementation.
 
 \section{Procedural Module}
 
@@ -397,45 +453,45 @@ The counting rule specified in the example in section~\ref{example_counting} cou
 
 An ACT-R production rule of the form
 
-\begin{verbatim}
+\begin{lstlisting}[mathescape]
 (p name
-  =buffer1>
-    isa    type1
-    slot11 val11
+  =buffer$_\mathtt{1}$>
+    isa    type$_1$
+    slot$_\mathtt{1,1}$  val$_\mathtt{1,1}$
     ...
-    slot1n val1n
+    slot$_\mathtt{1,n}$  val$_\mathtt{1,n}$
   ...
-  =bufferk>
-    isa    typek
-    slotk1 valk1
+  =buffer$_\mathtt{k}$>
+    isa    type$_\mathtt{k}$
+    slot$_\mathtt{k,1}$  val$_\mathtt{k,1}$
     ...
-    slotkm valkm
+    slot$_\mathtt{k,m}$  val$_\mathtt{k,m}$
 ==>
 ... )
-\end{verbatim}
+\end{lstlisting}
 
 states formally, that:
 
-If $buffer1 Holds c \wedge c Isa type1 \wedge slot_{1,1}=val_{1,1} \wedge \dots$ \FIXME{extend} is true, then the rule matches and the RHS should be performed.
+If $buffer_1 \enspace Holds \enspace c_1 \enspace \wedge \enspace c \enspace Isa \enspace type_1 \enspace \wedge \enspace c_1 \xrightarrow{slot_{1,1}} val_{1,1} \enspace \wedge \enspace \dots \enspace \wedge \enspace buffer_k \enspace Holds \enspace c_k \enspace \wedge \enspace c_k \enspace Isa \enspace type_k \enspace \wedge \enspace \dots$ is true, then the rule matches and the RHS should be performed.
 
 This can be directly translated into a CHR rule:
 
-\begin{verbatim}
+\begin{lstlisting}[mathescape]
 name @
-  buffer(buffer1,C1),
-  chunk(C1,type1),
-  chunk_has_slot(C1,slot11,val11),
+  buffer(buffer$_\mathtt{1}$,C$_\mathtt{1}$),
+  chunk(C$_\mathtt{1}$,type1),
+  chunk_has_slot(C$_\mathtt{1}$,slot$_\mathtt{1,1}$,val$_\mathtt{1,1}$),
   ...
-  chunk_has_slot(C1,slot1n,val1n),
+  chunk_has_slot(C$_\mathtt{1}$,slot$_\mathtt{1,n}$,val$_\mathtt{1,n}$),
   ...
-  buffer(bufferk,Ck),
-  chunk(Ck,typek),
-  chunk_has_slot(Ck,slotk1,valk1),
+  buffer(bufferk,C$_\mathtt{k}$),
+  chunk(C$_\mathtt{k}$,type$_\mathtt{k}$),
+  chunk_has_slot(C$_\mathtt{k}$,slot$_\mathtt{k,1}$,val$_\mathtt{k,1}$),
   ...
-  chunk_has_slot(Ck,slotkm,valkm)
+  chunk_has_slot(C$_\mathtt{k}$,slot$_\mathtt{k,m}$,val$_\mathtt{k,m}$)
 ==>
   ...
-\end{verbatim}
+\end{lstlisting}
 
 This rule checks the buffer system for the existence of a buffer specified in the request holding a certain chunk and then checks the chunk store of the buffer system for that chunk with the type and slots specified in the ACT-R rule.
 
@@ -447,7 +503,7 @@ The CHR rule only fires, if all the checked buffers hold chunks that meet the re
  \item If a checked buffer \verb|b| holds no chunk, the constraint \verb|buffer(b,nil)| will be present, but the chunk store will not hold any of the required \verb|chunk| or \verb|chunk_has_slot| constraints and the rule will not fire.
  \item If a checked buffer \verb|b| holds a chunk, but the chunk does not meet one of the requirements in its slots, the rule does not fire.
  \item The rule only fires, if for all checked buffers there are valid \verb|buffer|, \verb|chunk| and \verb|chunk_has_slot| constraints present that meet all the requirements specified by the ACT-R rule.
- \item Variables on the LHS of a rule are bound to the values of the actual constraints that are tried for the matching. This corresponds to the semantics of a ACT-R production rule with variables on the LHS.
+ \item Variables on the LHS of a rule are bound to the values of the actual constraints that are tried for the matching. After the matching, each variable from the rule has a ground value bound to it, because there are no variables in the implementation of the buffer store. This corresponds to the semantics of a ACT-R production rule with variables on the LHS.
 \end{itemize}
 
 \FIXME{ist die begründung schlüssig? evtl section über variablen hier einfügen}
@@ -492,9 +548,7 @@ on the LHS of a production rule can be translated to the following CHR rule head
 
 \begin{lstlisting}
 ...
-buffer_state(buffer,bstate) 
-...
-==> ...
+buffer_state(buffer,bstate) ... ==> ...
 \end{lstlisting}
 
 
@@ -511,7 +565,7 @@ The discussed concepts lead to the following grammar for production rules, which
 production-definition ::= (p name condition* ==> action*)
 name ::= a symbol that serves as the name of the production for reference
 condition ::= [ buffer-test | query ]
-action ::= [buffer-modification | request | buffer-clearing | output | ]
+action ::= [buffer-modification | request | buffer-clearing | output ]
 buffer-test ::= =buffer-name> isa chunk-type slot-test*
 buffer-name ::= a symbol which is the name of a buffer
 chunk-type ::= a symbol which is the name of a chunk-type in the model
@@ -543,6 +597,8 @@ Some of the details in this grammar that have not been discussed yet are present
 \subsubsection{The Order of Rule Applications}
 
 \subsubsection{Bound and Unbound Variables}
+
+\subsubsection{Double Chunk Checks}
 
 \subsubsection{Slot Modifiers}
 
@@ -882,7 +938,7 @@ where \verb|first(L,E)| gets a list \verb|L| and returns its first element \verb
 
 With \verb|return_chunk/2| and \verb|get_state/2|, the actual results of the request are computed:
 
-By now, the variable \verb|Chunk| holds the name of the chunk to return, but in the specification of the module request, a complete chunk specification is demanded. \verb|return_chunk/2| is defined as a default method of a chunk store that gets a chunk name as its first argument and returns a chunk specification created from the values in the chunk store as its second argument. \FIXME{add return chunk to default methods of chunk store}
+By now, the variable \verb|Chunk| holds the name of the chunk to return, but in the specification of the module request, a complete chunk specification is demanded. \verb|return_chunk/2| is defined as a default method of a chunk store that gets a chunk name as its first argument and returns a chunk specification created from the values in the chunk store as its second argument.
 
 The resulting state of the request is computed as follows: If the result chunk is \verb|nil|, then no chunk was in the match set, so the state of the declarative module will be \verb|error|. In any other case, the state is \verb|free| after the request has been performed.
 
@@ -1000,7 +1056,7 @@ A \emph{priority queue} is an abstract data structure that serves objects by the
 
 \subsubsection{Objects}
 
-In the implementation of the scheduler, the priority queue holds objects \verb|q(Time,Priority,Event)|. The priority of such a queue object is composed from the \verb|Time| and the \verb|Priority|. The order between the elements is defined as follows:
+In the implementation of the scheduler, the priority queue contains objects of the form \verb|q(Time,Priority,Event)|. The priority of such a queue object is composed from the \verb|Time| and the \verb|Priority|. The order between the elements is defined as follows:
 
 \begin{definition}[ordered time-priority condition]
 \verb|q(T1,P1,E1)| $\prec$ \verb|q(T2,P2,E2)|, if \verb|T1| $<$ \verb|T2|. In the case that \verb|T1 = T2|, then \verb|q(T1,P1,E1)| $\prec$ \verb|q(T2,P2,E2)| if \verb|P1| $>$ \verb|P2|. So, events with smaller times will be returned first. If two events appear at the same time, it is possible to define a priority and the event with the higher priority will be returned first. 
