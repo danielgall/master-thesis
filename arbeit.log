@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Arch Linux) (format=pdflatex 2013.7.15)  1 AUG 2013 14:46
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Arch Linux) (format=pdflatex 2013.7.15)  1 AUG 2013 14:50
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1373,17 +1373,15 @@ LaTeX Warning: Citation 'actr_reference' on page 35 undefined on input line 388
 .
 
 [35] [36] [37]
-Overfull \hbox (251.25174pt too wide) in paragraph at lines 509--511
-[][][][][][][] [][][][][][] 
- []
+Underfull \vbox (badness 2547) has occurred while \output is active []
 
-[38]
+ [38]
 
-LaTeX Warning: Citation 'actr_reference' on page 39 undefined on input line 561
+LaTeX Warning: Citation 'actr_reference' on page 39 undefined on input line 555
 .
 
 
-Underfull \vbox (badness 7576) has occurred while \output is active []
+Underfull \vbox (badness 2150) has occurred while \output is active []
 
  [39]
 Underfull \vbox (badness 6348) has occurred while \output is active []
@@ -1391,60 +1389,56 @@ Underfull \vbox (badness 6348) has occurred while \output is active []
  [40]
 [41]
 
-LaTeX Warning: Citation 'actr_reference' on page 42 undefined on input line 634
+LaTeX Warning: Citation 'actr_reference' on page 42 undefined on input line 630
 .
 
 [42]
-Overfull \hbox (27.69756pt too wide) in paragraph at lines 686--687
+Overfull \hbox (27.69756pt too wide) in paragraph at lines 682--683
 []\T1/phv/m/sl/10 will match all chunks which have the same value in []\T1/pcr/
 m/n/10 spam \T1/phv/m/sl/10 and []\T1/pcr/m/n/10 ham\T1/phv/m/sl/10 . [][][][][
 ][] 
  []
 
 
-LaTeX Warning: Citation 'actr_reference' on page 43 undefined on input line 693
+LaTeX Warning: Citation 'actr_reference' on page 43 undefined on input line 689
 .
 
-[43]
-Underfull \vbox (badness 7256) has occurred while \output is active []
-
- [44]
-[45] [46] [47]
-Overfull \hbox (14.90367pt too wide) in paragraph at lines 856--857
+[43] [44] [45] [46] [47]
+Overfull \hbox (14.90367pt too wide) in paragraph at lines 852--853
 \T1/phv/m/n/10 (-20) In this sec-tion, a CHR con-straint []\T1/pcr/m/n/10 find_
 chunk/3 \T1/phv/m/n/10 (-20) will be de-fined, that pro-duces a []\T1/pcr/m/n/1
 0 match_set/1
  []
 
 [48] [49]
-Overfull \hbox (21.86157pt too wide) in paragraph at lines 908--909
+Overfull \hbox (21.86157pt too wide) in paragraph at lines 904--905
 \T1/phv/m/n/10 (-20) de-sir-able to col-lect all those matches in one set. This
  can be trig-gered by a []\T1/pcr/m/n/10 collect_matches/1
  []
 
 
-Overfull \hbox (23.66547pt too wide) in paragraph at lines 929--930
+Overfull \hbox (23.66547pt too wide) in paragraph at lines 925--926
 [][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 [50] [51]
-Overfull \hbox (31.66534pt too wide) in paragraph at lines 983--984
+Overfull \hbox (31.66534pt too wide) in paragraph at lines 979--980
 [][][][][][][][][][][][][][][][][][][][] 
  []
 
 [52]
-Overfull \hbox (340.8917pt too wide) in paragraph at lines 1022--1023
+Overfull \hbox (340.8917pt too wide) in paragraph at lines 1018--1019
 \T1/phv/m/n/10 (-20) search of this chunk. [][][][][][] 
  []
 
 
 LaTeX Warning: Citation 'actr_reference' on page 53 undefined on input line 102
-4.
+0.
 
 [53]
 
-LaTeX Warning: Reference `fig:scheduler' on page 54 undefined on input line 104
-0.
+LaTeX Warning: Reference `fig:scheduler' on page 54 undefined on input line 103
+6.
 
 [54] [55] [56] [57]
 Underfull \vbox (badness 4621) has occurred while \output is active []
@@ -1452,7 +1446,7 @@ Underfull \vbox (badness 4621) has occurred while \output is active []
  [58]
 
 LaTeX Warning: Reference `tab:action_priorities' on page 59 undefined on input 
-line 1173.
+line 1169.
 
 [59] [60] [61]) (./chapters/compiler.tex [62]
 Chapter 5.
@@ -1553,7 +1547,7 @@ usr/share/texmf-dist/fonts/type1/urw/courier/ucrbo8a.pfb></usr/share/texmf-dist
 ier/ucrro8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></us
 r/share/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-dist/f
 onts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on arbeit.pdf (83 pages, 643361 bytes).
+Output written on arbeit.pdf (83 pages, 643530 bytes).
 PDF statistics:
  1822 PDF objects out of 2073 (max. 8388607)
  1690 compressed objects within 17 object streams

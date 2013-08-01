@@ -493,7 +493,7 @@ name @
   ...
 \end{lstlisting}
 
-This rule checks the buffer system for the existence of a buffer specified in the request holding a certain chunk and then checks the chunk store of the buffer system for that chunk with the type and slots specified in the ACT-R rule.
+This rule checks the buffer system for the existence of a buffer holding a particular chunk and then checks the chunk store of the buffer system for that chunk with the type and slots specified in the ACT-R rule. The rule is a propagation rule, because the information of the chunk-store should not be removed.
 
 If the values in the slot tests are variables, they can be directly translated to Prolog variables.
 
@@ -507,7 +507,6 @@ The CHR rule only fires, if all the checked buffers hold chunks that meet the re
 \end{itemize}
 
 \FIXME{ist die begründung schlüssig? evtl section über variablen hier einfügen}
-\FIXME{add some words about double chunk checks}
 
 \begin{example}[counting example in CHR -- simple]
 The production rule in example~\ref{ex:counting} can be translated to:
@@ -550,11 +549,6 @@ on the LHS of a production rule can be translated to the following CHR rule head
 ...
 buffer_state(buffer,bstate) ... ==> ...
 \end{lstlisting}
-
-
-
-
-
 
 \subsubsection{The Production Rule Grammar}
 
@@ -599,6 +593,8 @@ Some of the details in this grammar that have not been discussed yet are present
 \subsubsection{Bound and Unbound Variables}
 
 \subsubsection{Double Chunk Checks}
+
+\FIXME{add some words about double chunk checks}
 
 \subsubsection{Slot Modifiers}
 
