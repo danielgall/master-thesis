@@ -417,9 +417,30 @@ The condition part consists of two buffer tests:
 For the right hand side of a rule the following actions are allowed:
 
 \begin{description}
- \item[Buffer Modification] 
- \item[Buffer Request]
- \item[Buffer Clearing]
+ \item[Buffer Modifications] of the form
+\begin{lstlisting}
+=buffer>
+  s  v
+  ...
+\end{lstlisting}
+
+They are indicated by the buffer modifier \verb|=| right before the buffer name and are specified through a list of slot-value pairs. Note, that this list can be incomplete and must not contain a \verb|isa| specification. It leads all slots mentioned in the modification action of a buffer to be replaced by the specified values.
+
+ \item[Buffer Requests] of the form
+\begin{lstlisting}
++buffer>
+  s  v
+  ...
+\end{lstlisting}
+
+Requests are indicated by the buffer modifier \verb|+| and specified by a list of slot-value pairs. A request will be sent to the module of the specified buffer which reacts to the transmitted chunk of the request specification (in form of the slot-value pairs). The semantics of a request depends on the module, but the buffer is always first cleared before stating the request.
+ \item[Buffer Clearings] of the form
+ 
+\begin{lstlisting}
+-buffer>
+\end{lstlisting}
+
+Clearings are indicated by the buffer modifier \verb|-|. When a buffer is cleared, the chunk it contains will be removed from the chunk-store of the buffer system and then be added to the declarative memory. 
 \end{description}
 
 
@@ -444,9 +465,6 @@ The counting rule specified in the example in section~\ref{example_counting} cou
     first  =m
 )
 \end{lstlisting}
-
-\FIXME{add description}
-
 \end{example}
 
 \subsubsection{Direct Translation of Buffer Tests}

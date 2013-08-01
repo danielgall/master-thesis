@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Arch Linux) (format=pdflatex 2013.7.15)  1 AUG 2013 17:43
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Arch Linux) (format=pdflatex 2013.7.15)  1 AUG 2013 18:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1223,10 +1223,7 @@ LaTeX Warning: Citation 'unknown' on page 5 undefined on input line 49.
 Underfull \vbox (badness 3838) has occurred while \output is active []
 
  [5]
-Underfull \vbox (badness 1043) has occurred while \output is active []
-
- [6]
-[7] [8]
+[6] [7] [8]
 
 LaTeX Warning: Reference `fig:modular_organization' on page 9 undefined on inpu
 t line 120.
@@ -1369,100 +1366,102 @@ LaTeX Warning: Reference `fig:buffer_system' on page 34 undefined on input line
 LaTeX Warning: Citation 'actr_reference' on page 35 undefined on input line 388
 .
 
-[35] [36] [37]
-Underfull \vbox (badness 2547) has occurred while \output is active []
+[35] [36] [37] [38] [39]
 
- [38]
+LaTeX Warning: Reference `production_rule_grammar' on page 40 undefined on inpu
+t line 558.
 
-LaTeX Warning: Reference `production_rule_grammar' on page 39 undefined on inpu
-t line 540.
+[40]
 
-[39] [40]
-
-LaTeX Warning: Citation 'actr_reference' on page 41 undefined on input line 605
+LaTeX Warning: Citation 'actr_reference' on page 41 undefined on input line 623
 .
 
-[41] [42] [43] [44]
+[41]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-LaTeX Warning: Reference `lst:production_rule_grammar' on page 45 undefined on 
-input line 769.
+ [42]
+[43] [44] [45]
 
-[45] [46] [47]
+LaTeX Warning: Reference `lst:production_rule_grammar' on page 46 undefined on 
+input line 787.
 
-LaTeX Warning: Citation 'actr_reference' on page 48 undefined on input line 865
+[46]
+Underfull \vbox (badness 1838) has occurred while \output is active []
+
+ [47]
+
+LaTeX Warning: Citation 'actr_reference' on page 48 undefined on input line 883
 .
 
-[48]
-Overfull \hbox (27.69756pt too wide) in paragraph at lines 917--918
+[48] [49]
+Overfull \hbox (27.69756pt too wide) in paragraph at lines 935--936
 []\T1/phv/m/sl/10 will match all chunks which have the same value in []\T1/pcr/
 m/n/10 spam \T1/phv/m/sl/10 and []\T1/pcr/m/n/10 ham\T1/phv/m/sl/10 . [][][][][
 ][] 
  []
 
 
-Overfull \hbox (17.20668pt too wide) in paragraph at lines 923--924
+Overfull \hbox (17.20668pt too wide) in paragraph at lines 941--942
 [] []\T1/phv/b/n/10 Relation to Negation-as-Absence[][] \T1/phv/m/n/10 (-20) Ne
 gation-as-absence as de-scribed in [[][]Frü09[], pp. 147 sqq.]
  []
 
-[49]
 
-LaTeX Warning: Citation 'actr_reference' on page 50 undefined on input line 931
+LaTeX Warning: Citation 'actr_reference' on page 50 undefined on input line 949
 .
 
-[50] [51] [52] [53] [54] [55]
-Overfull \hbox (14.90367pt too wide) in paragraph at lines 1138--1139
+[50]
+Underfull \vbox (badness 2384) has occurred while \output is active []
+
+ [51]
+[52] [53] [54] [55]
+Overfull \hbox (14.90367pt too wide) in paragraph at lines 1156--1157
 \T1/phv/m/n/10 (-20) In this sec-tion, a CHR con-straint []\T1/pcr/m/n/10 find_
 chunk/3 \T1/phv/m/n/10 (-20) will be de-fined, that pro-duces a []\T1/pcr/m/n/1
 0 match_set/1
  []
 
-[56]
-Overfull \hbox (21.86157pt too wide) in paragraph at lines 1190--1191
+[56] [57]
+Overfull \hbox (21.86157pt too wide) in paragraph at lines 1208--1209
 \T1/phv/m/n/10 (-20) de-sir-able to col-lect all those matches in one set. This
  can be trig-gered by a []\T1/pcr/m/n/10 collect_matches/1
  []
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [57]
-Overfull \hbox (23.66547pt too wide) in paragraph at lines 1211--1212
+Overfull \hbox (23.66547pt too wide) in paragraph at lines 1229--1230
 [][][][][][][][][][][][][][][][][][][][][][] 
  []
 
 [58] [59]
-Overfull \hbox (31.66534pt too wide) in paragraph at lines 1265--1266
+Overfull \hbox (31.66534pt too wide) in paragraph at lines 1283--1284
 [][][][][][][][][][][][][][][][][][][][] 
  []
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [60]
-Overfull \hbox (340.8917pt too wide) in paragraph at lines 1304--1305
+[60] [61]
+Overfull \hbox (340.8917pt too wide) in paragraph at lines 1322--1323
 \T1/phv/m/n/10 (-20) search of this chunk. [][][][][][] 
  []
 
 
-LaTeX Warning: Citation 'actr_reference' on page 61 undefined on input line 130
-6.
+LaTeX Warning: Citation 'actr_reference' on page 62 undefined on input line 132
+4.
 
-[61]
 
-LaTeX Warning: Reference `fig:scheduler' on page 62 undefined on input line 132
-3.
+LaTeX Warning: Reference `fig:scheduler' on page 62 undefined on input line 134
+1.
 
-[62] [63] [64] [65] [66]
+[62] [63] [64]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [65]
+Underfull \vbox (badness 7238) has occurred while \output is active []
+
+ [66]
 
 LaTeX Warning: Reference `tab:action_priorities' on page 67 undefined on input 
-line 1456.
+line 1474.
 
-
-Underfull \vbox (badness 2111) has occurred while \output is active []
-
- [67]
-[68]) (./chapters/compiler.tex [69] [70]
+[67] [68] [69]) (./chapters/compiler.tex [70]
 Chapter 5.
 ) (./chapters/example_models.tex [71
 
@@ -1543,13 +1542,13 @@ Package logreq Info: Writing requests to 'arbeit.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 19767 strings out of 493488
- 302372 string characters out of 3146892
- 744408 words of memory out of 3000000
+ 19777 strings out of 493488
+ 302525 string characters out of 3146892
+ 747408 words of memory out of 3000000
  21560 multiletter control sequences out of 15000+200000
  71709 words of font info for 215 fonts, out of 3000000 for 9000
  958 hyphenation exceptions out of 8191
- 39i,12n,72p,1463b,3312s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 39i,12n,72p,1616b,3316s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-dist/fon
 ts/type1/public/ccicons/ccicons.pfb></usr/share/texmf-dist/fonts/type1/public/a
 msfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmm
@@ -1571,10 +1570,10 @@ usr/share/texmf-dist/fonts/type1/urw/courier/ucrbo8a.pfb></usr/share/texmf-dist
 ier/ucrro8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></us
 r/share/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-dist/f
 onts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on arbeit.pdf (95 pages, 671199 bytes).
+Output written on arbeit.pdf (95 pages, 673124 bytes).
 PDF statistics:
- 2171 PDF objects out of 2487 (max. 8388607)
- 2023 compressed objects within 21 object streams
- 984 named destinations out of 1000 (max. 500000)
+ 2182 PDF objects out of 2487 (max. 8388607)
+ 2034 compressed objects within 21 object streams
+ 994 named destinations out of 1000 (max. 500000)
  34027 words of extra memory for PDF output out of 35830 (max. 10000000)
 
