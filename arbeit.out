@@ -43,45 +43,50 @@
 \BOOKMARK [3][-]{section*.27}{The Left Hand Side of a Rule}{subsection.4.3.2}% 43
 \BOOKMARK [3][-]{section*.28}{The Right Hand Side of a Rule}{subsection.4.3.2}% 44
 \BOOKMARK [3][-]{section*.29}{Direct Translation of Buffer Tests}{subsection.4.3.2}% 45
-\BOOKMARK [2][-]{subsection.4.3.3}{Translation of Buffer Queries}{section.4.3}% 46
-\BOOKMARK [3][-]{section*.30}{The Production Rule Grammar}{subsection.4.3.3}% 47
-\BOOKMARK [3][-]{section*.31}{The Order of Rule Applications}{subsection.4.3.3}% 48
-\BOOKMARK [3][-]{section*.32}{Bound and Unbound Variables}{subsection.4.3.3}% 49
-\BOOKMARK [3][-]{section*.33}{Double Chunk Checks}{subsection.4.3.3}% 50
-\BOOKMARK [3][-]{section*.34}{Slot Modifiers}{subsection.4.3.3}% 51
-\BOOKMARK [3][-]{section*.36}{Empty Slots}{subsection.4.3.3}% 52
-\BOOKMARK [3][-]{section*.37}{Outputs}{subsection.4.3.3}% 53
-\BOOKMARK [1][-]{section.4.4}{Modular Organization}{chapter.4}% 54
-\BOOKMARK [2][-]{subsection.4.4.1}{Prolog Modules}{section.4.4}% 55
-\BOOKMARK [2][-]{subsection.4.4.2}{Interface for Module Requests}{section.4.4}% 56
-\BOOKMARK [2][-]{subsection.4.4.3}{Components of the Implementation}{section.4.4}% 57
-\BOOKMARK [1][-]{section.4.5}{Declarative Module}{chapter.4}% 58
-\BOOKMARK [2][-]{subsection.4.5.1}{Retrieval Requests}{section.4.5}% 59
-\BOOKMARK [3][-]{section*.38}{Chunk Patterns}{subsection.4.5.1}% 60
-\BOOKMARK [3][-]{section*.39}{Finding Chunks}{subsection.4.5.1}% 61
-\BOOKMARK [2][-]{subsection.4.5.2}{Chunk Merging}{section.4.5}% 62
-\BOOKMARK [1][-]{section.4.6}{Initialization}{chapter.4}% 63
-\BOOKMARK [1][-]{section.4.7}{Timing in ACT-R}{chapter.4}% 64
-\BOOKMARK [2][-]{subsection.4.7.1}{Priority Queue}{section.4.7}% 65
-\BOOKMARK [3][-]{section*.40}{Objects}{subsection.4.7.1}% 66
-\BOOKMARK [3][-]{section*.41}{Representation of the Queue}{subsection.4.7.1}% 67
-\BOOKMARK [3][-]{section*.42}{Special Operation for ACT-R}{subsection.4.7.1}% 68
-\BOOKMARK [2][-]{subsection.4.7.2}{Scheduler}{section.4.7}% 69
-\BOOKMARK [3][-]{section*.43}{Current Time}{subsection.4.7.2}% 70
-\BOOKMARK [3][-]{section*.44}{Recognize-Act Cycle}{subsection.4.7.2}% 71
-\BOOKMARK [1][-]{section.4.8}{Configuration}{chapter.4}% 72
-\BOOKMARK [1][-]{section.4.9}{Subsymbolic Layer}{chapter.4}% 73
-\BOOKMARK [2][-]{subsection.4.9.1}{Activation of Chunks}{section.4.9}% 74
-\BOOKMARK [2][-]{subsection.4.9.2}{Production Utility}{section.4.9}% 75
-\BOOKMARK [0][-]{chapter.5}{Compiler}{}% 76
-\BOOKMARK [0][-]{chapter.6}{Example Models}{}% 77
-\BOOKMARK [1][-]{section.6.1}{The Counting Model}{chapter.6}% 78
-\BOOKMARK [1][-]{section.6.2}{The Addition Model}{chapter.6}% 79
-\BOOKMARK [1][-]{section.6.3}{The Semantic Model}{chapter.6}% 80
-\BOOKMARK [1][-]{section.6.4}{The Fan Model}{chapter.6}% 81
-\BOOKMARK [0][-]{chapter.7}{Conclusion}{}% 82
-\BOOKMARK [1][-]{section.7.1}{Inventory: What does already work?}{chapter.7}% 83
-\BOOKMARK [1][-]{section.7.2}{Future Work}{chapter.7}% 84
-\BOOKMARK [0][-]{appendix.A}{Source Codes}{}% 85
-\BOOKMARK [0][-]{appendix.B}{Grammar for Production Rules}{}% 86
-\BOOKMARK [0][-]{appendix*.49}{Bibliography}{}% 87
+\BOOKMARK [3][-]{section*.30}{Translation of Actions}{subsection.4.3.2}% 46
+\BOOKMARK [2][-]{subsection.4.3.3}{Translation of Buffer Queries}{section.4.3}% 47
+\BOOKMARK [3][-]{section*.34}{The Production Rule Grammar}{subsection.4.3.3}% 48
+\BOOKMARK [3][-]{section*.35}{The Order of Rule Applications}{subsection.4.3.3}% 49
+\BOOKMARK [3][-]{section*.36}{Bound and Unbound Variables}{subsection.4.3.3}% 50
+\BOOKMARK [3][-]{section*.37}{Double Chunk Checks}{subsection.4.3.3}% 51
+\BOOKMARK [3][-]{section*.38}{Slot Modifiers}{subsection.4.3.3}% 52
+\BOOKMARK [3][-]{section*.40}{Empty Slots}{subsection.4.3.3}% 53
+\BOOKMARK [3][-]{section*.41}{Outputs}{subsection.4.3.3}% 54
+\BOOKMARK [1][-]{section.4.4}{Modular Organization}{chapter.4}% 55
+\BOOKMARK [2][-]{subsection.4.4.1}{Prolog Modules}{section.4.4}% 56
+\BOOKMARK [2][-]{subsection.4.4.2}{Interface for Module Requests}{section.4.4}% 57
+\BOOKMARK [2][-]{subsection.4.4.3}{How the Buffer System States a Request}{section.4.4}% 58
+\BOOKMARK [2][-]{subsection.4.4.4}{Components of the Implementation}{section.4.4}% 59
+\BOOKMARK [1][-]{section.4.5}{Declarative Module}{chapter.4}% 60
+\BOOKMARK [2][-]{subsection.4.5.1}{Global Method for Adding Chunks}{section.4.5}% 61
+\BOOKMARK [2][-]{subsection.4.5.2}{Retrieval Requests}{section.4.5}% 62
+\BOOKMARK [3][-]{section*.42}{Chunk Patterns}{subsection.4.5.2}% 63
+\BOOKMARK [3][-]{section*.43}{Finding Chunks}{subsection.4.5.2}% 64
+\BOOKMARK [2][-]{subsection.4.5.3}{Chunk Merging}{section.4.5}% 65
+\BOOKMARK [1][-]{section.4.6}{Initialization}{chapter.4}% 66
+\BOOKMARK [1][-]{section.4.7}{Timing in ACT-R}{chapter.4}% 67
+\BOOKMARK [2][-]{subsection.4.7.1}{Priority Queue}{section.4.7}% 68
+\BOOKMARK [3][-]{section*.44}{Objects}{subsection.4.7.1}% 69
+\BOOKMARK [3][-]{section*.45}{Representation of the Queue}{subsection.4.7.1}% 70
+\BOOKMARK [3][-]{section*.46}{Special Operation for ACT-R}{subsection.4.7.1}% 71
+\BOOKMARK [2][-]{subsection.4.7.2}{Scheduler}{section.4.7}% 72
+\BOOKMARK [3][-]{section*.47}{Current Time}{subsection.4.7.2}% 73
+\BOOKMARK [3][-]{section*.48}{Recognize-Act Cycle}{subsection.4.7.2}% 74
+\BOOKMARK [1][-]{section.4.8}{Configuration}{chapter.4}% 75
+\BOOKMARK [1][-]{section.4.9}{Subsymbolic Layer}{chapter.4}% 76
+\BOOKMARK [2][-]{subsection.4.9.1}{Activation of Chunks}{section.4.9}% 77
+\BOOKMARK [2][-]{subsection.4.9.2}{Production Utility}{section.4.9}% 78
+\BOOKMARK [0][-]{chapter.5}{Compiler}{}% 79
+\BOOKMARK [0][-]{chapter.6}{Example Models}{}% 80
+\BOOKMARK [1][-]{section.6.1}{The Counting Model}{chapter.6}% 81
+\BOOKMARK [1][-]{section.6.2}{The Addition Model}{chapter.6}% 82
+\BOOKMARK [1][-]{section.6.3}{The Semantic Model}{chapter.6}% 83
+\BOOKMARK [1][-]{section.6.4}{The Fan Model}{chapter.6}% 84
+\BOOKMARK [0][-]{chapter.7}{Conclusion}{}% 85
+\BOOKMARK [1][-]{section.7.1}{Inventory: What does already work?}{chapter.7}% 86
+\BOOKMARK [1][-]{section.7.2}{Future Work}{chapter.7}% 87
+\BOOKMARK [0][-]{appendix.A}{Source Codes}{}% 88
+\BOOKMARK [0][-]{appendix.B}{Grammar for Production Rules}{}% 89
+\BOOKMARK [0][-]{appendix.C}{Executable Examples}{}% 90
+\BOOKMARK [1][-]{section.C.1}{Rule Order}{appendix.C}% 91
+\BOOKMARK [0][-]{appendix*.53}{Bibliography}{}% 92

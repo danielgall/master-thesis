@@ -57,6 +57,7 @@ As mentioned before, modules communicate through buffers by putting a limited am
 For example, the declarative module has the retrieval buffer associated with it, which can hold one specific declarative chunk. The declarative module can put chunks in the buffer that can be processed by the procedural module, which is described in the next section.
 
 \subsection{Procedural Knowledge}
+\label{procedural_knowledge}
 
 Procedural Knowledge in ACT-R is formulated as a set of condition-action rules. Each rule defines in its condition-part the circumstances under which it can be applied. Those conditions refer to the current chunks in the buffer. In the condition-part of a rule it is defined which kind of chunk with certain slot values must be present in which buffer for the rule to fire. For example, one rule in the process of adding the numbers 5 and 2 could have the conditions that there is a chunk of type \verb|addition-fact| in the retrieval buffer with 5 and 7 in its argument-slots and specify certain actions if this is the case.
 

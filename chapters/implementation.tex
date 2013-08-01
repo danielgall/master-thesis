@@ -508,6 +508,59 @@ The CHR rule only fires, if all the checked buffers hold chunks that meet the re
 
 \FIXME{ist die begründung schlüssig? evtl section über variablen hier einfügen}
 
+\subsubsection{Translation of Actions}
+\label{translation_of_actions}
+
+For each action type a constraint
+
+\begin{lstlisting}
+buffer_action(buffer,chunk-specification)
+\end{lstlisting}
+
+with corresponding rules that handle the action have to be added. Note, that the buffer action is defined by the action name, the buffer name and a chunk specification, because actions in ACT-R are defined through a buffer modifier that specifies the action, the name of the buffer and a list of slot-value pairs. Hence, this is a direct translation to CHR.
+
+\paragraph{Buffer Modifications}
+
+The modification of a buffer takes an incomplete chunk specification and modifies the given slots of the chunk in the specified buffer. This can be implemented as follows:
+
+\begin{lstlisting}
+buffer(BufName, OldChunk) \ buffer_change(BufName, chunk(_,_,SVs)) <=>
+  alter_slots(OldChunk,SVs).
+\end{lstlisting}
+
+This implementation uses a generalization of the \verb|alter_slot| method as described in definition~\ref{def:abstract_methods_chunk_store} and section~\ref{chunk_specification}:
+
+\begin{lstlisting}  
+alter_slots(_,[]) <=> true.
+alter_slots(Chunk,[(S,V)|SVs]) <=> 
+  alter_slot(Chunk,S,V),
+  alter_slots(Chunk,SVs). 
+\end{lstlisting}
+
+Note that types cannot be changed. This corresponds to the grammar definition of ACT-R as presented in section~\ref{production_rule_grammar}.
+
+\paragraph{Buffer Clearings}
+
+When clearing a buffer, the chunk that was stored in the buffer will be removed from the chunk store and \verb|nil| will be written to the store. Additionally, the chunk goes to the declarative memory.
+
+\begin{lstlisting}
+do_buffer_clear(BufName), buffer(BufName, ModName, Chunk) <=> 
+  write_to_dm(Chunk), 
+  delete_chunk(Chunk), 
+  buffer(BufName, nil).
+\end{lstlisting}
+
+\verb|write_to_dm| handles the writing of the chunk to the declarative memory:
+
+\begin{lstlisting}
+write_to_dm(ChunkName) <=> return_chunk(ChunkName, ResChunk), add_dm(ResChunk).
+\end{lstlisting}
+
+where \verb|add_dm| is basically just a global wrapper for the \verb|add_chunk| method of the declarative memory and will be explained in section~\ref{global_method_for_adding_chunks}.
+
+\paragraph{Buffer Requests} The buffer requests have to be handled a little bit differently from the other actions. Therefore, they will be explained in section~\ref{interface_for_module_requests}. The changes to the buffer system are presented in section~\ref{how_the_buffer_system_states_a_request} and an example implementation of the module request interface for retrieval requests is given in section~\ref{retrieval_requests}.
+
+
 \begin{example}[counting example in CHR -- simple]
 The production rule in example~\ref{ex:counting} can be translated to:
 
@@ -521,11 +574,8 @@ count-rule @
     chunk_has_slot(first,N),
     chunk_has_slot(second,M)
 ==>
-  buffer_change(goal    number =m
-  +retrieval>
-    isa    count-fact
-    first  =m
-)
+  buffer_change(goal,chunk(_,_,[(number,M)])),
+  buffer_request(retrieval,chunk(_,count-fact,[first,M)])).
 \end{lstlisting}
 
 \end{example}
@@ -590,7 +640,128 @@ Some of the details in this grammar that have not been discussed yet are present
 
 \subsubsection{The Order of Rule Applications}
 
+In the current translation scheme, the order of the rule applications does not match the semantics as described in the ACT-R theory\footnote{see section~\ref{procedural_knowledge}}. Consider the following rules in a compact notation:
 
+\begin{lstlisting}
+=b1>
+  isa foo
+  s1  v1
+==>
+=b1>
+  s1  v2
+=b2>
+  s   x
+\end{lstlisting}
+
+and
+
+\begin{lstlisting}
+=b1>
+  isa foo
+  s1  v2
+==>
+=b2>
+  s   y
+=b1>
+  s1  v3 % for termination
+\end{lstlisting}
+
+In the semantics of ACT-R, if the first rule matches, all the buffer modifications are performed first. After that, the procedural module can look for the next matching rule, which is the second one (due to the result of the first rule). This rule then would overwrite the value \verb|x| in the \verb|s| slot of buffer \verb|b2| with \verb|y|.
+
+\begin{lstlisting}
+buffer(b1,C),
+  chunk(C,foo),
+  chunk_has_slot(C,s1,v1)
+==>
+buffer_change(b1,chunk(_,_,[(s1,v2)])),
+buffer_change(b2,chunk(_,_,[(s,x)])).
+
+buffer(b1,C),
+  chunk(C,foo),
+  chunk_has_slot(C,s1,v2)
+==>
+buffer_change(b2,chunk(_,_,[(s,y)])),
+buffer_change(b1,chunk(_,_,[(s1,v3)])). % this is for termination
+\end{lstlisting}
+
+For the query
+
+\begin{lstlisting}
+chunk(c,foo), chunk_has_slot(c,s1,v1), chunk(c2,bar), chunk_has_slot(c2,s,v), buffer(b2,c2), buffer(b1,c).
+\end{lstlisting}
+
+the result would be
+
+\begin{lstlisting}
+buffer(b1,c)
+buffer(b2,c2)
+chunk(c2,bar)
+chunk(c,foo)
+chunk_has_slot(c2,s,x)
+chunk_has_slot(c,s1,v3)
+\end{lstlisting}
+
+Ie., the buffer \verb|b2| holds the chunk with value \verb|x|. This is due to the fact, that after the first rule has modified the buffer \verb|b1|, the second rule matches and will be fired immediately, which then changes the value of \verb|b1| to \verb|y|. Afterwards, the second action of the first rule will be executed and the \verb|s| slot of the chunk in buffer \verb|b2| will be overwritten with \verb|x|.
+
+Hence, somehow the fact that the procedural module is busy and cannot fire another rule, has to be modeled. This can be achieved by a simple phase constraint \verb|fire| that will be added after the complete execution of a rule and will be removed as soon as a rule is executed.
+
+For every production rule, the rule
+
+\begin{lstlisting}
+{ buffer_tests } ==> { actions }
+\end{lstlisting}
+
+has to be changed to a simpagation rule
+
+\begin{lstlisting}
+{ buffer_tests } \ fire <=> { actions }, fire.
+\end{lstlisting}
+
+It is important, that the adding of \verb|fire| is the last action of a rule.
+
+The example would be modified as follows:
+
+\begin{lstlisting}
+buffer(b1,C),
+  chunk(C,foo),
+  chunk_has_slot(C,s1,v1)
+  \ fire
+<=>
+buffer_change(b1,chunk(_,_,[(s1,v2)])),
+buffer_change(b2,chunk(_,_,[(s,x)])),
+fire.
+
+buffer(b1,C),
+  chunk(C,foo),
+  chunk_has_slot(C,s1,v2)
+  \ fire
+<=>
+buffer_change(b2,chunk(_,_,[(s,y)])),
+fire.
+\end{lstlisting}
+
+
+The test query
+
+\begin{lstlisting}
+chunk(c,foo), chunk_has_slot(c,s1,v1), chunk(c2,bar), chunk_has_slot(c2,s,v), buffer(b2,c2), buffer(b1,c), fire.
+\end{lstlisting}
+
+yields
+
+\begin{lstlisting}
+buffer(b1,c)
+buffer(b2,c2)
+chunk(c2,bar)
+chunk(c,foo)
+chunk_has_slot(c,s1,v3)
+chunk_has_slot(c2,s,y)
+fire
+\end{lstlisting}
+
+The fire constraint has to be added at the end of the query. This ensures the correct semantics and a completely constructed buffer system.\footnote{This was actually the reason, why in the first example without the \texttt{fire} constraint, the buffer \texttt{b1} was created at the end of the query: If it would be created at an earlier point, the first rule would have matched immediately and the computation would have yielded a different result.}
+
+In appendix~\ref{app:ex:rule_order} a minimal executable example is provided.
 
 \subsubsection{Bound and Unbound Variables}
 \label{bound_and_unbound_variables}
@@ -848,6 +1019,7 @@ Exported constraints can only appear once in a program, since they can be called
 \end{example}
 
 \subsection{Interface for Module Requests}
+\label{interface_for_module_requests}
 
 The architecture of ACT-R provides an infrastructure for the procedural module to state requests to all the other modules. To implement this concept as general as possible, an interface has to be defined, which allows the adding of new modules to the system by just implementing this interface.
 
@@ -871,6 +1043,37 @@ The request provides the following result:
 
 This interface will be extended later on.
 
+\subsection{How the Buffer System States a Request}
+\label{how_the_buffer_system_states_a_request}
+
+Every module that can handle a request implements the interface in listing~\ref{lst:interface_module}. When the buffer system gets a call \verb|buffer_request(buffer,chunk-specification)|, it simply can call the \verb|module_request| method of the corresponding module. This can be achieved by \verb|ModName:module_request(...)|, where \verb|ModName| is the name of the corresponding module.
+
+Hence, the buffer system must now, which buffer belongs to which module. The \verb|buffer/2| constraint therefore has to be extended to a \verb|buffer/3| constraint, that also holds the module name of its module:
+
+\begin{lstlisting}
+buffer(BufName,ModName,Chunk)
+\end{lstlisting}
+
+A buffer request can now be handled as follows:
+
+\begin{lstlisting}
+buffer(BufName, ModName, _), buffer_request(BufName, Chunk) <=>
+  set_buffer_state(BufName,busy),
+  buffer_clear(BufName), % clear buffer immediately
+  ModName:module_request(BufName, Chunk, ResChunk,ResState),
+(ResState=error, 
+  buffer(BufName, ModName, nil),
+  set_buffer_state(BufName,error) ;
+  
+  ResState = free,
+  ResChunk = chunk(ResChunkName,_,_),
+  add_chunk(ResChunk), 
+  buffer(BufName, ModName, ResChunkName),
+  set_buffer_state(BufName,free)).
+\end{lstlisting}
+
+When getting a buffer request, the buffer state is set to \verb|busy| first. Then the buffer is cleared immediately, which leads the chunk in the buffer being added to the declarative memory. Then the module request is stated according to the interface. If the resulting state is \verb|error|, then the buffer gets this state and the content of the buffer is \verb|nil|, otherwise, if the resulting state is \verb|free|, the result will be added to the buffer and the state will eventually be set to \verb|free|. 
+
 \subsection{Components of the Implementation}
 
 uml component diagram + discussion
@@ -881,7 +1084,19 @@ uml component diagram + discussion
 
 The Declarative Module is a \emph{chunk store}, that additionally implements the \emph{module} interface. Therefore some rules to handle requests that find certain chunks in the chunk store have to be implemented. 
 
+\subsection{Global Method for Adding Chunks}
+\label{global_method_for_adding_chunks}
+
+Since the declarative module is very important to the whole theory it kind of is a special module. Therefore, its Prolog module exports a predicate \verb|add_dm| that is just a wrapper for its chunk store. Hence, with the command \verb|add_dm| chunks can be added to the chunk store of the declarative module from every part of the program. This is eg. used for the clearing of buffers in the buffer system, where the chunk of a buffer goes to the declarative memory when the buffer is cleared. This is the implementation of the command:
+
+\begin{lstlisting}
+add_dm(ChunkDef) <=> add_chunk(ChunkDef).
+\end{lstlisting}
+
+
+
 \subsection{Retrieval Requests}
+\label{retrieval_requests}
 
 A retrieval request gets an incomplete chunk specification as input and returns a chunk, whose slots match the provided chunk pattern.
 
