@@ -76,7 +76,8 @@ The following methods can be defined over a chunk store $\Sigma = (C, E, \mathca
 
 \begin{example}
  \label{ex:addition_fact_formal}
- The addition-fact chunk in figure \ref{fig:chunk_addition_fact} and its chunk-type are defined as follows:\\
+ The addition-fact chunk in figure \ref{fig:chunk_addition_fact} and its chunk-type are defined as follows:
+ 
 \begin{lstlisting}
 chunk-type(addition-fact arg1 arg2 sum)
 add-chunk(a isa addition-fact arg1 5 arg2 2 sum 7)
@@ -198,14 +199,14 @@ This method creates the chunks and elements of the chunk store. The set $E$ of e
 
 \begin{lstlisting}[caption={Rules for \texttt{add\_chunk}}, label=lst:add_chunk_rules]
 % empty chunk will not be added
-add_chunk(nil) <=> true.
+<<add_chunk(nil)>> <=> true.
   
 % initialize all slots with nil
-add_chunk(chunk(Name,Type, _)), chunk_type_has_slot(Type,S) ==> 
+<<add_chunk(chunk(Name,Type, _)), chunk_type_has_slot(Type,S)>> ==> 
   chunk_has_slot(Name,S,nil).
 
 % chunk has been initialized with empty slots -> actually add chunk
-add_chunk(chunk(Name,Type, Slots)) <=>
+<<add_chunk(chunk(Name,Type, Slots))>> <=>
   do_add_chunk(chunk(Name,Type,Slots)).
 \end{lstlisting}
 
@@ -215,26 +216,27 @@ If all slots have been initialized, \verb|do_add_chunk| performs the actual sett
   
 \begin{lstlisting}[caption={Additional rules for adding chunks}]  
 % base case
-do_add_chunk(chunk(Name, Type, [])) <=> chunk(Name, Type). 
+<<do_add_chunk(chunk(Name, Type, []))>> <=> 
+  chunk(Name, Type). 
 
 % overwrite slots with empty values
-chunk(V,_) \ do_add_chunk(chunk(Name, Type, [(S,V)|Rest])), chunk_has_slot(Name,S,nil)  <=>
+<<chunk(V,_) \ do_add_chunk(chunk(Name, Type, [(S,V)|Rest])), chunk_has_slot(Name,S,nil)>>  <=>
   chunk_has_slot(Name,S,V), 
   do_add_chunk(chunk(Name,Type,Rest)).
 
 % overwrite slots with empty values  
-do_add_chunk(chunk(Name, Type, [(S,V)|Rest])), chunk_has_slot(Name,S,nil)  <=> 
-  V == nil | % do not add chunk(nil,chunk)
+<<do_add_chunk(chunk(Name, Type, [(S,V)|Rest])), chunk_has_slot(Name,S,nil)>>  <=> 
+  <<<V == nil>>> | % do not add chunk(nil,chunk)
   chunk_has_slot(Name,S,V), 
   do_add_chunk(chunk(Name,Type,Rest)).  
 
 % overwrite slots with empty values  
-do_add_chunk(chunk(Name, Type, [(S,V)|Rest])), chunk_has_slot(Name,S,nil)  <=> 
-  V \== nil |
+<<do_add_chunk(chunk(Name, Type, [(S,V)|Rest])), chunk_has_slot(Name,S,nil)>>  <=> 
+  <<<V \== nil>>> |
   chunk_has_slot(Name,S,V), 
   chunk(V,chunk), % no chunk for slot value found => add chunk of type chunk 
   
-do_add_chunk(_) <=> false.
+<<do_add_chunk(_)>> <=> false.
 \end{lstlisting}
 
 The first rule is the base case, where no slots have to be added any more. Then, as a last step the actual \verb|chunk| constraint of the chunk that is added to the store is created.
@@ -251,8 +253,8 @@ On top of the rules in listing~\ref{lst:add_chunk_rules}, there must be added a 
 
 \begin{lstlisting}[caption={Clean up primitive elements}]  
 % delete chunk of Type chunk, if real chunk is added
-add_chunk(chunk(Name,_,_)) \ chunk(Name,Type) <=> 
-  Type == chunk |
+<<add_chunk(chunk(Name,_,_))>> \ <<chunk(Name,Type)>> <=> 
+  <<<Type == chunk>>> |
   true.
 \end{lstlisting}
 
@@ -262,9 +264,9 @@ add_chunk(chunk(Name,_,_)) \ chunk(Name,Type) <=>
 The following rules create a new chunk type:
 
 \begin{lstlisting}[caption={rules for \texttt{add\_chunk\_type}}]
-add_chunk_type(CT, []) <=> 
+<<add_chunk_type(CT, [])>> <=> 
   chunk_type(CT).
-add_chunk_type(CT, [S|Ss]) <=> 
+<<add_chunk_type(CT, [S|Ss])>> <=> 
   chunk_type_has_slot(CT, S), 
   add_chunk_type(CT, Ss).
 \end{lstlisting}
@@ -274,10 +276,10 @@ add_chunk_type(CT, [S|Ss]) <=>
 This method replaces the value of an existing slot for a given chunk, but only if it is a valid slot for the chunk-type of the altered chunk.
 
 \begin{lstlisting}
-alter_slot(Chunk,Slot,Value), chunk_has_slot(Chunk,Slot,_) <=>
+<<alter_slot(Chunk,Slot,Value), chunk_has_slot(Chunk,Slot,_)>> <=>
   chunk_has_slot(Chunk,Slot,Value).
   
-alter_slot(Chunk,Slot,Value) <=>
+<<alter_slot(Chunk,Slot,Value)>> <=>
   false.
 \end{lstlisting}
 
@@ -288,9 +290,9 @@ The first rule replaces the existing \verb|chunk_has_slot| constraint by a new o
 This method removes all occurrences of a chunk.
 
 \begin{lstlisting}
-remove_chunk(Name) \ chunk(Name, _) <=> true.
-remove_chunk(Name) \ chunk_has_slot(Name, _, _) <=> true.
-remove_chunk(_) <=> true.
+<<remove_chunk(Name)>> \ <<chunk(Name, _)>> <=> true.
+<<remove_chunk(Name)>> \ <<chunk_has_slot(Name, _, _)>> <=> true.
+<<remove_chunk(_)>> <=> true.
 \end{lstlisting}
 
 \paragraph{return\_chunk}
@@ -298,12 +300,12 @@ remove_chunk(_) <=> true.
 This method creates a chunk specification as defined in section~\ref{chunk_specification} from the chunk name of a chunk in the store.
 
 \begin{lstlisting}[caption={rules for \texttt{return\_chunk}}]
-chunk(ChunkName, ChunkType) \ return_chunk(ChunkName,Res) <=> 
-  var(Res) | 
+<<chunk(ChunkName, ChunkType)>> \ <<return_chunk(ChunkName,Res)>> <=> 
+  <<<var(Res)>>> | 
   build_chunk_list(chunk(ChunkName, ChunkType, []),Res).
 
-chunk_has_slot(ChunkName, S, V) \ build_chunk_list(chunk(ChunkName, ChunkType, L), Res) <=> 
-  \+member((S,V),L) | 
+<<chunk_has_slot(ChunkName, S, V)>> \ <<build_chunk_list(chunk(ChunkName, ChunkType, L), Res)>> <=> 
+  <<<\+member((S,V),L)>>> | 
   build_chunk_list(chunk(ChunkName, ChunkType, [(S,V)|L]),Res).
   
 build_chunk_list(X,Res) <=> Res=X.
@@ -346,7 +348,7 @@ For the implementation of a buffer system, the code of a chunk-store can be exte
 The demand of $Holds$ being right-unique\footnote{$\forall b \in B \enspace \forall c, d \in (C \cup \{ \mathtt{nil} \}): (b,c), (b,d) \in Holds \Rightarrow b = c$} is a form of destructive assignment as described in \cite[p. 32]{fru_chr_book_2009}, ie. if a new chunk is assigned to a buffer, the old \verb|buffer| constraint is removed and a new \verb|buffer| constraint is introduced, holding the new chunk:
 
 \begin{lstlisting}
-set_buffer(B, C) \ buffer(B, _) <=> buffer(B, C).
+<<set_buffer(B, C) \ buffer(B, _)>> <=> buffer(B, C).
 \end{lstlisting}
 
 This rule ensures that only one \verb|buffer| constraint exists for each buffer in $B$.
@@ -417,9 +419,30 @@ The condition part consists of two buffer tests:
 For the right hand side of a rule the following actions are allowed:
 
 \begin{description}
- \item[Buffer Modification] 
- \item[Buffer Request]
- \item[Buffer Clearing]
+ \item[Buffer Modifications] of the form
+\begin{lstlisting}
+=buffer>
+  s  v
+  ...
+\end{lstlisting}
+
+They are indicated by the buffer modifier \verb|=| right before the buffer name and are specified through a list of slot-value pairs. Note, that this list can be incomplete and must not contain a \verb|isa| specification. It leads all slots mentioned in the modification action of a buffer to be replaced by the specified values.
+
+ \item[Buffer Requests] of the form
+\begin{lstlisting}
++buffer>
+  s  v
+  ...
+\end{lstlisting}
+
+Requests are indicated by the buffer modifier \verb|+| and specified by a list of slot-value pairs. A request will be sent to the module of the specified buffer which reacts to the transmitted chunk of the request specification (in form of the slot-value pairs). The semantics of a request depends on the module, but the buffer is always first cleared before stating the request.
+ \item[Buffer Clearings] of the form
+ 
+\begin{lstlisting}
+-buffer>
+\end{lstlisting}
+
+Clearings are indicated by the buffer modifier \verb|-|. When a buffer is cleared, the chunk it contains will be removed from the chunk-store of the buffer system and then be added to the declarative memory. 
 \end{description}
 
 
@@ -444,9 +467,6 @@ The counting rule specified in the example in section~\ref{example_counting} cou
     first  =m
 )
 \end{lstlisting}
-
-\FIXME{add description}
-
 \end{example}
 
 \subsubsection{Direct Translation of Buffer Tests}
@@ -477,8 +497,8 @@ If $buffer_1 \enspace Holds \enspace c_1 \enspace \wedge \enspace c \enspace Isa
 This can be directly translated into a CHR rule:
 
 \begin{lstlisting}[mathescape]
-name @
-  buffer(buffer$_\mathtt{1}$,C$_\mathtt{1}$),
+<<<name>>> @
+  <<buffer(buffer$_\mathtt{1}$,C$_\mathtt{1}$),
   chunk(C$_\mathtt{1}$,type1),
   chunk_has_slot(C$_\mathtt{1}$,slot$_\mathtt{1,1}$,val$_\mathtt{1,1}$),
   ...
@@ -488,7 +508,7 @@ name @
   chunk(C$_\mathtt{k}$,type$_\mathtt{k}$),
   chunk_has_slot(C$_\mathtt{k}$,slot$_\mathtt{k,1}$,val$_\mathtt{k,1}$),
   ...
-  chunk_has_slot(C$_\mathtt{k}$,slot$_\mathtt{k,m}$,val$_\mathtt{k,m}$)
+  chunk_has_slot(C$_\mathtt{k}$,slot$_\mathtt{k,m}$,val$_\mathtt{k,m}$)>>
 ==>
   ...
 \end{lstlisting}
@@ -524,15 +544,15 @@ with corresponding rules that handle the action have to be added. Note, that the
 The modification of a buffer takes an incomplete chunk specification and modifies the given slots of the chunk in the specified buffer. This can be implemented as follows:
 
 \begin{lstlisting}
-buffer(BufName, OldChunk) \ buffer_change(BufName, chunk(_,_,SVs)) <=>
+<<buffer(BufName, OldChunk)>> \ <<buffer_change(BufName, chunk(_,_,SVs))>> <=>
   alter_slots(OldChunk,SVs).
 \end{lstlisting}
 
 This implementation uses a generalization of the \verb|alter_slot| method as described in definition~\ref{def:abstract_methods_chunk_store} and section~\ref{chunk_specification}:
 
 \begin{lstlisting}  
-alter_slots(_,[]) <=> true.
-alter_slots(Chunk,[(S,V)|SVs]) <=> 
+<<alter_slots(_,[])>> <=> true.
+<<alter_slots(Chunk,[(S,V)|SVs])>> <=> 
   alter_slot(Chunk,S,V),
   alter_slots(Chunk,SVs). 
 \end{lstlisting}
@@ -544,7 +564,7 @@ Note that types cannot be changed. This corresponds to the grammar definition of
 When clearing a buffer, the chunk that was stored in the buffer will be removed from the chunk store and \verb|nil| will be written to the store. Additionally, the chunk goes to the declarative memory.
 
 \begin{lstlisting}
-do_buffer_clear(BufName), buffer(BufName, ModName, Chunk) <=> 
+<<do_buffer_clear(BufName), buffer(BufName, ModName, Chunk)>> <=> 
   write_to_dm(Chunk), 
   delete_chunk(Chunk), 
   buffer(BufName, nil).
@@ -553,7 +573,7 @@ do_buffer_clear(BufName), buffer(BufName, ModName, Chunk) <=>
 \verb|write_to_dm| handles the writing of the chunk to the declarative memory:
 
 \begin{lstlisting}
-write_to_dm(ChunkName) <=> return_chunk(ChunkName, ResChunk), add_dm(ResChunk).
+<<write_to_dm(ChunkName)>> <=> return_chunk(ChunkName, ResChunk), add_dm(ResChunk).
 \end{lstlisting}
 
 where \verb|add_dm| is basically just a global wrapper for the \verb|add_chunk| method of the declarative memory and will be explained in section~\ref{global_method_for_adding_chunks}.
@@ -565,14 +585,14 @@ where \verb|add_dm| is basically just a global wrapper for the \verb|add_chunk| 
 The production rule in example~\ref{ex:counting} can be translated to:
 
 \begin{lstlisting}
-count-rule @
-  buffer(goal,C1), 
+<<<count-rule>>> @
+  <<buffer(goal,C1), 
     chunk(C1,count),
     chunk_has_slot(number,N),
   buffer(retrieval,C2),
     chunk(C2,count-fact),
     chunk_has_slot(first,N),
-    chunk_has_slot(second,M)
+    chunk_has_slot(second,M)>>
 ==>
   buffer_change(goal,chunk(_,_,[(number,M)])),
   buffer_request(retrieval,chunk(_,count-fact,[first,M)])).
@@ -597,7 +617,7 @@ on the LHS of a production rule can be translated to the following CHR rule head
 
 \begin{lstlisting}
 ...
-buffer_state(buffer,bstate) ... ==> ...
+<<buffer_state(buffer,bstate)>> ... ==> ...
 \end{lstlisting}
 
 \subsubsection{The Production Rule Grammar}
@@ -669,16 +689,16 @@ and
 In the semantics of ACT-R, if the first rule matches, all the buffer modifications are performed first. After that, the procedural module can look for the next matching rule, which is the second one (due to the result of the first rule). This rule then would overwrite the value \verb|x| in the \verb|s| slot of buffer \verb|b2| with \verb|y|.
 
 \begin{lstlisting}
-buffer(b1,C),
+<<buffer(b1,C),
   chunk(C,foo),
-  chunk_has_slot(C,s1,v1)
+  chunk_has_slot(C,s1,v1)>>
 ==>
 buffer_change(b1,chunk(_,_,[(s1,v2)])),
 buffer_change(b2,chunk(_,_,[(s,x)])).
 
-buffer(b1,C),
+<<buffer(b1,C),
   chunk(C,foo),
-  chunk_has_slot(C,s1,v2)
+  chunk_has_slot(C,s1,v2)>>
 ==>
 buffer_change(b2,chunk(_,_,[(s,y)])),
 buffer_change(b1,chunk(_,_,[(s1,v3)])). % this is for termination
@@ -687,7 +707,7 @@ buffer_change(b1,chunk(_,_,[(s1,v3)])). % this is for termination
 For the query
 
 \begin{lstlisting}
-chunk(c,foo), chunk_has_slot(c,s1,v1), chunk(c2,bar), chunk_has_slot(c2,s,v), buffer(b2,c2), buffer(b1,c).
+?- chunk(c,foo), chunk_has_slot(c,s1,v1), chunk(c2,bar), chunk_has_slot(c2,s,v), buffer(b2,c2), buffer(b1,c).
 \end{lstlisting}
 
 the result would be
@@ -714,7 +734,7 @@ For every production rule, the rule
 has to be changed to a simpagation rule
 
 \begin{lstlisting}
-{ buffer_tests } \ fire <=> { actions }, fire.
+{ buffer_tests } \ <<fire>> <=> { actions }, fire.
 \end{lstlisting}
 
 It is important, that the adding of \verb|fire| is the last action of a rule.
@@ -722,19 +742,19 @@ It is important, that the adding of \verb|fire| is the last action of a rule.
 The example would be modified as follows:
 
 \begin{lstlisting}
-buffer(b1,C),
+<<buffer(b1,C),
   chunk(C,foo),
   chunk_has_slot(C,s1,v1)
-  \ fire
+  \ fire>>
 <=>
 buffer_change(b1,chunk(_,_,[(s1,v2)])),
 buffer_change(b2,chunk(_,_,[(s,x)])),
 fire.
 
-buffer(b1,C),
+<<buffer(b1,C),
   chunk(C,foo),
   chunk_has_slot(C,s1,v2)
-  \ fire
+  \ fire>>
 <=>
 buffer_change(b2,chunk(_,_,[(s,y)])),
 fire.
@@ -744,7 +764,7 @@ fire.
 The test query
 
 \begin{lstlisting}
-chunk(c,foo), chunk_has_slot(c,s1,v1), chunk(c2,bar), chunk_has_slot(c2,s,v), buffer(b2,c2), buffer(b1,c), fire.
+?- chunk(c,foo), chunk_has_slot(c,s1,v1), chunk(c2,bar), chunk_has_slot(c2,s,v), buffer(b2,c2), buffer(b1,c), fire.
 \end{lstlisting}
 
 yields
@@ -781,18 +801,18 @@ A problem that has not been addressed yet, is that ACT-R allows buffer tests lik
 
 In the logical reading, this would signify that $buffer \enspace Holds \enspace c \enspace \wedge \enspace c \enspace Isa \enspace foo \enspace \wedge \enspace c \xrightarrow{bar} spam \enspace \wedge \enspace c \xrightarrow{bar} spam$ which is equivalent to the test with only one check of the \verb|bar| slot\footnote{$x \wedge x = x$}.
 
-However, in CHR the following rule resulting from the simple translation scheme would not match:
+However, in CHR the following rule head resulting from the simple translation scheme would not match:
 
 \begin{lstlisting}
 buffer(buffer,C),
-chunk(C,foo),
-chunk_has_slot(C,bar,spam),
-chunk_has_slot(C,bar,spam)
+  chunk(C,foo),
+  chunk_has_slot(C,bar,spam),
+  chunk_has_slot(C,bar,spam)
 \end{lstlisting}
 
 Because there are no two identical \verb|chunk_has_slot| constraints in the store, the rule could not fire. When translating such a rule, the second test has to be eliminated.
 
-However, this does not the trick for all possible cases. For example, suppose a test
+However, this does not do the trick for all possible cases. For example, suppose a test
 
 \begin{lstlisting}
 =buffer>
@@ -804,10 +824,10 @@ However, this does not the trick for all possible cases. For example, suppose a 
 where the second test refers to a variable (or even both tests are variables). This problem could be solved by adding a guard to the rule from the simple translation:
 
 \begin{lstlisting}
-buffer(buffer,C),
+<<buffer(buffer,C),
 chunk(C,foo),
-chunk_has_slot(C,bar,spam)
-==> spam == X
+chunk_has_slot(C,bar,spam)>>
+==> <<<spam == X>>> | ...
 \end{lstlisting}
 
 Since \verb|X| must be bound after the matching\footnote{see section~\ref{bound_and_unbound_variables}}, the test will always give the correct result. This also works for the first example, where the test would be \verb|spam == spam|, which is always true and hence could be reduced to the rule with the second test eliminated and no guard\footnote{true guards can always be reduced}.
@@ -822,10 +842,10 @@ bar  eggs
 would describe a rule that never can fire. The translation models exactly this behaviour:
 
 \begin{lstlisting}
-buffer(buffer,C),
+<<buffer(buffer,C),
 chunk(C,foo),
-chunk_has_slot(C,bar,spam)
-==> spam == eggs
+chunk_has_slot(C,bar,spam)>>
+==> <<<spam == eggs>>> | ...
 \end{lstlisting}
 
 since the built-in syntactic-equality test of Prolog would never return true for those two constants.
@@ -851,12 +871,12 @@ To translate the other slot modifiers to CHR, another CHR mechanism can be used:
 where \verb|~| stands for one of the modifiers in \{ \verb|=,-,<,>,<=,>=| \} can be translated as follows:
 
 \begin{lstlisting}
-buffer(buffer,C),
+<<buffer(buffer,C),
   ...
   chunk_has_slot(C,slot,V),
-  ...
+  ...>>
 ==>
-  V # val |
+  <<<V # val>>> |
   ...
 \end{lstlisting}
 
@@ -898,13 +918,14 @@ will fire, if there is a chunk whose value in \verb|eggs| is different from the 
 matches for every value of the spam slot. The translation to CHR is:
 
 \begin{lstlisting}
-buffer(buffer,C),
+<<buffer(buffer,C),
   chunk(C,foo),
-  chunk_has_slot(C,spam,Bar),
+  chunk_has_slot(C,spam,Bar)>>
 ==>
-  Bar=Eggs |
-  ...
+  <<<Bar=Eggs>>> | ...
 \end{lstlisting}
+
+In this case, a binding occurs in the guard, which is usually unwanted. However, since the \verb|Eggs| variable is unbound and therefore a fresh variable introduced in the guard, it is allowed and does not harm the matching process. It is even necessary to bind \verb|Eggs| to \verb|Bar| because of the semantics of the equivalent ACT-R rule. The following example is a little bit different: The rule
 
 \begin{lstlisting}
 =buffer>
@@ -914,13 +935,24 @@ buffer(buffer,C),
   ham   =eggs
 \end{lstlisting}
 
-will match all chunks which have the same value in \verb|spam| and \verb|ham|. \FIXME{CHR translation???}
+will match all chunks which have the same value in \verb|spam| and \verb|ham|. This translates to
+
+\begin{lstlisting}
+<<buffer(buffer,C),
+  chunk(C,foo),
+  chunk_has_slot(C,spam,Bar),
+  chunk_has_slot(C,spam,Eggs)>>
+==>
+  <<<Bar==Eggs>>> | ...
+\end{lstlisting}
+
+Note, that in this case, no binding occurs, since both, \verb|Bar| and \verb|Eggs|, already occur in the head of the rule and are bound to some value. Hence, the test in the guard can be reduced to a simple syntactic equality test without binding (\verb|==|).
 
 \end{example}
 
 \paragraph{Relation to Negation-as-Absence}
 
-Negation-as-absence as described in \cite[147\psqq]{fru_chr_book_2009} is a concept provided by many production rule systems. It enables the programmer to negate a fact in the sense that the fact is not in the store and therefore the rule is applicable -- so the programmer asks for the absence of a particular fact.
+The concept of negation-as-absence as described in \cite[147\psqq]{fru_chr_book_2009} is provided by many production rule systems. It enables the programmer to negate a fact in the sense that the fact is not explicitly in the store and therefore the rule is applicable -- so the programmer asks for the absence of a particular fact.
 
 At the first glance, the slot modifiers seem to implement this concept, but this is not the case: All negated slot tests in ACT-R can be reduced to simple built-in guard checks, because the chunks in the store are always described completely and the values are ground, so simple built-in checks work automatically. This also works for invalid slot-tests that ask for slots which are not offered by the chunk-type they ask for. Then there will never be a constraint matching the head of the rule due to type consistency.
 
@@ -960,10 +992,9 @@ The argument of such an output call is a list of Lisp-symbols, so it is possible
 This mechanism can be translated to Prolog directly:
 
 \begin{lstlisting}
-output([]) :-
-  nl.
+output([]).
 output([X|Xs]) :-
-  write(X),
+  write(X),nl,
   output(Xs).
 \end{lstlisting}
 
@@ -993,7 +1024,7 @@ In this example, two modules \verb|mod1| and \verb|mod2| are defined, with parti
 
 :- chr_constraint a/0, b/0.
 
-a <=> c.
+<<a>> <=> c.
 \end{lstlisting}
 
 \begin{lstlisting}[caption={Definition of Module 2},label=lst:mod2]
@@ -1004,8 +1035,8 @@ a <=> c.
 
 :- chr_constraint a/0, b/0, c/0. 
 
-a <=> b.
-b <=> mod1:a.
+<<a>> <=> b.
+<<b>> <=> mod1:a.
 \end{lstlisting}
 
 
@@ -1057,13 +1088,13 @@ buffer(BufName,ModName,Chunk)
 A buffer request can now be handled as follows:
 
 \begin{lstlisting}
-buffer(BufName, ModName, _) \ buffer_request(BufName, Chunk) <=>
+<<buffer(BufName, ModName, _) \ buffer_request(BufName, Chunk)>> <=>
   set_buffer_state(BufName,busy),
   buffer_clear(BufName), % clear buffer immediately
   ModName:module_request(BufName, Chunk, ResChunk,ResState),
 (ResState=error, 
   buffer(BufName, ModName, nil),
-  buffer_state(BufName,error) ;
+  set_buffer_state(BufName,error) ;
   
   ResState = free,
   ResChunk = chunk(ResChunkName,_,_),
@@ -1072,7 +1103,7 @@ buffer(BufName, ModName, _) \ buffer_request(BufName, Chunk) <=>
   set_buffer_state(BufName,free)).
 \end{lstlisting}
 
-When getting a buffer request, the buffer state is set to \verb|busy| first. Then the buffer is cleared immediately, which leads the chunk in the buffer being added to the declarative memory. Then the module request is stated according to the interface. If the resulting state is \verb|error|, then the buffer gets this state and the content of the buffer is \verb|nil|
+When getting a buffer request, the buffer state is set to \verb|busy| first. Then the buffer is cleared immediately, which leads the chunk in the buffer being added to the declarative memory. Then the module request is stated according to the interface. If the resulting state is \verb|error|, then the buffer gets this state and the content of the buffer is \verb|nil|, otherwise, if the resulting state is \verb|free|, the result will be added to the buffer and the state will eventually be set to \verb|free|. 
 
 \subsection{Components of the Implementation}
 
@@ -1086,6 +1117,13 @@ The Declarative Module is a \emph{chunk store}, that additionally implements the
 
 \subsection{Global Method for Adding Chunks}
 \label{global_method_for_adding_chunks}
+
+Since the declarative module is very important to the whole theory it kind of is a special module. Therefore, its Prolog module exports a predicate \verb|add_dm| that is just a wrapper for its chunk store. Hence, with the command \verb|add_dm| chunks can be added to the chunk store of the declarative module from every part of the program. This is eg. used for the clearing of buffers in the buffer system, where the chunk of a buffer goes to the declarative memory when the buffer is cleared. This is the implementation of the command:
+
+\begin{lstlisting}
+<<add_dm(ChunkDef)>> <=> add_chunk(ChunkDef).
+\end{lstlisting}
+
 
 
 \subsection{Retrieval Requests}
@@ -1131,19 +1169,19 @@ The most common case of requests is a specification of the type and a (possibly 
 In this section, a CHR constraint \verb|find_chunk/3| will be defined, that produces a \verb|match_set/1| constraint for each chunk that matches a specified pattern. Eventually, the match set will be collected and returned.
 
 \begin{lstlisting}
-find_chunk(N1,T1,Ss), chunk(N2,T2) ==> 
-  unifiable((N1,T1),(N2,T2),_), 
-  nonvar(Ss) | 
+<<find_chunk(N1,T1,Ss), chunk(N2,T2)>> ==> 
+  <<<unifiable((N1,T1),(N2,T2),_), 
+  nonvar(Ss)>>> | 
   test_slots(N2,Ss), 
   match_set([N2]).
   
-find_chunk(N1,T1,Ss), chunk(N2,T2) ==> 
-  unifiable((N1,T1),(N2,T2),_), 
-  var(Ss) | 
+<<find_chunk(N1,T1,Ss), chunk(N2,T2)>> ==> 
+  <<<unifiable((N1,T1),(N2,T2),_), 
+  var(Ss)>>> | 
   test_slots(N2,[]), 
   match_set([N2]).
 
-find_chunk(_,_,_) <=> true.
+<<find_chunk(_,_,_)>> <=> true.
 \end{lstlisting}
 
 First, for each chunk in the store, whose name and type is unifiable with the specified name and type, will be part of the initial match set. If in the chunk specification the name and type are variables, each chunk will match. For the unification test, the \verb|unifiable/3| predicate of Prolog is used, because the unification should not be performed but only tested. 
@@ -1155,19 +1193,19 @@ The rule in line~7 is for chunk specifications that do not specify the slots. In
 After adding each matching candidate to the match set, whose name and type have already been checked, the match set is pruned from chunks that have non-matching slot values:
 
 \begin{lstlisting}
-test_slots(_,[]) <=> true.
+<<test_slots(_,[])>> <=> true.
 
-chunk_has_slot(N,S,V1), match_set([N]) 
-\ test_slots(N,[(S,V2)|Ss]) <=> 
-  unifiable(V1,V2,_) | 
+<<chunk_has_slot(N,S,V1), match_set([N]) 
+\ test_slots(N,[(S,V2)|Ss])>> <=> 
+  <<<unifiable(V1,V2,_)>>> | 
   test_slots(N,Ss).
 
-chunk_has_slot(N,S,V1) 
-\ test_slots(N,[(S,V2)|_]), match_set([N]) <=> 
-    \+unifiable(V1,V2,_) | 
+<<chunk_has_slot(N,S,V1) 
+\ test_slots(N,[(S,V2)|_]), match_set([N])>> <=> 
+    <<<\+unifiable(V1,V2,_)>>> | 
     true.
 
-test_slots(N,_) \ match_set([N]) <=> true.
+<<test_slots(N,_) \ match_set([N])>> <=> true.
 \end{lstlisting}
 
 The first rule is the base case, where no slots have to be tested any more and the test is finished and has been successful.
@@ -1183,13 +1221,13 @@ If those rules have been applied exhaustively, only the matching chunks will rem
 However, since the match set is distributed over a set of \verb|match_set| constraints, it would be desirable to collect all those matches in one set. This can be triggered by a \verb|collect_matches/1| constraint, that gets the complete match set in its arguments:
 
 \begin{lstlisting}
-collect_matches(_) \ match_set(L1), match_set(L2) <=> 
+<<collect_matches(_) \ match_set(L1), match_set(L2)>> <=> 
   append(L1,L2,L), 
   match_set(L).
   
-collect_matches(Res), match_set(L) <=> Res=L.
+<<collect_matches(Res), match_set(L)>> <=> Res=L.
 
-collect_matches(Res) <=> Res=[].
+<<collect_matches(Res)>> <=> Res=[].
 \end{lstlisting}
 
 The first rule merges two match sets to one singe merge set containing a list with all the chunks of the former sets, if the \verb|collect_matches| trigger is present. 
@@ -1201,7 +1239,7 @@ Note, that this implies, that the rules have to be applied from top to bottom, l
 The symbolic layer does not implement any rule for which chunk will be returned, if there are more than one in the match set. In this implementation, the first chunk in the list is chosen. The module request is now implemented as follows:
 
 \begin{lstlisting}
-module_request(retrieval,chunk(Name,Type,Slots),ResChunk,ResState) <=> 
+<<module_request(retrieval,chunk(Name,Type,Slots),ResChunk,ResState)>> <=> 
   find_chunk(Name,Type,Slots),
   collect_matches(Res),
   first(Res,Chunk),
@@ -1224,13 +1262,13 @@ An important technique used in ACT-R's declarative memory module, is the chunk m
 If a chunk entering the declarative memory has the same name as a chunk in that already is in the store, the new chunk gets a new name and if its slots are the same as the slots of the old chunk, they will be merged and the new name will be deleted.
 
 \begin{lstlisting}
-chunk(Name,Type) \ add_chunk(chunk(Name,Type,Slots)) <=>
-  Type \== chunk |
+<<chunk(Name,Type) \ add_chunk(chunk(Name,Type,Slots))>> <=>
+  <<<Type \== chunk>>> |
   add_chunk(chunk(Name:new,Type,Slots)).
 
 % first check, if identical chunk exists
-add_chunk(chunk(C,T,S)) ==> 
-  T \== chunk | 
+<<add_chunk(chunk(C,T,S))>> ==> 
+  <<<T \== chunk>>> | 
   check_identical_chunks(chunk(C,T,S)).
 \end{lstlisting}
 
@@ -1241,9 +1279,9 @@ The second rule adds a identity check for each chunk to be added except for prim
 The identity check is implemented as follows:
 
 \begin{lstlisting}
-check_identical_chunks(nil) <=> true.
+<<check_identical_chunks(nil)>> <=> true.
 
-chunk(NameOld,Type), check_identical_chunks(chunk(NameNew,Type,Slots)) ==> 
+<<chunk(NameOld,Type), check_identical_chunks(chunk(NameNew,Type,Slots))>> ==> 
   check_identical_chunks(chunk(NameNew,Type,Slots),NameOld).
   
 check_identical_chunks(_) <=> true.
@@ -1252,20 +1290,20 @@ check_identical_chunks(_) <=> true.
 The rule in line~3 adds for each identity check and each chunk in the store a pairwise identity check which is performed by the following rules:
 
 \begin{lstlisting}
-chunk(NameOld, Type) \ check_identical_chunks(chunk(NameNew,Type,[]),NameOld) <=> 
+<<chunk(NameOld, Type) \ check_identical_chunks(chunk(NameNew,Type,[]),NameOld)>> <=> 
   identical(NameOld,NameNew).
   
-chunk(NameOld, Type), chunk_has_slot(NameOld, S, V) \ check_identical_chunks(chunk(NameNew,Type,[(S,V)|Rest]),NameOld) <=> 
+<<chunk(NameOld, Type), chunk_has_slot(NameOld, S, V) \ check_identical_chunks(chunk(NameNew,Type,[(S,V)|Rest]),NameOld)>> <=> 
   check_identical_chunks(chunk(NameNew,Type,Rest),NameOld).
   
-chunk(NameOld, Type), chunk_has_slot(NameOld, S, VOld) \ check_identical_chunks(chunk(_,Type,[(S,VNew)|_]),NameOld) <=> 
-  VOld \== VNew |
+<<chunk(NameOld, Type), chunk_has_slot(NameOld, S, VOld) \ check_identical_chunks(chunk(_,Type,[(S,VNew)|_]),NameOld)>> <=> 
+  <<<VOld \== VNew>>> |
   true.
     
-remove_duplicates @ identical(N,N) <=> true.
+<<<remove_duplicates>>> @ <<identical(N,N)>> <=> true.
 
 % abort checking for identical chunks if one has been found
-cleanup_identical_chunk_check @ identical(NameOld,NameNew) \ check_identical_chunks(chunk(NameNew,_,_),NameOld) <=> true.
+<<<cleanup_identical_chunk_check>>> @ <<identical(NameOld,NameNew) \ check_identical_chunks(chunk(NameNew,_,_),NameOld)>> <=> true.
 \end{lstlisting}
 
 The first rule is the base case, where no slots have to be tested any more. Then the chunks are identical and an \verb|identical/2| constraint is added to the store for those two chunks.
@@ -1279,19 +1317,22 @@ Note that this implementation assumes that the chunk specification of the chunk 
 For the easier use of the identical constraint at other points, transitive identities can be reduced to the only real chunk in the store (the one with the \verb|chunk| constraint):
 
 \begin{lstlisting}
-reduce @ chunk(C1,_), identical(C1,C2) \ identical(C2,C3) <=> identical(C1,C3).
+<<<reduce>>> @ <<chunk(C1,_), identical(C1,C2) \ identical(C2,C3)>> <=> 
+  identical(C1,C3).
 \end{lstlisting}
 
 Additionally, the newly created names can be deleted if the chunk was identical to another chunk with a real name, since the new nomenclature was only store internal, so only the original name must be kept:
 
 \begin{lstlisting}
-identical(C,C:new) <=> true.
+<<identical(C,C:new)>> <=> true.
 \end{lstlisting}
 
 In the declarative module, the chunk search must be extended to find merged chunks by both names. This can be achieved as follows:
 
 \begin{lstlisting}
-identical(C1,C2) \ find_chunk(C2,T2.Ss2)  <=> ground(C2) | find_chunk(C1,T2,Ss2).
+<<identical(C1,C2) \ find_chunk(C2,T2.Ss2)>> <=> 
+  <<<ground(C2)>>> | 
+  find_chunk(C1,T2,Ss2).
 \end{lstlisting}
 
 so the chunk search of a chunk that is only a pointer to another chunk can be reduced to the search of this chunk. \FIXME{maybe this can cause problems if a production rule refers to a particular name and gets a chunk with the name of its brother..}
@@ -1319,7 +1360,7 @@ The system just removes such events from the queue and executes them, which lead
 
 With this approach, the simulation of a parallel execution of ACT-R can be achieved: Each buffer action on the RHS of a rule just schedules an event that actually performs the action at a specified time (the current time plus its duration). 
 
-The heart of the scheduler is a \emph{priority queue} which is described in the next section.
+The central part of the scheduler is a \emph{priority queue} which manages a list of events and returns them by time. It is described in the next section.
 
 \subsection{Priority Queue}
 
@@ -1353,12 +1394,13 @@ This queue achieves the ordered time-priority condition, since the queue objects
 In general, there can be defined some rules to make such a queue consistent, ie. every object only has one successor and the queue achieves the time-priority condition:
 
 \begin{lstlisting}
-A --> A <=> true.
+<<A --> A>> <=> true.
 
-_ --> s <=> false.
+<<_ --> s>> <=> false.
 
-A --> B, A --> C <=>
-  leq(B,C) |
+<<A --> B, A --> C>> <=>
+  <<<leq(A,B),
+  leq(B,C)>>> |
   A --> B,
   B --> C.
 \end{lstlisting}
@@ -1391,14 +1433,14 @@ add_q(Time,Priority,Evt) <=>
 \end{lstlisting}
  \item[de\_q(X)] Dequeues the first element of the queue according to the time-priority condition and binds its value to \verb|X|.
 \begin{lstlisting}
-de_q(X), s --> A, A --> B <=>
+<<de_q(X), s --> A, A --> B>> <=>
   X = A,
   s --> B.
 
-de_q(X), s --> A <=>
+<<de_q(X), s --> A>> <=>
   X = A.  
   
-de_q(X) <=> X = nil.
+<<de_q(X)>> <=> X = nil.
 \end{lstlisting}
 
 The first object just is the successor of \verb|s|, since the list has been constructed preserving the correct order and the property, that everything starts at \verb|s|. If the first object has a successor, this object is the new first object. If there are no order constraints left, the queue is empty and \verb|de_q| returns \verb|nil|.

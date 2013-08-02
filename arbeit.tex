@@ -150,7 +150,13 @@ backend=bibtex
     numbers=left,
     aboveskip=\parskip,
     basicstyle=\ttfamily,
-    numberstyle=\tiny
+    numberstyle=\tiny,
+    deletekeywords={ time },
+    alsoletter= {<,=,>,:,-,@, |, \\, ? },
+    morekeywords={ <=>, ==> , :-, @, |, \\, false, ?- },
+    morecomment=[s]{\{}{\}},
+    moredelim=[is][\textbf]{<<}{>>},
+    moredelim=[is][\textit]{<<<}{>>>}
 }
 
 
