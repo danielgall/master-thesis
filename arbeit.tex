@@ -47,9 +47,12 @@ backend=bibtex
 %% Diverse Pakete
 %%
 \usepackage{fancyvrb}
-\usepackage{ccicons}
-\usepackage{enumitem}
-\setlist{nolistsep}
+\usepackage{ccicons} % Creative Commons Lizenzsymbole
+\usepackage{lmodern} % verbessert die Schriftdarstellung in pdfs
+\usepackage{enumitem} % ändern von listeneinstellungen mit \setlist
+\setlist{nolistsep} % kein abstand zwischen items in listen, Befehl von enumitem
+\usepackage{float} % use \begin{figure}{H} to really force a figure being placed here
+\usepackage[section]{placeins} % floatbarrier at each new section, so every figure appears in its own section
 
 \usepackage{scrhack}
 \usepackage{graphicx}

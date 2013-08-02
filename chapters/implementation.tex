@@ -1,10 +1,11 @@
 \chapter{Implementation of ACT-R in CHR}
+\label{implementation}
 
 After the comprehensive but at some point informal overview of the ACT-R theory in chapter \ref{actr_description}, this chapter presents a possible implementation of the described concepts of the ACT-R theory in CHR.
 
 For the implementation, some special cases and details that are not exactly defined in theory have to be considered. Hence, some concepts of the theory that are implemented in this work are formalized first. The implementation in form of CHR rules sticks to those formalisms and is often very similar to them.
 
-Additionally, the implementation is described incrementally, ie. first, a very minimal subset of ACT-R is presented that will be refined gradually with the progress of this chapter. In the end, an overview of the actual implementation as a result of this work is given.
+Additionally, the implementation is described incrementally, i.e. first, a very minimal subset of ACT-R is presented that will be refined gradually with the progress of this chapter. In the end, an overview of the actual implementation as a result of this work is given.
 
 Some of the definitions in this chapter result directly from the theory, some of them needed a further analysis of the official ACT-R 6.0 Reference Manual \cite{actr_reference} or the tutorials \cite{actr_tutorial}. 
 
@@ -64,13 +65,13 @@ A chunk-store is \emph{type-consistent}, iff $\forall (c,(t,S)) \in Isa: \forall
 The following methods can be defined over a chunk store $\Sigma = (C, E, \mathcal{T}, HasSlot, Isa)$:
 
 \begin{description}
- \item[\texttt{chunk-type(name slot\textsubscript{1} slot\textsubscript{2} ... slot\textsubscript{n})}] adds the type $T = (\mathtt{name},\{\mathtt{slot_1}, \dots, \mathtt{slot_n}\})$ to the store, ie. $\mathcal{T'} = \mathcal{T} \cup \{T\}$. 
- \item[\texttt{add-chunk(name isa type slot\textsubscript{1} val\textsubscript{1} ... slot\textsubscript{n} val\textsubscript{n})}] adds a new chunk to the store, ie. $C' = C \cup \{ \mathtt{name} \}$, $Isa' = Isa \cup (\mathtt{name}, (\mathtt{type}, slots(\mathtt{type}))$ and $HasSlot' = \bigcup_{i = 1}^n{\mathtt{(name,slot_i,val_i)}} \cup HasSlot.$ Note, that due to the expansion of $C$, the condition that $C$ and $E$ have to be disjoint may be violated. To fix this violation, the element can be removed from $E$: $E' = (E \cup C) - (E \cap C).$ 
+ \item[\texttt{chunk-type(name slot\textsubscript{1} slot\textsubscript{2} ... slot\textsubscript{n})}] adds the type $T = (\mathtt{name},\{\mathtt{slot_1}, \dots, \mathtt{slot_n}\})$ to the store, i.e. $\mathcal{T'} = \mathcal{T} \cup \{T\}$. 
+ \item[\texttt{add-chunk(name isa type slot\textsubscript{1} val\textsubscript{1} ... slot\textsubscript{n} val\textsubscript{n})}] adds a new chunk to the store, i.e. $C' = C \cup \{ \mathtt{name} \}$, $Isa' = Isa \cup (\mathtt{name}, (\mathtt{type}, slots(\mathtt{type}))$ and $HasSlot' = \bigcup_{i = 1}^n{\mathtt{(name,slot_i,val_i)}} \cup HasSlot.$ Note, that due to the expansion of $C$, the condition that $C$ and $E$ have to be disjoint may be violated. To fix this violation, the element can be removed from $E$: $E' = (E \cup C) - (E \cap C).$ 
  
  Additionally, a valid mechanism to restore type-consistency may be introduced: It might happen, that not all slots are specified in the call of the \verb|add-chunk| method. Since it is claimed by the definition of $HasSlot$ that for all slots $s$ of a chunk $c$ there must be a $(c,s,v) \in HasSlot$, in implementations the unspecified slots are initialized as empty slots, represented by the empty value \verb|nil|. Furthermore, slots specified in the call of the method that are not a member of the chunk's type should cause an error to preserve type-consistency.
   \item[\texttt{alter-slot(name slot\textsubscript{1} val\textsubscript{1} ... slot\textsubscript{n} val\textsubscript{n})}] changes the slot values of a chunk identified by its name. Only existing slots can be altered.
   \item[\texttt{remove-chunk(name)}] removes the chunk with the given name from $C$ and all of its occurrences in $Isa$ and $HasSlot$.
-  \item[\texttt{return-chunk(name)}] gets a chunk name as input and returns a chunk specification, ie. the name, type and all slot-value pairs of this chunk in the store.
+  \item[\texttt{return-chunk(name)}] gets a chunk name as input and returns a chunk specification, i.e. the name, type and all slot-value pairs of this chunk in the store.
 \end{description} 
 \end{definition}
 
@@ -189,13 +190,13 @@ The straight-forward definition of a data type for chunk specifications is just 
 :- chr_type pair(T1,T2) ---> (T1,T2).
 \end{lstlisting}
 
-This definition states that a chunk is either \verb|nil|, ie. an empty chunk, or a term \verb|chunk(Name, Type, SVP)|, where \verb|SVP| is a list of slot-value pairs. This is the direct translation of the chunk-specification used in the definition, amended by the \verb|nil| construct, that may be needed for later purposes.
+This definition states that a chunk is either \verb|nil|, i.e. an empty chunk, or a term \verb|chunk(Name, Type, SVP)|, where \verb|SVP| is a list of slot-value pairs. This is the direct translation of the chunk-specification used in the definition, amended by the \verb|nil| construct, that may be needed for later purposes.
 
 The default methods can be implemented as follows:
 
 \paragraph{add\_chunk}
 
-This method creates the chunks and elements of the chunk store. The set $E$ of elements is minimal, ie. only elements that appear in the slots of a chunk but are not chunks themselves are members of $E$. However, the set $E$ is never constructed explicitly, but represented by chunks of the special type \verb|chunk| that provides no slots. So each value in the slot of a chunk that is added to the store and that is not an element of the chunk store yet, gets its own chunk of type \verb|chunk|. As soon as a chunk with the name of such a primitive element is added to the store, the chunk of type \verb|chunk| is removed from the store.
+This method creates the chunks and elements of the chunk store. The set $E$ of elements is minimal, i.e. only elements that appear in the slots of a chunk but are not chunks themselves are members of $E$. However, the set $E$ is never constructed explicitly, but represented by chunks of the special type \verb|chunk| that provides no slots. So each value in the slot of a chunk that is added to the store and that is not an element of the chunk store yet, gets its own chunk of type \verb|chunk|. As soon as a chunk with the name of such a primitive element is added to the store, the chunk of type \verb|chunk| is removed from the store.
 
 \begin{lstlisting}[caption={Rules for \texttt{add\_chunk}}, label=lst:add_chunk_rules]
 % empty chunk will not be added
@@ -249,7 +250,7 @@ Otherwise, if the value of the slot to be added is not \verb|nil|, the next rule
 
 If no rule matches, the user tried to create a chunk with slots that are not specified in the chunk-type. This leads to an error.
 
-On top of the rules in listing~\ref{lst:add_chunk_rules}, there must be added a rule that deletes a primitive element (ie. a chunk of type \verb|chunk|), if the user introduces a real chunk with the name of this element:
+On top of the rules in listing~\ref{lst:add_chunk_rules}, there must be added a rule that deletes a primitive element (i.e. a chunk of type \verb|chunk|), if the user introduces a real chunk with the name of this element:
 
 \begin{lstlisting}[caption={Clean up primitive elements}]  
 % delete chunk of Type chunk, if real chunk is added
@@ -333,7 +334,7 @@ The buffer system can be regarded as a chunk-store, that is enhanced by buffers.
 
 \begin{definition}[buffer system]
 \label{def:buffer_system}
-A \emph{buffer system} is a tuple $(B,\Sigma,Holds)$, where $B$ is a set of buffers, $\Sigma = (C, E, \mathcal{T}, HasSlot, Isa)$ a type-consistent chunk-store and $Holds \subseteq B \times (C \cup \{ \mathtt{nil} \})$ a right-unique and left-total relation, that assigns every buffer at most one chunk that it holds. If a buffer $b$ is empty, ie. it does not hold a chunk, then $(b,\mathtt{nil}) \in Holds$.
+A \emph{buffer system} is a tuple $(B,\Sigma,Holds)$, where $B$ is a set of buffers, $\Sigma = (C, E, \mathcal{T}, HasSlot, Isa)$ a type-consistent chunk-store and $Holds \subseteq B \times (C \cup \{ \mathtt{nil} \})$ a right-unique and left-total relation, that assigns every buffer at most one chunk that it holds. If a buffer $b$ is empty, i.e. it does not hold a chunk, then $(b,\mathtt{nil}) \in Holds$.
 
 A buffer system is \emph{consistent}, if every chunk that appears in $Holds$ is a member of $C$ and $\Sigma$ is a type-consistent chunk-store.
 
@@ -345,7 +346,7 @@ For the implementation of a buffer system, the code of a chunk-store can be exte
 \subsubsection{Destructive Assignment and Consistency}
 \label{destructive_assignment}
 
-The demand of $Holds$ being right-unique\footnote{$\forall b \in B \enspace \forall c, d \in (C \cup \{ \mathtt{nil} \}): (b,c), (b,d) \in Holds \Rightarrow b = c$} is a form of destructive assignment as described in \cite[p. 32]{fru_chr_book_2009}, ie. if a new chunk is assigned to a buffer, the old \verb|buffer| constraint is removed and a new \verb|buffer| constraint is introduced, holding the new chunk:
+The demand of $Holds$ being right-unique\footnote{$\forall b \in B \enspace \forall c, d \in (C \cup \{ \mathtt{nil} \}): (b,c), (b,d) \in Holds \Rightarrow b = c$} is a form of destructive assignment as described in \cite[p. 32]{fru_chr_book_2009}, i.e. if a new chunk is assigned to a buffer, the old \verb|buffer| constraint is removed and a new \verb|buffer| constraint is introduced, holding the new chunk:
 
 \begin{lstlisting}
 <<set_buffer(B, C) \ buffer(B, _)>> <=> buffer(B, C).
@@ -383,11 +384,11 @@ The condition part is also called the \emph{left hand side} of a rule (LHS) and 
 
 \subsubsection{The Left Hand Side of a Rule}
 
-Generally, a condition is either a \emph{buffer test}, ie. a specification of slot-value pairs that are checked against the chunk in the specified buffer or a \emph{buffer query}, ie. a check of the state of a buffer's module (either busy, free or error). A buffer test on the LHS of a rule is indicated by a \verb|=| followed by the buffer name of the tested buffer; a query is indicated by a \verb|?| in front of the buffer name.
+Generally, a condition is either a \emph{buffer test}, i.e. a specification of slot-value pairs that are checked against the chunk in the specified buffer or a \emph{buffer query}, i.e. a check of the state of a buffer's module (either busy, free or error). A buffer test on the LHS of a rule is indicated by a \verb|=| followed by the buffer name of the tested buffer; a query is indicated by a \verb|?| in front of the buffer name.
 
 The LHS of a rule may contain bound or unbound variables: \verb|=varname| is a variable with name \verb|varname|.
 
-If the chunks in the buffers pass all buffer tests specified by the rule, the rule can fire, ie. its right hand side will be applied. The LHS is a conjunction of buffer tests, ie. there is no specific order for the tests \cite[p. 165]{actr_reference}.
+If the chunks in the buffers pass all buffer tests specified by the rule, the rule can fire, i.e. its right hand side will be applied. The LHS is a conjunction of buffer tests, i.e. there is no specific order for the tests \cite[p. 165]{actr_reference}.
 
 \begin{example}[counting example -- left hand side]
 The left hand side of the counting rule specified in the example in section~\ref{example_counting} could be defined as follows:
@@ -857,7 +858,7 @@ In ACT-R, slot-tests can be preceded by \emph{slot modifiers}. Those modifiers a
 
 If no slot modifier is specified in a slot test, the default modifier \verb|=| is used, that states that the chunk in the specified buffer must have the specified value in the specified slot. This default semantics has been used in the previous sections when translating simple ACT-R rules to CHR and is performed automatically by the matching of CHR.
 
-To translate the other slot modifiers to CHR, another CHR mechanism can be used: Guards. Since the allowed modifiers are all default built-in constraints\footnote{ie. Prolog predicates}, a slot test with a modifier
+To translate the other slot modifiers to CHR, another CHR mechanism can be used: Guards. Since the allowed modifiers are all default built-in constraints\footnote{i.e. Prolog predicates}, a slot test with a modifier
 
 \begin{lstlisting}
 ...
@@ -1061,7 +1062,7 @@ module_request(+BufName,+Chunk,-ResChunk,-ResState)
 The arguments of such a request are:
 
 \begin{description}
- \item[BufName] The name of the requested buffer, eg. \verb|retrieval|.
+ \item[BufName] The name of the requested buffer, e.g. \verb|retrieval|.
  \item[Chunk] A chunk specification that represents the arguments of the request. The form of the allowed chunk specifications and the semantics of the request are module-dependent. For example: \verb|chunk(_,t,[(foo,bar),(spam,eggs)])| could describe a chunk, that should be retrieved from declarative memory.
 \end{description}
 
@@ -1118,7 +1119,7 @@ The Declarative Module is a \emph{chunk store}, that additionally implements the
 \subsection{Global Method for Adding Chunks}
 \label{global_method_for_adding_chunks}
 
-Since the declarative module is very important to the whole theory it kind of is a special module. Therefore, its Prolog module exports a predicate \verb|add_dm| that is just a wrapper for its chunk store. Hence, with the command \verb|add_dm| chunks can be added to the chunk store of the declarative module from every part of the program. This is eg. used for the clearing of buffers in the buffer system, where the chunk of a buffer goes to the declarative memory when the buffer is cleared. This is the implementation of the command:
+Since the declarative module is very important to the whole theory it kind of is a special module. Therefore, its Prolog module exports a predicate \verb|add_dm| that is just a wrapper for its chunk store. Hence, with the command \verb|add_dm| chunks can be added to the chunk store of the declarative module from every part of the program. This is e.g. used for the clearing of buffers in the buffer system, where the chunk of a buffer goes to the declarative memory when the buffer is cleared. This is the implementation of the command:
 
 \begin{lstlisting}
 <<add_dm(ChunkDef)>> <=> add_chunk(ChunkDef).
@@ -1210,7 +1211,7 @@ After adding each matching candidate to the match set, whose name and type have 
 
 The first rule is the base case, where no slots have to be tested any more and the test is finished and has been successful.
 
-In line~3, the rule applies, if there is at least one slot \verb|(S,V2)| that has to be tested and a $HasSlot$ relation of the kind \verb|N| $\xrightarrow[]{\mathtt{S}}$ \verb|V1| with the slot \verb|S| to be tested, that is still in the match set, so no conflicting slot has been found yet. If the values \verb|V1| and \verb|V2| are unifiable, ie. the both are the same constant or at least one is a variable, then the test passes and the chunk \verb|N| remains in the match set and the rest of the slot tests are performed.
+In line~3, the rule applies, if there is at least one slot \verb|(S,V2)| that has to be tested and a $HasSlot$ relation of the kind \verb|N| $\xrightarrow[]{\mathtt{S}}$ \verb|V1| with the slot \verb|S| to be tested, that is still in the match set, so no conflicting slot has been found yet. If the values \verb|V1| and \verb|V2| are unifiable, i.e. the both are the same constant or at least one is a variable, then the test passes and the chunk \verb|N| remains in the match set and the rest of the slot tests are performed.
 
 The second rule in line~8 applied if the guard of the first rule did not hold, so the values \verb|V1| and \verb|V2| are not unifiable, but there is a connection \verb|N| $\xrightarrow[]{\mathtt{S}}$ \verb|V1| and in the request it has been specified that the value of slot \verb|S| has to be \verb|V2|. In this case, \verb|V1| $\neq$ \verb|V2|, so the test fails and the chunk \verb|N| has to be removed from the match set, since one of its slots does not match.
 
@@ -1391,7 +1392,7 @@ q(3,7,e2) --> q(3,2,e3)
 
 This queue achieves the ordered time-priority condition, since the queue objects are in the correct order according to their times and priorities. It is also consistent in a sense that it has no gaps and no object has more than one successor.
 
-In general, there can be defined some rules to make such a queue consistent, ie. every object only has one successor and the queue achieves the time-priority condition:
+In general, there can be defined some rules to make such a queue consistent, i.e. every object only has one successor and the queue achieves the time-priority condition:
 
 \begin{lstlisting}
 <<A --> A>> <=> true.
