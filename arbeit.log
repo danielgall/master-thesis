@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Arch Linux) (format=pdflatex 2013.7.15)  1 AUG 2013 18:03
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Arch Linux) (format=pdflatex 2013.7.15)  2 AUG 2013 08:41
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1325,25 +1325,20 @@ Overfull \hbox (8.66985pt too wide) in paragraph at lines 71--72
 LaTeX Warning: Reference `fig:chunk_addition_fact' on page 25 undefined on inpu
 t line 79.
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 79--80
-
- []
-
 LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <10> not available
-(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 80.
+(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 81.
 
-Underfull \vbox (badness 7238) has occurred while \output is active []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [25]
 [26] [27]
-Overfull \hbox (24.51604pt too wide) in paragraph at lines 181--182
+Overfull \hbox (24.51604pt too wide) in paragraph at lines 182--183
 \T1/phv/m/n/10 (-20) ca-tion like in def-i-ni-tion []4.2[]: Since []\T1/pcr/m/n
 /10 (name isa type slot_1 val_1 \dots slot_n val_n)
  []
 
 
-Overfull \hbox (64.7588pt too wide) in paragraph at lines 191--192
+Overfull \hbox (64.7588pt too wide) in paragraph at lines 192--193
 []\T1/phv/m/n/10 (-20) This def-i-ni-tion states that a chunk is ei-ther []\T1/
 pcr/m/n/10 nil\T1/phv/m/n/10 (-20) , ie. an empty chunk, or a term []\T1/pcr/m/
 n/10 chunk(Name, Type, SVP)\T1/phv/m/n/10 (-20) ,
@@ -1351,7 +1346,7 @@ n/10 chunk(Name, Type, SVP)\T1/phv/m/n/10 (-20) ,
 
 [28]
 LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <10> not available
-(Font)              Font shape `T1/pcr/b/n' tried instead on input line 201.
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 202.
  [29]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
@@ -1359,21 +1354,21 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 [31] [32] [33]
 
 LaTeX Warning: Reference `fig:buffer_system' on page 34 undefined on input line
- 356.
+ 357.
 
 [34]
 
-LaTeX Warning: Citation 'actr_reference' on page 35 undefined on input line 388
+LaTeX Warning: Citation 'actr_reference' on page 35 undefined on input line 389
 .
 
 [35] [36] [37] [38] [39]
 
 LaTeX Warning: Reference `production_rule_grammar' on page 40 undefined on inpu
-t line 558.
+t line 559.
 
 [40]
 
-LaTeX Warning: Citation 'actr_reference' on page 41 undefined on input line 623
+LaTeX Warning: Citation 'actr_reference' on page 41 undefined on input line 624
 .
 
 [41]
@@ -1383,122 +1378,111 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 [43] [44] [45]
 
 LaTeX Warning: Reference `lst:production_rule_grammar' on page 46 undefined on 
-input line 787.
+input line 788.
 
 [46]
 Underfull \vbox (badness 1838) has occurred while \output is active []
 
  [47]
 
-LaTeX Warning: Citation 'actr_reference' on page 48 undefined on input line 883
+LaTeX Warning: Citation 'actr_reference' on page 48 undefined on input line 884
 .
 
-[48] [49]
-Overfull \hbox (27.69756pt too wide) in paragraph at lines 935--936
-[]\T1/phv/m/sl/10 will match all chunks which have the same value in []\T1/pcr/
-m/n/10 spam \T1/phv/m/sl/10 and []\T1/pcr/m/n/10 ham\T1/phv/m/sl/10 . [][][][][
-][] 
- []
+[48] [49] [50]
 
-
-Overfull \hbox (17.20668pt too wide) in paragraph at lines 941--942
-[] []\T1/phv/b/n/10 Relation to Negation-as-Absence[][] \T1/phv/m/n/10 (-20) Ne
-gation-as-absence as de-scribed in [[][]Frü09[], pp. 147 sqq.]
- []
-
-
-LaTeX Warning: Citation 'actr_reference' on page 50 undefined on input line 949
+LaTeX Warning: Citation 'actr_reference' on page 51 undefined on input line 964
 .
 
-[50]
-Underfull \vbox (badness 2384) has occurred while \output is active []
-
- [51]
-[52] [53] [54] [55]
-Overfull \hbox (14.90367pt too wide) in paragraph at lines 1156--1157
+[51] [52] [53] [54] [55] [56]
+Overfull \hbox (14.90367pt too wide) in paragraph at lines 1171--1172
 \T1/phv/m/n/10 (-20) In this sec-tion, a CHR con-straint []\T1/pcr/m/n/10 find_
 chunk/3 \T1/phv/m/n/10 (-20) will be de-fined, that pro-duces a []\T1/pcr/m/n/1
 0 match_set/1
  []
 
-[56] [57]
-Overfull \hbox (21.86157pt too wide) in paragraph at lines 1208--1209
+[57]
+Overfull \hbox (21.86157pt too wide) in paragraph at lines 1223--1224
 \T1/phv/m/n/10 (-20) de-sir-able to col-lect all those matches in one set. This
  can be trig-gered by a []\T1/pcr/m/n/10 collect_matches/1
  []
 
 
-Overfull \hbox (23.66547pt too wide) in paragraph at lines 1229--1230
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [58]
+Overfull \hbox (23.66547pt too wide) in paragraph at lines 1244--1245
 [][][][][][][][][][][][][][][][][][][][][][] 
  []
 
-[58] [59]
-Overfull \hbox (31.66534pt too wide) in paragraph at lines 1283--1284
+[59] [60]
+Overfull \hbox (31.66534pt too wide) in paragraph at lines 1298--1299
 [][][][][][][][][][][][][][][][][][][][] 
  []
 
-[60] [61]
-Overfull \hbox (340.8917pt too wide) in paragraph at lines 1322--1323
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [61]
+Overfull \hbox (340.8917pt too wide) in paragraph at lines 1337--1338
 \T1/phv/m/n/10 (-20) search of this chunk. [][][][][][] 
  []
 
 
-LaTeX Warning: Citation 'actr_reference' on page 62 undefined on input line 132
-4.
+LaTeX Warning: Citation 'actr_reference' on page 62 undefined on input line 133
+9.
+
+[62]
+
+LaTeX Warning: Reference `fig:scheduler' on page 63 undefined on input line 135
+6.
+
+[63] [64] [65] [66] [67]
+
+LaTeX Warning: Reference `tab:action_priorities' on page 68 undefined on input 
+line 1489.
 
 
-LaTeX Warning: Reference `fig:scheduler' on page 62 undefined on input line 134
-1.
+Underfull \vbox (badness 2111) has occurred while \output is active []
 
-[62] [63] [64]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+ [68]
+[69]) (./chapters/compiler.tex [70] [71] [72
 
- [65]
-Underfull \vbox (badness 7238) has occurred while \output is active []
 
- [66]
-
-LaTeX Warning: Reference `tab:action_priorities' on page 67 undefined on input 
-line 1474.
-
-[67] [68] [69]) (./chapters/compiler.tex [70]
+]
 Chapter 5.
-) (./chapters/example_models.tex [71
-
-
-] [72
+) (./chapters/example_models.tex [73] [74
 
 
 ]
 Chapter 6.
-) (./chapters/conclusion.tex [73] [74
+) (./chapters/conclusion.tex [75] [76
 
 
 ]
 Chapter 7.
-) (./chapters/sources.tex [75] [76
+) (./chapters/sources.tex [77] [78
 
 
 ]
 Appendix A.
-) (./chapters/production_grammar.tex [77] [78
+) (./chapters/production_grammar.tex [79] [80
 
 
 ]
 Appendix B.
 
-LaTeX Warning: Citation 'actr_reference' on page 79 undefined on input line 3.
+LaTeX Warning: Citation 'actr_reference' on page 81 undefined on input line 3.
 
-[79]) (./chapters/appendix_examples.tex [80]
+[81]) (./chapters/appendix_examples.tex [82]
 Appendix C.
-[81
+[83
 
 
 ]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [82])
-[83] [84
+ [84])
+[85] [86
 
 
 ]
@@ -1513,12 +1497,12 @@ Overfull \hbox (49.7708pt too wide) in paragraph at lines 350--350
 f50d532cd825c1 .
  []
 
-[85
+[87
 
 
-] [86]
+] [88]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 366.
- [87
+ [89
 
 
 ]
@@ -1542,13 +1526,13 @@ Package logreq Info: Writing requests to 'arbeit.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 19777 strings out of 493488
- 302525 string characters out of 3146892
- 747408 words of memory out of 3000000
- 21560 multiletter control sequences out of 15000+200000
- 71709 words of font info for 215 fonts, out of 3000000 for 9000
+ 19836 strings out of 493488
+ 302951 string characters out of 3146892
+ 747331 words of memory out of 3000000
+ 21613 multiletter control sequences out of 15000+200000
+ 71492 words of font info for 212 fonts, out of 3000000 for 9000
  958 hyphenation exceptions out of 8191
- 39i,12n,72p,1616b,3316s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 39i,12n,72p,1616b,3314s stack positions out of 5000i,500n,10000p,200000b,50000s
 {/usr/share/texmf-dist/fonts/enc/dvips/base/8r.enc}</usr/share/texmf-dist/fon
 ts/type1/public/ccicons/ccicons.pfb></usr/share/texmf-dist/fonts/type1/public/a
 msfonts/cm/cmex10.pfb></usr/share/texmf-dist/fonts/type1/public/amsfonts/cm/cmm
@@ -1570,10 +1554,10 @@ usr/share/texmf-dist/fonts/type1/urw/courier/ucrbo8a.pfb></usr/share/texmf-dist
 ier/ucrro8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></us
 r/share/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-dist/f
 onts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on arbeit.pdf (95 pages, 673124 bytes).
+Output written on arbeit.pdf (97 pages, 672709 bytes).
 PDF statistics:
- 2182 PDF objects out of 2487 (max. 8388607)
- 2034 compressed objects within 21 object streams
- 994 named destinations out of 1000 (max. 500000)
+ 2167 PDF objects out of 2487 (max. 8388607)
+ 2017 compressed objects within 21 object streams
+ 1004 named destinations out of 1200 (max. 500000)
  34027 words of extra memory for PDF output out of 35830 (max. 10000000)
 

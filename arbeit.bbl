@@ -257,6 +257,9 @@
      {}{}%
      {}{}}%
   }
+  \list{publisher}{1}{%
+    {Cambridge University Press}%
+  }
   \keyw{tutorial}
   \strng{namehash}{FT1}
   \strng{fullhash}{FT1}

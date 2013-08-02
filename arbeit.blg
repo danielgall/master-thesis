@@ -15,8 +15,6 @@ Reallocated singl_function (elt_size=8) to 100 items from 50.
 Reallocated singl_function (elt_size=8) to 100 items from 50.
 Database file #1: arbeit-blx.bib
 Database file #2: bibliography.bib
-Warning--string name "cup" is undefined
---line 489 of file bibliography.bib
 Warning--I didn't find a database entry for "unknown"
 Warning--I didn't find a database entry for "actr_reference"
 Biblatex version: 2.5
@@ -25,42 +23,42 @@ Reallocated wiz_functions (elt_size=8) to 9000 items from 6000.
 You've used 13 entries,
             6019 wiz_defined-function locations,
             1223 strings with 11864 characters,
-and the built_in function-call counts, 54464 in all, are:
-= -- 2003
-> -- 3215
-< -- 666
-+ -- 2182
+and the built_in function-call counts, 55423 in all, are:
+= -- 2109
+> -- 3242
+< -- 692
++ -- 2208
 - -- 2160
-* -- 3507
-:= -- 4456
+* -- 3520
+:= -- 4488
 add.period$ -- 0
 call.type$ -- 13
-change.case$ -- 314
+change.case$ -- 341
 chr.to.int$ -- 210
 cite$ -- 28
-duplicate$ -- 5439
-empty$ -- 4945
-format.name$ -- 773
-if$ -- 10809
+duplicate$ -- 5527
+empty$ -- 5005
+format.name$ -- 774
+if$ -- 11055
 int.to.chr$ -- 0
-int.to.str$ -- 35
+int.to.str$ -- 36
 missing$ -- 0
-newline$ -- 428
-num.names$ -- 643
-pop$ -- 3830
+newline$ -- 431
+num.names$ -- 672
+pop$ -- 3828
 preamble$ -- 1
-purify$ -- 313
+purify$ -- 340
 quote$ -- 0
-skip$ -- 2702
+skip$ -- 2782
 stack$ -- 0
-substring$ -- 2008
-swap$ -- 1989
+substring$ -- 2141
+swap$ -- 2021
 text.length$ -- 474
 text.prefix$ -- 17
 top$ -- 1
 type$ -- 482
 warning$ -- 0
-while$ -- 407
+while$ -- 408
 width$ -- 0
-write$ -- 414
-(There were 3 warnings)
+write$ -- 417
+(There were 2 warnings)

@@ -76,7 +76,8 @@ The following methods can be defined over a chunk store $\Sigma = (C, E, \mathca
 
 \begin{example}
  \label{ex:addition_fact_formal}
- The addition-fact chunk in figure \ref{fig:chunk_addition_fact} and its chunk-type are defined as follows:\\
+ The addition-fact chunk in figure \ref{fig:chunk_addition_fact} and its chunk-type are defined as follows:
+ 
 \begin{lstlisting}
 chunk-type(addition-fact arg1 arg2 sum)
 add-chunk(a isa addition-fact arg1 5 arg2 2 sum 7)
@@ -705,7 +706,7 @@ buffer_change(b1,chunk(_,_,[(s1,v3)])). % this is for termination
 For the query
 
 \begin{lstlisting}
-chunk(c,foo), chunk_has_slot(c,s1,v1), chunk(c2,bar), chunk_has_slot(c2,s,v), buffer(b2,c2), buffer(b1,c).
+?- chunk(c,foo), chunk_has_slot(c,s1,v1), chunk(c2,bar), chunk_has_slot(c2,s,v), buffer(b2,c2), buffer(b1,c).
 \end{lstlisting}
 
 the result would be
@@ -762,7 +763,7 @@ fire.
 The test query
 
 \begin{lstlisting}
-chunk(c,foo), chunk_has_slot(c,s1,v1), chunk(c2,bar), chunk_has_slot(c2,s,v), buffer(b2,c2), buffer(b1,c), fire.
+?- chunk(c,foo), chunk_has_slot(c,s1,v1), chunk(c2,bar), chunk_has_slot(c2,s,v), buffer(b2,c2), buffer(b1,c), fire.
 \end{lstlisting}
 
 yields
@@ -810,7 +811,7 @@ chunk_has_slot(C,bar,spam)
 
 Because there are no two identical \verb|chunk_has_slot| constraints in the store, the rule could not fire. When translating such a rule, the second test has to be eliminated.
 
-However, this does not the trick for all possible cases. For example, suppose a test
+However, this does not do the trick for all possible cases. For example, suppose a test
 
 \begin{lstlisting}
 =buffer>
@@ -924,6 +925,8 @@ buffer(buffer,C),
   ...
 \end{lstlisting}
 
+In this case, a binding occurs in the guard, which is usually unwanted. However, since the \verb|Eggs| variable is unbound and therefore a fresh variable introduced in the guard, it is allowed and does not harm the matching process. It is even necessary to bind \verb|Eggs| to \verb|Bar| because of the semantics of the equivalent ACT-R rule. The following example is a little bit different: The rule
+
 \begin{lstlisting}
 =buffer>
   isa    foo
@@ -932,13 +935,25 @@ buffer(buffer,C),
   ham   =eggs
 \end{lstlisting}
 
-will match all chunks which have the same value in \verb|spam| and \verb|ham|. \FIXME{CHR translation???}
+will match all chunks which have the same value in \verb|spam| and \verb|ham|. This translates to
+
+\begin{lstlisting}
+buffer(buffer,C),
+  chunk(C,foo),
+  chunk_has_slot(C,spam,Bar),
+  chunk_has_slot(C,spam,Eggs),
+==>
+  Bar==Eggs |
+  ...
+\end{lstlisting}
+
+Note, that in this case, no binding occurs, since both, \verb|Bar| and \verb|Eggs|, already occur in the head of the rule and are bound to some value. Hence, the test in the guard can be reduced to a simple syntactic equality test without binding (\verb|==|).
 
 \end{example}
 
 \paragraph{Relation to Negation-as-Absence}
 
-Negation-as-absence as described in \cite[147\psqq]{fru_chr_book_2009} is a concept provided by many production rule systems. It enables the programmer to negate a fact in the sense that the fact is not in the store and therefore the rule is applicable -- so the programmer asks for the absence of a particular fact.
+The concept of negation-as-absence as described in \cite[147\psqq]{fru_chr_book_2009} is provided by many production rule systems. It enables the programmer to negate a fact in the sense that the fact is not explicitly in the store and therefore the rule is applicable -- so the programmer asks for the absence of a particular fact.
 
 At the first glance, the slot modifiers seem to implement this concept, but this is not the case: All negated slot tests in ACT-R can be reduced to simple built-in guard checks, because the chunks in the store are always described completely and the values are ground, so simple built-in checks work automatically. This also works for invalid slot-tests that ask for slots which are not offered by the chunk-type they ask for. Then there will never be a constraint matching the head of the rule due to type consistency.
 
