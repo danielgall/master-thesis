@@ -146,6 +146,7 @@ chunk_has_slot(a,sum,7)
 
 
 \subsubsection{Distinction of Elements and Chunks}
+\label{distinction_elements_chunks}
 
 A chunk store distinguishes between a set of chunks $C$ and a set of elements $E$. For implementational reasons it can be helpful if there are only chunks in the system, because elements just behave like chunks with no slots. Hence, a chunk-type \verb|chunk| with no slots will be added automatically to the store. Each element $e \in E$ and added as a chunk of type \verb|chunk| to the set of chunks $C$. After this operation $E = \emptyset$, and for every former element $e$ of $E$: $e \in C$, $(e,(chunk,\emptyset)) \in Isa$.
 
@@ -1594,7 +1595,121 @@ which removes the fire constraint if still present and states that no rule has b
 
 \section{Subsymbolic Layer}
 
+By now, a translation scheme and a framework implementing the symbolic concepts of ACT-R. This section extends this implementation by the subsymbolic layer as described in section~\ref{subsymbolic_layer}.
+
 \subsection{Activation of Chunks}
+
+The activation of a chunk is a numerical value that determines if a chunk is retrieved and how long is the latency of the retrieval. The next sections describe how the concept can be implemented in CHR.
+
+\subsubsection{Base-Level Learning}
+
+One part of the activation value is the base-level activation of a chunk. The value is learned by the system and depends on practice as stated in equation~\eqref{eq:base_level_learning}:
+
+\begin{equation*}
+B_i = \mathrm{ln}\left(\sum_{j=1}^n{t_j^{-d}}\right) 
+\end{equation*}
+
+\paragraph{Presentations of a Chunk} 
+
+To determine the base-level value of a chunk, the time points when it has been practiced have to be known. A chunk is considered as practiced when it enters the declarative memory either explicitly by calling \verb|add_dm| or implicitly by a buffer clearing. Additionally, if a chunk is merged with a chunk that enters the declarative memory, the original chunk is strengthened (so the chunk that has been in the declarative memory before is considered as presented). 
+
+Hence, every time a chunk enters the declarative memory, the time of this event has to be stored. Therefore, a \verb|presentation/2| that holds the chunk name and the time of a presentation is introduced. To simplify the use of this constraint, the procedural constraint \verb|present/1|, that stores the presentation of a chunk at the current time, can be implemented as follows:
+
+\begin{lstlisting}
+<<chunk(Name,Type) \ present(chunk(Name,Type,_))>> <=> 
+  getNow(Time),
+  presentation(Name,Time).
+\end{lstlisting}
+
+The \verb|add_dm| command is extended by a presentation event:
+
+\begin{lstlisting}
+add_dm(ChunkDef) <=> 
+  add_chunk(ChunkDef), 
+  present(ChunkDef). 
+\end{lstlisting}
+
+If a chunk that is identical to a chunk already stored enters declarative memory, the original chunk is being strengthened by:
+
+\begin{lstlisting}
+<<identical(C1,C2) \ present(chunk(C2,_,_))>> <=> 
+  present(C1).
+\end{lstlisting}
+
+\paragraph{Calculating the Base-Level Value}
+
+Somewhere in the process of a request, the activation of a set of chunks has to be calculated. Therefore, a constraint \verb|calc_activation(Chunk,Activation)|  that gets a chunk name and binds its activation value to the second argument, can be introduced:
+
+\begin{lstlisting}
+<<presentation(C,PTime), calc_activation(C,A)>> ==> 
+  get_now(Now), 
+  Time is Now - PTime, 
+  base_level_part(C,Time,_,A).
+  
+calc_activation(_,_) <=> true.
+\end{lstlisting}
+
+These two rules produce for every presentation of the chunk a \verb|base_level_part| with the name of the chunk and the time since a particular presentation has happened. Additionally, two unbound variables are given to the part constraint: The first is a variable that will hold an intermediate result and the second is the actual activation value that is bound to the return value of the \verb|calc_activation| constraint.
+
+Each of those \verb|base_level_part| constraints are part of the result which is the activation value of their chunk. The following rule converts the time $t_j$ to the value $t_j^{-d}$ as stated in equation~\eqref{base_level_learning}:
+
+\begin{lstlisting}
+% if A and B not set: set B to Time^(-D). Time is the time since the presentation of this base_level_part
+<<base_level_part(_,Time,B,A)>> ==>
+  <<<var(A), var(B), 
+  Time =\= 0>>> |
+  get_conf(bll,D), % decay parameter
+  B is Time ** (-D).
+\end{lstlisting}
+
+The result is bound to the variable \verb|B|. The rule only can be applied, if the intermediate result \verb|B| and the result \verb|A| are not bound to any value.
+
+As soon as the intermediate result has been calculated, two \verb|base_level_part| constraints can be merged, by adding their \verb|B| values up according to the base-level learning equation~\eqref{eq:base_level_learning}:
+
+\begin{lstlisting}
+% collect base level parts and add them together. Only if Bs are set
+<<base_level_part(C,_,B1,A), base_level_part(C,_,B2,A)>> <=>
+  <<<nonvar(B1), nonvar(B2), 
+  var(A)>>> |
+  B is B1+B2,
+  base_level_part(C,_,B,A).
+\end{lstlisting}
+
+If this rule is applied to exhaustion, only one \verb|base_level_part| constraint will be remaining. Hence, below this rule, a rule for this single constraint can be introduced:
+
+\begin{lstlisting}
+% if B is set, A is not set and there are no more base_level_parts of this chunk: calculate actual base level activation and store it in A. Only possible if B is =\= 0.
+<<base_level_part(_,_,B,A)>> <=>
+  <<<var(A),nonvar(B), 
+  B =\= 0>>> |
+  A is log(B).
+\end{lstlisting}
+
+Note, that the rule has to be executed after the last rule cannot be applied anymore, because otherwise it would take an intermediate result as the actual result.
+
+With this set of rules, the base-level activation can be calculated according to its definition. There are some special cases, that can be handled implementation specifically (all cases, where the guards prevent the rules from firing are such cases that may need some kind of special treatment).
+
+\paragraph{Fan Values}
+
+In the calculation process, the fan value $fan_j$ of a chunk $j$ may be needed. This value is the number of chunks where $j$ appears in the slots plus the chunk itself. So, a chunk that does not appear in any slots has the fan value $1$, a chunk that appears in the slots of another chunk has the value $2$, etc. This can be achieved in CHR as follows:
+
+\begin{lstlisting}
+<<chunk(C,_)>> ==> fan(C,1).
+
+<<chunk_has_slot(_,_,C), chunk(C,_)>> ==> fan(C,1).
+
+<<fan(C,F1), fan(C,F2)>> <=> 
+  F is F1+F2, 
+  fan(C,F).
+\end{lstlisting}
+
+The first rule adds a fan of $1$ for each chunk. The next rule adds a fan of $1$ for a chunk \verb|C| for each slot where \verb|C| is the value. In the last rule, two fan values for one particular chunk are summed up to a single fan value. Note, that this has to be considered when deleting a chunk: For every chunk in the slots of the deleted chunk, the fan value must be decreased by one.
+
+As noted before in section~\ref{distinction_elements_chunks} on page~\pageref{distinction_elements_chunks}, primitive elements are stored as chunks of the type \verb|chunk| that has no slots. This is very important of the fan calculation as it is presented here, since the fan value depends on the presence of a \verb|chunk| constraint to calculate the proper fan value. Otherwise, the fan value of primitive elements would always be off by one.
+
+\paragraph{Associative Weights}
+
+
 
 \subsection{Production Utility}
 

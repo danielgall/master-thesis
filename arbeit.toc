@@ -186,32 +186,42 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {4.9.1}Activation of Chunks}{71}{subsection.4.9.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.9.2}Production Utility}{71}{subsection.4.9.2}
+\contentsline {subsubsection}{Base-Level Learning}{71}{section*.53}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {5}Compiler}{73}{chapter.5}
+\contentsline {paragraph}{Presentations of a Chunk}{71}{section*.54}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {6}Example Models}{75}{chapter.6}
+\contentsline {paragraph}{Calculating the Base-Level Value}{72}{section*.55}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.1}The Counting Model}{75}{section.6.1}
+\contentsline {paragraph}{Fan Values}{74}{section*.56}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.2}The Addition Model}{75}{section.6.2}
+\contentsline {paragraph}{Associative Weights}{74}{section*.57}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.3}The Semantic Model}{75}{section.6.3}
+\contentsline {subsection}{\numberline {4.9.2}Production Utility}{75}{subsection.4.9.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.4}The Fan Model}{75}{section.6.4}
+\contentsline {chapter}{\numberline {5}Compiler}{77}{chapter.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {7}Conclusion}{77}{chapter.7}
+\contentsline {chapter}{\numberline {6}Example Models}{79}{chapter.6}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {7.1}Inventory: What does already work?}{77}{section.7.1}
+\contentsline {section}{\numberline {6.1}The Counting Model}{79}{section.6.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {7.2}Future Work}{77}{section.7.2}
+\contentsline {section}{\numberline {6.2}The Addition Model}{79}{section.6.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {A}Source Codes}{79}{appendix.A}
+\contentsline {section}{\numberline {6.3}The Semantic Model}{79}{section.6.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {B}Grammar for Production Rules}{81}{appendix.B}
+\contentsline {section}{\numberline {6.4}The Fan Model}{79}{section.6.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {C}Executable Examples}{83}{appendix.C}
+\contentsline {chapter}{\numberline {7}Conclusion}{81}{chapter.7}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {C.1}Rule Order}{83}{section.C.1}
+\contentsline {section}{\numberline {7.1}Inventory: What does already work?}{81}{section.7.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{Bibliography}{87}{appendix*.53}
+\contentsline {section}{\numberline {7.2}Future Work}{81}{section.7.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {A}Source Codes}{83}{appendix.A}
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {B}Grammar for Production Rules}{85}{appendix.B}
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {C}Executable Examples}{87}{appendix.C}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {C.1}Rule Order}{87}{section.C.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{Bibliography}{91}{appendix*.58}
