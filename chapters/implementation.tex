@@ -566,7 +566,7 @@ Note that types cannot be changed. This corresponds to the grammar definition of
 When clearing a buffer, the chunk that was stored in the buffer will be removed from the chunk store and \verb|nil| will be written to the store. Additionally, the chunk goes to the declarative memory.
 
 \begin{lstlisting}
-<<do_buffer_clear(BufName), buffer(BufName, ModName, Chunk)>> <=> 
+<<buffer_clear(BufName), buffer(BufName, ModName, Chunk)>> <=> 
   write_to_dm(Chunk), 
   delete_chunk(Chunk), 
   buffer(BufName, nil).
@@ -1089,7 +1089,7 @@ buffer(BufName,ModName,Chunk)
 
 A buffer request can now be handled as follows:
 
-\begin{lstlisting}
+\begin{lstlisting}[caption={Retrieval Request in CHR}, label=lst:retrieval_request_symbolic]
 <<buffer(BufName, ModName, _) \ buffer_request(BufName, Chunk)>> <=>
   set_buffer_state(BufName,busy),
   buffer_clear(BufName), % clear buffer immediately
@@ -1545,6 +1545,7 @@ If the queue element is \verb|nil| (so no event has been in the queue), the comp
 \end{lstlisting}
 
 \paragraph{Changing the Buffer System}
+\label{changing_the_buffer_system}
 
 For each buffer action, add a \verb|do_buffer_action| constraint, that actually performs the code specified in the former action. Modify the action as follows:
 
@@ -1591,6 +1592,7 @@ which removes the fire constraint if still present and states that no rule has b
 \end{lstlisting}
 
 \section{Configuration}
+\label{configuration}
 
 
 \section{Subsymbolic Layer}
@@ -1624,7 +1626,7 @@ Hence, every time a chunk enters the declarative memory, the time of this event 
 The \verb|add_dm| command is extended by a presentation event:
 
 \begin{lstlisting}
-add_dm(ChunkDef) <=> 
+<<add_dm(ChunkDef)>> <=> 
   add_chunk(ChunkDef), 
   present(ChunkDef). 
 \end{lstlisting}
@@ -1651,7 +1653,7 @@ calc_activation(_,_) <=> true.
 
 These two rules produce for every presentation of the chunk a \verb|base_level_part| with the name of the chunk and the time since a particular presentation has happened. Additionally, two unbound variables are given to the part constraint: The first is a variable that will hold an intermediate result and the second is the actual activation value that is bound to the return value of the \verb|calc_activation| constraint.
 
-Each of those \verb|base_level_part| constraints are part of the result which is the activation value of their chunk. The following rule converts the time $t_j$ to the value $t_j^{-d}$ as stated in equation~\eqref{base_level_learning}:
+Each of those \verb|base_level_part| constraints are part of the result which is the activation value of their chunk. The following rule converts the time $t_j$ to the value $t_j^{-d}$ as stated in equation~\eqref{eq:base_level_learning}:
 
 \begin{lstlisting}
 % if A and B not set: set B to Time^(-D). Time is the time since the presentation of this base_level_part
@@ -1691,7 +1693,7 @@ With this set of rules, the base-level activation can be calculated according to
 
 \paragraph{Fan Values}
 
-In the calculation process, the fan value $fan_j$ of a chunk $j$ may be needed. This value is the number of chunks where $j$ appears in the slots plus the chunk itself. So, a chunk that does not appear in any slots has the fan value $1$, a chunk that appears in the slots of another chunk has the value $2$, etc. This can be achieved in CHR as follows:
+In the calculation process, the fan value $\mathrm{fan}_j$ of a chunk $j$ may be needed. This value is the number of chunks where $j$ appears in the slots plus the chunk itself. So, a chunk that does not appear in any slots has the fan value $1$, a chunk that appears in the slots of another chunk has the value $2$, etc. This can be achieved in CHR as follows:
 
 \begin{lstlisting}
 <<chunk(C,_)>> ==> fan(C,1).
@@ -1709,7 +1711,186 @@ As noted before in section~\ref{distinction_elements_chunks} on page~\pageref{di
 
 \paragraph{Associative Weights}
 
+The activation calculation also depends on a contextual component, the associatiove weights. For a value $S_{ji}$, which describes the associative strength from a chunk $j$ to a chunk $i$, the following rules apply:
 
+\begin{lstlisting}
+<<fan(J,F), chunk(I,_), chunk_has_slot(I,_,J) \ calc_sji(J,I,Sji)>> <=> 
+  <<<I \== J>>> | 
+  Sji is 2 - log(F).
+
+<<calc_sji(_,_,Sji)>> <=> Sji=0.
+\end{lstlisting}
+
+The \verb|calc_sji(J,I,Sji)| gets a chunk \verb|J| and a chunk \verb|I|, calculates their associative weight from \verb|J| to \verb|I| and binds it to \verb|Sji|. The first rule can be applied, if \verb|J| appears in the slots of chunk \verb|I|. Then, the associative weight is calculated according to equation~\eqref{eq:assoc_strength}:
+
+\begin{equation*}
+S_{ji} = S - \mathrm{ln}(\mathrm{fan}_j) 
+\end{equation*}
+
+The value of $S$ is assumed to be $2$ in this rule; a configurable constant for $S$ as described in section~\ref{configuration} can be introduced easily.
+
+If \verb|J| does not appear in the slots of chunk \verb|I|, then $S{ji} := 0$ by definition.
+
+\paragraph{Calculate the Overall-Activations}
+
+The new constraint \verb|calc_activations/2| gets a list of chunks and a context and initiates the computation of the overall activation values of the chunks in the list regarding the context. Remember, that for the associative weights, the current context plays a role, since all associative weights from the chunks (the $j$s) in the context to the chunk whose activation is calculated are summed up (see section~\ref{activation} for details).
+
+\begin{lstlisting}[escapeinside={(*@}{@*)}]
+<<calc_activations([],_)>> <=>
+  true.
+  
+<<calc_activations([C|Cs],Context)>> <=> 
+  calc_activation(C,B), 
+  calc_activations(Cs,Context), 
+  context(C,Context,Assoc), (*@\label{lst:calc_activations:context}@*)
+  
+  length(Context,N), (*@\label{lst:calc_activations:attentional1}@*)
+  Assoc1 is 1/N * Assoc, (*@\label{lst:calc_activations:attentional2}@*)
+  A is B + Assoc1, (*@\label{lst:calc_activations:final}@*)
+  max(C,A). (*@\label{lst:calc_activations:max}@*)
+\end{lstlisting}
+
+The first rule is the base-case that simply finishes the calculation. The second rule takes the first chunk in the list and calculates its base-level activation \verb|B| by \verb|calc_activation|. The next line triggers the computation for the rest of the chunks in the list (using the same context).
+
+For the chunk \verb|C| the context component, i.e. the associative weight, is calculated by the call of \verb|context(C,Context,Assoc)| in line~\ref{lst:calc_activations:context}, which binds the associative weight to \verb|Assoc|, i.e. the result of $\sum_{j \in C}{S_{ji}}$ ($C$ is the context as represented by \verb|Context|) is bound to the variable \verb|Assoc|.
+
+Afterwards, the attentional weighting $W_j$ is considered in lines~\ref{lst:calc_activations:attentional1} and \ref{lst:calc_activations:attentional2}. The variable \verb|Assoc1| now holds the value of $W_j \cdot \sum_{j \in C}{S_{ji}}$.
+
+The overall activation of chunk \verb|C| is -- as defined in equation~\eqref{eq:activation_equation} -- calculated in line~\ref{lst:calc_activations:final} by adding the base-level activation to the sum of the associative weightings of the chunk.
+
+Eventually, in line~\ref{lst:calc_activations:max}, the activation of this chunk is added to the set of potential maximum candidates of all activation values. The maximum then is calculated as follows:
+
+\begin{lstlisting}[caption={Calculate highest activation of all matching chunks}, label=lst:max_activation]
+max(_,A1) \ max(_,A2) <=> 
+  A1 >= A2 |
+  true.
+\end{lstlisting}
+
+This deletes all potential candidates for the maximal activation value that have a smaller value than another candidate. In \cite[19\psqq]{fru_chr_book_2009} this algorithm is presented in more detail.
+
+\paragraph{Threshold and Maximum}
+
+The request is only successful, if there is a matching chunk that has an activation higher than a specified threshold. In the following, it is assumed that the threshold is saved in a \verb|threshold/1| constraint.
+
+In the last section, the chunk with the highest activation among all matching chunks is calculated and stored in a \verb|max/2| constraint (there is only one \verb|max| constraint, after the rule in listing~\ref{lst:max_activation} has been applied to exhaustion). The constraint \verb|get_max/2| triggers the final maximum computation and binds the chunk and its activation to its parameters:
+
+\begin{lstlisting}
+get_max(MN,MA), max(N,A), threshold(RT) <=> 
+  A >= RT | 
+  MN=N,
+  MA=A.
+  
+get_max(MN,MA), max(_,A), threshold(RT) <=> 
+  A < RT | 
+  MN=nil,
+  % set activation to threshold
+  MA=RT,
+  write('No chunk has high enough threshold'),nl.
+  
+get_max(MN,MA), threshold(RT) <=>
+  MN=nil,
+  % set activation to threshold if no chunk matches
+  MA=RT,
+  write('No chunk matches.'),nl.
+\end{lstlisting}
+
+The first rule is applied in the case, that the activation of the maximal chunk is higher than the threshold. In this case, the chunk and its activation are simply returned.
+
+In the second rule, the matching chunk with the highest activation does not pass the threshold. Then no chunk can be returned, so the result of the \verb|get_max| request is \verb|nil|. The activation of this empty chunk is set to the threshold, because the retrieval latency, i.e. the time the retrieval request takes, is dependent on the threshold in case that no chunk could be found. So this value is used later.
+
+The last rule will only be applied, if both of the other rules did not match. This is the case, if there has no \verb|max| constraint been put to the store, which does only occur, if no chunk matched the request. This also leads to an empty chunk as a result.
+
+\paragraph{New Module Request Interface}
+
+Requests that regard the subsymbolic layer need some additional information and return some additional results: First, somehow the \emph{Context}, i.e. all chunks that are in the values of the buffer chunks, have to be passed from the buffer system to the requested module (in this case the declarative module, but it may be possible that there are other modules which need the context). Additionally, the requested module has to return the time it takes, since every request may take a different time that is only known by the module, but has to be considered by the scheduler of the procedural module.
+
+The interface from section~\ref{interface_for_module_requests} changes to:
+
+\begin{lstlisting}
+module_request(+BufName, +ChunkDef, +Context, -ResChunk, -ResState, -ResTime) 
+\end{lstlisting}
+
+where \verb|Context| is a list of the chunk names that are in the current context (as defined in section~\ref{current_context} on page~\pageref{current_context}) and \verb|ResTime| is bound to the time the request will take. As described in section~\ref{changing_the_buffer_system} on page \pageref{changing_the_buffer_system}, the buffer actions are divided in two phases: The first only schedules the second phase at the time when the action is finished, whereas the second phase actually performs the action, i.e. the changes to the buffers.
+
+The same is valid for buffer requests: They are divided into two rules -- \verb|buffer_request/2| and \verb|do_buffer_request/2| -- as already described in section~\ref{changing_the_buffer_system} on page~\pageref{changing_the_buffer_system} for the other actions. The difference is, that the request is actually performed immediately when calling \verb|buffer_request|, but the effects to the buffers this request has are applied not until \verb|do_buffer_request| is called, which is scheduled at the result time (\verb|ResTime|) of the request. This is due to the dependence of the latency of a request on the activation values of the matching chunks, so the request has to be performed in advance to calculate the correct time it will take.
+
+This yields the following code in the buffer system:
+
+\begin{lstlisting}[label=Schedule buffer request, escapeinside={(*@}{@*)}]
+buffer(BufName, ModName, _) \ buffer_request(BufName, Chunk) <=> %% todo: check for free buffer!!
+  write('Scheduled buffer request '),
+  write(BufName),nl,
+  get_now(Now),
+  buffer_state(BufName,busy),
+  do_buffer_clear(BufName), % clear buffer immediately
+  get_context(Context), (*@\label{lst:schedule_buffer_request:context}@*)
+  ModName:module_request(BufName, Chunk, Context, ResChunk,ResState,RelTime),
+  performed_request(BufName, ResChunk, ResState), % save result of request
+  Time is Now + RelTime, 
+  add_q(Time, 0, do_buffer_request(BufName, Chunk)).
+\end{lstlisting}
+
+In line~\ref{lst:schedule_buffer_request:context} the current context is calculated and bound in form of a list of chunk names to the variable \verb|Context|.
+  
+\begin{lstlisting}[label=Handle buffer request]
+do_buffer_request(BufName, _), buffer(BufName, ModName, _), buffer_state(BufName,_), performed_request(BufName, ResChunk, ResState) <=>  %% todo: check for free buffer!!
+  write('performing request: '),write(BufName),nl,
+  (ResState=error, 
+  buffer(BufName, ModName, nil),
+  buffer_state(BufName,error) ;  
+  
+  ResState = free,
+  ResChunk = chunk(ResChunkName,_,_),
+  add_chunk(ResChunk), 
+  buffer(BufName, ModName, ResChunkName),
+  buffer_state(BufName,free)).  
+\end{lstlisting}
+
+Note that a buffer request has the lowest priority of all buffer actions, as shown in table~\ref{tab:action_priorities}. If the request would be performed before the buffer modifications and clearings have taken effect, the wrong context would be used for the activation calculations.
+
+\paragraph{Adapting the Retrieval Request}
+
+With the now defined methods, the overall activation of a chunk can be calculated. The module request for the retrieval buffer as introduced in listing~\ref{lst:retrieval_request_symbolic} can be adapted as follows:
+
+\begin{lstlisting}[escapeinside={(*@}{@*)}]
+<<module_request(retrieval, chunk(Name,Type,Slots), Context, ResChunk, ResState, RelTime)>> <=> 
+  find_chunk(Name,Type,Slots), (*@\label{lst:retrieval_request_subsymbolic:find_chunk1}@*)
+  collect_matches(Res), (*@\label{lst:retrieval_request_subsymbolic:find_chunk2}@*)
+  calc_activations(Res,Context), (*@\label{lst:retrieval_request_subsymbolic:calc_activations}@*)
+  % find threshold for maximum check
+  get_conf(rt,RT), (*@\label{lst:retrieval_request_subsymbolic:threshold1}@*)
+  threshold(RT), (*@\label{lst:retrieval_request_subsymbolic:threshold2}@*)
+  
+  get_max(MaxChunk,MaxAct), (*@\label{lst:retrieval_request_subsymbolic:max}@*)
+  
+  return_chunk(MaxChunk,ResChunk), (*@\label{lst:retrieval_request_subsymbolic:return_chunk}@*)
+  get_state(ResChunk,ResState), (*@\label{lst:retrieval_request_subsymbolic:get_state}@*)
+  calc_time(MaxAct,RelTime). (*@\label{lst:retrieval_request_subsymbolic:calc_time}@*)
+\end{lstlisting}
+
+\begin{description}
+ \item[Find matching chunks (lines~\ref{lst:retrieval_request_subsymbolic:find_chunk1}~and~\ref{lst:retrieval_request_subsymbolic:find_chunk2})] First of all, all matching chunks are searched and saved in a list called \verb|Res|, similarly to the symbolic approach in listing~\ref{lst:retrieval_request_symbolic}.
+ \item[Calculate Activations of the matching chunks (line~\ref{lst:retrieval_request_subsymbolic:calc_activations})] The activations of the matching chunks in the list \verb|Res| are computed regarding the context that has been handed over by the request.
+ \item[Get the threshold (lines~\ref{lst:retrieval_request_subsymbolic:threshold1}~and~\ref{lst:retrieval_request_subsymbolic:threshold2})] The current threshold is retrieved from the configuration and a \verb|threshold| constraint is placed in the store. The next steps will need a threshold constraint present.
+ \item[Find chunk with highest activation (line~\ref{lst:retrieval_request_subsymbolic:max})] The chunk with the highest activation is saved in \verb|MaxChunk|, its activation value in \verb|MaxAct|.
+ \item[Return a chunk specification (line~\ref{lst:retrieval_request_subsymbolic:return_chunk})] The request is supposed to return a complete chunk specification in the variable \verb|ResChunk|. This is achieved by \verb|return_chunk|.
+ \item[Return the resulting state of the buffer (line~\ref{lst:retrieval_request_subsymbolic:get_state})] The resulting state \verb|ResState| is \verb|free|, if a matching chunk has been found and \verb|error| if no chunk matches the request:
+ 
+\begin{lstlisting}
+get_state(nil,error).
+get_state(_,free).
+\end{lstlisting}
+
+ \item[Return the time the request takes (line~\ref{lst:retrieval_request_subsymbolic:calc_time})] The time depends on the activation of the chunk. If no matching chunk has been found, the activation is assumed to be the threshold value. This is already achieved by the maximum calculation as described above. The resulting time is computed as follows:
+ 
+\begin{lstlisting}
+calc_time(Act,ResTime) :-
+  get_conf(lf,F),
+  ResTime=F*exp(-Act). 
+\end{lstlisting}
+
+This corresponds to equation~\eqref{eq:retrieval_latency}.
+\end{description}
 
 \subsection{Production Utility}
 
