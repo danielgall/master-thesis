@@ -76,18 +76,20 @@
 \BOOKMARK [1][-]{section.4.9}{Subsymbolic Layer}{chapter.4}% 76
 \BOOKMARK [2][-]{subsection.4.9.1}{Activation of Chunks}{section.4.9}% 77
 \BOOKMARK [3][-]{section*.53}{Base-Level Learning}{subsection.4.9.1}% 78
-\BOOKMARK [2][-]{subsection.4.9.2}{Production Utility}{section.4.9}% 79
-\BOOKMARK [0][-]{chapter.5}{Compiler}{}% 80
-\BOOKMARK [0][-]{chapter.6}{Example Models}{}% 81
-\BOOKMARK [1][-]{section.6.1}{The Counting Model}{chapter.6}% 82
-\BOOKMARK [1][-]{section.6.2}{The Addition Model}{chapter.6}% 83
-\BOOKMARK [1][-]{section.6.3}{The Semantic Model}{chapter.6}% 84
-\BOOKMARK [1][-]{section.6.4}{The Fan Model}{chapter.6}% 85
-\BOOKMARK [0][-]{chapter.7}{Conclusion}{}% 86
-\BOOKMARK [1][-]{section.7.1}{Inventory: What does already work?}{chapter.7}% 87
-\BOOKMARK [1][-]{section.7.2}{Future Work}{chapter.7}% 88
-\BOOKMARK [0][-]{appendix.A}{Source Codes}{}% 89
-\BOOKMARK [0][-]{appendix.B}{Grammar for Production Rules}{}% 90
-\BOOKMARK [0][-]{appendix.C}{Executable Examples}{}% 91
-\BOOKMARK [1][-]{section.C.1}{Rule Order}{appendix.C}% 92
-\BOOKMARK [0][-]{appendix*.62}{Bibliography}{}% 93
+\BOOKMARK [2][-]{subsection.4.9.2}{Conflict Resolution and Production Utility}{section.4.9}% 79
+\BOOKMARK [3][-]{section*.62}{Conflict Resolution}{subsection.4.9.2}% 80
+\BOOKMARK [3][-]{section*.63}{Computing the Utility Values}{subsection.4.9.2}% 81
+\BOOKMARK [0][-]{chapter.5}{Compiler}{}% 82
+\BOOKMARK [0][-]{chapter.6}{Example Models}{}% 83
+\BOOKMARK [1][-]{section.6.1}{The Counting Model}{chapter.6}% 84
+\BOOKMARK [1][-]{section.6.2}{The Addition Model}{chapter.6}% 85
+\BOOKMARK [1][-]{section.6.3}{The Semantic Model}{chapter.6}% 86
+\BOOKMARK [1][-]{section.6.4}{The Fan Model}{chapter.6}% 87
+\BOOKMARK [0][-]{chapter.7}{Conclusion}{}% 88
+\BOOKMARK [1][-]{section.7.1}{Inventory: What does already work?}{chapter.7}% 89
+\BOOKMARK [1][-]{section.7.2}{Future Work}{chapter.7}% 90
+\BOOKMARK [0][-]{appendix.A}{Source Codes}{}% 91
+\BOOKMARK [0][-]{appendix.B}{Grammar for Production Rules}{}% 92
+\BOOKMARK [0][-]{appendix.C}{Executable Examples}{}% 93
+\BOOKMARK [1][-]{section.C.1}{Rule Order}{appendix.C}% 94
+\BOOKMARK [0][-]{appendix*.64}{Bibliography}{}% 95

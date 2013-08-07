@@ -44,6 +44,56 @@
   \field{year}{2012}
 \endentry
 
+\entry{abdennadher_sts_chr13}{inproceedings}{}
+  \name{author}{3}{}{%
+    {{}%
+     {Abdennadher}{A.}%
+     {Slim}{S.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Fakhry}{F.}%
+     {Ghada}{G.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Sharaf}{S.}%
+     {Nada}{N.}%
+     {}{}%
+     {}{}}%
+  }
+  \name{editor}{2}{}{%
+    {{}%
+     {Christiansen}{C.}%
+     {Henning}{H.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Sneyers}{S.}%
+     {Jon}{J.}%
+     {}{}%
+     {}{}}%
+  }
+  \list{publisher}{1}{%
+    {K.U.Leuven, Department of Computer Science , Technical report CW 641}%
+  }
+  \keyw{implementation, priorities}
+  \strng{namehash}{ASFGSN1}
+  \strng{fullhash}{ASFGSN1}
+  \field{labelalpha}{AFS13}
+  \field{sortinit}{A}
+  \field{booktitle}{{CHR} '13: Proc.\ 10th Workshop on Constraint Handling
+  Rules}
+  \field{pages}{1\bibrangedash 12}
+  \field{title}{Implementation of the Operational Semantics for {CHR} with
+  User-defined Rule Priorities}
+  \verb{file}
+  \verb http://dtai.cs.kuleuven.be/CHR/papers/ chr2013/01-Abdennadher-chr13.pdf
+  \endverb
+  \field{month}{07}
+  \field{year}{2013}
+\endentry
+
 \entry{anderson_integrated_2004}{article}{}
   \name{author}{6}{}{%
     {{}%

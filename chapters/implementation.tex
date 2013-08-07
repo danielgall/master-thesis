@@ -506,7 +506,7 @@ This can be directly translated into a CHR rule:
   ...
   chunk_has_slot(C$_\mathtt{1}$,slot$_\mathtt{1,n}$,val$_\mathtt{1,n}$),
   ...
-  buffer(bufferk,C$_\mathtt{k}$),
+  buffer(buffer$_\mathtt{k}$,C$_\mathtt{k}$),
   chunk(C$_\mathtt{k}$,type$_\mathtt{k}$),
   chunk_has_slot(C$_\mathtt{k}$,slot$_\mathtt{k,1}$,val$_\mathtt{k,1}$),
   ...
@@ -1565,13 +1565,13 @@ As in the last version of the production system, each rule has the following str
 
 \begin{lstlisting}
 <<<rule>>> @
-  {conditions} \ <<fire>> <=> {actions}, schedule_fire.
+  {conditions} \ <<fire>> <=> {actions}, conflict_resolution.
 \end{lstlisting}
 
-where schedule fire is defined as:
+where \verb|conflict_resolution/0| just schedules the next \verb|fire| event and is defined as:
 
 \begin{lstlisting}
-<<schedule_fire>> <=> 
+<<conflict_resolution>> <=> 
   get_now(Now),
   add_q(Now,0,fire).
 \end{lstlisting}
@@ -1892,5 +1892,148 @@ calc_time(Act,ResTime) :-
 This corresponds to equation~\eqref{eq:retrieval_latency}.
 \end{description}
 
-\subsection{Production Utility}
+\subsection{Conflict Resolution and Production Utility}
+
+If there are competing strategies that match a current state, the production system selects the rule with the highest production utility to fire. This process is called \emph{conflict resolution} in the terminology of production rule systems and is described in the following.
+
+\subsubsection{Conflict Resolution}
+
+In \cite[151\psqq]{fru_chr_book_2009} a general implementation of conflict resolution in CHR is described. This approach can be easily adapted to the needs of ACT-R.
+
+Replace every production rule
+
+\begin{lstlisting}
+{buffer tests} \ fire <=> {guard} | {actions}, conflict_resolution.
+\end{lstlisting}
+
+with two rules
+
+\begin{lstlisting}{caption={Translation scheme for production rules regarding conflict resolution}, label=lst:conflict_resolution_scheme}
+delay-name @
+  fire, {buffer tests} ==> {guard} | conflict_set(name).
+name @
+  {buffer tests}, apply_rule(name) <=> {actions}, conflict_resolution.
+\end{lstlisting}
+
+The first rule adds the matching rule to a conflict set without computing anything, the second rule actually performs the calculations as soon as the \verb|apply_rule| constraint is present.
+
+At the end, add a rule
+
+\begin{lstlisting}
+no-rule @
+  fire <=> conflict_set([]), choose.
+\end{lstlisting}
+
+As soon as the \verb|fire| constraint is present (so the recognize cycle/conflict resolution process begins), each matching rule adds a \verb|conflict_set/1| constraint with its name. The last rule finishes the recognize cycle by deleting the fire constraint \emph{after} all rules that match had their chance to add a \verb|conflict_set| constraint and adds an empty \verb|conflict_set| constraint, indicated by \verb|[]|. The constraints store contains at the end of this phase a bunch of \verb|conflict_set| constraints that represent the matching rules plus an empty \verb|conflict_set| constraint. If no rule matches, there is only an empty \verb|conflict_set| constraint in the store.
+
+The last rule also triggers the choosing process by adding the constraint \verb|choose|. The following rules handle the choosing process:
+
+\begin{lstlisting}
+conflict_set(_) \ conflict_set([]) <=> true.
+  
+find-max-utility @ production_utility(P1,U1), production_utility(P2,U2), conflict_set(P1) \ conflict_set(P2) <=>
+  U1 >= U2 |
+  true.
+\end{lstlisting}
+
+The first rule deletes the empty \verb|conflict_set| constraint, if there are other \verb|conflict_set| constraints present, i.e. there has been a rule that can fire.
+
+The second rule assumes, that for each production rule \verb|p| in the procedural memory there is a \verb|production_utility(p,u)| constraint that holds the utility value \verb|u| of the production \verb|p|. If there are two \verb|conflict_set| constraints in the store, the one with the higher utility value will be kept and the other removed from the store.
+
+If the rules have been applied to exhaustion, there is only one \verb|conflict_set| constraint in the store -- either an empty one ore one with the name of a rule. The following rules handle the choosing process:
+
+\begin{lstlisting}
+choose, conflict_set([]) <=>
+  no_rule.
+
+choose @ choose, conflict_set(P) <=>
+  P \== [] |
+  get_now(Now),
+  Time is Now + 0.05,
+  write('going to apply rule '),write(P),nl,
+  add_q(Time,0,apply_rule(P)). 
+\end{lstlisting}
+
+The first rule is only applicable, if there were no matching rules and the empty \verb|conflict_set| is still present. Then this fact is indicated by a \verb|no_rule| constraint.
+
+In the second rule, the firing of the last remaining rule is scheduled 50\,ms from the current time, as it is described in section~\ref{procedural_knowledge}. The event is the \verb|apply_rule(P)| constraint, which leads the second rule in listing~\ref{lst:conflict_resolution_scheme} to fire, which performs the actions of the rule.
+
+When the chosen rule is applied, its actions are performed and eventually, a \verb|conflict_resolution| constraint is added to the store. This constraint leads the next conflict resolution event to being scheduled:
+
+\begin{lstlisting}
+now(Time) \ conflict_resolution <=> add_q(Time,0,fire).
+\end{lstlisting}
+
+The event is scheduled at the current time with very low priority, so all the actions of the rule have had the chance to be executed.
+
+If there was no matching rule, the \verb|no_rule| constraint is in the store. This leads the next conflict resolution event to be scheduled after the next event (which may lead to a change of the system state):
+
+\begin{lstlisting}
+no_rule <=> after_next_event(fire).
+\end{lstlisting}
+
+Note, that the described method of implementing the conflict resolution process of ACT-R, matches exactly the description in the reference manual:
+
+\begin{quote}
+``The procedural module will automatically schedule conflict-resolution events. The first one is
+scheduled at time 0 and a new one is scheduled after each production fires. If no production is
+selected during a conflict-resolution event then a new conflict-resolution event is scheduled to occur
+after the next change occurs.'' \cite[156]{actr_reference}
+\end{quote}
+
+
+
+In \cite{fru_chr_book_2009}, the \verb|conflict_set| and \verb|apply_rule| constraints also have the values of the variables that have been bound in the matching of the rule in the collecting phase\footnote{The example is slightly modified from the original in \cite{fru_chr_book_2009}: In the original, the name of the rule does not play a role and the priorities are known in advance}: 
+
+\begin{lstlisting}
+delay-name @
+  fire, {buffer tests} ==> {guard} | conflict_set(rule(name, {Variables in the head of the rule})).
+name @
+  {buffer tests}, apply_rule(rule(name, {Variables in the head of the rule})) <=> {actions}, conflict_resolution.
+\end{lstlisting}
+
+This is due to the fact, that during the conflict resolution process other rules may have changed the constraint store and the rule might not be applicable anymore. However, in ACT-R the procedural module is a serial bottleneck, so no rules that change the state of the buffer system can be applied during the conflict resolution. Additionally, in \cite{fru_chr_book_2009} the rules that were in the conflict set but did not match, remain in the conflict set for the next cycle and are applied, if they have at some point the highest priority in the set and are still applicable (ensured by the bound variables in \verb|apply_rule|). In ACT-R, this does not play a role, since the recognize-act cycle is defined serially and only one rule is applied in each cycle. In the next cycle, all rules are checked again for matching heads and the computations are performed on the new values. Note that the problem of trivial non-termination of propagation rules described in \cite[5]{abdennadher_sts_chr13}, which has to be considered when changing the operational order of rule applications in CHR, does not play a role for ACT-R, since it does not implement propagation rules.
+
+\subsubsection{Computing the Utility Values}
+
+As described in section~\ref{production_utility}, rules can have a certain amount of reward that can be distributed among all rules that have been applied since the last reward has been distributed.
+
+The reward a rule can distribute, can be saved in a \verb|reward/2| constraint. If a rule is applied, the time of application can be saved in a \verb|to_reward/2| constraint, that states that the rule in the constraint has been applied and therefore receives a part of the next reward as soon as it occurs: 
+
+\begin{lstlisting}
+apply_rule(P) ==> P \== [] | get_now(Now), to_reward(P,Now).
+\end{lstlisting}
+
+Note, that the \verb|apply_rule/1| constraint from the last section is used to determine, when a rule is fired.
+
+When a rule that can distribute a reward is applied, the reward is triggered:
+
+\begin{lstlisting}
+apply_rule(P), reward(P,R) ==>
+  P \== [] |
+  trigger_reward(R).
+\end{lstlisting}
+
+This will reward all rules that have a \verb|to_reward/2| constraint in the store, which leads to a new production utility value:
+
+\begin{lstlisting}[escapeinside={(*@}{@*)}, label=lst:trigger_reward]
+trigger_reward(R) \ production_utility(P,U), to_reward(P,FireTime) <=>
+  calc_reward(R,FireTime,Reward),
+  get_conf(alpha,Alpha),
+  NewU is U + Alpha*(Reward-U), (*@\label{lst:trigger_reward:learning}@*)
+  production_utility(P,NewU).
+  
+calc_reward(R,FireTime,Reward) :- (*@\label{lst:trigger_reward:calc_reward}@*)
+  get_now(Now),
+  Reward is R - (Now-FireTime).
+\end{lstlisting}
+
+Note, that in line~\ref{lst:trigger_reward:learning} the utility is adapted by the utility learning rule as shown in equation~\eqref{eq:utility_learning}. The reward the rule receives is calculated by the Prolog predicate in lines~\ref{lst:trigger_reward:calc_reward} sqq.: The more time passed since the rule application, the less the reward of the rule.
+
+In the end, there has to be a rule that cleans up the reward trigger, after all the rules have been rewarded. This ensures, that the next \verb|to_reward| constraints are not immediately consumed by the last reward trigger:
+
+\begin{lstlisting}
+trigger_reward(_) <=> true.
+\end{lstlisting}
+
 

@@ -53,6 +53,8 @@ backend=bibtex
 \setlist{nolistsep} % kein abstand zwischen items in listen, Befehl von enumitem
 \usepackage{float} % use \begin{figure}{H} to really force a figure being placed here
 \usepackage[section]{placeins} % floatbarrier at each new section, so every figure appears in its own section
+\usepackage{tikz}
+\usetikzlibrary{positioning,shapes,shadows,arrows}
 
 \usepackage{scrhack}
 \usepackage{graphicx}
@@ -60,7 +62,7 @@ backend=bibtex
 \usepackage{tabularx}
 \usepackage{subfigure}
 \usepackage{url}
-\usepackage{color}
+\usepackage{xcolor}
 \usepackage{amssymb}
 \usepackage{amsmath}
 \usepackage{amsthm}
@@ -138,6 +140,12 @@ backend=bibtex
 \definecolor{Gray}{rgb}{0.80784, 0.86667, 0.90196} %dunkelblau
 \definecolor{Lightgray}{rgb}{0.9176, 0.95, 0.95686} %hellblau
 \definecolor{Akzent}{rgb}{0.6627, 0.63529, 0.55294} %akzentfarbe
+
+\definecolor{Uulmin}{RGB}{163,38,56} % Uni Ulm, rot der Fakultät für Ingenieurwissenschaften und Informatik
+
+\tikzstyle{rule}=[rectangle, draw=Uulmin,  rounded corners, 
+        anchor=west, text=white, text width=6.5cm]
+
 
 %%
 %% Einstellungen für Codelistings

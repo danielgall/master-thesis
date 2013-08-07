@@ -1,0 +1,72 @@
+\chapter{Executable Examples}
+
+This appendix provides some of the examples that appeared in the work with a minimal environment that represents the current context where the examples appeared.
+
+\section{Rule Order}
+\label{app:ex:rule_order}
+
+\begin{lstlisting}
+:- use_module(library(chr)).
+
+:- chr_type chunk_def ---> nil; chunk(any, any, slot_list).
+:- chr_type list(T) ---> []; [T | list(T)].
+:- chr_type slot_list == list(pair(any,any)). % a list of slot-value pairs
+:- chr_type pair(T1,T2) ---> (T1,T2).
+
+:- chr_type lchunk_defs == list(chunk_def).
+
+:- chr_constraint buffer/2, buffer_change/2, alter_slots/2, alter_slot/3, chunk/2, chunk_has_slot/3,fire.
+
+% Handle buffer_change
+buffer(BufName, OldChunk) \ buffer_change(BufName, chunk(_,_,SVs)) <=>
+  alter_slots(OldChunk,SVs).
+
+  
+alter_slots(_,[]) <=> true.
+alter_slots(Chunk,[(S,V)|SVs]) <=> 
+  alter_slot(Chunk,S,V),
+  alter_slots(Chunk,SVs).
+  
+alter_slot(Chunk,Slot,Value), chunk_has_slot(Chunk,Slot,_) <=>
+  chunk_has_slot(Chunk,Slot,Value).
+  
+alter_slot(Chunk,Slot,Value) <=>
+  false. % since every chunk must be described completely, Slot cannot be a slot of the type of Chunk
+  %chunk_has_slot(Chunk,Slot,Value).  
+
+% first example without fire: 
+  
+ buffer(b1,C),
+   chunk(C,foo),
+   chunk_has_slot(C,s1,v1)
+ ==>
+ buffer_change(b1,chunk(_,_,[(s1,v2)])),
+ buffer_change(b2,chunk(_,_,[(s,x)])).
+ 
+ buffer(b1,C),
+   chunk(C,foo),
+   chunk_has_slot(C,s1,v2)
+ ==>
+ buffer_change(b2,chunk(_,_,[(s,y)])),
+ buffer_change(b1,chunk(_,_,[(s1,v3)])).
+
+% example with fire (uncomment it and add comments to the rules above) 
+ 
+% buffer(b1,C),
+%   chunk(C,foo),
+%   chunk_has_slot(C,s1,v1)
+%   \ fire
+% <=>
+% buffer_change(b1,chunk(_,_,[(s1,v2)])),
+% buffer_change(b2,chunk(_,_,[(s,x)])),
+% fire.
+% 
+% buffer(b1,C),
+%   chunk(C,foo),
+%   chunk_has_slot(C,s1,v2)
+%   \ fire
+% <=>
+% buffer_change(b2,chunk(_,_,[(s,y)])),
+% buffer_change(b1,chunk(_,_,[(s1,v3)])),
+% fire.
+\end{lstlisting}

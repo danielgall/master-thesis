@@ -180,9 +180,17 @@ The next step is to define the goal chunk stored in the goal buffer. In this chu
 
 Now the rules to implement counting can be defined as:
 
-\begin{description}
- \item[count-rule] If the goal is to count, the current number is $n$ and the retrieval buffer holds a chunk of type \emph{count-fact} with the \emph{first} value $n$ and the \emph{second} value $m$, then set the current number in the goal to $m$ and send a retrieval request for a chunk that has $m$ in its \emph{first} slot.
-\end{description}
+\begin{center}
+\begin{tikzpicture}[node distance=0.5cm]
+\node (count-rule) [rule, rectangle split, rectangle split parts=4, rectangle split part fill={Uulmin, Uulmin!45,Uulmin!45,Uulmin!80,Uulmin!80}] {
+        \textbf{count-rule}
+        \nodepart{second} IF the goal is to count, the current number is $n$
+        \nodepart{third}AND the retrieval buffer holds a chunk of type \emph{count-fact} with the \emph{first} value $n$ and the \emph{second} value $m$
+        \nodepart{fourth}THEN set the current number in the goal to $m$
+                    AND send a retrieval request for a chunk that has $m$ in its \emph{first} slot
+    };
+\end{tikzpicture}
+\end{center}
 
 The rule matches the initial state: In the goal there is a chunk of type \emph{count}, that indicates that the goal is to count, the current number $n$ is $2$. In the retrieval buffer, there is a \emph{count-fact} with the \emph{first} number $n = 2$ and the \emph{second} number $m = 3$. 
 
@@ -318,6 +326,7 @@ F \approx 0.35\mathrm{e}^\tau
 where $\tau$ is the retrieval threshold as mentioned in section \ref{activation}, but $F$ can also be set individually by the modeller. Nevertheless, in \cite[1042]{anderson_integrated_2004} it is stated that the relationship of the retrieval threshold and the latency factor in equation \eqref{eq:retrieval_latency} seems to be suitable for a lot of models.
 
 \subsection{Production Utility}
+\label{production_utility}
 
 For the production system, there is the subsymbolic concept of \emph{production utilities} to deal with competing strategies. For instance, if a child learns to add numbers, it may have learned different strategies to compute the result: One could be counting with the fingers and the other could be just retrieving a fact for the addition from declarative memory. If the child now has the goal to add two numbers, it somehow has to decide which strategy it will choose, since both of them match the context.
 
