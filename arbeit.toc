@@ -180,60 +180,70 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {paragraph}{Production Rules}{70}{section*.52}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.8}Configuration}{71}{section.4.8}
+\contentsline {section}{\numberline {4.8}Lisp Functions}{71}{section.4.8}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.9}Subsymbolic Layer}{71}{section.4.9}
+\contentsline {subsection}{\numberline {4.8.1}General Translation}{71}{subsection.4.8.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.9.1}Activation of Chunks}{71}{subsection.4.9.1}
+\contentsline {subsection}{\numberline {4.8.2}Configuration Variables}{71}{subsection.4.8.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Base-Level Learning}{71}{section*.53}
+\contentsline {subsubsection}{The Observer Pattern}{72}{section*.53}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Presentations of a Chunk}{71}{section*.54}
+\contentsline {section}{\numberline {4.9}Subsymbolic Layer}{72}{section.4.9}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Calculating the Base-Level Value}{72}{section*.55}
+\contentsline {subsection}{\numberline {4.9.1}Activation of Chunks}{72}{subsection.4.9.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Fan Values}{74}{section*.56}
+\contentsline {subsubsection}{Base-Level Learning}{72}{section*.54}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Associative Weights}{75}{section*.57}
+\contentsline {paragraph}{Presentations of a Chunk}{72}{section*.55}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Calculate the Overall-Activations}{75}{section*.58}
+\contentsline {paragraph}{Calculating the Base-Level Value}{73}{section*.56}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Threshold and Maximum}{76}{section*.59}
+\contentsline {paragraph}{Fan Values}{75}{section*.57}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{New Module Request Interface}{77}{section*.60}
+\contentsline {paragraph}{Associative Weights}{75}{section*.58}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Adapting the Retrieval Request}{79}{section*.61}
+\contentsline {paragraph}{Calculate the Overall-Activations}{76}{section*.59}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.9.2}Conflict Resolution and Production Utility}{80}{subsection.4.9.2}
+\contentsline {paragraph}{Threshold and Maximum}{77}{section*.60}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Conflict Resolution}{80}{section*.62}
+\contentsline {paragraph}{New Module Request Interface}{78}{section*.61}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Computing the Utility Values}{84}{section*.63}
+\contentsline {paragraph}{Adapting the Retrieval Request}{80}{section*.62}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {5}Compiler}{87}{chapter.5}
+\contentsline {subsubsection}{Configuration of the Retrieval}{81}{section*.63}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {6}Example Models}{89}{chapter.6}
+\contentsline {subsection}{\numberline {4.9.2}Conflict Resolution and Production Utility}{82}{subsection.4.9.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.1}The Counting Model}{89}{section.6.1}
+\contentsline {subsubsection}{Conflict Resolution}{82}{section*.64}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.2}The Addition Model}{89}{section.6.2}
+\contentsline {subsubsection}{Computing the Utility Values}{85}{section*.65}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.3}The Semantic Model}{89}{section.6.3}
+\contentsline {subsubsection}{Configuration of the Conflict Resolution}{87}{section*.66}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.4}The Fan Model}{89}{section.6.4}
+\contentsline {chapter}{\numberline {5}Compiler}{89}{chapter.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {7}Conclusion}{91}{chapter.7}
+\contentsline {chapter}{\numberline {6}Example Models}{91}{chapter.6}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {7.1}Inventory: What does already work?}{91}{section.7.1}
+\contentsline {section}{\numberline {6.1}The Counting Model}{91}{section.6.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {7.2}Future Work}{91}{section.7.2}
+\contentsline {section}{\numberline {6.2}The Addition Model}{91}{section.6.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {A}Source Codes}{93}{appendix.A}
+\contentsline {section}{\numberline {6.3}The Semantic Model}{91}{section.6.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {B}Grammar for Production Rules}{95}{appendix.B}
+\contentsline {section}{\numberline {6.4}The Fan Model}{91}{section.6.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {C}Executable Examples}{97}{appendix.C}
+\contentsline {chapter}{\numberline {7}Conclusion}{93}{chapter.7}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {C.1}Rule Order}{97}{section.C.1}
+\contentsline {section}{\numberline {7.1}Inventory: What does already work?}{93}{section.7.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{Bibliography}{101}{appendix*.64}
+\contentsline {section}{\numberline {7.2}Future Work}{93}{section.7.2}
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {A}Source Codes}{95}{appendix.A}
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {B}Grammar for Production Rules}{97}{appendix.B}
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{\numberline {C}Executable Examples}{99}{appendix.C}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {C.1}Rule Order}{99}{section.C.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{Bibliography}{103}{appendix*.67}

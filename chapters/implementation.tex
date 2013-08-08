@@ -1,7 +1,7 @@
 \chapter{Implementation of ACT-R in CHR}
 \label{implementation}
 
-After the comprehensive but at some point informal overview of the ACT-R theory in chapter \ref{actr_description}, this chapter presents a possible implementation of the described concepts of the ACT-R theory in CHR.
+After the comprehensive but at some point informal overview of the ACT-R theory in chapter \ref{actr_description}, this chapter presents a possible implementation of the described concepts of the ACT-R theory in CHR. Note that this work only regards the fundamental concepts of ACT-R and abstracts from some details. For example, the experiment environment as described in section~\ref{experiment_environment} is ignored.
 
 For the implementation, some special cases and details that are not exactly defined in theory have to be considered. Hence, some concepts of the theory that are implemented in this work are formalized first. The implementation in form of CHR rules sticks to those formalisms and is often very similar to them.
 
@@ -1591,8 +1591,33 @@ which removes the fire constraint if still present and states that no rule has b
   after_next_event(do_conflict_resolution).
 \end{lstlisting}
 
-\section{Configuration}
+\section{Lisp Functions}
+\label{lisp_functions}
+
+In ACT-R, it is possible to call some Lisp functions in the model definitions, for example to add chunk-types and declarative memory or set configuration variables. Since those functions cannot be called in the CHR/Prolog environment, there has to be a mechanism to implement missing functions.
+
+\subsection{General Translation}
+
+Lisp functions are lists (indicated by round braces \verb|(| and \verb|)|), which have the functor as their first element and the function arguments in the rest of the list. Hence, each Lisp function \verb|(f arg1 arg2 ...)| called in the model definition of an ACT-R model is translated into the adding of a CHR constraint \verb|lisp_f([arg1, arg2, ...])|. For all used functions, there has to be a default implementation in the module \verb|std_lisp|. In this implementation, the concept is reduced to simple procedural calls ignoring return values, which is adequate for most of the pure ACT-R models without the experiment environment. Here is an example implementation of the lisp function \verb|(chunk-type name slot1 slot2 ...)|:
+
+\begin{lstlisting}
+lisp_chunktype([Type|Slots]) <=>
+  add_chunk_type(Type,Slots),
+  declarative_module:add_chunk_type(Type,Slots).
+\end{lstlisting}
+
+\subsection{Configuration Variables}
 \label{configuration}
+
+In ACT-R, configuration variables which control the behaviour of the architecture are set with the Lisp function \verb|(sgp :Var Val)|, which sets the variable \verb|Var| to \verb|Val|. To handle such configuration variables, a configuration module can be added to the CHR implementation, that offers an interface to set variables and to ask for their values:
+
+\begin{description}
+ \item[Set configuration variables]
+ \item[Get the value of a configuration variable]
+\end{description}
+
+\subsubsection{The Observer Pattern}
+
 
 
 \section{Subsymbolic Layer}
@@ -1892,6 +1917,39 @@ calc_time(Act,ResTime) :-
 This corresponds to equation~\eqref{eq:retrieval_latency}.
 \end{description}
 
+\subsubsection{Configuration of the Retrieval}
+
+ACT-R offers some configuration variables which influence the retrieval process. In the CHR implementation, some of those configuration variables are implemented in the system according to the configuration infrastructure as described in section~\ref{configuration}. In ACT-R, configuration variables are set with the command \verb|(sgp :Var Val)| which sets the value of the variable \verb|Var| to \verb|Val|. 
+
+\begin{description}
+ \item[Turn on the subsymbolic layer] The variable \verb|esc| that can be set to \verb|t| for \emph{true} and \verb|nil| for \emph{false} controls the activation of the subsymbolic layer for retrieval requests. In CHR, the declarative module observes the value of this variable by the observer interface presented in section~\ref{configuration}. Depending on the value of the variable, the constraint \verb|subsymbolic/0| is present or not:
+ 
+\begin{lstlisting}
+% subsymbolic layer turned on -> add subsymbolic constraint
+set_subsymbolic(t), subsymbolic <=> subsymbolic.
+set_subsymbolic(t) <=> subsymbolic.
+
+% subsymbolic layer turned off -> remove subsymbolic constraint
+set_subsymbolic(nil), subsymbolic <=> true.
+set_subsymbolic(nil) <=> true.
+\end{lstlisting}
+
+For each rule only involved in the subsymbolic layer, the constraint \verb|subsymbolic/0| is added to its kept head, so the rule only fires if the subsymbolic layer is turned on.
+
+\item[Retrieval threshold] The retrieval threshold $\theta$ is set by the configuration variable \verb|rt|.
+\item[Latency factor] The latency factor $F$ is set by the configuration variable \verb|lf|.
+\item[Proportion of $\theta$ and $F$] The configuration system automatically sets the latency factor if the retrieval threshold is set. If an individual value for $F$ should be set, then the automatically set value has to be overwritten after the threshold has been set.
+
+\begin{lstlisting}
+latency-factor-by-threshold @
+set_conf(rt,RT) ==> LF is 0.35*exp(RT), set_conf(lf,LF). 
+\end{lstlisting}
+
+\item[Decay parameter] The decay parameter $d$ is set by the configuration variable \verb|bll|.
+
+\end{description}
+
+
 \subsection{Conflict Resolution and Production Utility}
 
 If there are competing strategies that match a current state, the production system selects the rule with the highest production utility to fire. This process is called \emph{conflict resolution} in the terminology of production rule systems and is described in the following.
@@ -1903,16 +1961,16 @@ In \cite[151\psqq]{fru_chr_book_2009} a general implementation of conflict resol
 Replace every production rule
 
 \begin{lstlisting}
-{buffer tests} \ fire <=> {guard} | {actions}, conflict_resolution.
+<<{buffer tests} \ fire>> <=> {guard} | {actions}, conflict_resolution.
 \end{lstlisting}
 
 with two rules
 
 \begin{lstlisting}{caption={Translation scheme for production rules regarding conflict resolution}, label=lst:conflict_resolution_scheme}
-delay-name @
-  fire, {buffer tests} ==> {guard} | conflict_set(name).
-name @
-  {buffer tests}, apply_rule(name) <=> {actions}, conflict_resolution.
+<<<delay-name>>> @
+  <<fire, {buffer tests}>> ==> {guard} | conflict_set(name).
+<<<name>>> @
+  <<{buffer tests}, apply_rule(name)>> <=> {guard} | {actions}, conflict_resolution.
 \end{lstlisting}
 
 The first rule adds the matching rule to a conflict set without computing anything, the second rule actually performs the calculations as soon as the \verb|apply_rule| constraint is present.
@@ -1920,8 +1978,8 @@ The first rule adds the matching rule to a conflict set without computing anythi
 At the end, add a rule
 
 \begin{lstlisting}
-no-rule @
-  fire <=> conflict_set([]), choose.
+<<<no-rule>>> @
+  <<fire>> <=> conflict_set([]), choose.
 \end{lstlisting}
 
 As soon as the \verb|fire| constraint is present (so the recognize cycle/conflict resolution process begins), each matching rule adds a \verb|conflict_set/1| constraint with its name. The last rule finishes the recognize cycle by deleting the fire constraint \emph{after} all rules that match had their chance to add a \verb|conflict_set| constraint and adds an empty \verb|conflict_set| constraint, indicated by \verb|[]|. The constraints store contains at the end of this phase a bunch of \verb|conflict_set| constraints that represent the matching rules plus an empty \verb|conflict_set| constraint. If no rule matches, there is only an empty \verb|conflict_set| constraint in the store.
@@ -1929,10 +1987,10 @@ As soon as the \verb|fire| constraint is present (so the recognize cycle/conflic
 The last rule also triggers the choosing process by adding the constraint \verb|choose|. The following rules handle the choosing process:
 
 \begin{lstlisting}
-conflict_set(_) \ conflict_set([]) <=> true.
+<<conflict_set(_) \ conflict_set([])>> <=> true.
   
-find-max-utility @ production_utility(P1,U1), production_utility(P2,U2), conflict_set(P1) \ conflict_set(P2) <=>
-  U1 >= U2 |
+<<<find-max-utility>>> @ <<production_utility(P1,U1), production_utility(P2,U2), conflict_set(P1) \ conflict_set(P2)>> <=>
+  <<<U1 >= U2>>> |
   true.
 \end{lstlisting}
 
@@ -1943,14 +2001,13 @@ The second rule assumes, that for each production rule \verb|p| in the procedura
 If the rules have been applied to exhaustion, there is only one \verb|conflict_set| constraint in the store -- either an empty one ore one with the name of a rule. The following rules handle the choosing process:
 
 \begin{lstlisting}
-choose, conflict_set([]) <=>
+<<choose, conflict_set([])>> <=>
   no_rule.
 
-choose @ choose, conflict_set(P) <=>
-  P \== [] |
+<<<choose>>> @ <<choose, conflict_set(P)>> <=>
+  <<<P \== []>>> |
   get_now(Now),
   Time is Now + 0.05,
-  write('going to apply rule '),write(P),nl,
   add_q(Time,0,apply_rule(P)). 
 \end{lstlisting}
 
@@ -1961,7 +2018,7 @@ In the second rule, the firing of the last remaining rule is scheduled 50\,ms fr
 When the chosen rule is applied, its actions are performed and eventually, a \verb|conflict_resolution| constraint is added to the store. This constraint leads the next conflict resolution event to being scheduled:
 
 \begin{lstlisting}
-now(Time) \ conflict_resolution <=> add_q(Time,0,fire).
+<<now(Time) \ conflict_resolution>> <=> add_q(Time,0,fire).
 \end{lstlisting}
 
 The event is scheduled at the current time with very low priority, so all the actions of the rule have had the chance to be executed.
@@ -1969,7 +2026,7 @@ The event is scheduled at the current time with very low priority, so all the ac
 If there was no matching rule, the \verb|no_rule| constraint is in the store. This leads the next conflict resolution event to be scheduled after the next event (which may lead to a change of the system state):
 
 \begin{lstlisting}
-no_rule <=> after_next_event(fire).
+<<no_rule>> <=> after_next_event(fire).
 \end{lstlisting}
 
 Note, that the described method of implementing the conflict resolution process of ACT-R, matches exactly the description in the reference manual:
@@ -1981,15 +2038,13 @@ selected during a conflict-resolution event then a new conflict-resolution event
 after the next change occurs.'' \cite[156]{actr_reference}
 \end{quote}
 
-
-
 In \cite{fru_chr_book_2009}, the \verb|conflict_set| and \verb|apply_rule| constraints also have the values of the variables that have been bound in the matching of the rule in the collecting phase\footnote{The example is slightly modified from the original in \cite{fru_chr_book_2009}: In the original, the name of the rule does not play a role and the priorities are known in advance}: 
 
 \begin{lstlisting}
-delay-name @
-  fire, {buffer tests} ==> {guard} | conflict_set(rule(name, {Variables in the head of the rule})).
-name @
-  {buffer tests}, apply_rule(rule(name, {Variables in the head of the rule})) <=> {actions}, conflict_resolution.
+<<<delay-name>>> @
+  <<fire, {buffer tests}>> ==> {guard} | conflict_set(rule(name, {Variables in the head of the rule})).
+<<<name>>> @
+  <<{buffer tests}, apply_rule(rule(name, {Variables in the head of the rule}))>> <=> {guard} | {actions}, conflict_resolution.
 \end{lstlisting}
 
 This is due to the fact, that during the conflict resolution process other rules may have changed the constraint store and the rule might not be applicable anymore. However, in ACT-R the procedural module is a serial bottleneck, so no rules that change the state of the buffer system can be applied during the conflict resolution. Additionally, in \cite{fru_chr_book_2009} the rules that were in the conflict set but did not match, remain in the conflict set for the next cycle and are applied, if they have at some point the highest priority in the set and are still applicable (ensured by the bound variables in \verb|apply_rule|). In ACT-R, this does not play a role, since the recognize-act cycle is defined serially and only one rule is applied in each cycle. In the next cycle, all rules are checked again for matching heads and the computations are performed on the new values. Note that the problem of trivial non-termination of propagation rules described in \cite[5]{abdennadher_sts_chr13}, which has to be considered when changing the operational order of rule applications in CHR, does not play a role for ACT-R, since it does not implement propagation rules.
@@ -2001,7 +2056,7 @@ As described in section~\ref{production_utility}, rules can have a certain amoun
 The reward a rule can distribute, can be saved in a \verb|reward/2| constraint. If a rule is applied, the time of application can be saved in a \verb|to_reward/2| constraint, that states that the rule in the constraint has been applied and therefore receives a part of the next reward as soon as it occurs: 
 
 \begin{lstlisting}
-apply_rule(P) ==> P \== [] | get_now(Now), to_reward(P,Now).
+<<apply_rule(P)>> ==> <<<P \== []>>> | get_now(Now), to_reward(P,Now).
 \end{lstlisting}
 
 Note, that the \verb|apply_rule/1| constraint from the last section is used to determine, when a rule is fired.
@@ -2009,15 +2064,15 @@ Note, that the \verb|apply_rule/1| constraint from the last section is used to d
 When a rule that can distribute a reward is applied, the reward is triggered:
 
 \begin{lstlisting}
-apply_rule(P), reward(P,R) ==>
-  P \== [] |
+<<apply_rule(P), reward(P,R)>> ==>
+  <<<P \== []>>> |
   trigger_reward(R).
 \end{lstlisting}
 
 This will reward all rules that have a \verb|to_reward/2| constraint in the store, which leads to a new production utility value:
 
 \begin{lstlisting}[escapeinside={(*@}{@*)}, label=lst:trigger_reward]
-trigger_reward(R) \ production_utility(P,U), to_reward(P,FireTime) <=>
+<<trigger_reward(R) \ production_utility(P,U), to_reward(P,FireTime)>> <=>
   calc_reward(R,FireTime,Reward),
   get_conf(alpha,Alpha),
   NewU is U + Alpha*(Reward-U), (*@\label{lst:trigger_reward:learning}@*)
@@ -2033,7 +2088,21 @@ Note, that in line~\ref{lst:trigger_reward:learning} the utility is adapted by t
 In the end, there has to be a rule that cleans up the reward trigger, after all the rules have been rewarded. This ensures, that the next \verb|to_reward| constraints are not immediately consumed by the last reward trigger:
 
 \begin{lstlisting}
-trigger_reward(_) <=> true.
+<<trigger_reward(_)>> <=> true.
 \end{lstlisting}
+
+\subsubsection{Configuration of the Conflict Resolution}
+
+There are some methods to influence the conflict resolution process using the ACT-R command \verb|(spp ...)| that can set values for individual production rules. This command is translated as described in section~\ref{lisp_functions}. Additionally, there are some configuration variables that can be set -- as described in section~\ref{configuration} -- by the command \verb|(sgp ...)|:
+
+\begin{description}
+ \item[Setting the utility of a rule] Utilities can be set statically by the user by the ACT-R command \verb|(spp P :u U)|, which sets the utility of the rule \verb|P| to \verb|U|.
+ \item[Setting the reward of a rule] The amount of reward a rule can distribute is set by the user. By default, no rules have a reward to trigger. With the ACT-R command \verb|(spp P :reward R)|, the reward of the rule \verb|P| is set to \verb|R|. This command is also implemented among the standard lisp methods.  
+ \item[Default values and turning the utility mechanisms off] At the moment, there is no command in the CHR implementation that allows to turn off the conflict resolution mechanisms: The system sets a default utility value for each production rule and no rewards in the initialization process (the rule \verb|init @ run <=> ...| as described in section~\ref{initialization}). The user is able to set other initial utility values and rewards for particular rules. If no rewards are set, the utility values will remain at their initial values. Hence, if the user does not set any utilities or rewards, each rule will have the same utility value that does not change. If there are competing rules, the conflict resolution process will pick one. This can be regarded as turned off utility mechanisms.
+ \item[Learning rate] The learning rate $\alpha$ is set by the command \verb|(sgp :alpha A)| that sets the configuration variable \verb|alpha| to \verb|A|.
+\end{description}
+
+
+
 
 

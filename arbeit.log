@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Arch Linux) (format=pdflatex 2013.7.15)  7 AUG 2013 18:06
+This is pdfTeX, Version 3.1415926-2.4-1.40.13 (TeX Live 2012/Arch Linux) (format=pdflatex 2013.7.15)  8 AUG 2013 18:52
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1455,14 +1455,14 @@ LaTeX Info: Redefining \nameref on input line 228.
 \@outlinefile=\write6
 \openout6 = `arbeit.out'.
 
- <images/unilogo_bild.pdf, id=404, 199.74625pt x 199.74625pt>
+ <images/unilogo_bild.pdf, id=425, 199.74625pt x 199.74625pt>
 File: images/unilogo_bild.pdf Graphic file (type pdf)
 
 <use images/unilogo_bild.pdf>
 Package pdftex.def Info: images/unilogo_bild.pdf used on input line 243.
 (pdftex.def)             Requested size: 51.21349pt x 51.21504pt.
 
-<images/unilogo_wort.pdf, id=405, 761.34438pt x 183.18437pt>
+<images/unilogo_wort.pdf, id=426, 761.34438pt x 183.18437pt>
 File: images/unilogo_wort.pdf Graphic file (type pdf)
 
 <use images/unilogo_wort.pdf>
@@ -1691,6 +1691,10 @@ Chapter 3.
 ]
 Chapter 4.
 
+LaTeX Warning: Reference `experiment_environment' on page 23 undefined on input
+ line 4.
+
+
 LaTeX Warning: Citation 'actr_reference' on page 23 undefined on input line 10.
 
 
@@ -1855,91 +1859,85 @@ LaTeX Warning: Reference `fig:scheduler' on page 63 undefined on input line 135
 LaTeX Warning: Reference `tab:action_priorities' on page 68 undefined on input 
 line 1493.
 
-[68] [69] [70] [71]
-Overfull \hbox (65.34625pt too wide) in paragraph at lines 1643--1644
+[68] [69] [70] [71] [72]
+Overfull \hbox (65.34625pt too wide) in paragraph at lines 1668--1669
 \T1/phv/m/n/10 (-20) of a set of chunks has to be cal-cu-lated. There-fore, a c
 on-straint []\T1/pcr/m/n/10 calc_activation(Chunk,Activation)
  []
 
-[72] [73]
-Underfull \vbox (badness 4792) has occurred while \output is active []
+[73] [74] [75] [76] [77] [78]
+Underfull \vbox (badness 2635) has occurred while \output is active []
 
- [74]
-[75] [76] [77] [78]
+ [79]
 
-LaTeX Warning: Reference `tab:action_priorities' on page 79 undefined on input 
-line 1849.
+LaTeX Warning: Reference `tab:action_priorities' on page 80 undefined on input 
+line 1874.
 
-[79] [80]
-Overfull \hbox (0.81894pt too wide) in paragraph at lines 1939--1940
+[80] [81] [82]
+Overfull \hbox (0.81894pt too wide) in paragraph at lines 1997--1998
 []\T1/phv/m/n/10 (-20) The first rule deletes the empty []\T1/pcr/m/n/10 confli
 ct_set \T1/phv/m/n/10 (-20) con-straint, if there are other []\T1/pcr/m/n/10 co
 nflict_set
  []
 
-[81]
-Overfull \hbox (3.0493pt too wide) in paragraph at lines 1957--1958
+[83]
+Overfull \hbox (3.0493pt too wide) in paragraph at lines 2014--2015
 []\T1/phv/m/n/10 (-20) The first rule is only ap-pli-ca-ble, if there were no m
 atch-ing rules and the empty []\T1/pcr/m/n/10 conflict_set
  []
 
 
-LaTeX Warning: Reference `lst:conflict_resolution_scheme' on page 82 undefined 
-on input line 1959.
+LaTeX Warning: Reference `lst:conflict_resolution_scheme' on page 84 undefined 
+on input line 2016.
 
 
-Overfull \hbox (38.41306pt too wide) in paragraph at lines 1961--1962
+Overfull \hbox (38.41306pt too wide) in paragraph at lines 2018--2019
 []\T1/phv/m/n/10 (-20) When the cho-sen rule is ap-plied, its ac-tions are per-
 formed and even-tu-ally, a []\T1/pcr/m/n/10 conflict_resolution
  []
 
-[82]
 
-LaTeX Warning: Citation 'actr_reference' on page 83 undefined on input line 198
-1.
+LaTeX Warning: Citation 'actr_reference' on page 84 undefined on input line 203
+8.
 
-
-Underfull \vbox (badness 4492) has occurred while \output is active []
-
- [83]
-[84]) (./chapters/compiler.tex [85] [86
+[84] [85] [86]) (./chapters/compiler.tex [87] [88
 
 
 ]
 Chapter 5.
-) (./chapters/example_models.tex [87] [88
+) (./chapters/example_models.tex [89] [90
 
 
 ]
 Chapter 6.
-) (./chapters/conclusion.tex [89] [90
+) (./chapters/conclusion.tex [91] [92
 
 
 ]
 Chapter 7.
-) (./chapters/sources.tex [91] [92
+) (./chapters/sources.tex [93] [94
 
 
 ]
 Appendix A.
-) (./chapters/production_grammar.tex [93] [94
+) (./chapters/production_grammar.tex [95] [96
 
 
 ]
 Appendix B.
 
-LaTeX Warning: Citation 'actr_reference' on page 95 undefined on input line 3.
+LaTeX Warning: Citation 'actr_reference' on page 97 undefined on input line 3.
 
-[95]) (./chapters/appendix_examples.tex [96]
+[97]) (./chapters/appendix_examples.tex [98]
 Appendix C.
-[97
+[99
 
 
 ]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [98])
-[99] [100
+ [100])
+[101] [102
 
 
 ]
@@ -1954,12 +1952,12 @@ Overfull \hbox (49.7708pt too wide) in paragraph at lines 367--367
 f50d532cd825c1 .
  []
 
-[101
+[103
 
 
-] [102]
+] [104]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 383.
- [103
+ [105
 
 
 ]
@@ -1968,7 +1966,7 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 383.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 383.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 383.
 Package rerunfilecheck Info: File `arbeit.out' has not changed.
-(rerunfilecheck)             Checksum: 32D73485CD6248E92C8FA470D6118D4B;6762.
+(rerunfilecheck)             Checksum: 4526BA16E777BFC81696AB915CB68B82;7166.
 
 
 LaTeX Warning: There were undefined references.
@@ -1983,10 +1981,10 @@ Package logreq Info: Writing requests to 'arbeit.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 30937 strings out of 493488
- 542015 string characters out of 3146892
+ 30961 strings out of 493488
+ 542464 string characters out of 3146892
  990284 words of memory out of 3000000
- 32207 multiletter control sequences out of 15000+200000
+ 32210 multiletter control sequences out of 15000+200000
  90539 words of font info for 220 fonts, out of 3000000 for 9000
  958 hyphenation exceptions out of 8191
  65i,12n,73p,1616b,3317s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -2013,10 +2011,10 @@ r8a.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/
 texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-dist/fonts/typ
 e1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvr
 o8a.pfb>
-Output written on arbeit.pdf (111 pages, 759090 bytes).
+Output written on arbeit.pdf (113 pages, 767854 bytes).
 PDF statistics:
- 2565 PDF objects out of 2984 (max. 8388607)
- 2382 compressed objects within 24 object streams
- 1221 named destinations out of 1440 (max. 500000)
- 34159 words of extra memory for PDF output out of 35830 (max. 10000000)
+ 2623 PDF objects out of 2984 (max. 8388607)
+ 2437 compressed objects within 25 object streams
+ 1242 named destinations out of 1440 (max. 500000)
+ 34199 words of extra memory for PDF output out of 35830 (max. 10000000)
 
