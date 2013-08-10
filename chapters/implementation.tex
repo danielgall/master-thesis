@@ -326,6 +326,7 @@ At the moment, there are no rules that check the consistency of the chunk store.
 Rules for checking those constraints could be added easily to the implementation.
 
 \section{Procedural Module}
+\label{implementation:procedural_module}
 
 The part of the system, where the computations are performed, is the procedural module. It is the central component, that holds all the production rules, the working memory (in the buffer system) and organizes communication between modules (through buffers and requests). In the following, all of those subcomponents of the procedural module are described.
 
@@ -623,6 +624,7 @@ on the LHS of a production rule can be translated to the following CHR rule head
 \end{lstlisting}
 
 \subsection{The Production Rule Grammar}
+\label{implementation:production_rule_grammar}
 
 The discussed concepts lead to the following grammar for production rules, which is a simplified version of the actual grammar used in the original ACT-R implementation \cite[p. 162]{actr_reference}. 
 
@@ -2106,6 +2108,49 @@ There are some methods to influence the conflict resolution process using the AC
 
 \section{Compiler}
 
+With the implementation of the basic ACT-R concepts, a simple compiler has been created to automate the translation of Lisp ACT-R rules to CHR rules according to the translation schemes defined in section~\ref{implementation:procedural_module}. The compiler has been built using Prolog and CHR. However, it still lacks suitable translation of some of the details in the procedural module presented in section~\ref{implementation:production_rule_grammar}.
+
+\subsection{Basic Idea}
+
+The basic idea of the compiler is that it gets an ACT-R model definition written in the Lisp-like ACT-R syntax and produces the correspondent CHR rules. The model should be executable by just loading the translation and typing in the query \lstinline|run|. Hence, the translated model should somehow load the CHR framework simulating ACT-R, for instance the modules, the buffer system, the scheduler, etc. Figure~\ref{fig:basic_idea} illustrates the process.
+
+\subsection{Compiling}
+
+The compiler consists of three parts: A tokenizer, a parser and an actual translation component. Those three parts are described individually in the following sections.
+
+\subsubsection{Tokenizer}
+
+The tokenizer gets the file with the model definition as input and does some preprocessing on it: From the input -- a sequence of characters -- it builds a list of tokens. Tokens are separated by white-space (or by special characters) and can be one of the following character sequences in the input:
+
+\begin{description}
+ \item[Special Characters] are individual tokens and are defined as all allowed characters that are not letters, numbers or white-space. In ACT-R: \lstinline|!, (, ), +, -, =, >, ?|. Some special characters of ACT-R are missing in this list, but are not implemented in the compiler, yet.
+ \item[Keywords] are treated like a special character, but contains more than one symbol. In ACT-R, a keyword is \lstinline|==>|, separating the LHS from the RHS of a production rule.
+ \item[Identifiers] Everything that starts with a letter and contains only letters or numbers. An identifier ends, if a special character or a white-space is read from the input. An exception is the \lstinline|-| character, which can be used within identifiers. \emph{Example:} \lstinline|count, addition-fact, chunk1|
+ \item[Numbers] Every word, that only contains digits \lstinline|0-9|. As for every token, a number ends, if a white-space, a special character or a keyword occurs.
+\end{description}
+
+\begin{example}
+\FIXME{tokenize some input here}
+\end{example}
+
+extend figure illustrating overall process with details
+
+Idea: finite automaton, neutral state: start. States: identifier, number, image of automaton?
+
+\subsubsection{Parser}
+
+uses dcg rules, just implements a simplified version of the grammar presented above, produces a parse tree (explain how this is done with dcg rules), extend last figure illustrating overall process with details
+
+\subsubsection{Translation Component}
+
+writer as shown by Amira Zaki in the lecture
+
+\subsection{Problems with the current implementation}
+
+only subset of the grammar
+problems with duplicate slot tests
+no error handling, no error messages
+translation component is a little bit ugly -> new CHR based version is in development but not finished yet
 
 
 

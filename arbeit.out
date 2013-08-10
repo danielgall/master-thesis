@@ -86,16 +86,22 @@
 \BOOKMARK [3][-]{section*.66}{Configuration of the Conflict Resolution}{subsection.4.9.2}% 86
 \BOOKMARK [2][-]{subsection.4.9.3}{Extended Component Diagram}{section.4.9}% 87
 \BOOKMARK [1][-]{section.4.10}{Compiler}{chapter.4}% 88
-\BOOKMARK [0][-]{chapter.5}{Example Models}{}% 89
-\BOOKMARK [1][-]{section.5.1}{The Counting Model}{chapter.5}% 90
-\BOOKMARK [1][-]{section.5.2}{The Addition Model}{chapter.5}% 91
-\BOOKMARK [1][-]{section.5.3}{The Semantic Model}{chapter.5}% 92
-\BOOKMARK [1][-]{section.5.4}{The Fan Model}{chapter.5}% 93
-\BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 94
-\BOOKMARK [1][-]{section.6.1}{Inventory: What does already work?}{chapter.6}% 95
-\BOOKMARK [1][-]{section.6.2}{Future Work}{chapter.6}% 96
-\BOOKMARK [0][-]{appendix.A}{Source Codes}{}% 97
-\BOOKMARK [0][-]{appendix.B}{Grammar for Production Rules}{}% 98
-\BOOKMARK [0][-]{appendix.C}{Executable Examples}{}% 99
-\BOOKMARK [1][-]{section.C.1}{Rule Order}{appendix.C}% 100
-\BOOKMARK [0][-]{appendix*.67}{Bibliography}{}% 101
+\BOOKMARK [2][-]{subsection.4.10.1}{Basic Idea}{section.4.10}% 89
+\BOOKMARK [2][-]{subsection.4.10.2}{Compiling}{section.4.10}% 90
+\BOOKMARK [3][-]{section*.67}{Tokenizer}{subsection.4.10.2}% 91
+\BOOKMARK [3][-]{section*.68}{Parser}{subsection.4.10.2}% 92
+\BOOKMARK [3][-]{section*.69}{Translation Component}{subsection.4.10.2}% 93
+\BOOKMARK [2][-]{subsection.4.10.3}{Problems with the current implementation}{section.4.10}% 94
+\BOOKMARK [0][-]{chapter.5}{Example Models}{}% 95
+\BOOKMARK [1][-]{section.5.1}{The Counting Model}{chapter.5}% 96
+\BOOKMARK [1][-]{section.5.2}{The Addition Model}{chapter.5}% 97
+\BOOKMARK [1][-]{section.5.3}{The Semantic Model}{chapter.5}% 98
+\BOOKMARK [1][-]{section.5.4}{The Fan Model}{chapter.5}% 99
+\BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 100
+\BOOKMARK [1][-]{section.6.1}{Inventory: What does already work?}{chapter.6}% 101
+\BOOKMARK [1][-]{section.6.2}{Future Work}{chapter.6}% 102
+\BOOKMARK [0][-]{appendix.A}{Source Codes}{}% 103
+\BOOKMARK [0][-]{appendix.B}{Grammar for Production Rules}{}% 104
+\BOOKMARK [0][-]{appendix.C}{Executable Examples}{}% 105
+\BOOKMARK [1][-]{section.C.1}{Rule Order}{appendix.C}% 106
+\BOOKMARK [0][-]{appendix*.70}{Bibliography}{}% 107
