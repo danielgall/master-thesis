@@ -85,15 +85,15 @@
 \BOOKMARK [3][-]{section*.65}{Computing the Utility Values}{subsection.4.9.2}% 85
 \BOOKMARK [3][-]{section*.66}{Configuration of the Conflict Resolution}{subsection.4.9.2}% 86
 \BOOKMARK [2][-]{subsection.4.9.3}{Extended Component Diagram}{section.4.9}% 87
-\BOOKMARK [0][-]{chapter.5}{Compiler}{}% 88
-\BOOKMARK [0][-]{chapter.6}{Example Models}{}% 89
-\BOOKMARK [1][-]{section.6.1}{The Counting Model}{chapter.6}% 90
-\BOOKMARK [1][-]{section.6.2}{The Addition Model}{chapter.6}% 91
-\BOOKMARK [1][-]{section.6.3}{The Semantic Model}{chapter.6}% 92
-\BOOKMARK [1][-]{section.6.4}{The Fan Model}{chapter.6}% 93
-\BOOKMARK [0][-]{chapter.7}{Conclusion}{}% 94
-\BOOKMARK [1][-]{section.7.1}{Inventory: What does already work?}{chapter.7}% 95
-\BOOKMARK [1][-]{section.7.2}{Future Work}{chapter.7}% 96
+\BOOKMARK [1][-]{section.4.10}{Compiler}{chapter.4}% 88
+\BOOKMARK [0][-]{chapter.5}{Example Models}{}% 89
+\BOOKMARK [1][-]{section.5.1}{The Counting Model}{chapter.5}% 90
+\BOOKMARK [1][-]{section.5.2}{The Addition Model}{chapter.5}% 91
+\BOOKMARK [1][-]{section.5.3}{The Semantic Model}{chapter.5}% 92
+\BOOKMARK [1][-]{section.5.4}{The Fan Model}{chapter.5}% 93
+\BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 94
+\BOOKMARK [1][-]{section.6.1}{Inventory: What does already work?}{chapter.6}% 95
+\BOOKMARK [1][-]{section.6.2}{Future Work}{chapter.6}% 96
 \BOOKMARK [0][-]{appendix.A}{Source Codes}{}% 97
 \BOOKMARK [0][-]{appendix.B}{Grammar for Production Rules}{}% 98
 \BOOKMARK [0][-]{appendix.C}{Executable Examples}{}% 99

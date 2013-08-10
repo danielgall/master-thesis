@@ -125,7 +125,7 @@ The $HasSlot$ relation is represented by the \lstinline|chunk_has_slot(c,s,v)| c
 
 Note that all values in the just presented constraints have to be ground. This is a demand claimed by the original ACT-R implementation and makes sense, since each value in a slot of a chunk is a real, ground value and the concept of variables does not have an advantage in this context, because every element that can be stored in the brain is assumed to be known by the brain.
 
-Additionally, from the definition of a chunk store it is known, that the $HasSlot$ and the $Isa$ relations have to be left-complete. \FIXME{correct expression! correct definitions!} Therefore, for every chunk \lstinline|c| in the store, exactly one \lstinline|isa(c,t)| constraint has to be in the store. For each \lstinline|chunk_type_has_slot(t,s)| constraint, a \lstinline|chunk_has_slot(c,s,v)| constraint has to be defined. If one wants to express, that a chunk has an empty slot, he might use \lstinline|nil| for the value to indicate that. Note that \lstinline|nil| must not be a chunk name or chunk-type name.
+Additionally, from the definition of a chunk store it is known, that the $Isa$ relation has to be left-total. Therefore, for every chunk \lstinline|c| in the store, exactly one \lstinline|isa(c,t)| constraint has to be in the store. Due to type-consistency, for each \lstinline|chunk_type_has_slot(t,s)| constraint a \lstinline|chunk_has_slot(c,s,v)| constraint has to be defined. If it should be expressed that a chunk has an empty slot, the special chunk name \lstinline|nil| can be used as slot value to indicate that. Note that \lstinline|nil| must not be the name of a regular chunk or chunk-type.
 
 \begin{example}
 \label{ex:addition_fact_chr}
@@ -2103,6 +2103,8 @@ There are some methods to influence the conflict resolution process using the AC
 \end{description}
 
 \subsection{Extended Component Diagram}
+
+\section{Compiler}
 
 
 
