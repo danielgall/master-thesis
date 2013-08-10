@@ -44,11 +44,11 @@
 \BOOKMARK [3][-]{section*.28}{The Right Hand Side of a Rule}{subsection.4.3.2}% 44
 \BOOKMARK [3][-]{section*.29}{Direct Translation of Buffer Tests}{subsection.4.3.2}% 45
 \BOOKMARK [3][-]{section*.30}{Translation of Actions}{subsection.4.3.2}% 46
-\BOOKMARK [2][-]{subsection.4.3.3}{Translation of Buffer Queries}{section.4.3}% 47
-\BOOKMARK [3][-]{section*.34}{The Production Rule Grammar}{subsection.4.3.3}% 48
+\BOOKMARK [3][-]{section*.34}{Translation of Buffer Queries}{subsection.4.3.2}% 47
+\BOOKMARK [2][-]{subsection.4.3.3}{The Production Rule Grammar}{section.4.3}% 48
 \BOOKMARK [3][-]{section*.35}{The Order of Rule Applications}{subsection.4.3.3}% 49
 \BOOKMARK [3][-]{section*.36}{Bound and Unbound Variables}{subsection.4.3.3}% 50
-\BOOKMARK [3][-]{section*.37}{Double Chunk Checks}{subsection.4.3.3}% 51
+\BOOKMARK [3][-]{section*.37}{Duplicate Slot Tests}{subsection.4.3.3}% 51
 \BOOKMARK [3][-]{section*.38}{Slot Modifiers}{subsection.4.3.3}% 52
 \BOOKMARK [3][-]{section*.40}{Empty Slots}{subsection.4.3.3}% 53
 \BOOKMARK [3][-]{section*.41}{Outputs}{subsection.4.3.3}% 54
@@ -84,17 +84,18 @@
 \BOOKMARK [3][-]{section*.64}{Conflict Resolution}{subsection.4.9.2}% 84
 \BOOKMARK [3][-]{section*.65}{Computing the Utility Values}{subsection.4.9.2}% 85
 \BOOKMARK [3][-]{section*.66}{Configuration of the Conflict Resolution}{subsection.4.9.2}% 86
-\BOOKMARK [0][-]{chapter.5}{Compiler}{}% 87
-\BOOKMARK [0][-]{chapter.6}{Example Models}{}% 88
-\BOOKMARK [1][-]{section.6.1}{The Counting Model}{chapter.6}% 89
-\BOOKMARK [1][-]{section.6.2}{The Addition Model}{chapter.6}% 90
-\BOOKMARK [1][-]{section.6.3}{The Semantic Model}{chapter.6}% 91
-\BOOKMARK [1][-]{section.6.4}{The Fan Model}{chapter.6}% 92
-\BOOKMARK [0][-]{chapter.7}{Conclusion}{}% 93
-\BOOKMARK [1][-]{section.7.1}{Inventory: What does already work?}{chapter.7}% 94
-\BOOKMARK [1][-]{section.7.2}{Future Work}{chapter.7}% 95
-\BOOKMARK [0][-]{appendix.A}{Source Codes}{}% 96
-\BOOKMARK [0][-]{appendix.B}{Grammar for Production Rules}{}% 97
-\BOOKMARK [0][-]{appendix.C}{Executable Examples}{}% 98
-\BOOKMARK [1][-]{section.C.1}{Rule Order}{appendix.C}% 99
-\BOOKMARK [0][-]{appendix*.67}{Bibliography}{}% 100
+\BOOKMARK [2][-]{subsection.4.9.3}{Extended Component Diagram}{section.4.9}% 87
+\BOOKMARK [0][-]{chapter.5}{Compiler}{}% 88
+\BOOKMARK [0][-]{chapter.6}{Example Models}{}% 89
+\BOOKMARK [1][-]{section.6.1}{The Counting Model}{chapter.6}% 90
+\BOOKMARK [1][-]{section.6.2}{The Addition Model}{chapter.6}% 91
+\BOOKMARK [1][-]{section.6.3}{The Semantic Model}{chapter.6}% 92
+\BOOKMARK [1][-]{section.6.4}{The Fan Model}{chapter.6}% 93
+\BOOKMARK [0][-]{chapter.7}{Conclusion}{}% 94
+\BOOKMARK [1][-]{section.7.1}{Inventory: What does already work?}{chapter.7}% 95
+\BOOKMARK [1][-]{section.7.2}{Future Work}{chapter.7}% 96
+\BOOKMARK [0][-]{appendix.A}{Source Codes}{}% 97
+\BOOKMARK [0][-]{appendix.B}{Grammar for Production Rules}{}% 98
+\BOOKMARK [0][-]{appendix.C}{Executable Examples}{}% 99
+\BOOKMARK [1][-]{section.C.1}{Rule Order}{appendix.C}% 100
+\BOOKMARK [0][-]{appendix*.67}{Bibliography}{}% 101

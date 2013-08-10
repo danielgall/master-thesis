@@ -114,15 +114,15 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {paragraph}{Buffer Requests}{40}{section*.33}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.3.3}Translation of Buffer Queries}{41}{subsection.4.3.3}
+\contentsline {subsubsection}{Translation of Buffer Queries}{41}{section*.34}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{The Production Rule Grammar}{41}{section*.34}
+\contentsline {subsection}{\numberline {4.3.3}The Production Rule Grammar}{41}{subsection.4.3.3}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{The Order of Rule Applications}{43}{section*.35}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Bound and Unbound Variables}{46}{section*.36}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Double Chunk Checks}{46}{section*.37}
+\contentsline {subsubsection}{Duplicate Slot Tests}{46}{section*.37}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Slot Modifiers}{48}{section*.38}
 \defcounter {refsection}{0}\relax 
@@ -134,15 +134,15 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {4.4}Modular Organization}{52}{section.4.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.4.1}Prolog Modules}{52}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.1}Prolog Modules}{53}{subsection.4.4.1}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {4.4.2}Interface for Module Requests}{54}{subsection.4.4.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.4.3}How the Buffer System States a Request}{54}{subsection.4.4.3}
+\contentsline {subsection}{\numberline {4.4.3}How the Buffer System States a Request}{55}{subsection.4.4.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.4.4}Components of the Implementation}{55}{subsection.4.4.4}
+\contentsline {subsection}{\numberline {4.4.4}Components of the Implementation}{56}{subsection.4.4.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.5}Declarative Module}{55}{section.4.5}
+\contentsline {section}{\numberline {4.5}Declarative Module}{56}{section.4.5}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {4.5.1}Global Method for Adding Chunks}{56}{subsection.4.5.1}
 \defcounter {refsection}{0}\relax 
@@ -168,7 +168,7 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {4.7.2}Scheduler}{67}{subsection.4.7.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Current Time}{67}{section*.47}
+\contentsline {subsubsection}{Current Time}{68}{section*.47}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Recognize-Act Cycle}{68}{section*.48}
 \defcounter {refsection}{0}\relax 
@@ -184,7 +184,7 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {4.8.1}General Translation}{71}{subsection.4.8.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.8.2}Configuration Variables}{71}{subsection.4.8.2}
+\contentsline {subsection}{\numberline {4.8.2}Configuration Variables}{72}{subsection.4.8.2}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{The Observer Pattern}{72}{section*.53}
 \defcounter {refsection}{0}\relax 
@@ -194,13 +194,13 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Base-Level Learning}{72}{section*.54}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Presentations of a Chunk}{72}{section*.55}
+\contentsline {paragraph}{Presentations of a Chunk}{73}{section*.55}
 \defcounter {refsection}{0}\relax 
 \contentsline {paragraph}{Calculating the Base-Level Value}{73}{section*.56}
 \defcounter {refsection}{0}\relax 
 \contentsline {paragraph}{Fan Values}{75}{section*.57}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Associative Weights}{75}{section*.58}
+\contentsline {paragraph}{Associative Weights}{76}{section*.58}
 \defcounter {refsection}{0}\relax 
 \contentsline {paragraph}{Calculate the Overall-Activations}{76}{section*.59}
 \defcounter {refsection}{0}\relax 
@@ -216,9 +216,11 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Conflict Resolution}{82}{section*.64}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Computing the Utility Values}{85}{section*.65}
+\contentsline {subsubsection}{Computing the Utility Values}{86}{section*.65}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Configuration of the Conflict Resolution}{87}{section*.66}
+\defcounter {refsection}{0}\relax 
+\contentsline {subsection}{\numberline {4.9.3}Extended Component Diagram}{87}{subsection.4.9.3}
 \defcounter {refsection}{0}\relax 
 \contentsline {chapter}{\numberline {5}Compiler}{89}{chapter.5}
 \defcounter {refsection}{0}\relax 

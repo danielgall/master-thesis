@@ -1,4 +1,4 @@
-This is BibTeX, Version 0.99d (TeX Live 2012/Arch Linux)
+This is BibTeX, Version 0.99d (TeX Live 2013/Arch Linux)
 Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
 The top-level auxiliary file: arbeit.aux
 The style file: biblatex.bst
@@ -17,42 +17,42 @@ Database file #1: arbeit-blx.bib
 Database file #2: bibliography.bib
 Warning--I didn't find a database entry for "unknown"
 Warning--I didn't find a database entry for "actr_reference"
-Biblatex version: 2.5
+Biblatex version: 2.6
 Reallocated singl_function (elt_size=8) to 100 items from 50.
 Reallocated wiz_functions (elt_size=8) to 9000 items from 6000.
 You've used 14 entries,
             6019 wiz_defined-function locations,
-            1233 strings with 12291 characters,
-and the built_in function-call counts, 61671 in all, are:
-= -- 2484
-> -- 3469
-< -- 802
-+ -- 2324
+            1233 strings with 12245 characters,
+and the built_in function-call counts, 61637 in all, are:
+= -- 2480
+> -- 3468
+< -- 801
++ -- 2323
 - -- 2233
 * -- 3955
-:= -- 4810
+:= -- 4809
 add.period$ -- 0
 call.type$ -- 14
-change.case$ -- 418
+change.case$ -- 417
 chr.to.int$ -- 216
 cite$ -- 30
-duplicate$ -- 6186
-empty$ -- 5529
+duplicate$ -- 6183
+empty$ -- 5527
 format.name$ -- 887
-if$ -- 12512
+if$ -- 12503
 int.to.chr$ -- 0
 int.to.str$ -- 40
 missing$ -- 0
 newline$ -- 479
-num.names$ -- 786
+num.names$ -- 785
 pop$ -- 4160
 preamble$ -- 1
-purify$ -- 420
+purify$ -- 419
 quote$ -- 0
-skip$ -- 3187
+skip$ -- 3184
 stack$ -- 0
-substring$ -- 2509
-swap$ -- 2261
+substring$ -- 2504
+swap$ -- 2260
 text.length$ -- 520
 text.prefix$ -- 18
 top$ -- 1

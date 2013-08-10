@@ -561,6 +561,8 @@ This implementation uses a generalization of the \verb|alter_slot| method as des
 
 Note that types cannot be changed. This corresponds to the grammar definition of ACT-R as presented in section~\ref{production_rule_grammar}.
 
+\FIXME{add some rules! What about chunk type and chunk name -> not allowed in buffer modification -> mention in text}
+
 \paragraph{Buffer Clearings}
 
 When clearing a buffer, the chunk that was stored in the buffer will be removed from the chunk store and \verb|nil| will be written to the store. Additionally, the chunk goes to the declarative memory.
@@ -603,7 +605,7 @@ The production rule in example~\ref{ex:counting} can be translated to:
 \end{example}
 
 
-\subsection{Translation of Buffer Queries}
+\subsubsection{Translation of Buffer Queries}
 
 A buffer query
 
@@ -622,7 +624,7 @@ on the LHS of a production rule can be translated to the following CHR rule head
 <<buffer_state(buffer,bstate)>> ... ==> ...
 \end{lstlisting}
 
-\subsubsection{The Production Rule Grammar}
+\subsection{The Production Rule Grammar}
 
 The discussed concepts lead to the following grammar for production rules, which is a simplified version of the actual grammar used in the original ACT-R implementation \cite[p. 162]{actr_reference}. 
 
@@ -790,7 +792,7 @@ In appendix~\ref{app:ex:rule_order} a minimal executable example is provided.
 
 According to the ACT-R production rule grammar in listing~\ref{lst:production_rule_grammar}, unbound variables can only appear on the left hand side of a rule. Hence, no new variables are introduced on the right hand side. Since all the elements in the buffer store are completely described and ground, every variable on the LHS of a rule will be bound to a ground value. This simplifies the rule selection and application process a lot, since every value of the calculation is known after the matching. This enables simple implementations of arithmetic tests, for example (see section~\ref{slot_modifiers}).
 
-\subsubsection{Double Chunk Checks}
+\subsubsection{Duplicate Slot Tests}
 
 A problem that has not been addressed yet, is that ACT-R allows buffer tests like the following:
 
@@ -1006,6 +1008,8 @@ In ACT-R, function calls like \verb|!eval!| or \verb|!bind!| are allowed, but th
 
 \section{Modular Organization}
 
+By now, all components of the implementation have been assumed to be in one file: buffer system, production rules, declarative memory, \dots This leads to problems like name space pollution and duplicate code, since, e.g. both the buffer system and the declarative memory use different chunk stores, which have the same behaviour but different data. It would be nice to reuse this code in both modules, but keeping the stores separated. Additionally, the code is better readable and it is easier to add new modules if a program is distributed over multiple files. Finally, the ACT-R architecture already proposes a modular organization, so it seems likely to adopt this idea of a modular architecture.
+
 The term \emph{module} is highly overloaded: In ACT-R it describes independent parts of human cognition, whereas in the world of programming the term is used in a slightly different manner. In the following, implementational modules will always be named explicitly as \emph{Prolog modules}.
 
 Nevertheless, the modular organization of ACT-R with its independent modules can be implemented by defining a Prolog module for each ACT-R module and adding some other modules around them. In the following, the concept of Prolog modules is explained.
@@ -1220,7 +1224,7 @@ If the last two rules cannot be applied, the chunk does not provide a slot that,
 
 If those rules have been applied exhaustively, only the matching chunks will remain in the match set: If there would be an outstanding slot test, one of the rules would be applicable and the chunk would be removed from the match set, if the test fails (and the test would also be removed, because it has been performed). If the test is successful, the chunk will remain part of the match set, but the test will be removed. So the match set is correct and complete.
 
-However, since the match set is distributed over a set of \verb|match_set| constraints, it would be desirable to collect all those matches in one set. This can be triggered by a \verb|collect_matches/1| constraint, that gets the complete match set in its arguments:
+However, since the match set is distributed over a set of \verb|match_set| constraints, it would be desirable to collect all those matches in one set. This can be triggered by the constraint \verb|collect_matches/1|, which returns the complete match set in its arguments as soon as there is only one \verb|match_set| left:
 
 \begin{lstlisting}
 <<collect_matches(_) \ match_set(L1), match_set(L2)>> <=> 
@@ -1234,14 +1238,12 @@ However, since the match set is distributed over a set of \verb|match_set| const
 
 The first rule merges two match sets to one singe merge set containing a list with all the chunks of the former sets, if the \verb|collect_matches| trigger is present. 
 
-In the second rule, if no two match sets are in the store, the result of the \verb|collect_matches| operation is the match set. The same applies for the last rule, where no match set is in the store and therefore the result is empty.
-
-Note, that this implies, that the rules have to be applied from top to bottom, left to right\footnote{This is called the refined operational semantics of CHR}.
+In the second rule, if no two match sets are in the store, the result of the \verb|collect_matches| operation is the match set. The same applies for the last rule, where no match set is in the store and therefore the result is empty. Note, that this implies, that the rules have to be applied from top to bottom, left to right\footnote{This is called the refined operational semantics of CHR}.
 
 The symbolic layer does not implement any rule for which chunk will be returned, if there are more than one in the match set. In this implementation, the first chunk in the list is chosen. The module request is now implemented as follows:
 
 \begin{lstlisting}
-<<module_request(retrieval,chunk(Name,Type,Slots),ResChunk,ResState)>> <=> 
+<<module_request(retrieval,chunk(Name,Type,Slots),ResChunk, ResState)>> <=> 
   find_chunk(Name,Type,Slots),
   collect_matches(Res),
   first(Res,Chunk),
@@ -1295,7 +1297,7 @@ The rule in line~3 adds for each identity check and each chunk in the store a pa
 <<chunk(NameOld, Type) \ check_identical_chunks(chunk(NameNew,Type,[]),NameOld)>> <=> 
   identical(NameOld,NameNew).
   
-<<chunk(NameOld, Type), chunk_has_slot(NameOld, S, V) \ check_identical_chunks(chunk(NameNew,Type,[(S,V)|Rest]),NameOld)>> <=> 
+<<chunk(NameOld, Type), chunk_has_slot(NameOld, S, V) \ check_identical_chunks(chunk(NameNew,Type,[(S,V)|Rest]), NameOld)>> <=> 
   check_identical_chunks(chunk(NameNew,Type,Rest),NameOld).
   
 <<chunk(NameOld, Type), chunk_has_slot(NameOld, S, VOld) \ check_identical_chunks(chunk(_,Type,[(S,VNew)|_]),NameOld)>> <=> 
@@ -1378,7 +1380,7 @@ A \emph{priority queue} is an abstract data structure that serves objects by the
 In the implementation of the scheduler, the priority queue contains objects of the form \verb|q(Time,Priority,Event)|. The priority of such a queue object is composed from the \verb|Time| and the \verb|Priority|. The order between the elements is defined as follows:
 
 \begin{definition}[ordered time-priority condition]
-\verb|q(T1,P1,E1)| $\prec$ \verb|q(T2,P2,E2)|, if \verb|T1| $<$ \verb|T2|. In the case that \verb|T1 = T2|, then \verb|q(T1,P1,E1)| $\prec$ \verb|q(T2,P2,E2)| if \verb|P1| $>$ \verb|P2|. So, events with smaller times will be returned first. If two events appear at the same time, it is possible to define a priority and the event with the higher priority will be returned first. 
+\verb|q(T1,P1,E1)| $\prec$ \verb|q(T2,P2,E2)|, i.e. the object \verb|q(T1,P1,E1)| is the predecessor of the object \verb|q(T2,P2,E2)|, if \verb|T1| $<$ \verb|T2|. In the case that \verb|T1 = T2|, then \verb|q(T1,P1,E1)| $\prec$ \verb|q(T2,P2,E2)| if \verb|P1| $>$ \verb|P2|. So, events with smaller times will be returned first. If two events appear at the same time, it is possible to define a priority and the event with the higher priority will be returned first. 
 \end{definition}
 
 \subsubsection{Representation of the Queue}
@@ -1386,7 +1388,7 @@ In the implementation of the scheduler, the priority queue contains objects of t
 The representation of the priority queue is inspired by \cite[38\psqq]{fru_chr_book_2009}: An order constraint \verb|A --> B| is introduced, which states that \verb|A| will be returned before \verb|B| (or \verb|B| is the direct successor of \verb|A|). The beginning of the queue will be defined by a start symbol \verb|s|, so the first real element is the successor of \verb|s|. A possible queue could be:
 
 \begin{lstlisting}
-s         --> q(1,0,e1)
+    s     --> q(1,0,e1)
 q(1,0,e1) --> q(3,7,e2)
 q(3,7,e2) --> q(3,2,e3)
 \end{lstlisting}
@@ -1754,7 +1756,7 @@ S_{ji} = S - \mathrm{ln}(\mathrm{fan}_j)
 
 The value of $S$ is assumed to be $2$ in this rule; a configurable constant for $S$ as described in section~\ref{configuration} can be introduced easily.
 
-If \verb|J| does not appear in the slots of chunk \verb|I|, then $S{ji} := 0$ by definition.
+If \verb|J| does not appear in the slots of chunk \verb|I|, then $S_{ji} := 0$ by definition.
 
 \paragraph{Calculate the Overall-Activations}
 
@@ -2093,7 +2095,7 @@ In the end, there has to be a rule that cleans up the reward trigger, after all 
 
 \subsubsection{Configuration of the Conflict Resolution}
 
-There are some methods to influence the conflict resolution process using the ACT-R command \verb|(spp ...)| that can set values for individual production rules. This command is translated as described in section~\ref{lisp_functions}. Additionally, there are some configuration variables that can be set -- as described in section~\ref{configuration} -- by the command \verb|(sgp ...)|:
+There are some methods to influence the conflict resolution process using the ACT-R command \verb|(spp ...)| that can set values for individual production rules. This command is translated into CHR as described in section~\ref{lisp_functions}. Additionally, there are some configuration variables that can be set -- as described in section~\ref{configuration} -- by the command \verb|(sgp ...)|:
 
 \begin{description}
  \item[Setting the utility of a rule] Utilities can be set statically by the user by the ACT-R command \verb|(spp P :u U)|, which sets the utility of the rule \verb|P| to \verb|U|.
@@ -2101,6 +2103,8 @@ There are some methods to influence the conflict resolution process using the AC
  \item[Default values and turning the utility mechanisms off] At the moment, there is no command in the CHR implementation that allows to turn off the conflict resolution mechanisms: The system sets a default utility value for each production rule and no rewards in the initialization process (the rule \verb|init @ run <=> ...| as described in section~\ref{initialization}). The user is able to set other initial utility values and rewards for particular rules. If no rewards are set, the utility values will remain at their initial values. Hence, if the user does not set any utilities or rewards, each rule will have the same utility value that does not change. If there are competing rules, the conflict resolution process will pick one. This can be regarded as turned off utility mechanisms.
  \item[Learning rate] The learning rate $\alpha$ is set by the command \verb|(sgp :alpha A)| that sets the configuration variable \verb|alpha| to \verb|A|.
 \end{description}
+
+\subsection{Extended Component Diagram}
 
 
 

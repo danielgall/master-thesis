@@ -1,5 +1,5 @@
 % $ biblatex auxiliary file $
-% $ biblatex version 2.1 $
+% $ biblatex version 2.2 $
 % Do not modify the above lines!
 %
 % This is an auxiliary file used by the 'biblatex' package.
@@ -75,7 +75,7 @@
      {}{}}%
   }
   \list{publisher}{1}{%
-    {K.U.Leuven, Department of Computer Science , Technical report CW 641}%
+    {K.U.Leuven, Department of Computer Science, Technical report CW 641}%
   }
   \keyw{implementation, priorities}
   \strng{namehash}{ASFGSN1}
@@ -246,8 +246,8 @@
   \field{shorttitle}{Working memory}
   \field{title}{Working memory: Activation limitations on retrieval}
   \verb{url}
-  \verb http://www.researchgate.net/publication/2605305_Working_Memory_Activati
-  \verb on_Limitations_on_Retrieval/file/d912f50d532cd825c1.pdf
+  \verb http://citeseerx.ist.psu.edu/viewdoc/download?doi=10.1.1.5.6397&rep=rep
+  \verb 1&type=pdf
   \endverb
   \field{volume}{30}
   \verb{file}
@@ -452,7 +452,7 @@
   \field{urlyear}{2013}
 \endentry
 
-\entry{whitehill_understanding}{article}{}
+\entry{whitehill_understanding}{misc}{}
   \name{author}{1}{}{%
     {{}%
      {Whitehill}{W.}%

@@ -35,7 +35,8 @@ block=space,               % kleiner horizontaler Platz zwischen den Feldern
 backref=false,              % Seiten anzeigen, auf denen die Referenz vorkommt
 %backrefstyle=three+,       % fasst Seiten zusammen, z.B. S. 2f, 6ff, 7-10
 date=short,                % Datumsformat
-backend=bibtex
+backend=bibtex,
+hyperref=true
 ]{biblatex}
 \setlength{\bibitemsep}{1em}     % Abstand zwischen den Literaturangaben
 \setlength{\bibhang}{2em}        % Einzug nach jeweils erster Zeile
@@ -184,7 +185,8 @@ backend=bibtex
 %%
 %% Eigene Makros
 %%
-\newcommand{\FIXME}[1]{\colorbox{yellow}{\bf FIXME: #1}}
+\newcommand{\FIXME}[1]{\colorbox{yellow}{\bf FIXME: #1}} % debug mode
+%\newcommand{\FIXME}[1]{} % deploy mode
 
 
 %%
@@ -314,6 +316,7 @@ backend=bibtex
     \ccbyncsa\\
     \vspace{0.5cm}
     Typesetting: PDF-\LaTeXe{}\\
+    Graphics created with: Ti\textit{k}Z\\
     Printed by: Communication- and Information Center (kiz), Ulm University
 }
 
