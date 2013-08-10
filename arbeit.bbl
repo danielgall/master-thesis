@@ -299,6 +299,18 @@
   \field{year}{2000}
 \endentry
 
+\entry{chr_homepage}{misc}{}
+  \field{labelalpha}{Chr}
+  \field{sortinit}{C}
+  \field{title}{The {CHR} Homepage}
+  \verb{url}
+  \verb http://www.constraint-handling-rules.org
+  \endverb
+  \field{urlday}{10}
+  \field{urlmonth}{08}
+  \field{urlyear}{2013}
+\endentry
+
 \entry{fru_chr_book_2009}{book}{}
   \name{author}{1}{}{%
     {{}%
@@ -367,6 +379,49 @@
   \field{year}{1972}
 \endentry
 
+\entry{chr_survey_tplp10}{article}{}
+  \name{author}{4}{}{%
+    {{}%
+     {Sneyers}{S.}%
+     {Jon}{J.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Weert}{W.}%
+     {Peter~Van}{P.~V.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Schrijvers}{S.}%
+     {Tom}{T.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Koninck}{K.}%
+     {Leslie~De}{L.~D.}%
+     {}{}%
+     {}{}}%
+  }
+  \keyw{survey}
+  \strng{namehash}{SJ+1}
+  \strng{fullhash}{SJWPVSTKLD1}
+  \field{labelalpha}{Sne+10}
+  \field{sortinit}{S}
+  \verb{doi}
+  \verb 10.1017/S1471068409990123
+  \endverb
+  \field{number}{1}
+  \field{pages}{1\bibrangedash 47}
+  \field{title}{As Time Goes By: {C}onstraint {H}andling {R}ules -- {A} Survey
+  of {CHR} Research between 1998 and 2007}
+  \field{volume}{10}
+  \verb{file}
+  \verb http://dtai.cs.kuleuven.be/CHR/papers/draft_chr_survey.pdf
+  \endverb
+  \field{journaltitle}{Theory and Practice of Logic Programming}
+  \field{year}{2010}
+\endentry
+
 \entry{sun_introduction_2008}{incollection}{}
   \name{author}{1}{}{%
     {{}%
@@ -407,6 +462,18 @@
   \field{year}{2008}
   \field{urlday}{15}
   \field{urlmonth}{07}
+  \field{urlyear}{2013}
+\endentry
+
+\entry{swi_prolog}{misc}{}
+  \field{labelalpha}{Swi}
+  \field{sortinit}{S}
+  \field{title}{The {SWI-Prolog} Homepage}
+  \verb{url}
+  \verb http://www.swi-prolog.org/
+  \endverb
+  \field{urlday}{10}
+  \field{urlmonth}{08}
   \field{urlyear}{2013}
 \endentry
 

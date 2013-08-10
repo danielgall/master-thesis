@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.8.10)  10 AUG 2013 14:49
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.8.10)  10 AUG 2013 19:24
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1565,7 +1565,12 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 Underfull \vbox (badness 1648) has occurred while \output is active []
 
  [5]
-[6])
+[6]
+Overfull \hbox (1.17978pt too wide) detected at line 249
+ []\T1/phv/m/n/10 101
+ []
+
+)
 \tf@toc=\write7
 \openout7 = `arbeit.toc'.
 
@@ -1675,43 +1680,48 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  [19])
 (./chapters/chr.tex [20]
 Chapter 3.
-) (./chapters/implementation.tex [21
-
-
-] [22
-
-
-]
-Chapter 4.
-
-LaTeX Warning: Reference `experiment_environment' on page 23 undefined on input
- line 4.
-
-
-LaTeX Warning: Citation 'actr_reference' on page 23 undefined on input line 10.
-
-
-[23]
-LaTeX Font Info:    Try loading font information for OT1+lmtt on input line 35.
-
- (/usr/share/texmf-dist/tex/latex/lm/ot1lmtt.fd
+LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <10> not available
+(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 8.
+LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <10> not available
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 8.
+LaTeX Font Info:    Try loading font information for OT1+lmtt on input line 8.
+(/usr/share/texmf-dist/tex/latex/lm/ot1lmtt.fd
 File: ot1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 Package microtype Info: Loading generic settings for font family
 (microtype)             `lmtt' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
+ [21
+
+
+]
+LaTeX Font Info:    Font shape `T1/pcr/bx/it' in size <10> not available
+(Font)              Font shape `T1/pcr/b/it' tried instead on input line 31.
+LaTeX Font Info:    Font shape `T1/pcr/b/it' in size <10> not available
+(Font)              Font shape `T1/pcr/b/sl' tried instead on input line 31.
+ [22] [23])
+(./chapters/implementation.tex [24]
+Chapter 4.
+
+LaTeX Warning: Reference `experiment_environment' on page 25 undefined on input
+ line 4.
+
+
+LaTeX Warning: Citation 'actr_reference' on page 25 undefined on input line 10.
+
+
+[25
+
+
+]
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <7> not available
 (Font)              Font shape `T1/phv/m/sl' tried instead on input line 35.
- [24]
+ [26]
 LaTeX Font Info:    Font shape `T1/phv/bx/it' in size <10> not available
 (Font)              Font shape `T1/phv/b/it' tried instead on input line 68.
 LaTeX Font Info:    Font shape `T1/phv/b/it' in size <10> not available
 (Font)              Font shape `T1/phv/b/sl' tried instead on input line 68.
-LaTeX Font Info:    Font shape `T1/pcr/bx/it' in size <10> not available
-(Font)              Font shape `T1/pcr/b/it' tried instead on input line 68.
-LaTeX Font Info:    Font shape `T1/pcr/b/it' in size <10> not available
-(Font)              Font shape `T1/pcr/b/sl' tried instead on input line 68.
 LaTeX Font Info:    Font shape `T1/pcr/bx/it' in size <7> not available
 (Font)              Font shape `T1/pcr/b/it' tried instead on input line 68.
 LaTeX Font Info:    Font shape `T1/pcr/b/it' in size <7> not available
@@ -1729,208 +1739,194 @@ Overfull \hbox (8.66985pt too wide) in paragraph at lines 72--73
  []
 
 
-LaTeX Warning: Reference `fig:chunk_addition_fact' on page 25 undefined on inpu
+LaTeX Warning: Reference `fig:chunk_addition_fact' on page 27 undefined on inpu
 t line 80.
 
-LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <10> not available
-(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 82.
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [25]
-LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <10> not available
-(Font)              Font shape `T1/pcr/b/n' tried instead on input line 103.
-
-[26] [27]
-Overfull \hbox (24.51604pt too wide) in paragraph at lines 184--185
-\T1/phv/m/n/10 (-20) ca-tion like in def-i-ni-tion []4.2[]: Since []\T1/pcr/m/n
-/10 (name isa type slot_1 val_1 \dots slot_n val_n)
- []
-
-
-Overfull \hbox (67.4831pt too wide) in paragraph at lines 194--195
-[]\T1/phv/m/n/10 (-20) This def-i-ni-tion states that a chunk is ei-ther []\T1/
-pcr/m/n/10 nil\T1/phv/m/n/10 (-20) , i.e. an empty chunk, or a term []\T1/pcr/m
-/n/10 chunk(Name, Type, SVP)\T1/phv/m/n/10 (-20) ,
- []
-
+ [27]
 [28] [29]
+Overfull \hbox (6.1488pt too wide) in paragraph at lines 194--195
+[]\T1/phv/m/n/10 (-20) This def-i-ni-tion states that a chunk is ei-ther [][][]
+, i.e. an empty chunk, or a term [][][][]
+ []
+
+[30] [31]
 Underfull \vbox (badness 2662) has occurred while \output is active []
 
- [30]
-[31] [32] [33]
+ [32]
+[33] [34] [35]
 
-LaTeX Warning: Reference `fig:buffer_system' on page 34 undefined on input line
+LaTeX Warning: Reference `fig:buffer_system' on page 36 undefined on input line
  360.
 
-[34]
+[36]
 
-LaTeX Warning: Citation 'actr_reference' on page 35 undefined on input line 392
+LaTeX Warning: Citation 'actr_reference' on page 37 undefined on input line 392
 .
 
-[35] [36] [37] [38] [39]
+[37] [38] [39] [40] [41]
 
-LaTeX Warning: Reference `production_rule_grammar' on page 40 undefined on inpu
-t line 562.
+LaTeX Warning: Reference `production_rule_grammar' on page 42 undefined on inpu
+t line 560.
 
 
-Overfull \hbox (185.85225pt too wide) in paragraph at lines 564--565
+Overfull \hbox (185.85225pt too wide) in paragraph at lines 562--563
 [][][][][][][] 
  []
 
-[40]
+[42]
 
-LaTeX Warning: Citation 'actr_reference' on page 41 undefined on input line 629
+LaTeX Warning: Citation 'actr_reference' on page 43 undefined on input line 627
 .
 
-[41]
+[43]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [42]
-[43] [44] [45]
+ [44]
+[45] [46] [47]
 
-LaTeX Warning: Reference `lst:production_rule_grammar' on page 46 undefined on 
-input line 793.
+LaTeX Warning: Reference `lst:production_rule_grammar' on page 48 undefined on 
+input line 791.
 
-[46]
+[48]
 Underfull \vbox (badness 1838) has occurred while \output is active []
 
- [47]
+ [49]
 
-LaTeX Warning: Citation 'actr_reference' on page 48 undefined on input line 889
+LaTeX Warning: Citation 'actr_reference' on page 50 undefined on input line 887
 .
 
-[48] [49] [50]
+[50] [51] [52]
 
-LaTeX Warning: Citation 'actr_reference' on page 51 undefined on input line 967
+LaTeX Warning: Citation 'actr_reference' on page 53 undefined on input line 965
 .
 
-[51]
+[53]
 Underfull \vbox (badness 4686) has occurred while \output is active []
 
- [52]
-[53]
+ [54]
+[55]
 Underfull \vbox (badness 6316) has occurred while \output is active []
 
- [54]
-[55] [56]
-Overfull \hbox (14.90367pt too wide) in paragraph at lines 1175--1176
-\T1/phv/m/n/10 (-20) In this sec-tion, a CHR con-straint []\T1/pcr/m/n/10 find_
-chunk/3 \T1/phv/m/n/10 (-20) will be de-fined, that pro-duces a []\T1/pcr/m/n/1
-0 match_set/1
+ [56]
+[57] [58]
+Overfull \hbox (14.90367pt too wide) in paragraph at lines 1173--1174
+\T1/phv/m/n/10 (-20) In this sec-tion, a CHR con-straint [][][][] will be de-fi
+ned, that pro-duces a [][][][]
  []
 
-[57] [58] [59] [60] [61]
-Overfull \hbox (340.8917pt too wide) in paragraph at lines 1342--1343
+[59] [60] [61] [62] [63]
+Overfull \hbox (340.8917pt too wide) in paragraph at lines 1340--1341
 \T1/phv/m/n/10 (-20) search of this chunk. [][][][][][] 
  []
 
 
-LaTeX Warning: Citation 'actr_reference' on page 62 undefined on input line 134
-4.
+LaTeX Warning: Citation 'actr_reference' on page 64 undefined on input line 134
+2.
 
-[62]
+[64]
 
-LaTeX Warning: Reference `fig:scheduler' on page 63 undefined on input line 136
-1.
+LaTeX Warning: Reference `fig:scheduler' on page 65 undefined on input line 135
+9.
 
-[63] [64] [65] [66]
+[65] [66] [67] [68]
 Underfull \vbox (badness 4621) has occurred while \output is active []
 
- [67]
+ [69]
 
-LaTeX Warning: Reference `tab:action_priorities' on page 68 undefined on input 
-line 1495.
+LaTeX Warning: Reference `tab:action_priorities' on page 70 undefined on input 
+line 1493.
 
-[68] [69] [70] [71] [72]
-Overfull \hbox (65.34625pt too wide) in paragraph at lines 1670--1671
+[70] [71] [72] [73] [74]
+Overfull \hbox (65.34625pt too wide) in paragraph at lines 1668--1669
 \T1/phv/m/n/10 (-20) of a set of chunks has to be cal-cu-lated. There-fore, a c
-on-straint []\T1/pcr/m/n/10 calc_activation(Chunk,Activation)
+on-straint [][][][][][]
  []
 
-[73] [74] [75] [76] [77] [78] [79]
+[75] [76] [77] [78] [79] [80] [81]
 
-LaTeX Warning: Reference `tab:action_priorities' on page 80 undefined on input 
-line 1876.
+LaTeX Warning: Reference `tab:action_priorities' on page 82 undefined on input 
+line 1874.
 
-[80] [81] [82]
-Overfull \hbox (0.81894pt too wide) in paragraph at lines 1999--2000
-[]\T1/phv/m/n/10 (-20) The first rule deletes the empty []\T1/pcr/m/n/10 confli
-ct_set \T1/phv/m/n/10 (-20) con-straint, if there are other []\T1/pcr/m/n/10 co
-nflict_set
+[82] [83] [84]
+Overfull \hbox (0.81894pt too wide) in paragraph at lines 1997--1998
+[]\T1/phv/m/n/10 (-20) The first rule deletes the empty [][][] con-straint, if 
+there are other [][][]
  []
 
-[83]
-Overfull \hbox (3.0493pt too wide) in paragraph at lines 2016--2017
+[85]
+Overfull \hbox (3.0493pt too wide) in paragraph at lines 2014--2015
 []\T1/phv/m/n/10 (-20) The first rule is only ap-pli-ca-ble, if there were no m
-atch-ing rules and the empty []\T1/pcr/m/n/10 conflict_set
+atch-ing rules and the empty [][][]
  []
 
 
-LaTeX Warning: Reference `lst:conflict_resolution_scheme' on page 84 undefined 
-on input line 2018.
+LaTeX Warning: Reference `lst:conflict_resolution_scheme' on page 86 undefined 
+on input line 2016.
 
 
-Overfull \hbox (38.41306pt too wide) in paragraph at lines 2020--2021
+Overfull \hbox (38.41306pt too wide) in paragraph at lines 2018--2019
 []\T1/phv/m/n/10 (-20) When the cho-sen rule is ap-plied, its ac-tions are per-
-formed and even-tu-ally, a []\T1/pcr/m/n/10 conflict_resolution
+formed and even-tu-ally, a [][][]
  []
 
-[84]
+[86]
 
-LaTeX Warning: Citation 'actr_reference' on page 85 undefined on input line 204
-0.
+LaTeX Warning: Citation 'actr_reference' on page 87 undefined on input line 203
+8.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [85]
-[86]) (./chapters/compiler.tex [87] [88
+ [87]
+[88]) (./chapters/compiler.tex [89] [90
 
 
 ]
 Chapter 5.
-) (./chapters/example_models.tex [89] [90
+) (./chapters/example_models.tex [91] [92
 
 
 ]
 Chapter 6.
-) (./chapters/conclusion.tex [91] [92
+) (./chapters/conclusion.tex [93] [94
 
 
 ]
 Chapter 7.
-) (./chapters/sources.tex [93] [94
+) (./chapters/sources.tex [95] [96
 
 
 ]
 Appendix A.
-) (./chapters/production_grammar.tex [95] [96
+) (./chapters/production_grammar.tex [97] [98
 
 
 ]
 Appendix B.
 
-LaTeX Warning: Citation 'actr_reference' on page 97 undefined on input line 3.
+LaTeX Warning: Citation 'actr_reference' on page 99 undefined on input line 3.
 
-[97]) (./chapters/appendix_examples.tex [98]
+[99]) (./chapters/appendix_examples.tex [100]
 Appendix C.
-[99
+[101
 
 
 ]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [100])
-[101] [102
+ [102])
+[103] [104
 
 
-] [103
+] [105
 
 
-] [104]
+] [106]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 386.
- [105
+ [107
 
 
 ]
@@ -1954,17 +1950,17 @@ Package logreq Info: Writing requests to 'arbeit.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 31077 strings out of 493315
- 544216 string characters out of 6143704
- 1006133 words of memory out of 5000000
- 32456 multiletter control sequences out of 15000+600000
+ 31210 strings out of 493315
+ 545844 string characters out of 6143704
+ 1000133 words of memory out of 5000000
+ 32561 multiletter control sequences out of 15000+600000
  93840 words of font info for 223 fonts, out of 8000000 for 9000
  958 hyphenation exceptions out of 8191
- 65i,12n,73p,1616b,3134s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 65i,12n,73p,1616b,3156s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf-dist/fo
-nts/enc/dvips/base/8r.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-rmtt.enc
-}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf-dist
-/fonts/enc/dvips/lm/lm-mathit.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-
+nts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-mat
+hit.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-rmtt.enc}{/usr/share/texmf
+-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-
 mathex.enc}</usr/share/texmf-dist/fonts/type1/public/ccicons/ccicons.pfb></usr/
 share/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></usr/share/texmf-dis
 t/fonts/type1/public/lm/lmex10.pfb></usr/share/texmf-dist/fonts/type1/public/lm
@@ -1984,10 +1980,10 @@ r8a.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/
 texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-dist/fonts/typ
 e1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvr
 o8a.pfb>
-Output written on arbeit.pdf (113 pages, 769052 bytes).
+Output written on arbeit.pdf (115 pages, 783895 bytes).
 PDF statistics:
- 2629 PDF objects out of 2984 (max. 8388607)
- 2443 compressed objects within 25 object streams
- 1243 named destinations out of 1440 (max. 500000)
+ 2687 PDF objects out of 2984 (max. 8388607)
+ 2499 compressed objects within 25 object streams
+ 1271 named destinations out of 1440 (max. 500000)
  38303 words of extra memory for PDF output out of 42996 (max. 10000000)
 

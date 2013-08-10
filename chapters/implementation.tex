@@ -53,7 +53,7 @@ The $Isa$ relation has to be right-unique and left-total, so each chunk has to h
 % \end{align*}
 
 
-A chunk-store is \emph{type-consistent}, iff $\forall (c,(t,S)) \in Isa: \forall s \in S \enspace \exists ! (c,s,v) \in HasSlot$. So every chunk must have exactly one value for each slot of its type and only describe slots of its type. Empty slots are represented by the value \verb|nil|. Since every chunk has exactly one type, this is valid for all chunks in the store.
+A chunk-store is \emph{type-consistent}, iff $\forall (c,(t,S)) \in Isa: \forall s \in S \enspace \exists ! (c,s,v) \in HasSlot$. So every chunk must have exactly one value for each slot of its type and only describe slots of its type. Empty slots are represented by the value \lstinline|nil|. Since every chunk has exactly one type, this is valid for all chunks in the store.
 
 %iff $\forall(c,s,v) \in HasSlot: c \enspace Isa \enspace (T,S) \Rightarrow \exists s' \in S: s=s'$ and $\forall c \in C: \enspace c \enspace Isa \enspace (T,S) \Rightarrow \forall s \in S: \exists (c',s',v) \in HasSlot: c=c', s=s'$. 
 
@@ -68,7 +68,7 @@ The following methods can be defined over a chunk store $\Sigma = (C, E, \mathca
  \item[\texttt{chunk-type(name slot\textsubscript{1} slot\textsubscript{2} ... slot\textsubscript{n})}] adds the type $T = (\mathtt{name},\{\mathtt{slot_1}, \dots, \mathtt{slot_n}\})$ to the store, i.e. $\mathcal{T'} = \mathcal{T} \cup \{T\}$. 
  \item[\texttt{add-chunk(name isa type slot\textsubscript{1} val\textsubscript{1} ... slot\textsubscript{n} val\textsubscript{n})}] adds a new chunk to the store, i.e. $C' = C \cup \{ \mathtt{name} \}$, $Isa' = Isa \cup (\mathtt{name}, (\mathtt{type}, slots(\mathtt{type}))$ and $HasSlot' = \bigcup_{i = 1}^n{\mathtt{(name,slot_i,val_i)}} \cup HasSlot.$ Note, that due to the expansion of $C$, the condition that $C$ and $E$ have to be disjoint may be violated. To fix this violation, the element can be removed from $E$: $E' = (E \cup C) - (E \cap C).$ 
  
- Additionally, a valid mechanism to restore type-consistency may be introduced: It might happen, that not all slots are specified in the call of the \verb|add-chunk| method. Since it is claimed by the definition of $HasSlot$ that for all slots $s$ of a chunk $c$ there must be a $(c,s,v) \in HasSlot$, in implementations the unspecified slots are initialized as empty slots, represented by the empty value \verb|nil|. Furthermore, slots specified in the call of the method that are not a member of the chunk's type should cause an error to preserve type-consistency.
+ Additionally, a valid mechanism to restore type-consistency may be introduced: It might happen, that not all slots are specified in the call of the \lstinline|add-chunk| method. Since it is claimed by the definition of $HasSlot$ that for all slots $s$ of a chunk $c$ there must be a $(c,s,v) \in HasSlot$, in implementations the unspecified slots are initialized as empty slots, represented by the empty value \lstinline|nil|. Furthermore, slots specified in the call of the method that are not a member of the chunk's type should cause an error to preserve type-consistency.
   \item[\texttt{alter-slot(name slot\textsubscript{1} val\textsubscript{1} ... slot\textsubscript{n} val\textsubscript{n})}] changes the slot values of a chunk identified by its name. Only existing slots can be altered.
   \item[\texttt{remove-chunk(name)}] removes the chunk with the given name from $C$ and all of its occurrences in $Isa$ and $HasSlot$.
   \item[\texttt{return-chunk(name)}] gets a chunk name as input and returns a chunk specification, i.e. the name, type and all slot-value pairs of this chunk in the store.
@@ -107,7 +107,7 @@ Declarative knowledge is represented as a network of chunks, defined by the two 
 % chunk_type_has_slot(ChunkTypeName, SlotName).
 \end{lstlisting}
 
-The \verb|chunk_type/1| constraint represents the set $\mathcal{T}$ of chunk-types in the store, but refers only to the chunk-type names. The set of slots of a chunk-type is specified by the \verb|chunk_type_has_slot/2| constraint\footnote{For a chunk-type $T \in \mathcal{T}$, with $T = (t, S)$, there exists a \texttt{chunk\_type(t)} and for every slot $s \in S$ there is a \texttt{chunk\_type\_has\_slot(t,s)} in the constraint store.}.
+The \lstinline|chunk_type/1| constraint represents the set $\mathcal{T}$ of chunk-types in the store, but refers only to the chunk-type names. The set of slots of a chunk-type is specified by the \lstinline|chunk_type_has_slot/2| constraint\footnote{For a chunk-type $T \in \mathcal{T}$, with $T = (t, S)$, there exists a \texttt{chunk\_type(t)} and for every slot $s \in S$ there is a \texttt{chunk\_type\_has\_slot(t,s)} in the constraint store.}.
 
 For the chunks:
 
@@ -119,13 +119,13 @@ For the chunks:
 % chunk_has_slot(ChunkName, SlotName, Value)
 \end{lstlisting}
 
-The \verb|chunk/2| constraint represents both the set $C$ of chunks and the $Isa$ relation, since the presence of a constraint \verb|chunk(c,t)| signifies, that chunk \verb|c| is of a type $T = (\mathtt{t},S)$.
+The \lstinline|chunk/2| constraint represents both the set $C$ of chunks and the $Isa$ relation, since the presence of a constraint \lstinline|chunk(c,t)| signifies, that chunk \lstinline|c| is of a type $T = (\mathtt{t},S)$.
 
-The $HasSlot$ relation is represented by the \verb|chunk_has_slot(c,s,v)| constraint, which really is just a direct translation of an element $(c,s,v) \in HasSlot$.
+The $HasSlot$ relation is represented by the \lstinline|chunk_has_slot(c,s,v)| constraint, which really is just a direct translation of an element $(c,s,v) \in HasSlot$.
 
 Note that all values in the just presented constraints have to be ground. This is a demand claimed by the original ACT-R implementation and makes sense, since each value in a slot of a chunk is a real, ground value and the concept of variables does not have an advantage in this context, because every element that can be stored in the brain is assumed to be known by the brain.
 
-Additionally, from the definition of a chunk store it is known, that the $HasSlot$ and the $Isa$ relations have to be left-complete. \FIXME{correct expression! correct definitions!} Therefore, for every chunk \verb|c| in the store, exactly one \verb|isa(c,t)| constraint has to be in the store. For each \verb|chunk_type_has_slot(t,s)| constraint, a \verb|chunk_has_slot(c,s,v)| constraint has to be defined. If one wants to express, that a chunk has an empty slot, he might use \verb|nil| for the value to indicate that. Note that \verb|nil| must not be a chunk name or chunk-type name.
+Additionally, from the definition of a chunk store it is known, that the $HasSlot$ and the $Isa$ relations have to be left-complete. \FIXME{correct expression! correct definitions!} Therefore, for every chunk \lstinline|c| in the store, exactly one \lstinline|isa(c,t)| constraint has to be in the store. For each \lstinline|chunk_type_has_slot(t,s)| constraint, a \lstinline|chunk_has_slot(c,s,v)| constraint has to be defined. If one wants to express, that a chunk has an empty slot, he might use \lstinline|nil| for the value to indicate that. Note that \lstinline|nil| must not be a chunk name or chunk-type name.
 
 \begin{example}
 \label{ex:addition_fact_chr}
@@ -148,7 +148,7 @@ chunk_has_slot(a,sum,7)
 \subsubsection{Distinction of Elements and Chunks}
 \label{distinction_elements_chunks}
 
-A chunk store distinguishes between a set of chunks $C$ and a set of elements $E$. For implementational reasons it can be helpful if there are only chunks in the system, because elements just behave like chunks with no slots. Hence, a chunk-type \verb|chunk| with no slots will be added automatically to the store. Each element $e \in E$ and added as a chunk of type \verb|chunk| to the set of chunks $C$. After this operation $E = \emptyset$, and for every former element $e$ of $E$: $e \in C$, $(e,(chunk,\emptyset)) \in Isa$.
+A chunk store distinguishes between a set of chunks $C$ and a set of elements $E$. For implementational reasons it can be helpful if there are only chunks in the system, because elements just behave like chunks with no slots. Hence, a chunk-type \lstinline|chunk| with no slots will be added automatically to the store. Each element $e \in E$ and added as a chunk of type \lstinline|chunk| to the set of chunks $C$. After this operation $E = \emptyset$, and for every former element $e$ of $E$: $e \in C$, $(e,(chunk,\emptyset)) \in Isa$.
 
 So $E$ is represented now by $\{ c \in C | c Isa (chunk,\emptyset)$ in the implementation.
 
@@ -181,7 +181,7 @@ chunk(7,chunk)
 
 To implement the methods in definition~\ref{def:abstract_methods_chunk_store}, first a data type for chunk specifications has to be introduced. From this specification the correct constraints modeling the chunk-store are added or modified.
 
-The straight-forward definition of a data type for chunk specifications is just to use the specification like in definition~\ref{def:abstract_methods_chunk_store}: Since \verb|(name isa type slot_1 val_1 \dots slot_n val_n)| is just a list in LISP and specifies a chunk uniquely, a similar Prolog term can be used:
+The straight-forward definition of a data type for chunk specifications is just to use the specification like in definition~\ref{def:abstract_methods_chunk_store}: Since \lstinline|(name isa type slot_1 val_1 \dots slot_n val_n)| is just a list in LISP and specifies a chunk uniquely, a similar Prolog term can be used:
 
 \begin{lstlisting}
 :- chr_type chunk_def ---> nil; chunk(any, any, slot_list).
@@ -191,13 +191,13 @@ The straight-forward definition of a data type for chunk specifications is just 
 :- chr_type pair(T1,T2) ---> (T1,T2).
 \end{lstlisting}
 
-This definition states that a chunk is either \verb|nil|, i.e. an empty chunk, or a term \verb|chunk(Name, Type, SVP)|, where \verb|SVP| is a list of slot-value pairs. This is the direct translation of the chunk-specification used in the definition, amended by the \verb|nil| construct, that may be needed for later purposes.
+This definition states that a chunk is either \lstinline|nil|, i.e. an empty chunk, or a term \lstinline|chunk(Name, Type, SVP)|, where \lstinline|SVP| is a list of slot-value pairs. This is the direct translation of the chunk-specification used in the definition, amended by the \lstinline|nil| construct, that may be needed for later purposes.
 
 The default methods can be implemented as follows:
 
 \paragraph{add\_chunk}
 
-This method creates the chunks and elements of the chunk store. The set $E$ of elements is minimal, i.e. only elements that appear in the slots of a chunk but are not chunks themselves are members of $E$. However, the set $E$ is never constructed explicitly, but represented by chunks of the special type \verb|chunk| that provides no slots. So each value in the slot of a chunk that is added to the store and that is not an element of the chunk store yet, gets its own chunk of type \verb|chunk|. As soon as a chunk with the name of such a primitive element is added to the store, the chunk of type \verb|chunk| is removed from the store.
+This method creates the chunks and elements of the chunk store. The set $E$ of elements is minimal, i.e. only elements that appear in the slots of a chunk but are not chunks themselves are members of $E$. However, the set $E$ is never constructed explicitly, but represented by chunks of the special type \lstinline|chunk| that provides no slots. So each value in the slot of a chunk that is added to the store and that is not an element of the chunk store yet, gets its own chunk of type \lstinline|chunk|. As soon as a chunk with the name of such a primitive element is added to the store, the chunk of type \lstinline|chunk| is removed from the store.
 
 \begin{lstlisting}[caption={Rules for \texttt{add\_chunk}}, label=lst:add_chunk_rules]
 % empty chunk will not be added
@@ -212,9 +212,9 @@ This method creates the chunks and elements of the chunk store. The set $E$ of e
   do_add_chunk(chunk(Name,Type,Slots)).
 \end{lstlisting}
 
-First, all \verb|chunk_type_has_slot| constraints are added to the store and initialized with \verb|nil| as slot value. This leads to complete chunk specifications that are consistent to the type as demanded by a type-consistent chunk-store.
+First, all \lstinline|chunk_type_has_slot| constraints are added to the store and initialized with \lstinline|nil| as slot value. This leads to complete chunk specifications that are consistent to the type as demanded by a type-consistent chunk-store.
 
-If all slots have been initialized, \verb|do_add_chunk| performs the actual setting of the real slot values:
+If all slots have been initialized, \lstinline|do_add_chunk| performs the actual setting of the real slot values:
   
 \begin{lstlisting}[caption={Additional rules for adding chunks}]  
 % base case
@@ -241,17 +241,17 @@ If all slots have been initialized, \verb|do_add_chunk| performs the actual sett
 <<do_add_chunk(_)>> <=> false.
 \end{lstlisting}
 
-The first rule is the base case, where no slots have to be added any more. Then, as a last step the actual \verb|chunk| constraint of the chunk that is added to the store is created.
+The first rule is the base case, where no slots have to be added any more. Then, as a last step the actual \lstinline|chunk| constraint of the chunk that is added to the store is created.
 
-The second rule deals with the case, that a slot-value pair has to be added with a value that is already described by a chunk. Then the \verb|nil|-initialized slot of this chunk is removed and replaced by another slot containing the actual value.
+The second rule deals with the case, that a slot-value pair has to be added with a value that is already described by a chunk. Then the \lstinline|nil|-initialized slot of this chunk is removed and replaced by another slot containing the actual value.
 
-The next rule ensures that the helper chunk specification \verb|nil| will not get a chunk in the store, even if it is in the slots of a chunk.
+The next rule ensures that the helper chunk specification \lstinline|nil| will not get a chunk in the store, even if it is in the slots of a chunk.
 
-Otherwise, if the value of the slot to be added is not \verb|nil|, the next rule can fire and the slot with the actual value will replace the previously \verb|nil|-initialized slot with the actual value. Additionally, since the first rule obviously did not fire for this constellation, \verb|V| is a value different from \verb|nil| that does not have a chunk in the store. Hence, it must be a primitive element. Thus a new chunk of type \verb|chunk| is added to the store for this value.
+Otherwise, if the value of the slot to be added is not \lstinline|nil|, the next rule can fire and the slot with the actual value will replace the previously \lstinline|nil|-initialized slot with the actual value. Additionally, since the first rule obviously did not fire for this constellation, \lstinline|V| is a value different from \lstinline|nil| that does not have a chunk in the store. Hence, it must be a primitive element. Thus a new chunk of type \lstinline|chunk| is added to the store for this value.
 
 If no rule matches, the user tried to create a chunk with slots that are not specified in the chunk-type. This leads to an error.
 
-On top of the rules in listing~\ref{lst:add_chunk_rules}, there must be added a rule that deletes a primitive element (i.e. a chunk of type \verb|chunk|), if the user introduces a real chunk with the name of this element:
+On top of the rules in listing~\ref{lst:add_chunk_rules}, there must be added a rule that deletes a primitive element (i.e. a chunk of type \lstinline|chunk|), if the user introduces a real chunk with the name of this element:
 
 \begin{lstlisting}[caption={Clean up primitive elements}]  
 % delete chunk of Type chunk, if real chunk is added
@@ -285,7 +285,7 @@ This method replaces the value of an existing slot for a given chunk, but only i
   false.
 \end{lstlisting}
 
-The first rule replaces the existing \verb|chunk_has_slot| constraint by a new one. This is called \emph{destructive assignment} as described in \cite[32]{fru_chr_book_2009}. The second rule only matches, if the first did not match (due to the refined operational semantics of CHR). This is only the case, if it is tried to alter a slot with a non-existing \verb|chunk_has_slot| constraint. However, since the chunk descriptions are complete, the slot cannot be valid for the type of the chunk and the altering has to fail.
+The first rule replaces the existing \lstinline|chunk_has_slot| constraint by a new one. This is called \emph{destructive assignment} as described in \cite[32]{fru_chr_book_2009}. The second rule only matches, if the first did not match (due to the refined operational semantics of CHR). This is only the case, if it is tried to alter a slot with a non-existing \lstinline|chunk_has_slot| constraint. However, since the chunk descriptions are complete, the slot cannot be valid for the type of the chunk and the altering has to fail.
 
 \paragraph{remove\_chunk}
 
@@ -313,7 +313,7 @@ This method creates a chunk specification as defined in section~\ref{chunk_speci
 build_chunk_list(X,Res) <=> Res=X.
 \end{lstlisting}
 
-The first rule creates the initial chunk specification with name and type set, but without any slot specification. This initial representation is handed to the \verb|build_chunk_list| constraint.
+The first rule creates the initial chunk specification with name and type set, but without any slot specification. This initial representation is handed to the \lstinline|build_chunk_list| constraint.
 
 The second rule adds a slot-value pair from the store to the list of slot-value pairs in the specification and builds the next chunk specification from this new representation.
 
@@ -342,22 +342,22 @@ A buffer system is \emph{consistent}, if every chunk that appears in $Holds$ is 
 A buffer system is \emph{clean}, if its chunk-store only holds chunks which appear in $Holds$.
 \end{definition}
 
-For the implementation of a buffer system, the code of a chunk-store can be extended by a \verb|buffer/2| constraint, that encodes the set $B$ and the relation $Holds$ at once, since the relation is complete by definition\footnote{$\forall b \in B \enspace \exists c \in (C \cup \{ \mathtt{nil} \}): (b,c) \in Holds$}.
+For the implementation of a buffer system, the code of a chunk-store can be extended by a \lstinline|buffer/2| constraint, that encodes the set $B$ and the relation $Holds$ at once, since the relation is complete by definition\footnote{$\forall b \in B \enspace \exists c \in (C \cup \{ \mathtt{nil} \}): (b,c) \in Holds$}.
 
 \subsubsection{Destructive Assignment and Consistency}
 \label{destructive_assignment}
 
-The demand of $Holds$ being right-unique\footnote{$\forall b \in B \enspace \forall c, d \in (C \cup \{ \mathtt{nil} \}): (b,c), (b,d) \in Holds \Rightarrow b = c$} is a form of destructive assignment as described in \cite[p. 32]{fru_chr_book_2009}, i.e. if a new chunk is assigned to a buffer, the old \verb|buffer| constraint is removed and a new \verb|buffer| constraint is introduced, holding the new chunk:
+The demand of $Holds$ being right-unique\footnote{$\forall b \in B \enspace \forall c, d \in (C \cup \{ \mathtt{nil} \}): (b,c), (b,d) \in Holds \Rightarrow b = c$} is a form of destructive assignment as described in \cite[p. 32]{fru_chr_book_2009}, i.e. if a new chunk is assigned to a buffer, the old \lstinline|buffer| constraint is removed and a new \lstinline|buffer| constraint is introduced, holding the new chunk:
 
 \begin{lstlisting}
 <<set_buffer(B, C) \ buffer(B, _)>> <=> buffer(B, C).
 \end{lstlisting}
 
-This rule ensures that only one \verb|buffer| constraint exists for each buffer in $B$.
+This rule ensures that only one \lstinline|buffer| constraint exists for each buffer in $B$.
 
-At the beginning of the program, a \verb|buffer| constraint has to be added for all the available buffers of the modules. This problem is discussed in section~\ref{initialization}.
+At the beginning of the program, a \lstinline|buffer| constraint has to be added for all the available buffers of the modules. This problem is discussed in section~\ref{initialization}.
 
-In addition, if a new chunk is put into a buffer, it also has to be present in the chunk-store, since the production system relies on the knowledge about the chunks in its buffers and chunks are essentially defined by their slots (\emph{consistency property} in definition~\ref{def:buffer_system}). Hence, every time a chunk is stored in a buffer, the \verb|add_chunk| method described in definition~\ref{def:abstract_methods_chunk_store} has to be called. However, the chunks in the slots are not loaded, since they are not present for working memory. They only appear as primitive elements in the chunk-store. Figure~\ref{fig:buffer_system}
+In addition, if a new chunk is put into a buffer, it also has to be present in the chunk-store, since the production system relies on the knowledge about the chunks in its buffers and chunks are essentially defined by their slots (\emph{consistency property} in definition~\ref{def:buffer_system}). Hence, every time a chunk is stored in a buffer, the \lstinline|add_chunk| method described in definition~\ref{def:abstract_methods_chunk_store} has to be called. However, the chunks in the slots are not loaded, since they are not present for working memory. They only appear as primitive elements in the chunk-store. Figure~\ref{fig:buffer_system}
 
 %This process is discussed later when talking about buffer requests in section~\ref{buffer_requests}.
 
@@ -369,13 +369,13 @@ Since a module can only handle one request at a time and requests may need a cer
 
 A buffer's state is set to \emph{error}, if a request was unsuccessful because of an invalid request specification or, in case of the declarative module for instance, a chunk that could not be found.
 
-In CHR, a buffer state can be represented by a \verb|buffer_state(b,s)| constraint, which signifies that buffer \verb|b| has the state \verb|s|. Since every buffer has exactly one state all the time, it is required, that for every buffer there is such a constraint and it is ensured, that only one \verb|buffer_state| constraint is present for each buffer. This can be achieved by the destructive assignment method described in section~\ref{destructive_assignment}. 
+In CHR, a buffer state can be represented by a \lstinline|buffer_state(b,s)| constraint, which signifies that buffer \lstinline|b| has the state \lstinline|s|. Since every buffer has exactly one state all the time, it is required, that for every buffer there is such a constraint and it is ensured, that only one \lstinline|buffer_state| constraint is present for each buffer. This can be achieved by the destructive assignment method described in section~\ref{destructive_assignment}. 
 
-At the beginning of the program, when a buffer is created (a \verb|buffer| constraint is placed into the store), a corresponding \verb|buffer_state| constraint has to be added. The initial state can be set to \verb|free|, since no request is being computed at the time of creation.
+At the beginning of the program, when a buffer is created (a \lstinline|buffer| constraint is placed into the store), a corresponding \lstinline|buffer_state| constraint has to be added. The initial state can be set to \lstinline|free|, since no request is being computed at the time of creation.
 
 \subsection{Production Rules}
 
-Production rules consist of a \emph{condition} part and an \emph{action} part. Syntactically, in ACT-R the condition is separated from the action by \verb|==>|. Additionally, each production rule has a name. Thus, a rule is defined by:
+Production rules consist of a \emph{condition} part and an \emph{action} part. Syntactically, in ACT-R the condition is separated from the action by \lstinline|==>|. Additionally, each production rule has a name. Thus, a rule is defined by:
 
 \begin{verbatim}
 (p name condition* ==> action*)
@@ -385,9 +385,9 @@ The condition part is also called the \emph{left hand side} of a rule (LHS) and 
 
 \subsubsection{The Left Hand Side of a Rule}
 
-Generally, a condition is either a \emph{buffer test}, i.e. a specification of slot-value pairs that are checked against the chunk in the specified buffer or a \emph{buffer query}, i.e. a check of the state of a buffer's module (either busy, free or error). A buffer test on the LHS of a rule is indicated by a \verb|=| followed by the buffer name of the tested buffer; a query is indicated by a \verb|?| in front of the buffer name.
+Generally, a condition is either a \emph{buffer test}, i.e. a specification of slot-value pairs that are checked against the chunk in the specified buffer or a \emph{buffer query}, i.e. a check of the state of a buffer's module (either busy, free or error). A buffer test on the LHS of a rule is indicated by a \lstinline|=| followed by the buffer name of the tested buffer; a query is indicated by a \lstinline|?| in front of the buffer name.
 
-The LHS of a rule may contain bound or unbound variables: \verb|=varname| is a variable with name \verb|varname|.
+The LHS of a rule may contain bound or unbound variables: \lstinline|=varname| is a variable with name \lstinline|varname|.
 
 If the chunks in the buffers pass all buffer tests specified by the rule, the rule can fire, i.e. its right hand side will be applied. The LHS is a conjunction of buffer tests, i.e. there is no specific order for the tests \cite[p. 165]{actr_reference}.
 
@@ -410,8 +410,8 @@ The left hand side of the counting rule specified in the example in section~\ref
 The condition part consists of two buffer tests:
 
 \begin{enumerate}
- \item The goal buffer is tested for a chunk of type \verb|count| and a slot with name \verb|number|. The value of the slot is bound to the variable \verb|=n|.
- \item The retrieval buffer is tested for a chunk of type \verb|count-fact| that has the variable \verb|=n| in its \verb|first| slot (with the same value as the \verb|number| slot of the chunk in the goal buffer, since \verb|=n| has been bound to that value), and another value in its second slot which is bound to the variable \verb|=m|.
+ \item The goal buffer is tested for a chunk of type \lstinline|count| and a slot with name \lstinline|number|. The value of the slot is bound to the variable \lstinline|=n|.
+ \item The retrieval buffer is tested for a chunk of type \lstinline|count-fact| that has the variable \lstinline|=n| in its \lstinline|first| slot (with the same value as the \lstinline|number| slot of the chunk in the goal buffer, since \lstinline|=n| has been bound to that value), and another value in its second slot which is bound to the variable \lstinline|=m|.
 \end{enumerate}
 
 \end{example}
@@ -428,7 +428,7 @@ For the right hand side of a rule the following actions are allowed:
   ...
 \end{lstlisting}
 
-They are indicated by the buffer modifier \verb|=| right before the buffer name and are specified through a list of slot-value pairs. Note, that this list can be incomplete and must not contain a \verb|isa| specification. It leads all slots mentioned in the modification action of a buffer to be replaced by the specified values.
+They are indicated by the buffer modifier \lstinline|=| right before the buffer name and are specified through a list of slot-value pairs. Note, that this list can be incomplete and must not contain a \lstinline|isa| specification. It leads all slots mentioned in the modification action of a buffer to be replaced by the specified values.
 
  \item[Buffer Requests] of the form
 \begin{lstlisting}
@@ -437,14 +437,14 @@ They are indicated by the buffer modifier \verb|=| right before the buffer name 
   ...
 \end{lstlisting}
 
-Requests are indicated by the buffer modifier \verb|+| and specified by a list of slot-value pairs. A request will be sent to the module of the specified buffer which reacts to the transmitted chunk of the request specification (in form of the slot-value pairs). The semantics of a request depends on the module, but the buffer is always first cleared before stating the request.
+Requests are indicated by the buffer modifier \lstinline|+| and specified by a list of slot-value pairs. A request will be sent to the module of the specified buffer which reacts to the transmitted chunk of the request specification (in form of the slot-value pairs). The semantics of a request depends on the module, but the buffer is always first cleared before stating the request.
  \item[Buffer Clearings] of the form
  
 \begin{lstlisting}
 -buffer>
 \end{lstlisting}
 
-Clearings are indicated by the buffer modifier \verb|-|. When a buffer is cleared, the chunk it contains will be removed from the chunk-store of the buffer system and then be added to the declarative memory. 
+Clearings are indicated by the buffer modifier \lstinline|-|. When a buffer is cleared, the chunk it contains will be removed from the chunk-store of the buffer system and then be added to the declarative memory. 
 \end{description}
 
 
@@ -478,13 +478,13 @@ An ACT-R production rule of the form
 \begin{lstlisting}[mathescape]
 (p name
   =buffer$_\mathtt{1}$>
-    isa    type$_1$
+    isa   type$_1$
     slot$_\mathtt{1,1}$  val$_\mathtt{1,1}$
     ...
     slot$_\mathtt{1,n}$  val$_\mathtt{1,n}$
   ...
   =buffer$_\mathtt{k}$>
-    isa    type$_\mathtt{k}$
+    isa   type$_\mathtt{k}$
     slot$_\mathtt{k,1}$  val$_\mathtt{k,1}$
     ...
     slot$_\mathtt{k,m}$  val$_\mathtt{k,m}$
@@ -519,16 +519,14 @@ This rule checks the buffer system for the existence of a buffer holding a parti
 
 If the values in the slot tests are variables, they can be directly translated to Prolog variables.
 
-The CHR rule only fires, if all the checked buffers hold chunks that meet the requirements specified in the slot tests of the ACT-R rule. Since those slot-tests are just a conjunction of relation-membership tests and the CHR rule is a translation of these tests into constraints, both are equivalent. In detail: \FIXME{geht besser}
+The CHR rule only fires, if all the checked buffers hold chunks that meet the requirements specified in the slot tests of the ACT-R rule. Since those slot-tests are just a conjunction of relation-membership tests and the CHR rule is a translation of these tests into constraints, both are equivalent. In detail: 
 
 \begin{itemize}
- \item If a checked buffer \verb|b| holds no chunk, the constraint \verb|buffer(b,nil)| will be present, but the chunk store will not hold any of the required \verb|chunk| or \verb|chunk_has_slot| constraints and the rule will not fire.
- \item If a checked buffer \verb|b| holds a chunk, but the chunk does not meet one of the requirements in its slots, the rule does not fire.
- \item The rule only fires, if for all checked buffers there are valid \verb|buffer|, \verb|chunk| and \verb|chunk_has_slot| constraints present that meet all the requirements specified by the ACT-R rule.
- \item Variables on the LHS of a rule are bound to the values of the actual constraints that are tried for the matching. After the matching, each variable from the rule has a ground value bound to it, because there are no variables in the implementation of the buffer store. This corresponds to the semantics of a ACT-R production rule with variables on the LHS.
+ \item If a checked buffer \lstinline|b| holds no chunk, the constraint \lstinline|buffer(b,nil)| will be present, but the chunk store will not hold any of the required \lstinline|chunk| or \lstinline|chunk_has_slot| constraints and the rule will not fire.
+ \item If a checked buffer \lstinline|b| holds a chunk, but the chunk does not meet one of the requirements in its slots, the rule does not fire.
+ \item The rule only fires, if for all checked buffers there are valid \lstinline|buffer|, \lstinline|chunk| and \lstinline|chunk_has_slot| constraints present that meet all the requirements specified by the ACT-R rule.
+ \item Variables on the LHS of a rule are bound to the values of the actual constraints that are tried for the matching. After the matching, each variable from the rule has a ground value bound to it, because there are no variables in the implementation of the buffer store. This corresponds to the semantics of an ACT-R production rule with variables on the LHS.
 \end{itemize}
-
-\FIXME{ist die begründung schlüssig? evtl section über variablen hier einfügen}
 
 \subsubsection{Translation of Actions}
 \label{translation_of_actions}
@@ -550,7 +548,7 @@ The modification of a buffer takes an incomplete chunk specification and modifie
   alter_slots(OldChunk,SVs).
 \end{lstlisting}
 
-This implementation uses a generalization of the \verb|alter_slot| method as described in definition~\ref{def:abstract_methods_chunk_store} and section~\ref{chunk_specification}:
+This implementation uses a generalization of the \lstinline|alter_slot| method as described in definition~\ref{def:abstract_methods_chunk_store} and section~\ref{chunk_specification}:
 
 \begin{lstlisting}  
 <<alter_slots(_,[])>> <=> true.
@@ -565,7 +563,7 @@ Note that types cannot be changed. This corresponds to the grammar definition of
 
 \paragraph{Buffer Clearings}
 
-When clearing a buffer, the chunk that was stored in the buffer will be removed from the chunk store and \verb|nil| will be written to the store. Additionally, the chunk goes to the declarative memory.
+When clearing a buffer, the chunk that was stored in the buffer will be removed from the chunk store and \lstinline|nil| will be written to the store. Additionally, the chunk goes to the declarative memory.
 
 \begin{lstlisting}
 <<buffer_clear(BufName), buffer(BufName, ModName, Chunk)>> <=> 
@@ -574,13 +572,13 @@ When clearing a buffer, the chunk that was stored in the buffer will be removed 
   buffer(BufName, nil).
 \end{lstlisting}
 
-\verb|write_to_dm| handles the writing of the chunk to the declarative memory:
+\lstinline|write_to_dm| handles the writing of the chunk to the declarative memory:
 
 \begin{lstlisting}
 <<write_to_dm(ChunkName)>> <=> return_chunk(ChunkName, ResChunk), add_dm(ResChunk).
 \end{lstlisting}
 
-where \verb|add_dm| is basically just a global wrapper for the \verb|add_chunk| method of the declarative memory and will be explained in section~\ref{global_method_for_adding_chunks}.
+where \lstinline|add_dm| is basically just a global wrapper for the \lstinline|add_chunk| method of the declarative memory and will be explained in section~\ref{global_method_for_adding_chunks}.
 
 \paragraph{Buffer Requests} The buffer requests have to be handled a little bit differently from the other actions. Therefore, they will be explained in section~\ref{interface_for_module_requests}. The changes to the buffer system are presented in section~\ref{how_the_buffer_system_states_a_request} and an example implementation of the module request interface for retrieval requests is given in section~\ref{retrieval_requests}.
 
@@ -690,7 +688,7 @@ and
   s1  v3 % for termination
 \end{lstlisting}
 
-In the semantics of ACT-R, if the first rule matches, all the buffer modifications are performed first. After that, the procedural module can look for the next matching rule, which is the second one (due to the result of the first rule). This rule then would overwrite the value \verb|x| in the \verb|s| slot of buffer \verb|b2| with \verb|y|.
+In the semantics of ACT-R, if the first rule matches, all the buffer modifications are performed first. After that, the procedural module can look for the next matching rule, which is the second one (due to the result of the first rule). This rule then would overwrite the value \lstinline|x| in the \lstinline|s| slot of buffer \lstinline|b2| with \lstinline|y|.
 
 \begin{lstlisting}
 <<buffer(b1,C),
@@ -725,9 +723,9 @@ chunk_has_slot(c2,s,x)
 chunk_has_slot(c,s1,v3)
 \end{lstlisting}
 
-Ie., the buffer \verb|b2| holds the chunk with value \verb|x|. This is due to the fact, that after the first rule has modified the buffer \verb|b1|, the second rule matches and will be fired immediately, which then changes the value of \verb|b1| to \verb|y|. Afterwards, the second action of the first rule will be executed and the \verb|s| slot of the chunk in buffer \verb|b2| will be overwritten with \verb|x|.
+Ie., the buffer \lstinline|b2| holds the chunk with value \lstinline|x|. This is due to the fact, that after the first rule has modified the buffer \lstinline|b1|, the second rule matches and will be fired immediately, which then changes the value of \lstinline|b1| to \lstinline|y|. Afterwards, the second action of the first rule will be executed and the \lstinline|s| slot of the chunk in buffer \lstinline|b2| will be overwritten with \lstinline|x|.
 
-Hence, somehow the fact that the procedural module is busy and cannot fire another rule, has to be modeled. This can be achieved by a simple phase constraint \verb|fire| that will be added after the complete execution of a rule and will be removed as soon as a rule is executed.
+Hence, somehow the fact that the procedural module is busy and cannot fire another rule, has to be modeled. This can be achieved by a simple phase constraint \lstinline|fire| that will be added after the complete execution of a rule and will be removed as soon as a rule is executed.
 
 For every production rule, the rule
 
@@ -741,7 +739,7 @@ has to be changed to a simpagation rule
 { buffer_tests } \ <<fire>> <=> { actions }, fire.
 \end{lstlisting}
 
-It is important, that the adding of \verb|fire| is the last action of a rule.
+It is important, that the adding of \lstinline|fire| is the last action of a rule.
 
 The example would be modified as follows:
 
@@ -803,7 +801,7 @@ A problem that has not been addressed yet, is that ACT-R allows buffer tests lik
   bar  spam
 \end{lstlisting}
 
-In the logical reading, this would signify that $buffer \enspace Holds \enspace c \enspace \wedge \enspace c \enspace Isa \enspace foo \enspace \wedge \enspace c \xrightarrow{bar} spam \enspace \wedge \enspace c \xrightarrow{bar} spam$ which is equivalent to the test with only one check of the \verb|bar| slot\footnote{$x \wedge x = x$}.
+In the logical reading, this would signify that $buffer \enspace Holds \enspace c \enspace \wedge \enspace c \enspace Isa \enspace foo \enspace \wedge \enspace c \xrightarrow{bar} spam \enspace \wedge \enspace c \xrightarrow{bar} spam$ which is equivalent to the test with only one check of the \lstinline|bar| slot\footnote{$x \wedge x = x$}.
 
 However, in CHR the following rule head resulting from the simple translation scheme would not match:
 
@@ -814,7 +812,7 @@ buffer(buffer,C),
   chunk_has_slot(C,bar,spam)
 \end{lstlisting}
 
-Because there are no two identical \verb|chunk_has_slot| constraints in the store, the rule could not fire. When translating such a rule, the second test has to be eliminated.
+Because there are no two identical \lstinline|chunk_has_slot| constraints in the store, the rule could not fire. When translating such a rule, the second test has to be eliminated.
 
 However, this does not do the trick for all possible cases. For example, suppose a test
 
@@ -834,7 +832,7 @@ chunk_has_slot(C,bar,spam)>>
 ==> <<<spam == X>>> | ...
 \end{lstlisting}
 
-Since \verb|X| must be bound after the matching\footnote{see section~\ref{bound_and_unbound_variables}}, the test will always give the correct result. This also works for the first example, where the test would be \verb|spam == spam|, which is always true and hence could be reduced to the rule with the second test eliminated and no guard\footnote{true guards can always be reduced}.
+Since \lstinline|X| must be bound after the matching\footnote{see section~\ref{bound_and_unbound_variables}}, the test will always give the correct result. This also works for the first example, where the test would be \lstinline|spam == spam|, which is always true and hence could be reduced to the rule with the second test eliminated and no guard\footnote{true guards can always be reduced}.
 
 It also works if the two slot-tests were contradictory, for example: 
 
@@ -857,9 +855,9 @@ since the built-in syntactic-equality test of Prolog would never return true for
 \subsubsection{Slot Modifiers}
 \label{slot_modifiers}
 
-In ACT-R, slot-tests can be preceded by \emph{slot modifiers}. Those modifiers allow to specify tests like inequality (\verb|-|) or arithmetic comparisons (\verb|<, >, <=, >=|) of the slot value of a chunk with the specified variable or value. Since the slots in a chunk store are always fully defined with ground values, those tests are decidable.
+In ACT-R, slot-tests can be preceded by \emph{slot modifiers}. Those modifiers allow to specify tests like inequality (\lstinline|-|) or arithmetic comparisons (\lstinline|<, >, <=, >=|) of the slot value of a chunk with the specified variable or value. Since the slots in a chunk store are always fully defined with ground values, those tests are decidable.
 
-If no slot modifier is specified in a slot test, the default modifier \verb|=| is used, that states that the chunk in the specified buffer must have the specified value in the specified slot. This default semantics has been used in the previous sections when translating simple ACT-R rules to CHR and is performed automatically by the matching of CHR.
+If no slot modifier is specified in a slot test, the default modifier \lstinline|=| is used, that states that the chunk in the specified buffer must have the specified value in the specified slot. This default semantics has been used in the previous sections when translating simple ACT-R rules to CHR and is performed automatically by the matching of CHR.
 
 To translate the other slot modifiers to CHR, another CHR mechanism can be used: Guards. Since the allowed modifiers are all default built-in constraints\footnote{i.e. Prolog predicates}, a slot test with a modifier
 
@@ -872,7 +870,7 @@ To translate the other slot modifiers to CHR, another CHR mechanism can be used:
 ==>
 \end{lstlisting}
 
-where \verb|~| stands for one of the modifiers in \{ \verb|=,-,<,>,<=,>=| \} can be translated as follows:
+where \lstinline|~| stands for one of the modifiers in \{ \lstinline|=,-,<,>,<=,>=| \} can be translated as follows:
 
 \begin{lstlisting}
 <<buffer(buffer,C),
@@ -884,13 +882,13 @@ where \verb|~| stands for one of the modifiers in \{ \verb|=,-,<,>,<=,>=| \} can
   ...
 \end{lstlisting}
 
-where \verb|#| is the placeholder for the built-in constraint that computes the test specified by \verb|~| and \verb|V| is a fresh variable that has not been used in the rule, yet.
+where \lstinline|#| is the placeholder for the built-in constraint that computes the test specified by \lstinline|~| and \lstinline|V| is a fresh variable that has not been used in the rule, yet.
 
 For arithmetic slot modifiers the values being compared have to be numbers. If a value is not a number, the arithmetic test will fail and the rule cannot be applied \cite{actr_reference}.
 
-Note, that slot tests with modifiers other than \verb|=| do not bind variables, but only perform simple checks, like it is with guards in CHR. If \verb|val| is an unbound variable and is never bound to a value on LHS, the default implementation throws a warning, and the rule will not match. Therefore, to handle this case, the rule translation scheme has to be extended by an additional guard check \verb|ground(Val)|, where \verb|Val| is the Prolog variable that replaces each occurrence of the variable \verb|val|.
+Note, that slot tests with modifiers other than \lstinline|=| do not bind variables, but only perform simple checks, like it is with guards in CHR. If \lstinline|val| is an unbound variable and is never bound to a value on LHS, the default implementation throws a warning, and the rule will not match. Therefore, to handle this case, the rule translation scheme has to be extended by an additional guard check \lstinline|ground(Val)|, where \lstinline|Val| is the Prolog variable that replaces each occurrence of the variable \lstinline|val|.
 
-As with normal slot tests, it is important to mention that if there are several tests on the same slot, the \verb|chunk_has_slot| constraint must appear only once on the LHS of the CHR rule, since every slot-value pair is unique in the constraint store. Ie., if the first slot test of a particular slot appears on the LHS of the ACT-R rule, a \verb|chunk_has_slot| constraint has to be added to the LHS of the CHR rule. For every other occurrence of this slot in a slot test, only guard checks are added.
+As with normal slot tests, it is important to mention that if there are several tests on the same slot, the \lstinline|chunk_has_slot| constraint must appear only once on the LHS of the CHR rule, since every slot-value pair is unique in the constraint store. Ie., if the first slot test of a particular slot appears on the LHS of the ACT-R rule, a \lstinline|chunk_has_slot| constraint has to be added to the LHS of the CHR rule. For every other occurrence of this slot in a slot test, only guard checks are added.
 
 \begin{example}
 To clarify the details of the matching concept in ACT-R, here are some examples and their behaviour:
@@ -901,7 +899,7 @@ To clarify the details of the matching concept in ACT-R, here are some examples 
   -spam  =bar
 \end{lstlisting}
 
-will throw a warning when loading the model. When running it, the rule will never fire, since no chunk value will match the inequality to the unbound variable \verb|bar|.
+will throw a warning when loading the model. When running it, the rule will never fire, since no chunk value will match the inequality to the unbound variable \lstinline|bar|.
 
 \begin{lstlisting}
 =buffer>
@@ -910,7 +908,7 @@ will throw a warning when loading the model. When running it, the rule will neve
   eggs   =bar
 \end{lstlisting}
 
-will fire, if there is a chunk whose value in \verb|eggs| is different from the value in \verb|spam|.
+will fire, if there is a chunk whose value in \lstinline|eggs| is different from the value in \lstinline|spam|.
 
 \begin{lstlisting}
 =buffer>
@@ -929,7 +927,7 @@ matches for every value of the spam slot. The translation to CHR is:
   <<<Bar=Eggs>>> | ...
 \end{lstlisting}
 
-In this case, a binding occurs in the guard, which is usually unwanted. However, since the \verb|Eggs| variable is unbound and therefore a fresh variable introduced in the guard, it is allowed and does not harm the matching process. It is even necessary to bind \verb|Eggs| to \verb|Bar| because of the semantics of the equivalent ACT-R rule. The following example is a little bit different: The rule
+In this case, a binding occurs in the guard, which is usually unwanted. However, since the \lstinline|Eggs| variable is unbound and therefore a fresh variable introduced in the guard, it is allowed and does not harm the matching process. It is even necessary to bind \lstinline|Eggs| to \lstinline|Bar| because of the semantics of the equivalent ACT-R rule. The following example is a little bit different: The rule
 
 \begin{lstlisting}
 =buffer>
@@ -939,7 +937,7 @@ In this case, a binding occurs in the guard, which is usually unwanted. However,
   ham   =eggs
 \end{lstlisting}
 
-will match all chunks which have the same value in \verb|spam| and \verb|ham|. This translates to
+will match all chunks which have the same value in \lstinline|spam| and \lstinline|ham|. This translates to
 
 \begin{lstlisting}
 <<buffer(buffer,C),
@@ -950,7 +948,7 @@ will match all chunks which have the same value in \verb|spam| and \verb|ham|. T
   <<<Bar==Eggs>>> | ...
 \end{lstlisting}
 
-Note, that in this case, no binding occurs, since both, \verb|Bar| and \verb|Eggs|, already occur in the head of the rule and are bound to some value. Hence, the test in the guard can be reduced to a simple syntactic equality test without binding (\verb|==|).
+Note, that in this case, no binding occurs, since both, \lstinline|Bar| and \lstinline|Eggs|, already occur in the head of the rule and are bound to some value. Hence, the test in the guard can be reduced to a simple syntactic equality test without binding (\lstinline|==|).
 
 \end{example}
 
@@ -964,9 +962,9 @@ With these restrictions, ACT-R avoids the problems that come with negation-as-ab
 
 \subsubsection{Empty Slots}
 
-An important special case in the semantics of ACT-R production rules is, that if there is a slot test specified, then a potential chunk only matches, if it really has a value in this slot. Chunks that have \verb|nil| in a slot specified in a buffer test, will not match the test. Hence, variables can not be used to test if two slots have the same value and the value is \verb|nil|, since every positive slot test involving \verb|nil| fails automatically \cite[p. 164, section ``Variables'', last sentence]{actr_reference}.
+An important special case in the semantics of ACT-R production rules is, that if there is a slot test specified, then a potential chunk only matches, if it really has a value in this slot. Chunks that have \lstinline|nil| in a slot specified in a buffer test, will not match the test. Hence, variables can not be used to test if two slots have the same value and the value is \lstinline|nil|, since every positive slot test involving \lstinline|nil| fails automatically \cite[p. 164, section ``Variables'', last sentence]{actr_reference}.
 
-In CHR this special case can be handled, by adding a guard for each variable occurring in a positive slot-test checking that this variable does not equal \verb|nil|.
+In CHR this special case can be handled, by adding a guard for each variable occurring in a positive slot-test checking that this variable does not equal \lstinline|nil|.
 
 For negated slot tests, this is not the case: 
 
@@ -976,7 +974,7 @@ For negated slot tests, this is not the case:
   -spam  4
 \end{lstlisting}
 
-matches also a chunk with an empty \verb|spam| slot (\verb|nil| in its \verb|spam| slot).
+matches also a chunk with an empty \lstinline|spam| slot (\lstinline|nil| in its \lstinline|spam| slot).
 
 
 
@@ -1002,9 +1000,9 @@ output([X|Xs]) :-
   output(Xs).
 \end{lstlisting}
 
-The \verb|X| have to be Prolog terms.
+The \lstinline|X| have to be Prolog terms.
 
-In ACT-R, function calls like \verb|!eval!| or \verb|!bind!| are allowed, but they are ignored in this work.
+In ACT-R, function calls like \lstinline|!eval!| or \lstinline|!bind!| are allowed, but they are ignored in this work.
 
 \section{Modular Organization}
 
@@ -1020,7 +1018,7 @@ Defining a new module creates a new namespace for all CHR constraints and Prolog
 
 \begin{example}[Prolog Modules and CHR]
 
-In this example, two modules \verb|mod1| and \verb|mod2| are defined, with partially overlapping constraints. \verb|mod2| exports the constraint \verb|c|. In the following, the behaviour an interaction of the modules is explored.
+In this example, two modules \lstinline|mod1| and \lstinline|mod2| are defined, with partially overlapping constraints. \lstinline|mod2| exports the constraint \lstinline|c|. In the following, the behaviour an interaction of the modules is explored.
 
 \begin{lstlisting}[caption={Definition of Module 1},label=lst:mod1]
 :- module(mod1,[]).
@@ -1046,13 +1044,13 @@ In this example, two modules \verb|mod1| and \verb|mod2| are defined, with parti
 \end{lstlisting}
 
 
-In this definition, two new modules \verb|mod1| and \verb|mod2| are created and only the \verb|c| constraint of \verb|mod2| is exported, indicated by the lists in the module definitions.
+In this definition, two new modules \lstinline|mod1| and \lstinline|mod2| are created and only the \lstinline|c| constraint of \lstinline|mod2| is exported, indicated by the lists in the module definitions.
 
-The CHR constraint \verb|a| in listing~\ref{lst:mod1} is internally represented as \verb|mod1:a|, so it lives in its own namespace and does not pollute other namespaces. The constraint can appear on the right hand side of rules of other modules, but has to be called explicitly with its full namespace identifier. In line~8 of listing~\ref{lst:mod2}, the presence of the local \verb|a| constraint leads the rule to fire and \verb|mod2:a| is replaced by \verb|mod2:b|, which leads the rule in line~9 to fire and replaces the local \verb|mod2:b| constraint by an external \verb|mod1:a| constraint. So, external constraints can be called by their complete identifiers.
+The CHR constraint \lstinline|a| in listing~\ref{lst:mod1} is internally represented as \lstinline|mod1:a|, so it lives in its own namespace and does not pollute other namespaces. The constraint can appear on the right hand side of rules of other modules, but has to be called explicitly with its full namespace identifier. In line~8 of listing~\ref{lst:mod2}, the presence of the local \lstinline|a| constraint leads the rule to fire and \lstinline|mod2:a| is replaced by \lstinline|mod2:b|, which leads the rule in line~9 to fire and replaces the local \lstinline|mod2:b| constraint by an external \lstinline|mod1:a| constraint. So, external constraints can be called by their complete identifiers.
 
 However, on the left hand side of a rule, only the constraints local to the current module can appear. 
 
-Exported constraints can only appear once in a program, since they can be called without their namespace definition, which is demonstrated in line~8 of listing~\ref{lst:mod1}, where \verb|mod2:c| is called in \verb|mod1| without referring to \verb|mod2| explicitly.
+Exported constraints can only appear once in a program, since they can be called without their namespace definition, which is demonstrated in line~8 of listing~\ref{lst:mod1}, where \lstinline|mod2:c| is called in \lstinline|mod1| without referring to \lstinline|mod2| explicitly.
 \end{example}
 
 \subsection{Interface for Module Requests}
@@ -1067,15 +1065,15 @@ module_request(+BufName,+Chunk,-ResChunk,-ResState)
 The arguments of such a request are:
 
 \begin{description}
- \item[BufName] The name of the requested buffer, e.g. \verb|retrieval|.
- \item[Chunk] A chunk specification that represents the arguments of the request. The form of the allowed chunk specifications and the semantics of the request are module-dependent. For example: \verb|chunk(_,t,[(foo,bar),(spam,eggs)])| could describe a chunk, that should be retrieved from declarative memory.
+ \item[BufName] The name of the requested buffer, e.g. \lstinline|retrieval|.
+ \item[Chunk] A chunk specification that represents the arguments of the request. The form of the allowed chunk specifications and the semantics of the request are module-dependent. For example: \lstinline|chunk(_,t,[(foo,bar),(spam,eggs)])| could describe a chunk, that should be retrieved from declarative memory.
 \end{description}
 
 The request provides the following result:
 
 \begin{description}
  \item[ResChunk] The resulting chunk in form of a chunk specification. The actual result and its semantics depend on the particular module.
- \item[ResState] The state of the buffer after the request. For example, if no matching chunk could be retrieved from declarative memory, the state would be \verb|error|.
+ \item[ResState] The state of the buffer after the request. For example, if no matching chunk could be retrieved from declarative memory, the state would be \lstinline|error|.
 \end{description}
 
 This interface will be extended later on.
@@ -1083,9 +1081,9 @@ This interface will be extended later on.
 \subsection{How the Buffer System States a Request}
 \label{how_the_buffer_system_states_a_request}
 
-Every module that can handle a request implements the interface in listing~\ref{lst:interface_module}. When the buffer system gets a call \verb|buffer_request(buffer,chunk-specification)|, it simply can call the \verb|module_request| method of the corresponding module. This can be achieved by \verb|ModName:module_request(...)|, where \verb|ModName| is the name of the corresponding module.
+Every module that can handle a request implements the interface in listing~\ref{lst:interface_module}. When the buffer system gets a call \lstinline|buffer_request(buffer,chunk-specification)|, it simply can call the \lstinline|module_request| method of the corresponding module. This can be achieved by \lstinline|ModName:module_request(...)|, where \lstinline|ModName| is the name of the corresponding module.
 
-Hence, the buffer system must now, which buffer belongs to which module. The \verb|buffer/2| constraint therefore has to be extended to a \verb|buffer/3| constraint, that also holds the module name of its module:
+Hence, the buffer system must now, which buffer belongs to which module. The \lstinline|buffer/2| constraint therefore has to be extended to a \lstinline|buffer/3| constraint, that also holds the module name of its module:
 
 \begin{lstlisting}
 buffer(BufName,ModName,Chunk)
@@ -1109,7 +1107,7 @@ A buffer request can now be handled as follows:
   set_buffer_state(BufName,free)).
 \end{lstlisting}
 
-When getting a buffer request, the buffer state is set to \verb|busy| first. Then the buffer is cleared immediately, which leads the chunk in the buffer being added to the declarative memory. Then the module request is stated according to the interface. If the resulting state is \verb|error|, then the buffer gets this state and the content of the buffer is \verb|nil|, otherwise, if the resulting state is \verb|free|, the result will be added to the buffer and the state will eventually be set to \verb|free|. 
+When getting a buffer request, the buffer state is set to \lstinline|busy| first. Then the buffer is cleared immediately, which leads the chunk in the buffer being added to the declarative memory. Then the module request is stated according to the interface. If the resulting state is \lstinline|error|, then the buffer gets this state and the content of the buffer is \lstinline|nil|, otherwise, if the resulting state is \lstinline|free|, the result will be added to the buffer and the state will eventually be set to \lstinline|free|. 
 
 \subsection{Components of the Implementation}
 
@@ -1124,7 +1122,7 @@ The Declarative Module is a \emph{chunk store}, that additionally implements the
 \subsection{Global Method for Adding Chunks}
 \label{global_method_for_adding_chunks}
 
-Since the declarative module is very important to the whole theory it kind of is a special module. Therefore, its Prolog module exports a predicate \verb|add_dm| that is just a wrapper for its chunk store. Hence, with the command \verb|add_dm| chunks can be added to the chunk store of the declarative module from every part of the program. This is e.g. used for the clearing of buffers in the buffer system, where the chunk of a buffer goes to the declarative memory when the buffer is cleared. This is the implementation of the command:
+Since the declarative module is very important to the whole theory it kind of is a special module. Therefore, its Prolog module exports a predicate \lstinline|add_dm| that is just a wrapper for its chunk store. Hence, with the command \lstinline|add_dm| chunks can be added to the chunk store of the declarative module from every part of the program. This is e.g. used for the clearing of buffers in the buffer system, where the chunk of a buffer goes to the declarative memory when the buffer is cleared. This is the implementation of the command:
 
 \begin{lstlisting}
 <<add_dm(ChunkDef)>> <=> add_chunk(ChunkDef).
@@ -1150,14 +1148,14 @@ In this example some possible requests are discussed.
 chunk(foo,bar,_)        
 \end{lstlisting}
 
-A chunk with name \verb|foo|, type \verb|bar| and arbitrary slot values is requested.
+A chunk with name \lstinline|foo|, type \lstinline|bar| and arbitrary slot values is requested.
 
  \item Request:
 \begin{lstlisting}
 chunk(_,bar,_)        
 \end{lstlisting}
 
-This request is satisfied by every chunk of type \verb|bar|.
+This request is satisfied by every chunk of type \lstinline|bar|.
 
  \item Request:
 \begin{lstlisting}
@@ -1172,7 +1170,7 @@ The most common case of requests is a specification of the type and a (possibly 
 
 \subsubsection{Finding Chunks}
 
-In this section, a CHR constraint \verb|find_chunk/3| will be defined, that produces a \verb|match_set/1| constraint for each chunk that matches a specified pattern. Eventually, the match set will be collected and returned.
+In this section, a CHR constraint \lstinline|find_chunk/3| will be defined, that produces a \lstinline|match_set/1| constraint for each chunk that matches a specified pattern. Eventually, the match set will be collected and returned.
 
 \begin{lstlisting}
 <<find_chunk(N1,T1,Ss), chunk(N2,T2)>> ==> 
@@ -1190,7 +1188,7 @@ In this section, a CHR constraint \verb|find_chunk/3| will be defined, that prod
 <<find_chunk(_,_,_)>> <=> true.
 \end{lstlisting}
 
-First, for each chunk in the store, whose name and type is unifiable with the specified name and type, will be part of the initial match set. If in the chunk specification the name and type are variables, each chunk will match. For the unification test, the \verb|unifiable/3| predicate of Prolog is used, because the unification should not be performed but only tested. 
+First, for each chunk in the store, whose name and type is unifiable with the specified name and type, will be part of the initial match set. If in the chunk specification the name and type are variables, each chunk will match. For the unification test, the \lstinline|unifiable/3| predicate of Prolog is used, because the unification should not be performed but only tested. 
 
 If name and type match the pattern, then the slots have to be tested.
 
@@ -1216,15 +1214,15 @@ After adding each matching candidate to the match set, whose name and type have 
 
 The first rule is the base case, where no slots have to be tested any more and the test is finished and has been successful.
 
-In line~3, the rule applies, if there is at least one slot \verb|(S,V2)| that has to be tested and a $HasSlot$ relation of the kind \verb|N| $\xrightarrow[]{\mathtt{S}}$ \verb|V1| with the slot \verb|S| to be tested, that is still in the match set, so no conflicting slot has been found yet. If the values \verb|V1| and \verb|V2| are unifiable, i.e. the both are the same constant or at least one is a variable, then the test passes and the chunk \verb|N| remains in the match set and the rest of the slot tests are performed.
+In line~3, the rule applies, if there is at least one slot \lstinline|(S,V2)| that has to be tested and a $HasSlot$ relation of the kind \lstinline|N| $\xrightarrow[]{\mathtt{S}}$ \lstinline|V1| with the slot \lstinline|S| to be tested, that is still in the match set, so no conflicting slot has been found yet. If the values \lstinline|V1| and \lstinline|V2| are unifiable, i.e. the both are the same constant or at least one is a variable, then the test passes and the chunk \lstinline|N| remains in the match set and the rest of the slot tests are performed.
 
-The second rule in line~8 applied if the guard of the first rule did not hold, so the values \verb|V1| and \verb|V2| are not unifiable, but there is a connection \verb|N| $\xrightarrow[]{\mathtt{S}}$ \verb|V1| and in the request it has been specified that the value of slot \verb|S| has to be \verb|V2|. In this case, \verb|V1| $\neq$ \verb|V2|, so the test fails and the chunk \verb|N| has to be removed from the match set, since one of its slots does not match.
+The second rule in line~8 applied if the guard of the first rule did not hold, so the values \lstinline|V1| and \lstinline|V2| are not unifiable, but there is a connection \lstinline|N| $\xrightarrow[]{\mathtt{S}}$ \lstinline|V1| and in the request it has been specified that the value of slot \lstinline|S| has to be \lstinline|V2|. In this case, \lstinline|V1| $\neq$ \lstinline|V2|, so the test fails and the chunk \lstinline|N| has to be removed from the match set, since one of its slots does not match.
 
 If the last two rules cannot be applied, the chunk does not provide a slot that, however, has been specified in the request. Hence, the chunk does not match and the last rule therefore deletes it from the match set. \FIXME{make simpagation rule to simplification rule?}
 
 If those rules have been applied exhaustively, only the matching chunks will remain in the match set: If there would be an outstanding slot test, one of the rules would be applicable and the chunk would be removed from the match set, if the test fails (and the test would also be removed, because it has been performed). If the test is successful, the chunk will remain part of the match set, but the test will be removed. So the match set is correct and complete.
 
-However, since the match set is distributed over a set of \verb|match_set| constraints, it would be desirable to collect all those matches in one set. This can be triggered by the constraint \verb|collect_matches/1|, which returns the complete match set in its arguments as soon as there is only one \verb|match_set| left:
+However, since the match set is distributed over a set of \lstinline|match_set| constraints, it would be desirable to collect all those matches in one set. This can be triggered by the constraint \lstinline|collect_matches/1|, which returns the complete match set in its arguments as soon as there is only one \lstinline|match_set| left:
 
 \begin{lstlisting}
 <<collect_matches(_) \ match_set(L1), match_set(L2)>> <=> 
@@ -1236,9 +1234,9 @@ However, since the match set is distributed over a set of \verb|match_set| const
 <<collect_matches(Res)>> <=> Res=[].
 \end{lstlisting}
 
-The first rule merges two match sets to one singe merge set containing a list with all the chunks of the former sets, if the \verb|collect_matches| trigger is present. 
+The first rule merges two match sets to one singe merge set containing a list with all the chunks of the former sets, if the \lstinline|collect_matches| trigger is present. 
 
-In the second rule, if no two match sets are in the store, the result of the \verb|collect_matches| operation is the match set. The same applies for the last rule, where no match set is in the store and therefore the result is empty. Note, that this implies, that the rules have to be applied from top to bottom, left to right\footnote{This is called the refined operational semantics of CHR}.
+In the second rule, if no two match sets are in the store, the result of the \lstinline|collect_matches| operation is the match set. The same applies for the last rule, where no match set is in the store and therefore the result is empty. Note, that this implies, that the rules have to be applied from top to bottom, left to right\footnote{This is called the refined operational semantics of CHR}.
 
 The symbolic layer does not implement any rule for which chunk will be returned, if there are more than one in the match set. In this implementation, the first chunk in the list is chosen. The module request is now implemented as follows:
 
@@ -1251,13 +1249,13 @@ The symbolic layer does not implement any rule for which chunk will be returned,
   get_state(ResChunk,ResState).
 \end{lstlisting}
 
-where \verb|first(L,E)| gets a list \verb|L| and returns its first element \verb|E| or \verb|nil|, if the list was empty.
+where \lstinline|first(L,E)| gets a list \lstinline|L| and returns its first element \lstinline|E| or \lstinline|nil|, if the list was empty.
 
-With \verb|return_chunk/2| and \verb|get_state/2|, the actual results of the request are computed:
+With \lstinline|return_chunk/2| and \lstinline|get_state/2|, the actual results of the request are computed:
 
-By now, the variable \verb|Chunk| holds the name of the chunk to return, but in the specification of the module request, a complete chunk specification is demanded. \verb|return_chunk/2| is defined as a default method of a chunk store that gets a chunk name as its first argument and returns a chunk specification created from the values in the chunk store as its second argument.
+By now, the variable \lstinline|Chunk| holds the name of the chunk to return, but in the specification of the module request, a complete chunk specification is demanded. \lstinline|return_chunk/2| is defined as a default method of a chunk store that gets a chunk name as its first argument and returns a chunk specification created from the values in the chunk store as its second argument.
 
-The resulting state of the request is computed as follows: If the result chunk is \verb|nil|, then no chunk was in the match set, so the state of the declarative module will be \verb|error|. In any other case, the state is \verb|free| after the request has been performed.
+The resulting state of the request is computed as follows: If the result chunk is \lstinline|nil|, then no chunk was in the match set, so the state of the declarative module will be \lstinline|error|. In any other case, the state is \lstinline|free| after the request has been performed.
 
 \subsection{Chunk Merging}
 
@@ -1276,9 +1274,9 @@ If a chunk entering the declarative memory has the same name as a chunk in that 
   check_identical_chunks(chunk(C,T,S)).
 \end{lstlisting}
 
-The rules are added before the empty slot initialization in listing~\ref{lst:add_chunk_rules}. The first rule handles the case where a chunk with a already allocated name is added to the store. Then it gets a new name (which basically is just the old name extended by \verb|:new|, and tries to add this new chunk to the memory. 
+The rules are added before the empty slot initialization in listing~\ref{lst:add_chunk_rules}. The first rule handles the case where a chunk with an already allocated name is added to the store. Then it gets a new name (which basically is just the old name extended by \lstinline|:new|, and tries to add this new chunk to the memory. 
 
-The second rule adds a identity check for each chunk to be added except for primitive elements, since their slots are identical for every name, because every primitive element has no slots. Nevertheless they have to be distinguishable by their names and therefore cannot be merged.
+The second rule adds an identity check for each chunk to be added except for primitive elements, since their slots are identical for every name, because every primitive element has no slots. Nevertheless they have to be distinguishable by their names and therefore cannot be merged.
 
 The identity check is implemented as follows:
 
@@ -1310,15 +1308,15 @@ The rule in line~3 adds for each identity check and each chunk in the store a pa
 <<<cleanup_identical_chunk_check>>> @ <<identical(NameOld,NameNew) \ check_identical_chunks(chunk(NameNew,_,_),NameOld)>> <=> true.
 \end{lstlisting}
 
-The first rule is the base case, where no slots have to be tested any more. Then the chunks are identical and an \verb|identical/2| constraint is added to the store for those two chunks.
+The first rule is the base case, where no slots have to be tested any more. Then the chunks are identical and an \lstinline|identical/2| constraint is added to the store for those two chunks.
 
-The next rule applies for an identity check for a slot-value pair that is successful, whereas the third rule handles the opposite case and aborts the check for this pair of chunks without adding an \verb|identical| constraint.
+The next rule applies for an identity check for a slot-value pair that is successful, whereas the third rule handles the opposite case and aborts the check for this pair of chunks without adding an \lstinline|identical| constraint.
 
 In the fourth rule redundant information is removed and the lust rule aborts the identity check as soon as one matching chunk has been found.
 
-Note that this implementation assumes that the chunk specification of the chunk entering the declarative memory is complete. If it is not complete, the correct semantics of the adding is that all unspecified slots are empty so their values equal \verb|nil|. Nevertheless, this implementation would merge the chunk with a chunk that has values in those unspecified slots. This could be improved by completing the chunk specifications before checking for identical chunks in the store.
+Note that this implementation assumes that the chunk specification of the chunk entering the declarative memory is complete. If it is not complete, the correct semantics of the adding is that all unspecified slots are empty so their values equal \lstinline|nil|. Nevertheless, this implementation would merge the chunk with a chunk that has values in those unspecified slots. This could be improved by completing the chunk specifications before checking for identical chunks in the store.
 
-For the easier use of the identical constraint at other points, transitive identities can be reduced to the only real chunk in the store (the one with the \verb|chunk| constraint):
+For the easier use of the identical constraint at other points, transitive identities can be reduced to the only real chunk in the store (the one with the \lstinline|chunk| constraint):
 
 \begin{lstlisting}
 <<<reduce>>> @ <<chunk(C1,_), identical(C1,C2) \ identical(C2,C3)>> <=> 
@@ -1341,18 +1339,18 @@ In the declarative module, the chunk search must be extended to find merged chun
 
 so the chunk search of a chunk that is only a pointer to another chunk can be reduced to the search of this chunk. \FIXME{maybe this can cause problems if a production rule refers to a particular name and gets a chunk with the name of its brother..}
 
-The process of chunk merging is described in \cite[??]{actr_reference}. The treating of identical names is not described there, but has been tested in the original implementation: ACT-R handles those identical names similarly to this approach by adding a sequential number to the identical name. For example, the chunk with name \verb|a| would be called \verb|a-0| if there already was a chunk \verb|a| in the store.
+The process of chunk merging is described in \cite[??]{actr_reference}. The treating of identical names is not described there, but has been tested in the original implementation: ACT-R handles those identical names similarly to this approach by adding a sequential number to the identical name. For example, the chunk with name \lstinline|a| would be called \lstinline|a-0| if there already was a chunk \lstinline|a| in the store.
 
 \section{Initialization}
 \label{initialization}
 
-In the examples the models had to be run by stating complex queries which create all necessary buffers and add all chunk types and chunks to the declarative memory manually. In the original ACT-R implementation, the command \verb|run| is used to run a model. This behaviour can be transferred to the CHR implementation easily by adding a \verb|run| constraint and a rule for this constraint, that performs all the initialization work.
+In the examples the models had to be run by stating complex queries which create all necessary buffers and add all chunk types and chunks to the declarative memory manually. In the original ACT-R implementation, the command \lstinline|run| is used to run a model. This behaviour can be transferred to the CHR implementation easily by adding a \lstinline|run| constraint and a rule for this constraint, that performs all the initialization work.
 
 \FIXME{modify count example from above}
 
 \section{Timing in ACT-R}
 
-So far, the execution order of the production rules has been controlled by the \verb|fire| constraint -- a phase constraint that simulated the occupation of the production system while a rule is executed.
+So far, the execution order of the production rules has been controlled by the \lstinline|fire| constraint -- a phase constraint that simulated the occupation of the production system while a rule is executed.
 
 However, certain buffer actions like buffer requests may take some time until they are finished. The procedural system is free to fire the next rule after all actions have been started\footnote{see chapters \ref{serial_parallel_aspects} and \ref{process_of_rule_selection_and_execution}} and the requests are performed in parallel to that.
 
@@ -1377,15 +1375,15 @@ A \emph{priority queue} is an abstract data structure that serves objects by the
 
 \subsubsection{Objects}
 
-In the implementation of the scheduler, the priority queue contains objects of the form \verb|q(Time,Priority,Event)|. The priority of such a queue object is composed from the \verb|Time| and the \verb|Priority|. The order between the elements is defined as follows:
+In the implementation of the scheduler, the priority queue contains objects of the form \lstinline|q(Time,Priority,Event)|. The priority of such a queue object is composed from the \lstinline|Time| and the \lstinline|Priority|. The order between the elements is defined as follows:
 
 \begin{definition}[ordered time-priority condition]
-\verb|q(T1,P1,E1)| $\prec$ \verb|q(T2,P2,E2)|, i.e. the object \verb|q(T1,P1,E1)| is the predecessor of the object \verb|q(T2,P2,E2)|, if \verb|T1| $<$ \verb|T2|. In the case that \verb|T1 = T2|, then \verb|q(T1,P1,E1)| $\prec$ \verb|q(T2,P2,E2)| if \verb|P1| $>$ \verb|P2|. So, events with smaller times will be returned first. If two events appear at the same time, it is possible to define a priority and the event with the higher priority will be returned first. 
+\lstinline|q(T1,P1,E1)| $\prec$ \lstinline|q(T2,P2,E2)|, i.e. the object \lstinline|q(T1,P1,E1)| is the predecessor of the object \lstinline|q(T2,P2,E2)|, if \lstinline|T1| $<$ \lstinline|T2|. In the case that \lstinline|T1 = T2|, then \lstinline|q(T1,P1,E1)| $\prec$ \lstinline|q(T2,P2,E2)| if \lstinline|P1| $>$ \lstinline|P2|. So, events with smaller times will be returned first. If two events appear at the same time, it is possible to define a priority and the event with the higher priority will be returned first. 
 \end{definition}
 
 \subsubsection{Representation of the Queue}
 
-The representation of the priority queue is inspired by \cite[38\psqq]{fru_chr_book_2009}: An order constraint \verb|A --> B| is introduced, which states that \verb|A| will be returned before \verb|B| (or \verb|B| is the direct successor of \verb|A|). The beginning of the queue will be defined by a start symbol \verb|s|, so the first real element is the successor of \verb|s|. A possible queue could be:
+The representation of the priority queue is inspired by \cite[38\psqq]{fru_chr_book_2009}: An order constraint \lstinline|A --> B| is introduced, which states that \lstinline|A| will be returned before \lstinline|B| (or \lstinline|B| is the direct successor of \lstinline|A|). The beginning of the queue will be defined by a start symbol \lstinline|s|, so the first real element is the successor of \lstinline|s|. A possible queue could be:
 
 \begin{lstlisting}
     s     --> q(1,0,e1)
@@ -1425,17 +1423,17 @@ leq(q(Time,Priority1,_), q(Time,Priority2,_)) :-
 
 The first predicate states that the start symbol is is less than every other object. The other two rules implement the time-priority condition directly.
 
-Note that two objects are considered the same, iff. their time, priority and event are syntactically the same. If an object is altered in one of the \verb|-->| constraints, it has to be edited in every other occurrence in the   list to avoid gaps.
+Note that two objects are considered the same, iff. their time, priority and event are syntactically the same. If an object is altered in one of the \lstinline|-->| constraints, it has to be edited in every other occurrence in the   list to avoid gaps.
 
 Another important property is, that the list does not have any gaps, so it must be possible to track the queue from every element backwards to the start symbol. This condition is not achieved by the rules above, but since a priority queue only offers two mechanisms to modify it, a lot of those problems can be avoided:
 
 \begin{description}
- \item[add\_q(Time,Priority,Event)] Enqueues an object with the specified properties. Ie., a new \verb|q(Time,Priority,Event)| object will be created and the following constraint will be added: \verb|s --> q(Time,Priority,Event)|. The rules presented above will lead to a linear, serialized list achieving the time-priority condition without gaps.
+ \item[add\_q(Time,Priority,Event)] Enqueues an object with the specified properties. Ie., a new \lstinline|q(Time,Priority,Event)| object will be created and the following constraint will be added: \lstinline|s --> q(Time,Priority,Event)|. The rules presented above will lead to a linear, serialized list achieving the time-priority condition without gaps.
 \begin{lstlisting}
 <<add_q(Time,Priority,Evt)>> <=>
   s --> q(Time,Priority,Evt).
 \end{lstlisting}
- \item[de\_q(X)] Dequeues the first element of the queue according to the time-priority condition and binds its value to \verb|X|.
+ \item[de\_q(X)] Dequeues the first element of the queue according to the time-priority condition and binds its value to \lstinline|X|.
 \begin{lstlisting}
 <<de_q(X), s --> A, A --> B>> <=>
   X = A,
@@ -1447,7 +1445,7 @@ Another important property is, that the list does not have any gaps, so it must 
 <<de_q(X)>> <=> X = nil.
 \end{lstlisting}
 
-The first object just is the successor of \verb|s|, since the list has been constructed preserving the correct order and the property, that everything starts at \verb|s|. If the first object has a successor, this object is the new first object. If there are no order constraints left, the queue is empty and \verb|de_q| returns \verb|nil|.
+The first object just is the successor of \lstinline|s|, since the list has been constructed preserving the correct order and the property, that everything starts at \lstinline|s|. If the first object has a successor, this object is the new first object. If there are no order constraints left, the queue is empty and \lstinline|de_q| returns \lstinline|nil|.
 
 \end{description}
 
@@ -1456,7 +1454,7 @@ The first object just is the successor of \verb|s|, since the list has been cons
 In this implementation, another default method is added to the priority queue: 
 
 \begin{description}
- \item[after\_next\_event(E)] Adds the event \verb|E| to the queue, after the first event without destroying the consistency and the time-priority condition of the queue.
+ \item[after\_next\_event(E)] Adds the event \lstinline|E| to the queue, after the first event without destroying the consistency and the time-priority condition of the queue.
 \end{description}
 
 To implement this method, the time and priorities have to be set such that the time-priority condition does hold:
@@ -1470,31 +1468,31 @@ To implement this method, the time and priorities have to be set such that the t
   add_q(Time,P,Evt). % add new event. Will be < than Prio of head but it is ensured that it is higher than prio of second event
 \end{lstlisting}
 
-If the first event is \verb|q(Time,P1,E1)| and a new event \verb|Evt| has to be added after this event, the times of the two events are the same, the priority of the first event is \verb|P1 + 2| and the priority of the new event is \verb|P1 + 1|. The first event is removed from the queue and would be added with its new priority to the queue again, as it is with the new event. 
+If the first event is \lstinline|q(Time,P1,E1)| and a new event \lstinline|Evt| has to be added after this event, the times of the two events are the same, the priority of the first event is \lstinline|P1 + 2| and the priority of the new event is \lstinline|P1 + 1|. The first event is removed from the queue and would be added with its new priority to the queue again, as it is with the new event. 
 
 This is correct: The first event will be the first event again, because its old priority was higher than any other priority at that time point and since the new priority is even higher than that, no other event from the queue will have a higher priority. The new event also has a higher priority than every other event in the queue, but a lower priority than the first event, so it will be added after the first event.
 
-By the \verb|de_q| and \verb|add_q| actions it is ensured, that no garbage of the old event remains in the queue and the events are added correctly through a official method of the queue.
+By the \lstinline|de_q| and \lstinline|add_q| actions it is ensured, that no garbage of the old event remains in the queue and the events are added correctly through an official method of the queue.
 
 \subsection{Scheduler}
 
-The scheduler component is a own module that manages events by feeding a priority queue and controls the recognize-act cycle. It also holds the current time of the system. 
+The scheduler component is an own module that manages events by feeding a priority queue and controls the recognize-act cycle. It also holds the current time of the system. 
 
 \subsubsection{Current Time}
 
-The current time can be saved in a \verb|now/1| constraint. It is important that there is only one such constraint and that time increases monotonically.
+The current time can be saved in a \lstinline|now/1| constraint. It is important that there is only one such constraint and that time increases monotonically.
 
-Other modules can access the time only by a \verb|get_now/1| that only returns the current time saved in the \verb|now/1| constraint. The current time cannot be set from outside, but is determined by the last event dequeued from the priority queue.
+Other modules can access the time only by a \lstinline|get_now/1| that only returns the current time saved in the \lstinline|now/1| constraint. The current time cannot be set from outside, but is determined by the last event dequeued from the priority queue.
 
 \subsubsection{Recognize-Act Cycle}
 
 As described before, the procedural module can only fire one rule at a time. When executing the RHS of a rule, all its actions are added to the scheduler with the time point when their execution is finished. For example: If on the RHS of the firing rule a retrieval request has to be performed, an event will be added to the priority queue with the time $Now + Duration$, so the chunk retrieved from the declarative memory will be written to the retrieval buffer at this time point.
 
-After all events of the RHS have been added to the scheduler, the procedural module is free again and therefore the next rule can fire. The event of firing will be added to the priority queue as well by the \verb|fire| constraint at the end of each production rule. The rule will be added at the current time point, but with low priority, since it has to be ensured, that every action of the previously executed rule has been performed yet (in the sense that a corresponding event has been added at the specified time point). In many cases, no other rule will be applicable at this time, because most of the meaningful production rules have to wait for the results of the production rule before. 
+After all events of the RHS have been added to the scheduler, the procedural module is free again and therefore the next rule can fire. The event of firing will be added to the priority queue as well by the \lstinline|fire| constraint at the end of each production rule. The rule will be added at the current time point, but with low priority, since it has to be ensured, that every action of the previously executed rule has been performed yet (in the sense that a corresponding event has been added at the specified time point). In many cases, no other rule will be applicable at this time, because most of the meaningful production rules have to wait for the results of the production rule before. 
 
 Many of the buffer actions are performed immediately, so an event with the current time point is added for the buffer modifications or clearings. They are performed in a certain order defined by their priority as shown in table~\ref{tab:action_priorities}. The request actions are performed at last, but they perform a buffer clearing immediately and then start their calculation which can take some time. 
 
-If no rule is applicable, the next time that a rule could be applicable is after having performed the next event. So, the next \verb|fire| event is scheduled directly after the first event in the queue. This simulates the behaviour that the procedural module stays ready to fire the next rule, without polling at every time point if a rule is applicable, but only reacting on changes to the buffer system. 
+If no rule is applicable, the next time that a rule could be applicable is after having performed the next event. So, the next \lstinline|fire| event is scheduled directly after the first event in the queue. This simulates the behaviour that the procedural module stays ready to fire the next rule, without polling at every time point if a rule is applicable, but only reacting on changes to the buffer system. 
 
 
 The following enumeration summarizes the recognize-act cycle with a scheduler:
@@ -1502,13 +1500,13 @@ The following enumeration summarizes the recognize-act cycle with a scheduler:
 \begin{enumerate}
  \item The next event is removed from the queue, the current time is set to the time of the event and the event is performed.
  \begin{enumerate}
- \item The dequeued event is a \verb|fire| constraint: The rule that matches all its conditions is fired and removes the \verb|fire| constraint.
+ \item The dequeued event is a \lstinline|fire| constraint: The rule that matches all its conditions is fired and removes the \lstinline|fire| constraint.
  \item The actions of the rule are scheduled in the queue. Modifications and Clearings have the current time point, requests have a time point in the future depending on the module.
- \item The last action of the rule is to add a \verb|fire| constraint to the queue with the current time point and a low priority. This simulates that the procedural module is free again, after all in-place actions of a rule have been fired.
+ \item The last action of the rule is to add a \lstinline|fire| constraint to the queue with the current time point and a low priority. This simulates that the procedural module is free again, after all in-place actions of a rule have been fired.
  \item There are two possibilities:
  \begin{enumerate}
   \item \emph{The next rule matches:} It will be performed like the last rule.
-  \item \emph{No rule matches:} The next time, it could be possible that a rule can fire, is when something in the buffers changed. This only can happen, after the next event has been performed. So the next \verb|fire| event will be added to the queue by \verb|after_next_event| which has been described above.
+  \item \emph{No rule matches:} The next time, it could be possible that a rule can fire, is when something in the buffers changed. This only can happen, after the next event has been performed. So the next \lstinline|fire| event will be added to the queue by \lstinline|after_next_event| which has been described above.
  \end{enumerate}
   \end{enumerate}
  \item Go to point 1. This is performed until there are no events in the queue.
@@ -1519,7 +1517,7 @@ The following parts are necessary to implement this cycle:
 
 \paragraph{Start Next Cycle} 
 
-The constraint \verb|nextcyc| leads the system to remove the next event from queue and perform it. Performing is done by a \verb|call_event| constraint:
+The constraint \lstinline|nextcyc| leads the system to remove the next event from queue and perform it. Performing is done by a \lstinline|call_event| constraint:
 
 \begin{lstlisting}
 % After an event has been performed, nextcyc is triggered. 
@@ -1529,9 +1527,9 @@ The constraint \verb|nextcyc| leads the system to remove the next event from que
 
 \paragraph{Call an Event} 
 
-Event calling just takes a queue element and sets the current time to the time of the event and performs a Prolog \verb|call|. Additionally, a message is printed to the screen. After the event has been executed, the next cycle is initiated.
+Event calling just takes a queue element and sets the current time to the time of the event and performs a Prolog \lstinline|call|. Additionally, a message is printed to the screen. After the event has been executed, the next cycle is initiated.
 
-If the queue element is \verb|nil| (so no event has been in the queue), the computation is finished and the current time is removed.
+If the queue element is \lstinline|nil| (so no event has been in the queue), the computation is finished and the current time is removed.
 
 \begin{lstlisting}
 % no event in queue -> do nothing and remove current time
@@ -1549,7 +1547,7 @@ If the queue element is \verb|nil| (so no event has been in the queue), the comp
 \paragraph{Changing the Buffer System}
 \label{changing_the_buffer_system}
 
-For each buffer action, add a \verb|do_buffer_action| constraint, that actually performs the code specified in the former action. Modify the action as follows:
+For each buffer action, add a \lstinline|do_buffer_action| constraint, that actually performs the code specified in the former action. Modify the action as follows:
 
 \begin{lstlisting}
 % Schedule buffer_action
@@ -1559,7 +1557,7 @@ For each buffer action, add a \verb|do_buffer_action| constraint, that actually 
   add_q(Time, Priority, do_buffer_action(BufName, Chunk)). 
 \end{lstlisting}
 
-with appropriate values for \verb|Duration| and \verb|Priority|.
+with appropriate values for \lstinline|Duration| and \lstinline|Priority|.
 
 \paragraph{Production Rules}
 
@@ -1570,7 +1568,7 @@ As in the last version of the production system, each rule has the following str
   {conditions} \ <<fire>> <=> {actions}, conflict_resolution.
 \end{lstlisting}
 
-where \verb|conflict_resolution/0| just schedules the next \verb|fire| event and is defined as:
+where \lstinline|conflict_resolution/0| just schedules the next \lstinline|fire| event and is defined as:
 
 \begin{lstlisting}
 <<conflict_resolution>> <=> 
@@ -1585,7 +1583,7 @@ As the last production rule, there has to be:
   <<fire>> <=> no_rule.
 \end{lstlisting}
 
-which removes the fire constraint if still present and states that no rule has been fired (since the fire constraint is still present). In this case, a new \verb|fire| event is scheduled after the next event:
+which removes the fire constraint if still present and states that no rule has been fired (since the fire constraint is still present). In this case, a new \lstinline|fire| event is scheduled after the next event:
 
 \begin{lstlisting}
 <<no_rule>> <=> 
@@ -1600,7 +1598,7 @@ In ACT-R, it is possible to call some Lisp functions in the model definitions, f
 
 \subsection{General Translation}
 
-Lisp functions are lists (indicated by round braces \verb|(| and \verb|)|), which have the functor as their first element and the function arguments in the rest of the list. Hence, each Lisp function \verb|(f arg1 arg2 ...)| called in the model definition of an ACT-R model is translated into the adding of a CHR constraint \verb|lisp_f([arg1, arg2, ...])|. For all used functions, there has to be a default implementation in the module \verb|std_lisp|. In this implementation, the concept is reduced to simple procedural calls ignoring return values, which is adequate for most of the pure ACT-R models without the experiment environment. Here is an example implementation of the lisp function \verb|(chunk-type name slot1 slot2 ...)|:
+Lisp functions are lists (indicated by round braces \lstinline|(| and \lstinline|)|), which have the functor as their first element and the function arguments in the rest of the list. Hence, each Lisp function \lstinline|(f arg1 arg2 ...)| called in the model definition of an ACT-R model is translated into the adding of a CHR constraint \lstinline|lisp_f([arg1, arg2, ...])|. For all used functions, there has to be a default implementation in the module \lstinline|std_lisp|. In this implementation, the concept is reduced to simple procedural calls ignoring return values, which is adequate for most of the pure ACT-R models without the experiment environment. Here is an example implementation of the lisp function \lstinline|(chunk-type name slot1 slot2 ...)|:
 
 \begin{lstlisting}
 lisp_chunktype([Type|Slots]) <=>
@@ -1611,7 +1609,7 @@ lisp_chunktype([Type|Slots]) <=>
 \subsection{Configuration Variables}
 \label{configuration}
 
-In ACT-R, configuration variables which control the behaviour of the architecture are set with the Lisp function \verb|(sgp :Var Val)|, which sets the variable \verb|Var| to \verb|Val|. To handle such configuration variables, a configuration module can be added to the CHR implementation, that offers an interface to set variables and to ask for their values:
+In ACT-R, configuration variables which control the behaviour of the architecture are set with the Lisp function \lstinline|(sgp :Var Val)|, which sets the variable \lstinline|Var| to \lstinline|Val|. To handle such configuration variables, a configuration module can be added to the CHR implementation, that offers an interface to set variables and to ask for their values:
 
 \begin{description}
  \item[Set configuration variables]
@@ -1640,9 +1638,9 @@ B_i = \mathrm{ln}\left(\sum_{j=1}^n{t_j^{-d}}\right)
 
 \paragraph{Presentations of a Chunk} 
 
-To determine the base-level value of a chunk, the time points when it has been practiced have to be known. A chunk is considered as practiced when it enters the declarative memory either explicitly by calling \verb|add_dm| or implicitly by a buffer clearing. Additionally, if a chunk is merged with a chunk that enters the declarative memory, the original chunk is strengthened (so the chunk that has been in the declarative memory before is considered as presented). 
+To determine the base-level value of a chunk, the time points when it has been practiced have to be known. A chunk is considered as practiced when it enters the declarative memory either explicitly by calling \lstinline|add_dm| or implicitly by a buffer clearing. Additionally, if a chunk is merged with a chunk that enters the declarative memory, the original chunk is strengthened (so the chunk that has been in the declarative memory before is considered as presented). 
 
-Hence, every time a chunk enters the declarative memory, the time of this event has to be stored. Therefore, a \verb|presentation/2| that holds the chunk name and the time of a presentation is introduced. To simplify the use of this constraint, the procedural constraint \verb|present/1|, that stores the presentation of a chunk at the current time, can be implemented as follows:
+Hence, every time a chunk enters the declarative memory, the time of this event has to be stored. Therefore, a \lstinline|presentation/2| that holds the chunk name and the time of a presentation is introduced. To simplify the use of this constraint, the procedural constraint \lstinline|present/1|, that stores the presentation of a chunk at the current time, can be implemented as follows:
 
 \begin{lstlisting}
 <<chunk(Name,Type) \ present(chunk(Name,Type,_))>> <=> 
@@ -1650,7 +1648,7 @@ Hence, every time a chunk enters the declarative memory, the time of this event 
   presentation(Name,Time).
 \end{lstlisting}
 
-The \verb|add_dm| command is extended by a presentation event:
+The \lstinline|add_dm| command is extended by a presentation event:
 
 \begin{lstlisting}
 <<add_dm(ChunkDef)>> <=> 
@@ -1667,7 +1665,7 @@ If a chunk that is identical to a chunk already stored enters declarative memory
 
 \paragraph{Calculating the Base-Level Value}
 
-Somewhere in the process of a request, the activation of a set of chunks has to be calculated. Therefore, a constraint \verb|calc_activation(Chunk,Activation)|  that gets a chunk name and binds its activation value to the second argument, can be introduced:
+Somewhere in the process of a request, the activation of a set of chunks has to be calculated. Therefore, a constraint \lstinline|calc_activation(Chunk,Activation)|  that gets a chunk name and binds its activation value to the second argument, can be introduced:
 
 \begin{lstlisting}
 <<presentation(C,PTime), calc_activation(C,A)>> ==> 
@@ -1678,9 +1676,9 @@ Somewhere in the process of a request, the activation of a set of chunks has to 
 calc_activation(_,_) <=> true.
 \end{lstlisting}
 
-These two rules produce for every presentation of the chunk a \verb|base_level_part| with the name of the chunk and the time since a particular presentation has happened. Additionally, two unbound variables are given to the part constraint: The first is a variable that will hold an intermediate result and the second is the actual activation value that is bound to the return value of the \verb|calc_activation| constraint.
+These two rules produce for every presentation of the chunk a \lstinline|base_level_part| with the name of the chunk and the time since a particular presentation has happened. Additionally, two unbound variables are given to the part constraint: The first is a variable that will hold an intermediate result and the second is the actual activation value that is bound to the return value of the \lstinline|calc_activation| constraint.
 
-Each of those \verb|base_level_part| constraints are part of the result which is the activation value of their chunk. The following rule converts the time $t_j$ to the value $t_j^{-d}$ as stated in equation~\eqref{eq:base_level_learning}:
+Each of those \lstinline|base_level_part| constraints are part of the result which is the activation value of their chunk. The following rule converts the time $t_j$ to the value $t_j^{-d}$ as stated in equation~\eqref{eq:base_level_learning}:
 
 \begin{lstlisting}
 % if A and B not set: set B to Time^(-D). Time is the time since the presentation of this base_level_part
@@ -1691,9 +1689,9 @@ Each of those \verb|base_level_part| constraints are part of the result which is
   B is Time ** (-D).
 \end{lstlisting}
 
-The result is bound to the variable \verb|B|. The rule only can be applied, if the intermediate result \verb|B| and the result \verb|A| are not bound to any value.
+The result is bound to the variable \lstinline|B|. The rule only can be applied, if the intermediate result \lstinline|B| and the result \lstinline|A| are not bound to any value.
 
-As soon as the intermediate result has been calculated, two \verb|base_level_part| constraints can be merged, by adding their \verb|B| values up according to the base-level learning equation~\eqref{eq:base_level_learning}:
+As soon as the intermediate result has been calculated, two \lstinline|base_level_part| constraints can be merged, by adding their \lstinline|B| values up according to the base-level learning equation~\eqref{eq:base_level_learning}:
 
 \begin{lstlisting}
 % collect base level parts and add them together. Only if Bs are set
@@ -1704,7 +1702,7 @@ As soon as the intermediate result has been calculated, two \verb|base_level_par
   base_level_part(C,_,B,A).
 \end{lstlisting}
 
-If this rule is applied to exhaustion, only one \verb|base_level_part| constraint will be remaining. Hence, below this rule, a rule for this single constraint can be introduced:
+If this rule is applied to exhaustion, only one \lstinline|base_level_part| constraint will be remaining. Hence, below this rule, a rule for this single constraint can be introduced:
 
 \begin{lstlisting}
 % if B is set, A is not set and there are no more base_level_parts of this chunk: calculate actual base level activation and store it in A. Only possible if B is =\= 0.
@@ -1732,9 +1730,9 @@ In the calculation process, the fan value $\mathrm{fan}_j$ of a chunk $j$ may be
   fan(C,F).
 \end{lstlisting}
 
-The first rule adds a fan of $1$ for each chunk. The next rule adds a fan of $1$ for a chunk \verb|C| for each slot where \verb|C| is the value. In the last rule, two fan values for one particular chunk are summed up to a single fan value. Note, that this has to be considered when deleting a chunk: For every chunk in the slots of the deleted chunk, the fan value must be decreased by one.
+The first rule adds a fan of $1$ for each chunk. The next rule adds a fan of $1$ for a chunk \lstinline|C| for each slot where \lstinline|C| is the value. In the last rule, two fan values for one particular chunk are summed up to a single fan value. Note, that this has to be considered when deleting a chunk: For every chunk in the slots of the deleted chunk, the fan value must be decreased by one.
 
-As noted before in section~\ref{distinction_elements_chunks} on page~\pageref{distinction_elements_chunks}, primitive elements are stored as chunks of the type \verb|chunk| that has no slots. This is very important of the fan calculation as it is presented here, since the fan value depends on the presence of a \verb|chunk| constraint to calculate the proper fan value. Otherwise, the fan value of primitive elements would always be off by one.
+As noted before in section~\ref{distinction_elements_chunks} on page~\pageref{distinction_elements_chunks}, primitive elements are stored as chunks of the type \lstinline|chunk| that has no slots. This is very important of the fan calculation as it is presented here, since the fan value depends on the presence of a \lstinline|chunk| constraint to calculate the proper fan value. Otherwise, the fan value of primitive elements would always be off by one.
 
 \paragraph{Associative Weights}
 
@@ -1748,7 +1746,7 @@ The activation calculation also depends on a contextual component, the associati
 <<calc_sji(_,_,Sji)>> <=> Sji=0.
 \end{lstlisting}
 
-The \verb|calc_sji(J,I,Sji)| gets a chunk \verb|J| and a chunk \verb|I|, calculates their associative weight from \verb|J| to \verb|I| and binds it to \verb|Sji|. The first rule can be applied, if \verb|J| appears in the slots of chunk \verb|I|. Then, the associative weight is calculated according to equation~\eqref{eq:assoc_strength}:
+The \lstinline|calc_sji(J,I,Sji)| gets a chunk \lstinline|J| and a chunk \lstinline|I|, calculates their associative weight from \lstinline|J| to \lstinline|I| and binds it to \lstinline|Sji|. The first rule can be applied, if \lstinline|J| appears in the slots of chunk \lstinline|I|. Then, the associative weight is calculated according to equation~\eqref{eq:assoc_strength}:
 
 \begin{equation*}
 S_{ji} = S - \mathrm{ln}(\mathrm{fan}_j) 
@@ -1756,11 +1754,11 @@ S_{ji} = S - \mathrm{ln}(\mathrm{fan}_j)
 
 The value of $S$ is assumed to be $2$ in this rule; a configurable constant for $S$ as described in section~\ref{configuration} can be introduced easily.
 
-If \verb|J| does not appear in the slots of chunk \verb|I|, then $S_{ji} := 0$ by definition.
+If \lstinline|J| does not appear in the slots of chunk \lstinline|I|, then $S_{ji} := 0$ by definition.
 
 \paragraph{Calculate the Overall-Activations}
 
-The new constraint \verb|calc_activations/2| gets a list of chunks and a context and initiates the computation of the overall activation values of the chunks in the list regarding the context. Remember, that for the associative weights, the current context plays a role, since all associative weights from the chunks (the $j$s) in the context to the chunk whose activation is calculated are summed up (see section~\ref{activation} for details).
+The new constraint \lstinline|calc_activations/2| gets a list of chunks and a context and initiates the computation of the overall activation values of the chunks in the list regarding the context. Remember, that for the associative weights, the current context plays a role, since all associative weights from the chunks (the $j$s) in the context to the chunk whose activation is calculated are summed up (see section~\ref{activation} for details).
 
 \begin{lstlisting}[escapeinside={(*@}{@*)}]
 <<calc_activations([],_)>> <=>
@@ -1777,13 +1775,13 @@ The new constraint \verb|calc_activations/2| gets a list of chunks and a context
   max(C,A). (*@\label{lst:calc_activations:max}@*)
 \end{lstlisting}
 
-The first rule is the base-case that simply finishes the calculation. The second rule takes the first chunk in the list and calculates its base-level activation \verb|B| by \verb|calc_activation|. The next line triggers the computation for the rest of the chunks in the list (using the same context).
+The first rule is the base-case that simply finishes the calculation. The second rule takes the first chunk in the list and calculates its base-level activation \lstinline|B| by \lstinline|calc_activation|. The next line triggers the computation for the rest of the chunks in the list (using the same context).
 
-For the chunk \verb|C| the context component, i.e. the associative weight, is calculated by the call of \verb|context(C,Context,Assoc)| in line~\ref{lst:calc_activations:context}, which binds the associative weight to \verb|Assoc|, i.e. the result of $\sum_{j \in C}{S_{ji}}$ ($C$ is the context as represented by \verb|Context|) is bound to the variable \verb|Assoc|.
+For the chunk \lstinline|C| the context component, i.e. the associative weight, is calculated by the call of \lstinline|context(C,Context,Assoc)| in line~\ref{lst:calc_activations:context}, which binds the associative weight to \lstinline|Assoc|, i.e. the result of $\sum_{j \in C}{S_{ji}}$ ($C$ is the context as represented by \lstinline|Context|) is bound to the variable \lstinline|Assoc|.
 
-Afterwards, the attentional weighting $W_j$ is considered in lines~\ref{lst:calc_activations:attentional1} and \ref{lst:calc_activations:attentional2}. The variable \verb|Assoc1| now holds the value of $W_j \cdot \sum_{j \in C}{S_{ji}}$.
+Afterwards, the attentional weighting $W_j$ is considered in lines~\ref{lst:calc_activations:attentional1} and \ref{lst:calc_activations:attentional2}. The variable \lstinline|Assoc1| now holds the value of $W_j \cdot \sum_{j \in C}{S_{ji}}$.
 
-The overall activation of chunk \verb|C| is -- as defined in equation~\eqref{eq:activation_equation} -- calculated in line~\ref{lst:calc_activations:final} by adding the base-level activation to the sum of the associative weightings of the chunk.
+The overall activation of chunk \lstinline|C| is -- as defined in equation~\eqref{eq:activation_equation} -- calculated in line~\ref{lst:calc_activations:final} by adding the base-level activation to the sum of the associative weightings of the chunk.
 
 Eventually, in line~\ref{lst:calc_activations:max}, the activation of this chunk is added to the set of potential maximum candidates of all activation values. The maximum then is calculated as follows:
 
@@ -1797,9 +1795,9 @@ This deletes all potential candidates for the maximal activation value that have
 
 \paragraph{Threshold and Maximum}
 
-The request is only successful, if there is a matching chunk that has an activation higher than a specified threshold. In the following, it is assumed that the threshold is saved in a \verb|threshold/1| constraint.
+The request is only successful, if there is a matching chunk that has an activation higher than a specified threshold. In the following, it is assumed that the threshold is saved in a \lstinline|threshold/1| constraint.
 
-In the last section, the chunk with the highest activation among all matching chunks is calculated and stored in a \verb|max/2| constraint (there is only one \verb|max| constraint, after the rule in listing~\ref{lst:max_activation} has been applied to exhaustion). The constraint \verb|get_max/2| triggers the final maximum computation and binds the chunk and its activation to its parameters:
+In the last section, the chunk with the highest activation among all matching chunks is calculated and stored in a \lstinline|max/2| constraint (there is only one \lstinline|max| constraint, after the rule in listing~\ref{lst:max_activation} has been applied to exhaustion). The constraint \lstinline|get_max/2| triggers the final maximum computation and binds the chunk and its activation to its parameters:
 
 \begin{lstlisting}
 get_max(MN,MA), max(N,A), threshold(RT) <=> 
@@ -1823,9 +1821,9 @@ get_max(MN,MA), threshold(RT) <=>
 
 The first rule is applied in the case, that the activation of the maximal chunk is higher than the threshold. In this case, the chunk and its activation are simply returned.
 
-In the second rule, the matching chunk with the highest activation does not pass the threshold. Then no chunk can be returned, so the result of the \verb|get_max| request is \verb|nil|. The activation of this empty chunk is set to the threshold, because the retrieval latency, i.e. the time the retrieval request takes, is dependent on the threshold in case that no chunk could be found. So this value is used later.
+In the second rule, the matching chunk with the highest activation does not pass the threshold. Then no chunk can be returned, so the result of the \lstinline|get_max| request is \lstinline|nil|. The activation of this empty chunk is set to the threshold, because the retrieval latency, i.e. the time the retrieval request takes, is dependent on the threshold in case that no chunk could be found. So this value is used later.
 
-The last rule will only be applied, if both of the other rules did not match. This is the case, if there has no \verb|max| constraint been put to the store, which does only occur, if no chunk matched the request. This also leads to an empty chunk as a result.
+The last rule will only be applied, if both of the other rules did not match. This is the case, if there has no \lstinline|max| constraint been put to the store, which does only occur, if no chunk matched the request. This also leads to an empty chunk as a result.
 
 \paragraph{New Module Request Interface}
 
@@ -1837,9 +1835,9 @@ The interface from section~\ref{interface_for_module_requests} changes to:
 module_request(+BufName, +ChunkDef, +Context, -ResChunk, -ResState, -ResTime) 
 \end{lstlisting}
 
-where \verb|Context| is a list of the chunk names that are in the current context (as defined in section~\ref{current_context} on page~\pageref{current_context}) and \verb|ResTime| is bound to the time the request will take. As described in section~\ref{changing_the_buffer_system} on page \pageref{changing_the_buffer_system}, the buffer actions are divided in two phases: The first only schedules the second phase at the time when the action is finished, whereas the second phase actually performs the action, i.e. the changes to the buffers.
+where \lstinline|Context| is a list of the chunk names that are in the current context (as defined in section~\ref{current_context} on page~\pageref{current_context}) and \lstinline|ResTime| is bound to the time the request will take. As described in section~\ref{changing_the_buffer_system} on page \pageref{changing_the_buffer_system}, the buffer actions are divided in two phases: The first only schedules the second phase at the time when the action is finished, whereas the second phase actually performs the action, i.e. the changes to the buffers.
 
-The same is valid for buffer requests: They are divided into two rules -- \verb|buffer_request/2| and \verb|do_buffer_request/2| -- as already described in section~\ref{changing_the_buffer_system} on page~\pageref{changing_the_buffer_system} for the other actions. The difference is, that the request is actually performed immediately when calling \verb|buffer_request|, but the effects to the buffers this request has are applied not until \verb|do_buffer_request| is called, which is scheduled at the result time (\verb|ResTime|) of the request. This is due to the dependence of the latency of a request on the activation values of the matching chunks, so the request has to be performed in advance to calculate the correct time it will take.
+The same is valid for buffer requests: They are divided into two rules -- \lstinline|buffer_request/2| and \lstinline|do_buffer_request/2| -- as already described in section~\ref{changing_the_buffer_system} on page~\pageref{changing_the_buffer_system} for the other actions. The difference is, that the request is actually performed immediately when calling \lstinline|buffer_request|, but the effects to the buffers this request has are applied not until \lstinline|do_buffer_request| is called, which is scheduled at the result time (\lstinline|ResTime|) of the request. This is due to the dependence of the latency of a request on the activation values of the matching chunks, so the request has to be performed in advance to calculate the correct time it will take.
 
 This yields the following code in the buffer system:
 
@@ -1857,7 +1855,7 @@ buffer(BufName, ModName, _) \ buffer_request(BufName, Chunk) <=> %% todo: check 
   add_q(Time, 0, do_buffer_request(BufName, Chunk)).
 \end{lstlisting}
 
-In line~\ref{lst:schedule_buffer_request:context} the current context is calculated and bound in form of a list of chunk names to the variable \verb|Context|.
+In line~\ref{lst:schedule_buffer_request:context} the current context is calculated and bound in form of a list of chunk names to the variable \lstinline|Context|.
   
 \begin{lstlisting}[label=Handle buffer request]
 do_buffer_request(BufName, _), buffer(BufName, ModName, _), buffer_state(BufName,_), performed_request(BufName, ResChunk, ResState) <=>  %% todo: check for free buffer!!
@@ -1896,12 +1894,12 @@ With the now defined methods, the overall activation of a chunk can be calculate
 \end{lstlisting}
 
 \begin{description}
- \item[Find matching chunks (lines~\ref{lst:retrieval_request_subsymbolic:find_chunk1}~and~\ref{lst:retrieval_request_subsymbolic:find_chunk2})] First of all, all matching chunks are searched and saved in a list called \verb|Res|, similarly to the symbolic approach in listing~\ref{lst:retrieval_request_symbolic}.
- \item[Calculate Activations of the matching chunks (line~\ref{lst:retrieval_request_subsymbolic:calc_activations})] The activations of the matching chunks in the list \verb|Res| are computed regarding the context that has been handed over by the request.
- \item[Get the threshold (lines~\ref{lst:retrieval_request_subsymbolic:threshold1}~and~\ref{lst:retrieval_request_subsymbolic:threshold2})] The current threshold is retrieved from the configuration and a \verb|threshold| constraint is placed in the store. The next steps will need a threshold constraint present.
- \item[Find chunk with highest activation (line~\ref{lst:retrieval_request_subsymbolic:max})] The chunk with the highest activation is saved in \verb|MaxChunk|, its activation value in \verb|MaxAct|.
- \item[Return a chunk specification (line~\ref{lst:retrieval_request_subsymbolic:return_chunk})] The request is supposed to return a complete chunk specification in the variable \verb|ResChunk|. This is achieved by \verb|return_chunk|.
- \item[Return the resulting state of the buffer (line~\ref{lst:retrieval_request_subsymbolic:get_state})] The resulting state \verb|ResState| is \verb|free|, if a matching chunk has been found and \verb|error| if no chunk matches the request:
+ \item[Find matching chunks (lines~\ref{lst:retrieval_request_subsymbolic:find_chunk1}~and~\ref{lst:retrieval_request_subsymbolic:find_chunk2})] First of all, all matching chunks are searched and saved in a list called \lstinline|Res|, similarly to the symbolic approach in listing~\ref{lst:retrieval_request_symbolic}.
+ \item[Calculate Activations of the matching chunks (line~\ref{lst:retrieval_request_subsymbolic:calc_activations})] The activations of the matching chunks in the list \lstinline|Res| are computed regarding the context that has been handed over by the request.
+ \item[Get the threshold (lines~\ref{lst:retrieval_request_subsymbolic:threshold1}~and~\ref{lst:retrieval_request_subsymbolic:threshold2})] The current threshold is retrieved from the configuration and a \lstinline|threshold| constraint is placed in the store. The next steps will need a threshold constraint present.
+ \item[Find chunk with highest activation (line~\ref{lst:retrieval_request_subsymbolic:max})] The chunk with the highest activation is saved in \lstinline|MaxChunk|, its activation value in \lstinline|MaxAct|.
+ \item[Return a chunk specification (line~\ref{lst:retrieval_request_subsymbolic:return_chunk})] The request is supposed to return a complete chunk specification in the variable \lstinline|ResChunk|. This is achieved by \lstinline|return_chunk|.
+ \item[Return the resulting state of the buffer (line~\ref{lst:retrieval_request_subsymbolic:get_state})] The resulting state \lstinline|ResState| is \lstinline|free|, if a matching chunk has been found and \lstinline|error| if no chunk matches the request:
  
 \begin{lstlisting}
 get_state(nil,error).
@@ -1921,10 +1919,10 @@ This corresponds to equation~\eqref{eq:retrieval_latency}.
 
 \subsubsection{Configuration of the Retrieval}
 
-ACT-R offers some configuration variables which influence the retrieval process. In the CHR implementation, some of those configuration variables are implemented in the system according to the configuration infrastructure as described in section~\ref{configuration}. In ACT-R, configuration variables are set with the command \verb|(sgp :Var Val)| which sets the value of the variable \verb|Var| to \verb|Val|. 
+ACT-R offers some configuration variables which influence the retrieval process. In the CHR implementation, some of those configuration variables are implemented in the system according to the configuration infrastructure as described in section~\ref{configuration}. In ACT-R, configuration variables are set with the command \lstinline|(sgp :Var Val)| which sets the value of the variable \lstinline|Var| to \lstinline|Val|. 
 
 \begin{description}
- \item[Turn on the subsymbolic layer] The variable \verb|esc| that can be set to \verb|t| for \emph{true} and \verb|nil| for \emph{false} controls the activation of the subsymbolic layer for retrieval requests. In CHR, the declarative module observes the value of this variable by the observer interface presented in section~\ref{configuration}. Depending on the value of the variable, the constraint \verb|subsymbolic/0| is present or not:
+ \item[Turn on the subsymbolic layer] The variable \lstinline|esc| that can be set to \lstinline|t| for \emph{true} and \lstinline|nil| for \emph{false} controls the activation of the subsymbolic layer for retrieval requests. In CHR, the declarative module observes the value of this variable by the observer interface presented in section~\ref{configuration}. Depending on the value of the variable, the constraint \lstinline|subsymbolic/0| is present or not:
  
 \begin{lstlisting}
 % subsymbolic layer turned on -> add subsymbolic constraint
@@ -1936,10 +1934,10 @@ set_subsymbolic(nil), subsymbolic <=> true.
 set_subsymbolic(nil) <=> true.
 \end{lstlisting}
 
-For each rule only involved in the subsymbolic layer, the constraint \verb|subsymbolic/0| is added to its kept head, so the rule only fires if the subsymbolic layer is turned on.
+For each rule only involved in the subsymbolic layer, the constraint \lstinline|subsymbolic/0| is added to its kept head, so the rule only fires if the subsymbolic layer is turned on.
 
-\item[Retrieval threshold] The retrieval threshold $\theta$ is set by the configuration variable \verb|rt|.
-\item[Latency factor] The latency factor $F$ is set by the configuration variable \verb|lf|.
+\item[Retrieval threshold] The retrieval threshold $\theta$ is set by the configuration variable \lstinline|rt|.
+\item[Latency factor] The latency factor $F$ is set by the configuration variable \lstinline|lf|.
 \item[Proportion of $\theta$ and $F$] The configuration system automatically sets the latency factor if the retrieval threshold is set. If an individual value for $F$ should be set, then the automatically set value has to be overwritten after the threshold has been set.
 
 \begin{lstlisting}
@@ -1947,7 +1945,7 @@ latency-factor-by-threshold @
 set_conf(rt,RT) ==> LF is 0.35*exp(RT), set_conf(lf,LF). 
 \end{lstlisting}
 
-\item[Decay parameter] The decay parameter $d$ is set by the configuration variable \verb|bll|.
+\item[Decay parameter] The decay parameter $d$ is set by the configuration variable \lstinline|bll|.
 
 \end{description}
 
@@ -1975,7 +1973,7 @@ with two rules
   <<{buffer tests}, apply_rule(name)>> <=> {guard} | {actions}, conflict_resolution.
 \end{lstlisting}
 
-The first rule adds the matching rule to a conflict set without computing anything, the second rule actually performs the calculations as soon as the \verb|apply_rule| constraint is present.
+The first rule adds the matching rule to a conflict set without computing anything, the second rule actually performs the calculations as soon as the \lstinline|apply_rule| constraint is present.
 
 At the end, add a rule
 
@@ -1984,9 +1982,9 @@ At the end, add a rule
   <<fire>> <=> conflict_set([]), choose.
 \end{lstlisting}
 
-As soon as the \verb|fire| constraint is present (so the recognize cycle/conflict resolution process begins), each matching rule adds a \verb|conflict_set/1| constraint with its name. The last rule finishes the recognize cycle by deleting the fire constraint \emph{after} all rules that match had their chance to add a \verb|conflict_set| constraint and adds an empty \verb|conflict_set| constraint, indicated by \verb|[]|. The constraints store contains at the end of this phase a bunch of \verb|conflict_set| constraints that represent the matching rules plus an empty \verb|conflict_set| constraint. If no rule matches, there is only an empty \verb|conflict_set| constraint in the store.
+As soon as the \lstinline|fire| constraint is present (so the recognize cycle/conflict resolution process begins), each matching rule adds a \lstinline|conflict_set/1| constraint with its name. The last rule finishes the recognize cycle by deleting the fire constraint \emph{after} all rules that match had their chance to add a \lstinline|conflict_set| constraint and adds an empty \lstinline|conflict_set| constraint, indicated by \lstinline|[]|. The constraints store contains at the end of this phase a bunch of \lstinline|conflict_set| constraints that represent the matching rules plus an empty \lstinline|conflict_set| constraint. If no rule matches, there is only an empty \lstinline|conflict_set| constraint in the store.
 
-The last rule also triggers the choosing process by adding the constraint \verb|choose|. The following rules handle the choosing process:
+The last rule also triggers the choosing process by adding the constraint \lstinline|choose|. The following rules handle the choosing process:
 
 \begin{lstlisting}
 <<conflict_set(_) \ conflict_set([])>> <=> true.
@@ -1996,11 +1994,11 @@ The last rule also triggers the choosing process by adding the constraint \verb|
   true.
 \end{lstlisting}
 
-The first rule deletes the empty \verb|conflict_set| constraint, if there are other \verb|conflict_set| constraints present, i.e. there has been a rule that can fire.
+The first rule deletes the empty \lstinline|conflict_set| constraint, if there are other \lstinline|conflict_set| constraints present, i.e. there has been a rule that can fire.
 
-The second rule assumes, that for each production rule \verb|p| in the procedural memory there is a \verb|production_utility(p,u)| constraint that holds the utility value \verb|u| of the production \verb|p|. If there are two \verb|conflict_set| constraints in the store, the one with the higher utility value will be kept and the other removed from the store.
+The second rule assumes, that for each production rule \lstinline|p| in the procedural memory there is a \lstinline|production_utility(p,u)| constraint that holds the utility value \lstinline|u| of the production \lstinline|p|. If there are two \lstinline|conflict_set| constraints in the store, the one with the higher utility value will be kept and the other removed from the store.
 
-If the rules have been applied to exhaustion, there is only one \verb|conflict_set| constraint in the store -- either an empty one ore one with the name of a rule. The following rules handle the choosing process:
+If the rules have been applied to exhaustion, there is only one \lstinline|conflict_set| constraint in the store -- either an empty one ore one with the name of a rule. The following rules handle the choosing process:
 
 \begin{lstlisting}
 <<choose, conflict_set([])>> <=>
@@ -2013,11 +2011,11 @@ If the rules have been applied to exhaustion, there is only one \verb|conflict_s
   add_q(Time,0,apply_rule(P)). 
 \end{lstlisting}
 
-The first rule is only applicable, if there were no matching rules and the empty \verb|conflict_set| is still present. Then this fact is indicated by a \verb|no_rule| constraint.
+The first rule is only applicable, if there were no matching rules and the empty \lstinline|conflict_set| is still present. Then this fact is indicated by a \lstinline|no_rule| constraint.
 
-In the second rule, the firing of the last remaining rule is scheduled 50\,ms from the current time, as it is described in section~\ref{procedural_knowledge}. The event is the \verb|apply_rule(P)| constraint, which leads the second rule in listing~\ref{lst:conflict_resolution_scheme} to fire, which performs the actions of the rule.
+In the second rule, the firing of the last remaining rule is scheduled 50\,ms from the current time, as it is described in section~\ref{procedural_knowledge}. The event is the \lstinline|apply_rule(P)| constraint, which leads the second rule in listing~\ref{lst:conflict_resolution_scheme} to fire, which performs the actions of the rule.
 
-When the chosen rule is applied, its actions are performed and eventually, a \verb|conflict_resolution| constraint is added to the store. This constraint leads the next conflict resolution event to being scheduled:
+When the chosen rule is applied, its actions are performed and eventually, a \lstinline|conflict_resolution| constraint is added to the store. This constraint leads the next conflict resolution event to being scheduled:
 
 \begin{lstlisting}
 <<now(Time) \ conflict_resolution>> <=> add_q(Time,0,fire).
@@ -2025,7 +2023,7 @@ When the chosen rule is applied, its actions are performed and eventually, a \ve
 
 The event is scheduled at the current time with very low priority, so all the actions of the rule have had the chance to be executed.
 
-If there was no matching rule, the \verb|no_rule| constraint is in the store. This leads the next conflict resolution event to be scheduled after the next event (which may lead to a change of the system state):
+If there was no matching rule, the \lstinline|no_rule| constraint is in the store. This leads the next conflict resolution event to be scheduled after the next event (which may lead to a change of the system state):
 
 \begin{lstlisting}
 <<no_rule>> <=> after_next_event(fire).
@@ -2040,7 +2038,7 @@ selected during a conflict-resolution event then a new conflict-resolution event
 after the next change occurs.'' \cite[156]{actr_reference}
 \end{quote}
 
-In \cite{fru_chr_book_2009}, the \verb|conflict_set| and \verb|apply_rule| constraints also have the values of the variables that have been bound in the matching of the rule in the collecting phase\footnote{The example is slightly modified from the original in \cite{fru_chr_book_2009}: In the original, the name of the rule does not play a role and the priorities are known in advance}: 
+In \cite{fru_chr_book_2009}, the \lstinline|conflict_set| and \lstinline|apply_rule| constraints also have the values of the variables that have been bound in the matching of the rule in the collecting phase\footnote{The example is slightly modified from the original in \cite{fru_chr_book_2009}: In the original, the name of the rule does not play a role and the priorities are known in advance}: 
 
 \begin{lstlisting}
 <<<delay-name>>> @
@@ -2049,19 +2047,19 @@ In \cite{fru_chr_book_2009}, the \verb|conflict_set| and \verb|apply_rule| const
   <<{buffer tests}, apply_rule(rule(name, {Variables in the head of the rule}))>> <=> {guard} | {actions}, conflict_resolution.
 \end{lstlisting}
 
-This is due to the fact, that during the conflict resolution process other rules may have changed the constraint store and the rule might not be applicable anymore. However, in ACT-R the procedural module is a serial bottleneck, so no rules that change the state of the buffer system can be applied during the conflict resolution. Additionally, in \cite{fru_chr_book_2009} the rules that were in the conflict set but did not match, remain in the conflict set for the next cycle and are applied, if they have at some point the highest priority in the set and are still applicable (ensured by the bound variables in \verb|apply_rule|). In ACT-R, this does not play a role, since the recognize-act cycle is defined serially and only one rule is applied in each cycle. In the next cycle, all rules are checked again for matching heads and the computations are performed on the new values. Note that the problem of trivial non-termination of propagation rules described in \cite[5]{abdennadher_sts_chr13}, which has to be considered when changing the operational order of rule applications in CHR, does not play a role for ACT-R, since it does not implement propagation rules.
+This is due to the fact, that during the conflict resolution process other rules may have changed the constraint store and the rule might not be applicable anymore. However, in ACT-R the procedural module is a serial bottleneck, so no rules that change the state of the buffer system can be applied during the conflict resolution. Additionally, in \cite{fru_chr_book_2009} the rules that were in the conflict set but did not match, remain in the conflict set for the next cycle and are applied, if they have at some point the highest priority in the set and are still applicable (ensured by the bound variables in \lstinline|apply_rule|). In ACT-R, this does not play a role, since the recognize-act cycle is defined serially and only one rule is applied in each cycle. In the next cycle, all rules are checked again for matching heads and the computations are performed on the new values. Note that the problem of trivial non-termination of propagation rules described in \cite[5]{abdennadher_sts_chr13}, which has to be considered when changing the operational order of rule applications in CHR, does not play a role for ACT-R, since it does not implement propagation rules.
 
 \subsubsection{Computing the Utility Values}
 
 As described in section~\ref{production_utility}, rules can have a certain amount of reward that can be distributed among all rules that have been applied since the last reward has been distributed.
 
-The reward a rule can distribute, can be saved in a \verb|reward/2| constraint. If a rule is applied, the time of application can be saved in a \verb|to_reward/2| constraint, that states that the rule in the constraint has been applied and therefore receives a part of the next reward as soon as it occurs: 
+The reward a rule can distribute, can be saved in a \lstinline|reward/2| constraint. If a rule is applied, the time of application can be saved in a \lstinline|to_reward/2| constraint, that states that the rule in the constraint has been applied and therefore receives a part of the next reward as soon as it occurs: 
 
 \begin{lstlisting}
 <<apply_rule(P)>> ==> <<<P \== []>>> | get_now(Now), to_reward(P,Now).
 \end{lstlisting}
 
-Note, that the \verb|apply_rule/1| constraint from the last section is used to determine, when a rule is fired.
+Note, that the \lstinline|apply_rule/1| constraint from the last section is used to determine, when a rule is fired.
 
 When a rule that can distribute a reward is applied, the reward is triggered:
 
@@ -2071,7 +2069,7 @@ When a rule that can distribute a reward is applied, the reward is triggered:
   trigger_reward(R).
 \end{lstlisting}
 
-This will reward all rules that have a \verb|to_reward/2| constraint in the store, which leads to a new production utility value:
+This will reward all rules that have a \lstinline|to_reward/2| constraint in the store, which leads to a new production utility value:
 
 \begin{lstlisting}[escapeinside={(*@}{@*)}, label=lst:trigger_reward]
 <<trigger_reward(R) \ production_utility(P,U), to_reward(P,FireTime)>> <=>
@@ -2087,7 +2085,7 @@ calc_reward(R,FireTime,Reward) :- (*@\label{lst:trigger_reward:calc_reward}@*)
 
 Note, that in line~\ref{lst:trigger_reward:learning} the utility is adapted by the utility learning rule as shown in equation~\eqref{eq:utility_learning}. The reward the rule receives is calculated by the Prolog predicate in lines~\ref{lst:trigger_reward:calc_reward} sqq.: The more time passed since the rule application, the less the reward of the rule.
 
-In the end, there has to be a rule that cleans up the reward trigger, after all the rules have been rewarded. This ensures, that the next \verb|to_reward| constraints are not immediately consumed by the last reward trigger:
+In the end, there has to be a rule that cleans up the reward trigger, after all the rules have been rewarded. This ensures, that the next \lstinline|to_reward| constraints are not immediately consumed by the last reward trigger:
 
 \begin{lstlisting}
 <<trigger_reward(_)>> <=> true.
@@ -2095,13 +2093,13 @@ In the end, there has to be a rule that cleans up the reward trigger, after all 
 
 \subsubsection{Configuration of the Conflict Resolution}
 
-There are some methods to influence the conflict resolution process using the ACT-R command \verb|(spp ...)| that can set values for individual production rules. This command is translated into CHR as described in section~\ref{lisp_functions}. Additionally, there are some configuration variables that can be set -- as described in section~\ref{configuration} -- by the command \verb|(sgp ...)|:
+There are some methods to influence the conflict resolution process using the ACT-R command \lstinline|(spp ...)| that can set values for individual production rules. This command is translated into CHR as described in section~\ref{lisp_functions}. Additionally, there are some configuration variables that can be set -- as described in section~\ref{configuration} -- by the command \lstinline|(sgp ...)|:
 
 \begin{description}
- \item[Setting the utility of a rule] Utilities can be set statically by the user by the ACT-R command \verb|(spp P :u U)|, which sets the utility of the rule \verb|P| to \verb|U|.
- \item[Setting the reward of a rule] The amount of reward a rule can distribute is set by the user. By default, no rules have a reward to trigger. With the ACT-R command \verb|(spp P :reward R)|, the reward of the rule \verb|P| is set to \verb|R|. This command is also implemented among the standard lisp methods.  
- \item[Default values and turning the utility mechanisms off] At the moment, there is no command in the CHR implementation that allows to turn off the conflict resolution mechanisms: The system sets a default utility value for each production rule and no rewards in the initialization process (the rule \verb|init @ run <=> ...| as described in section~\ref{initialization}). The user is able to set other initial utility values and rewards for particular rules. If no rewards are set, the utility values will remain at their initial values. Hence, if the user does not set any utilities or rewards, each rule will have the same utility value that does not change. If there are competing rules, the conflict resolution process will pick one. This can be regarded as turned off utility mechanisms.
- \item[Learning rate] The learning rate $\alpha$ is set by the command \verb|(sgp :alpha A)| that sets the configuration variable \verb|alpha| to \verb|A|.
+ \item[Setting the utility of a rule] Utilities can be set statically by the user by the ACT-R command \lstinline|(spp P :u U)|, which sets the utility of the rule \lstinline|P| to \lstinline|U|.
+ \item[Setting the reward of a rule] The amount of reward a rule can distribute is set by the user. By default, no rules have a reward to trigger. With the ACT-R command \lstinline|(spp P :reward R)|, the reward of the rule \lstinline|P| is set to \lstinline|R|. This command is also implemented among the standard lisp methods.  
+ \item[Default values and turning the utility mechanisms off] At the moment, there is no command in the CHR implementation that allows to turn off the conflict resolution mechanisms: The system sets a default utility value for each production rule and no rewards in the initialization process (the rule \lstinline|init @ run <=> ...| as described in section~\ref{initialization}). The user is able to set other initial utility values and rewards for particular rules. If no rewards are set, the utility values will remain at their initial values. Hence, if the user does not set any utilities or rewards, each rule will have the same utility value that does not change. If there are competing rules, the conflict resolution process will pick one. This can be regarded as turned off utility mechanisms.
+ \item[Learning rate] The learning rate $\alpha$ is set by the command \lstinline|(sgp :alpha A)| that sets the configuration variable \lstinline|alpha| to \lstinline|A|.
 \end{description}
 
 \subsection{Extended Component Diagram}

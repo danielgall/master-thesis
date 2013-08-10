@@ -20,45 +20,45 @@ Warning--I didn't find a database entry for "actr_reference"
 Biblatex version: 2.6
 Reallocated singl_function (elt_size=8) to 100 items from 50.
 Reallocated wiz_functions (elt_size=8) to 9000 items from 6000.
-You've used 14 entries,
+You've used 17 entries,
             6019 wiz_defined-function locations,
-            1233 strings with 12245 characters,
-and the built_in function-call counts, 61637 in all, are:
-= -- 2480
-> -- 3468
-< -- 801
-+ -- 2323
-- -- 2233
-* -- 3955
-:= -- 4809
+            1248 strings with 12675 characters,
+and the built_in function-call counts, 71460 in all, are:
+= -- 2723
+> -- 4110
+< -- 901
++ -- 2835
+- -- 2750
+* -- 4510
+:= -- 5629
 add.period$ -- 0
-call.type$ -- 14
-change.case$ -- 417
-chr.to.int$ -- 216
-cite$ -- 30
-duplicate$ -- 6183
-empty$ -- 5527
-format.name$ -- 887
-if$ -- 12503
+call.type$ -- 17
+change.case$ -- 449
+chr.to.int$ -- 264
+cite$ -- 40
+duplicate$ -- 7218
+empty$ -- 6544
+format.name$ -- 975
+if$ -- 14302
 int.to.chr$ -- 0
-int.to.str$ -- 40
+int.to.str$ -- 44
 missing$ -- 0
-newline$ -- 479
-num.names$ -- 785
-pop$ -- 4160
+newline$ -- 545
+num.names$ -- 830
+pop$ -- 5123
 preamble$ -- 1
-purify$ -- 419
+purify$ -- 443
 quote$ -- 0
-skip$ -- 3184
+skip$ -- 3552
 stack$ -- 0
-substring$ -- 2504
-swap$ -- 2260
-text.length$ -- 520
-text.prefix$ -- 18
+substring$ -- 2748
+swap$ -- 2617
+text.length$ -- 605
+text.prefix$ -- 22
 top$ -- 1
-type$ -- 520
+type$ -- 634
 warning$ -- 0
-while$ -- 436
+while$ -- 501
 width$ -- 0
-write$ -- 464
+write$ -- 527
 (There were 2 warnings)
