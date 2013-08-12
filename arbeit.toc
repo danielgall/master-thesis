@@ -4,6 +4,10 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {chapter}{\numberline {1}Introduction}{1}{chapter.1}
 \defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {1.1}Motivation for a CHR-Based Implementation}{1}{section.1.1}
+\defcounter {refsection}{0}\relax 
+\contentsline {section}{\numberline {1.2}Related Work}{2}{section.1.2}
+\defcounter {refsection}{0}\relax 
 \contentsline {chapter}{\numberline {2}Description of ACT-R}{3}{chapter.2}
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {2.1}Procedural and Declarative Knowledge}{4}{section.2.1}
@@ -18,7 +22,7 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Description of Procedural Actions}{7}{section*.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Chunks as Central Data Structure}{8}{section*.5}
+\contentsline {subsubsection}{Chunks as Central Data Structure}{7}{section*.5}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Process of Rule Selection and Execution}{8}{section*.6}
 \defcounter {refsection}{0}\relax 
@@ -30,7 +34,7 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{The Outside World}{9}{section*.8}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{The Visual Module}{10}{section*.9}
+\contentsline {paragraph}{The Visual Module}{9}{section*.9}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{The Imaginal Module}{10}{section*.10}
 \defcounter {refsection}{0}\relax 
@@ -38,7 +42,7 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {2.2}Serial and Parallel Aspects of ACT-R}{13}{section.2.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.3}Subsymbolic layer}{14}{section.2.3}
+\contentsline {section}{\numberline {2.3}Subsymbolic layer}{13}{section.2.3}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.3.1}Activation of Chunks}{14}{subsection.2.3.1}
 \defcounter {refsection}{0}\relax 
@@ -230,34 +234,34 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Tokenizer}{90}{section*.67}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Parser}{91}{section*.68}
+\contentsline {subsubsection}{Parser}{94}{section*.68}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Translation Component}{91}{section*.69}
+\contentsline {subsubsection}{Translation Component}{94}{section*.69}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.10.3}Problems with the current implementation}{91}{subsection.4.10.3}
+\contentsline {subsection}{\numberline {4.10.3}Problems with the Current Implementation}{95}{subsection.4.10.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {5}Example Models}{93}{chapter.5}
+\contentsline {chapter}{\numberline {5}Example Models}{97}{chapter.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.1}The Counting Model}{93}{section.5.1}
+\contentsline {section}{\numberline {5.1}The Counting Model}{97}{section.5.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.2}The Addition Model}{93}{section.5.2}
+\contentsline {section}{\numberline {5.2}The Addition Model}{97}{section.5.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.3}The Semantic Model}{93}{section.5.3}
+\contentsline {section}{\numberline {5.3}The Semantic Model}{97}{section.5.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.4}The Fan Model}{93}{section.5.4}
+\contentsline {section}{\numberline {5.4}The Fan Model}{97}{section.5.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {6}Conclusion}{95}{chapter.6}
+\contentsline {chapter}{\numberline {6}Conclusion}{99}{chapter.6}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.1}Inventory: What does already work?}{95}{section.6.1}
+\contentsline {section}{\numberline {6.1}Inventory: What does already work?}{99}{section.6.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.2}Future Work}{95}{section.6.2}
+\contentsline {section}{\numberline {6.2}Future Work}{99}{section.6.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {A}Source Codes}{97}{appendix.A}
+\contentsline {chapter}{\numberline {A}Source Codes}{101}{appendix.A}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {B}Grammar for Production Rules}{99}{appendix.B}
+\contentsline {chapter}{\numberline {B}Grammar for Production Rules}{103}{appendix.B}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {C}Executable Examples}{101}{appendix.C}
+\contentsline {chapter}{\numberline {C}Executable Examples}{105}{appendix.C}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {C.1}Rule Order}{101}{section.C.1}
+\contentsline {section}{\numberline {C.1}Rule Order}{105}{section.C.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{Bibliography}{105}{appendix*.70}
+\contentsline {chapter}{Bibliography}{109}{appendix*.70}

@@ -793,6 +793,7 @@ In appendix~\ref{app:ex:rule_order} a minimal executable example is provided.
 According to the ACT-R production rule grammar in listing~\ref{lst:production_rule_grammar}, unbound variables can only appear on the left hand side of a rule. Hence, no new variables are introduced on the right hand side. Since all the elements in the buffer store are completely described and ground, every variable on the LHS of a rule will be bound to a ground value. This simplifies the rule selection and application process a lot, since every value of the calculation is known after the matching. This enables simple implementations of arithmetic tests, for example (see section~\ref{slot_modifiers}).
 
 \subsubsection{Duplicate Slot Tests}
+\label{implementation:duplicate_slot_tests}
 
 A problem that has not been addressed yet, is that ACT-R allows buffer tests like the following:
 
@@ -2112,7 +2113,7 @@ With the implementation of the basic ACT-R concepts, a simple compiler has been 
 
 \subsection{Basic Idea}
 
-The basic idea of the compiler is that it gets an ACT-R model definition written in the Lisp-like ACT-R syntax and produces the correspondent CHR rules. The model should be executable by just loading the translation and typing in the query \lstinline|run|. Hence, the translated model should somehow load the CHR framework simulating ACT-R, for instance the modules, the buffer system, the scheduler, etc. Figure~\ref{fig:basic_idea} illustrates the process.
+The basic idea of the compiler is that it gets an ACT-R model definition written in the Lisp-like ACT-R syntax and produces the correspondent CHR rules. The model should be executable by just loading the translation and typing in the query \lstinline|run|. Hence, the translated model should somehow load the CHR framework simulating ACT-R, for instance the modules, the buffer system, the scheduler, etc. %Figure~\ref{fig:basic_idea} illustrates the process.
 
 \subsection{Compiling}
 
@@ -2125,25 +2126,146 @@ The tokenizer gets the file with the model definition as input and does some pre
 \begin{description}
  \item[Special Characters] are individual tokens and are defined as all allowed characters that are not letters, numbers or white-space. In ACT-R: \lstinline|!, (, ), +, -, =, >, ?|. Some special characters of ACT-R are missing in this list, but are not implemented in the compiler, yet.
  \item[Keywords] are treated like a special character, but contains more than one symbol. In ACT-R, a keyword is \lstinline|==>|, separating the LHS from the RHS of a production rule.
- \item[Identifier] Everything that starts with a letter and contains only letters or numbers. An identifier ends, if a special character or a white-space is read from the input. An exception is the \lstinline|-| character, which can be used within identifiers. \emph{Example:} \lstinline|count, addition-fact, chunk1|
- \item[Numbers] Every word, that only contains numbers.
+ \item[Identifiers] Everything that starts with a letter and contains only letters or numbers. An identifier ends, if a special character or a white-space is read from the input. The \lstinline|-| character is an exception, because it can be used within identifiers, although it is a special character.
+ 
+ \emph{Example:} \lstinline|count, addition-fact, chunk1|
+ \item[Numbers] Every word, that only contains digits \lstinline|0-9|. As for every token, a number ends, if a white-space, a special character or a keyword occurs.
 \end{description}
 
-\begin{example}
-\FIXME{tokenize some input here}
+\begin{example}[Tokenizing some input]
+The input 
+
+\begin{lstlisting}
+(p name
+  =buffer>
+    s  v
+==>
+  +buffer>
+    s  new-value
+  -buffer2>
+)
+\end{lstlisting}
+
+produces the output list
+
+\begin{lstlisting}
+['(',p,name,=,buffer,>,s,v,==>,+,buffer,>,s,new-value, -,buffer2,>,')']
+\end{lstlisting}
 \end{example}
 
+The basic idea for the implementation of such a tokenizer comes from~\cite[19\psqq]{prolog_tokenizer}. It basically follows a deterministic finite automaton with the state transitions as illustrated in figure~\ref{fig:tokenizer_automaton}.
+
+\begin{figure}[htb]
+\begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=5cm,
+                    semithick]
+  \tikzstyle{every state}=[fill=none,draw,text=black]
+
+  \node[initial,state] (start)                            {start};
+  \node[state]         (identifier) [right of=start]      {identifier};
+  \node[state]         (number)     [below of=start]      {number};
+  \node[state]         (fail)       [above left of=start] {fail};
+
+  \path (start)      edge [loop above] node {white-space, special character, keyword} (start)
+                     edge              node {letter} (identifier)
+                     edge              node {digit}  (number)
+                     edge              node {otherwise} (fail)
+        (identifier) edge [loop above] node {letter, number, \texttt{-}} (identifier)
+                     edge              node {special character (without \texttt{-}, white-space, keyword} (start)
+        (number)     edge [loop below] node {number} (number)
+                     edge              node {special character, white-space, keyword} (start)
+                     edge              node {letter} (fail)
+        (fail)       edge [loop above] node {*} (fail);
+\end{tikzpicture}
+\end{figure}
 
 
+In Prolog, text input can be handled as a list of ASCII character codes. To classify those characters according to the list above, some predicates and facts can be used:
+
+\begin{lstlisting}
+digit(D) :- 46 < D, D < 59.
+special_char(33). %!
+special_char(40). %(
+...
+\end{lstlisting}
+
+The tokenizer gets a list of such character codes and returns a list of tokens:
+
+\begin{lstlisting}
+getTokens([], []).
+
+getTokens([X|Xs], Ts) :- 
+  white_space(X),
+  getTokens(Xs,Ts). 
+  
+getTokens(In, [T|Ts]) :- 
+  getToken(start, In, Rest, T), !, 
+  getTokens(Rest, Ts).
+\end{lstlisting}
+
+The first predicate is the base case. The second rule just drops the white-space and calls the tokenizing predicate again with the rest of the list. The last predicate only applies if the other predicates failed. It starts the inspection of the symbols by calling the predicate \lstinline|getToken(Q,In,Rest,T)|, which gets the \lstinline|start| state as argument \lstinline|Q| and the current input list \lstinline|In|, and returns the rest of the list and the result token \lstinline|T|, after some input has been processed. The \lstinline|getToken| predicate starts in the start state and then decides deterministically which of the state transitions is chosen by inspecting the first character from the input list. It the remains in the state according to the state transition diagram in figure~\ref{fig:tokenizer_automaton} until it reads a character that forces it to leave the state. Then it binds the remaining input to the list \lstinline|Rest| and all the characters that have been consumed in this state to the result token \lstinline|T|. For the identifiers, the following implementation is used:
+
+\begin{lstlisting}
+getToken(start, [X|Xs],Rest,LT) :-
+  letter(X), 
+  getToken(identifier, Xs,Rest,[X],T), % find rest of word
+  downcase_atom(T,LT). % convert uppercase letters to lowercase
+  
+getToken(identifier, [C|R],Rest,S,T) :-
+  (letter(C); digit(C); minus(C)), 
+  getToken(identifier,R,Rest,[C|S],T).
+  
+getToken(identifier,Rest,Rest,S,W) :-
+  reverse(S,S1),
+  atom_chars(W,S1). 
+\end{lstlisting}
+
+The first predicate checks, if the list starts with a letter. It then changes the state to \lstinline|identifier|, because only identifiers start with a letter. The predicate \lstinline|getToken/5| has an accumulator list as an additional argument to the original \lstinline|getToken/4| predicate. It remains in the state identifier, if it reads a letter, a digit or the symbol~\lstinline|-| and accumulates the read symbol in a list (second predicate). If the second predicate cannot be applied any more, because the input list starts with a symbol that is not allowed for an identifier, the third predicate binds this remaining input to the list \lstinline|Rest| and returns the reversed accumulated characters as token. The first predicate then changes the case of the token to lowercase and returns it to \lstinline|getTokens|, which changes the state to \lstinline|start| and begins the next cycle, until the complete input has been consumed. The implementation for digits is analogous.
+
+The arrow keyword is handled separately by a predicate, which consumes the three characters \lstinline|==>| at once, as shown in the following predicate. This predicate has to be the first to be checked.
+
+\begin{lstlisting}
+getToken(start, [61,61,62|Rest], Rest, '==>').
+\end{lstlisting}
+
+Note, that the processing fails, if a not-allowed symbol is read from input, so all of the \lstinline|getToken| predicates fail.
 
 \subsubsection{Parser}
 
+The parser takes a list of tokens as input and returns a parse tree. It is implemented by the use of Definite Clause Grammar Rules (DCG rules), which allow to directly write grammar-like rules like:
+
+\begin{lstlisting}
+s --> [a], s, [b].
+s --> [].
+\end{lstlisting}
+
+This program recognizes the language $\{ a^nb^n \enspace | \enspace n \leq 0 \}$. The query \lstinline|s([a,a,b,b],[])| returns \lstinline|true|, whereas \lstinline|s([a,b,b])| returns \lstinline|false|. An introduction to DCG rules is given in~\cite{ogb_dcg}.
+
+Hence, the grammar in section~\ref{implementation:production_rule_grammar} can be translated almost directly to such DCG rules. However, this only returns if the input list is a word of the defined grammar. To get a parse-tree out of the parsing process, the rules can be extended according to the following scheme:
+
+\begin{lstlisting}
+a(a(B,C)) --> b(B), c(C).
+b(b(B)) --> ...
+c(c(C)) --> ...
+\end{lstlisting}
+
+I.e., the path taken by the program is accumulated in an argument as a term. A result of the example could be \lstinline|a(b(...),c(...))|.
+
 \subsubsection{Translation Component}
 
-\subsection{Problems with the current implementation}
+In the translation component, CHR rules are generated from the parse-tree according to the methods discussed in this chapter. For the output, a writer that has been presented in the exercises of the \emph{Rule-Based Programming} lecture at Ulm University by Amira Zaki \cite{chr_homepage} has been used.
 
+The translation component also organizes the complete parsing process: It loads the input file, calls the tokenizer and the parser and then recursively analyzes the resulting parsing tree. Whenever an ACT-R production rule has been processed completely, it produces a CHR rule using the writer.
 
+For the variables in the rules, it uses a symbol table for each rule to ensure that the same variable is always translated to the same Prolog variable in the result.
 
+\subsection{Problems with the Current Implementation}
 
+The current implementation can be improved at some points. First of all, it only can process a subset of the grammar, that actually is a subset of the simplified grammar shown in section~\ref{implementation:production_rule_grammar}. For example, it is only able to parse the negation slot-modifier, the others are not implemented yet, but can be added easily.
 
+The formulation of the grammar also differs from the original definition, so it would be nice to assimilate the two grammars. Additionally, lists have been implemented very complicated in the DCG rule grammar and could be simplified by using actual Prolog lists instead of constructs like \lstinline|tests --> test, tests; test|, which make the parse tree very complicated. Instead, the tree could be simplified to \lstinline[mathescape]|tests([t$_\mathtt{1}$, ..., t$_\mathtt{n}$)|.
 
+Another problem is that duplicate slot tests as shown in section~\ref{implementation:duplicate_slot_tests} on page~\pageref{implementation:duplicate_slot_tests} cannot be handled by the compiler, yet.
+
+The recursive approach of the translation component can get very confusing the more rules are added, because a lot of help data has to be accumulated and passed between the diffeent recursion levels (sometimes upwards, sometimes downwards). Another approach could be, to store the data that is parsed at a certain level in the constraint store, where some CHR rules put the parts together in the end.
+
+Finally, the compiler does not produce any error messages, but only fails silently, if there are syntactical problems in the input.

@@ -1,2 +1,26 @@
 \chapter{Introduction}
 
+In computational psychology, the approach to explore human cognition is to implement detailed computational models that enable computers to execute them and simulate human behaviour \cite{sun_introduction_2008}. By conducting the same experiments with humans and with simulations of the suggested underlying cognitive models, the plausibility of models can be checked and models can be improved gradually.
+
+On the other hand, psychology is experiencing a movement towards specialization \cite{anderson_integrated_2004}, i.e. there are a lot of independent, highly specialized fields that lack a more global view.
+
+To implement consistent models of cognition, it is necessary to develop a theory that tries to put all those highly specialized components together and allows modelers to build their models on the basis of this theory. Cognitive architectures try to explain \FIXME{definition cognitive architecture from book}
+\FIXME{move to introduction and motivation}
+
+Adaptive Control of Thought-Rational  (ACT-R) is a cognitive architecture, that ``is capable of interacting with the outside world, has been mapped onto brain structures, and is able to learn to interact with complex dynamic tasks'' \cite[29]{taatgen_modeling_2006}, so its theory is well-investigated. It also is one of the most popular cognitive architectures in the field \cite{rutledge2005can}.
+
+\section{Motivation for a CHR-Based Implementation}
+
+Constraint Handling Rules (CHR) is a high-level rule-based programming language with several very well-defined operational and declarative semantics \cite[49\psqq]{fru_chr_book_2009}, so the meaning of a CHR program is logically defined. Additionally, there are a lot of methods to analyze CHR programs \cite[96\psqq]{fru_chr_book_2009} and there are a lot of very nice properties each CHR program has automatically, like the anytime and online property \cite[83\psqq]{fru_chr_book_2009}. The declarativity of CHR programs does not affect the efficiency, so every algorithm that can be implemented efficiently in a imperative language can also be implemented efficiently in CHR and the constant slow-down of CHR compared to a C program is very low using high-optimizing compilers \cite[94]{fru_chr_book_2009}.
+
+Since models are expressed by production rules in ACT-R, the idea to implement such models in CHR seems likely, since the semantics of a CHR rule does not seem to be very different from an ACT-R production rule, so a lot of work like the \emph{efficient} implementation of the matching process can be saved. Due to the clear semantics and the several analysis methods, there is a hope that through the translation of the ACT-R theory to CHR there will be a benefit to the analysis of models and the inspection of the logical implications of a cognitive model.
+
+The aim of this work is to implement the basic concepts of ACT-R and stick as closely as possible to the theory using the original implementation as a reference. Hence, a goal is to find translation schemes of ACT-R production rules to CHR rules and the implementation of the underlying cognitive architecture in CHR.
+
+\section{Related Work}
+
+There are several implementations of the ACT-R theory in different languages. First of all, there is the official ACT-R implementation in Lisp \cite{actr_homepage} often referred to as the \emph{vanilla} implementation. There are a lot of extensions to this implementation, which partly have been included to the original package in later versions like the ACT-R/PM extension that has been included in ACT-R 6.0 \cite[264]{actr_reference}.
+
+\citeauthor{stewart_deconstructing_2007} have built an implementation in Python, which also had the aim to simplify and harmonize parts of the ACT-R theory by finding the central components of the theory \cites{stewart_deconstructing_2006,stewart_deconstructing_2007}. 
+
+Additionally, there are two different implementations in Java: \emph{jACT-R} \cite{jactr} and \emph{ACT-R: The Java Simulation \& Development Environment} \cite{java_actr}.

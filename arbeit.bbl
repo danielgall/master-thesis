@@ -299,6 +299,27 @@
   \field{year}{2000}
 \endentry
 
+\entry{actr_reference}{manual}{}
+  \name{author}{1}{}{%
+    {{}%
+     {Bothell}{B.}%
+     {Dan}{D.}%
+     {}{}%
+     {}{}}%
+  }
+  \list{organization}{1}{%
+    {Department of Psychology, Carnegie Mellon University}%
+  }
+  \strng{namehash}{BD1}
+  \strng{fullhash}{BD1}
+  \field{labelalpha}{Bot}
+  \field{sortinit}{B}
+  \field{title}{ACT-R 6.0 Reference Manual -- Working Draft}
+  \list{location}{1}{%
+    {Pittsburgh, Pennsylvania 15213}%
+  }
+\endentry
+
 \entry{chr_homepage}{misc}{}
   \field{labelalpha}{Chr}
   \field{sortinit}{C}
@@ -334,6 +355,96 @@
   \endverb
   \field{month}{08}
   \field{year}{2009}
+\endentry
+
+\entry{jactr}{misc}{}
+  \field{labelalpha}{Jac}
+  \field{sortinit}{J}
+  \field{title}{The Homepage of jACT-R}
+  \verb{url}
+  \verb http://jactr.org/
+  \endverb
+  \field{urlday}{12}
+  \field{urlmonth}{08}
+  \field{urlyear}{2013}
+\endentry
+
+\entry{java_actr}{misc}{}
+  \field{labelalpha}{Jav}
+  \field{sortinit}{J}
+  \field{title}{ACT-R: The Java Simulation \& Development Environment --
+  Homepage}
+  \verb{url}
+  \verb http://cog.cs.drexel.edu/act-r/
+  \endverb
+  \field{urlday}{12}
+  \field{urlmonth}{08}
+  \field{urlyear}{2013}
+\endentry
+
+\entry{prolog_tokenizer}{manual}{}
+  \name{author}{2}{}{%
+    {{}%
+     {Lu}{L.}%
+     {James}{J.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Mead}{M.}%
+     {Jerud~J.}{J.~J.}%
+     {}{}%
+     {}{}}%
+  }
+  \list{organization}{1}{%
+    {Computer Science Department, Bucknell University}%
+  }
+  \strng{namehash}{LJMJJ1}
+  \strng{fullhash}{LJMJJ1}
+  \field{labelalpha}{LM}
+  \field{sortinit}{L}
+  \field{title}{Prolog -- A Tutorial Introduction}
+  \list{location}{1}{%
+    {Lewisburg, PA 17387}%
+  }
+\endentry
+
+\entry{ogb_dcg}{misc}{}
+  \name{author}{1}{}{%
+    {{}%
+     {Ogborn}{O.}%
+     {Anne}{A.}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{OA1}
+  \strng{fullhash}{OA1}
+  \field{labelalpha}{Ogb}
+  \field{sortinit}{O}
+  \field{title}{Using Definite Clause Grammars in SWI-Prolog}
+  \verb{url}
+  \verb http://www.pathwayslms.com/swipltuts/dcg/
+  \endverb
+  \field{urlday}{12}
+  \field{urlmonth}{08}
+  \field{urlyear}{2013}
+\endentry
+
+\entry{rutledge2005can}{inproceedings}{}
+  \name{author}{1}{}{%
+    {{}%
+     {Rutledge-Taylor}{R.-T.}%
+     {M}{M}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{RTM1}
+  \strng{fullhash}{RTM1}
+  \field{labelalpha}{RT05}
+  \field{sortinit}{R}
+  \field{booktitle}{Proceedings of the 27th annual meeting of the Cognitive
+  Science Society}
+  \field{title}{Can ACT-R realize” Newell’s dream”}
+  \field{year}{2005}
 \endentry
 
 \entry{rescorla_wagner_1972}{inbook}{}
@@ -462,6 +573,84 @@
   \field{year}{2008}
   \field{urlday}{15}
   \field{urlmonth}{07}
+  \field{urlyear}{2013}
+\endentry
+
+\entry{stewart_deconstructing_2006}{inproceedings}{}
+  \name{author}{2}{}{%
+    {{}%
+     {Stewart}{S.}%
+     {Terrence~C.}{T.~C.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {West}{W.}%
+     {Robert~L.}{R.~L.}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{STCWRL1}
+  \strng{fullhash}{STCWRL1}
+  \field{labelalpha}{SW06}
+  \field{sortinit}{S}
+  \field{booktitle}{Proceedings of the Seventh International Conference on
+  Cognitive Modeling}
+  \field{pages}{298–303}
+  \field{title}{Deconstructing {ACT-R}}
+  \verb{url}
+  \verb http://actr.psy.cmu.edu/papers/641/stewartPaper.pdf
+  \endverb
+  \verb{file}
+  \verb 2006-Deconstructing_ACT-R.pdf:/home/dgall/.mozilla/firefox/r7xmse5h.def
+  \verb ault/zotero/storage/TEU5479S/2006-Deconstructing_ACT-R.pdf:application/
+  \verb pdf
+  \endverb
+  \field{year}{2006}
+  \field{urlday}{24}
+  \field{urlmonth}{04}
+  \field{urlyear}{2013}
+\endentry
+
+\entry{stewart_deconstructing_2007}{article}{}
+  \name{author}{2}{}{%
+    {{}%
+     {Stewart}{S.}%
+     {Terrence~C.}{T.~C.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {West}{W.}%
+     {Robert~L.}{R.~L.}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{STCWRL1}
+  \strng{fullhash}{STCWRL1}
+  \field{labelalpha}{SW07}
+  \field{sortinit}{S}
+  \verb{doi}
+  \verb 10.1016/j.cogsys.2007.06.006
+  \endverb
+  \field{issn}{13890417}
+  \field{number}{3}
+  \field{pages}{227\bibrangedash 236}
+  \field{shorttitle}{Deconstructing and reconstructing {ACT-R}}
+  \field{title}{Deconstructing and reconstructing {ACT-R:} Exploring the
+  architectural space}
+  \verb{url}
+  \verb http://linkinghub.elsevier.com/retrieve/pii/S1389041707000253
+  \endverb
+  \field{volume}{8}
+  \verb{file}
+  \verb 1-s2.0-S1389041707000253-main.pdf:/home/dgall/.mozilla/firefox/r7xmse5h
+  \verb .default/zotero/storage/IAKBD2DF/1-s2.0-S1389041707000253-main.pdf:appl
+  \verb ication/pdf
+  \endverb
+  \field{journaltitle}{Cognitive Systems Research}
+  \field{month}{09}
+  \field{year}{2007}
+  \field{urlday}{24}
+  \field{urlmonth}{04}
   \field{urlyear}{2013}
 \endentry
 
