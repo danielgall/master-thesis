@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.8.10)  13 AUG 2013 18:22
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.8.10)  13 AUG 2013 21:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1680,19 +1680,19 @@ ine 258.
 [17]
 
 LaTeX Warning: Reference `fig:activation_spreading' on page 18 undefined on inp
-ut line 262.
+ut line 263.
 
 
 LaTeX Warning: Reference `fig:fan_network' on page 18 undefined on input line 2
-85.
+86.
 
 
-LaTeX Warning: Reference `fig:fans' on page 18 undefined on input line 287.
+LaTeX Warning: Reference `fig:fans' on page 18 undefined on input line 288.
 
 [18] [19]
 
 LaTeX Warning: Reference `tab:learning_types' on page 20 undefined on input lin
-e 334.
+e 333.
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1931,11 +1931,11 @@ Package logreq Info: Writing requests to 'arbeit.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 31754 strings out of 493315
- 556245 string characters out of 6143704
+ 31750 strings out of 493315
+ 556211 string characters out of 6143704
  1001424 words of memory out of 5000000
  32931 multiletter control sequences out of 15000+600000
- 94484 words of font info for 225 fonts, out of 8000000 for 9000
+ 94359 words of font info for 223 fonts, out of 8000000 for 9000
  958 hyphenation exceptions out of 8191
  65i,12n,76p,1611b,3156s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf-dist/fo
@@ -1961,10 +1961,10 @@ r8a.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/
 texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-dist/fonts/typ
 e1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvr
 o8a.pfb>
-Output written on arbeit.pdf (125 pages, 828833 bytes).
+Output written on arbeit.pdf (125 pages, 828572 bytes).
 PDF statistics:
- 3053 PDF objects out of 3580 (max. 8388607)
- 2851 compressed objects within 29 object streams
- 1445 named destinations out of 1728 (max. 500000)
+ 3052 PDF objects out of 3580 (max. 8388607)
+ 2850 compressed objects within 29 object streams
+ 1444 named destinations out of 1728 (max. 500000)
  39399 words of extra memory for PDF output out of 42996 (max. 10000000)
 
