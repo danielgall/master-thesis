@@ -7,9 +7,7 @@ Because of the underlying theory which is the basis for the ACT-R cognitive arch
 
 When talking about ACT-R, one can refer to the theory or the implementation. The theory gives a view which abstracts from implementational details that may be concerned when talking about implementation \FIXME{source}. In this work, implementation always refers to the vanilla Lisp implementation that can be downloaded from \cite{actr_homepage}.
 
-In this chapter, a short overview over the theory of ACT-R is given. First, the description is informal to provide a general image of how ACT-R works. Then, some important parts of the system are defined more formally in chapter \ref{implementation}, as soon as it is needed in the implementation. All of the information in this chapter refers to the theory. Implementation is discussed in chapter \ref{implementation}.
-
-A lot of the information in this chapter is based on \cite{anderson_how_2007, anderson_integrated_2004, taatgen_modeling_2006}, where a much more comprehensive discussion of the ACT-R theory including complex examples, referrings to the neuro-biology and the reasons why this particular modeling of human cognition has been chosen. In this work, only the basic concepts of ACT-R are presented.
+In this chapter, a short overview over the theory of ACT-R is given. First, the description is informal to provide a general image of how ACT-R works. Then, some important parts of the system are defined more formally in chapter \ref{implementation}, as soon as it is needed in the implementation. All of the information in this chapter refers to the theory. Implementation is discussed in chapter \ref{implementation}. A lot of the information in this chapter is based on \cite{anderson_how_2007, anderson_integrated_2004, taatgen_modeling_2006}, where a much more comprehensive discussion of the ACT-R theory including complex examples, referrings to the neuro-biology and the reasons why this particular modeling of human cognition has been chosen. In this work, only the basic concepts of ACT-R are presented.
 
 \section{Procedural and Declarative Knowledge}
 
@@ -19,30 +17,24 @@ A central idea of ACT-R is the distinction between \emph{declarative} and \emph{
 
 This approach leads to a modular organization of ACT-R with modules for each purpose needed to simulate human cognition. Figure \ref{fig:modular_organization} provides an overview of some of the default modules of ACT-R. For example, the declarative module stores the factual information (the declarative knowledge), the visual module perceives and processes the visual field, the procedural module holds the procedural information and controls the computational process. 
 
-Each module is independent from the other modules and computations in the modules can be performed in parallel to other modules, for instance: The declarative module can search a specific fact while the visual module processes the visual field. Additionally, within one module computations are executed massively parallel, e.g., the visual module can process the entire visual field at once to determine the location of a certain object, which implies the processing of a huge amount of data at a time.
+Each module is independent from the other modules and computations in the modules can be performed parallel to other modules, for instance: The declarative module can search a specific fact while the visual module processes the visual field. Additionally, within one module computations are executed massively parallel, e.g., the visual module can process the entire visual field at once to determine the location of a certain object, which implies the processing of a huge amount of data at a time.
 
 However, each module can perform its computation only locally and has no access to computations of other modules. To communicate, modules have associated \emph{buffers}, where they can put a limited amount of information -- one primitive knowledge element -- and the procedural module can access each of these buffers. The information in a buffer could be one single fact retrieved from declarative memory or one visual object from the visual field perceived by the visual module. Information between modules is exchanged by the procedural module taking information from one buffer and putting it into another (with an optional computation on the way). This leads to a serial bottleneck in the computation, since every communication between modules has to go its way through the procedural module.
 
-In figure \ref{fig:recognize_act} the general computational process is illustrated by showing the \emph{recognize-act-cycle}: The procedural information is stored as rules that have a \emph{condition} and an \emph{action}. The condition refers to the so-called \emph{working memory}, which basically is the content of all the buffers. In the recognize-phase of the cycle, a suitable rule that matches the current state of the working memory is searched. If the condition of a rule holds, it \emph{fires} and performs its actions -- this is the act-phase of the cycle. Those actions can cause changes on the buffers that may lead to the next rule matching the current state in the next recognize-part of the cycle.
-
-In the following sections, some of the modules and their precise interaction will be described in more detail.
+In figure \ref{fig:recognize_act} the general computational process is illustrated by showing the \emph{recognize-act-cycle}: The procedural information is stored as rules that have a \emph{condition} and an \emph{action}. The condition refers to the so-called \emph{working memory}, which basically is the content of all the buffers. In the recognize-phase of the cycle, a suitable rule that matches the current state of the working memory is searched. If the condition of a rule holds, it \emph{fires} and performs its actions -- this is the act-phase of the cycle. Those actions can cause changes on the buffers, so the next rule may match the current state in the next recognize-part of the cycle. In the following sections, some of the modules and their precise interaction will be described in more detail.
 
 \subsection{Declarative Knowledge}
 
-The declarative module organizes the factual knowledge as an associative memory. Ie., it consists of a set of concepts that are connected to each other in a certain way.
-
-Such elementary concepts are represented in form of chunks that can be seen as basic knowledge elements. They can have names, but those names are not critical for the description of the facts and just for readability in the theory. The actual description of a concept comes from its connections.
+The declarative module organizes the factual knowledge as an associative memory. I.e., it consists of a set of concepts that are connected to each other in a certain way. Such elementary concepts are represented in form of chunks that can be seen as basic knowledge elements. They can have names, but those names are not critical for the description of the facts and just for readability in the theory. So, the definition of a chunk is based only on its connections. 
 
 Chunks can have slots that are connected to other chunks or elements. Such an element can be regarded as a chunk without any slots. For instance, the fact $5 + 2 = 7$ can be modeled as a chunk that is connected to the numbers 5, 2 and 7 (see figure \ref{fig:chunk_addition_fact}). Notice that in the figure each slot has an individual name. This is necessary to distinguish the connections of the chunks, otherwise the summands would be indistinguishable from the sum in the example.
 
-Thus, chunks are defined by their name and the values of their slots. When talking about chunk descriptions, often the term \emph{slot-value pairs} is used especially for partial chunk descriptions, i.e. if not all possible slots of a chunk are given a value. This refers simply to a chunk that has the specified values in its slots (and the others are ignored).
+Thus, chunks are defined by their name and the values of their slots. When talking about chunk descriptions, often the term \emph{slot-value pairs} is used especially for partial chunk descriptions, i.e. descriptions which do not have a value for all possible slots. This simply refers to an arbitrary chunk that has the specified values in its slots (and the others are ignored).
 
 Each chunk is associated with a chunk-type that determines the slots a chunk can have. For example, the fact in figure \ref{fig:chunk_addition_fact} has the type \verb|addition-fact|. All chunks of this type must provide the slots \verb|arg1|, \verb|arg2| and \verb|sum|.
 
 \label{millers_number}
-For the chunk-types there is no upper limit of slots they can define. However, Anderson et al. suggested to limit the number of slots to Miller's Number of $7 \pm 2$, for the reason of plausibility \cite{unknown}. \FIXME{Find cite}
-
-
+For the chunk-types there is no upper limit of slots they can define. However, it is suggested to limit the number of slots to Miller's Number of $7 \pm 2$, for the reason of plausibility \cite[230]{stewart_deconstructing_2007}. 
 
 \subsubsection{Buffers}
 
@@ -53,18 +45,18 @@ For example, the declarative module has the retrieval buffer associated with it,
 \subsection{Procedural Knowledge}
 \label{procedural_knowledge}
 
-Procedural Knowledge in ACT-R is formulated as a set of condition-action rules. Each rule defines in its condition-part the circumstances under which it can be applied. Those conditions refer to the current chunks in the buffer. In the condition-part of a rule it is defined which kind of chunk with which slot values must be present in which buffer for the rule to fire. For example, one rule in the process of adding the numbers 5 and 2 could have the conditions that there is a chunk of type \verb|addition-fact| in the retrieval buffer with 5 and 7 in its argument-slots and specify certain actions if this is the case.
+Procedural Knowledge in ACT-R is formulated as a set of condition-action rules. Each rule defines in its condition-part the circumstances under which it can be applied. Those conditions refer to the current chunks in the respective buffer. The condition-part of a rule defines which kind of chunk with which slot values must be present in which buffer for the rule to fire. For example, one rule in the process of adding the numbers 5 and 2 could have the conditions that there is a chunk of type \verb|addition-fact| in the retrieval buffer with 5 and 2 in its argument-slots and specify certain actions if this is the case.
 
-If the chunks in the buffers match all the conditions stated in a rule, it can be applied (``fired''), which leads its action-part to be performed. Possible actions are changes of some of the values in the chunk of a buffer, the clearing of a buffer or a buffer request, which leads the corresponding module to put a certain chunk into the requested buffer. Buffer requests are also stated in form of a (partial) chunk description\footnote{A partial chunk description is just a chunk description that does not specify all slots that are available as defined in the chunk-type.} where chunk-type and slots encode the query of the request. So all the arguments and even the task which should be performed by the module are specified through a chunk representation. The actual semantics of a request is dependent on the module. For example, the declarative module will search a chunk that matches the chunk in the description of the request. One production rule, for instance, in the process of adding the numbers 5 and 2 could be, if the wrong \verb|addition-fact| chunk is stored in the retrieval buffer, a retrieval request will be performed, which states that the declarative module should put a chunk into the retrieval buffer, that has 5 and 2 in its argument slots and is of type \verb|addition-fact|. After the successful performance of the request, a chunk with 5 and 2 in its argument slots will be stored in the retrieval buffer, that also has a value for the sum. The actions are described in more detail in the following section.
+If the chunks in the buffers match all the conditions stated in a rule, it can be applied (``fired''), which leads its action-part to be performed. Possible actions are changes of some of the values in the chunk of a buffer, the clearing of a buffer or a buffer request, which leads the corresponding module to put a certain chunk into the requested buffer. Buffer requests are also stated in form of a (partial) chunk description\footnote{A partial chunk description is just a chunk description that does not specify all slots that are available as defined in the chunk-type.} where chunk-type and slots encode the query of the request. So all the arguments and even the task which should be performed by the module are specified through a chunk representation. The actual semantics of a request depends on the module. For example, the declarative module will search a chunk that matches the chunk in the description of the request. One production rule, for instance, in the process of adding the numbers 5 and 2 could be, if the wrong \verb|addition-fact| chunk is stored in the retrieval buffer, a retrieval request will be performed, which states that the declarative module should put a chunk into the retrieval buffer, that has 5 and 2 in its argument slots and is of type \verb|addition-fact|. After the successful performance of the request, a chunk with 5 and 2 in its argument slots will be stored in the retrieval buffer, that also has a value for the sum. The actions are described in more detail in the following section.
 
 Although the term \emph{module} is used for the procedural system, it differs a lot from the other modules: In contrast to other modules, the procedural module has no own buffers, but can access the buffers of all the other modules. ``It really is just a system of mapping cortical buffers to other cortical buffers'' \cite[p. 54]{anderson_how_2007}.
 
-The procedural system can only fire one rule at once and it takes 50\,ms for a rule to fire \cite[p. 54]{anderson_how_2007}. After firing the selected rule, the next recognize cycle starts and a suitable rule will be detected and caused to fire. During this time, other modules may perform requests triggered in the action of the last rule. Sometimes, rules have to wait for results of certain modules and they cannot fire before those results are available. Those two facts illustrate how the procedural module can become a serial bottleneck in the computation process.
+The procedural system can only fire one rule at once and it takes 50\,ms for a rule to fire \cite[p. 54]{anderson_how_2007}. After firing the selected rule, the next recognize cycle starts and a suitable rule will be detected and caused to fire. During this time, other modules may perform requests triggered by the action of the last rule. Sometimes, rules have to wait for results of certain modules and they cannot fire before those results are available. Those two facts illustrate how the procedural module can become a serial bottleneck in the computation process.
 
 \subsubsection{Description of Procedural Actions}
 \label{description_of_proc_actions}
 
-In this section, the actions that can be performed by a production rule are described in more detail than before.
+In this section, the actions that can be performed by a production rule are described in more detail than before. The information in this section has been taken from \FIXME{source} and is -- in this degree of detail -- not part of the theory, but focuses more on the implementation to give a more detailed understanding of the concepts needed in chapter~\ref{implementation}.
 
 \begin{description}
  \item[Buffer Modification:] 
@@ -81,31 +73,29 @@ In this section, the actions that can be performed by a production rule are desc
  
  \item[Buffer Clearing:] 
  
- If a buffer is cleared, its containing chunk will be placed into the declarative memory from where it can be retrieved later on.
+ If a buffer is cleared, its containing chunk will be placed into the declarative memory from where it can be retrieved later on. The clearing of a buffer with the implicit storing of the chunk in the declarative memory is an implementational detail which is very important for further considerations.
 \end{description}
 
 \subsubsection{Chunks as Central Data Structure}
 
-As may have become obvious in the previous sections, chunks are the central data structures in ACT-R. They are used to model factual knowledge in the declarative memory, but are also used for communication: Requests are stated as chunks that encode the input of the request, for instance a chunk pattern for a result chunk the declarative memory should retrieve. 
-
-The result of a request is a chunk placed into a buffer and even the procedural system tries to match the chunks in the buffers in the condition part and the action of a rule is specified by slot-value pairs that are basically just partial chunk descriptions. 
+As may have become obvious in the previous sections, chunks are the central data structures in ACT-R. They are used to model factual knowledge in the declarative memory, but are also used for communication: Requests are stated as chunks that encode the input of the request, for instance a chunk pattern for a result chunk the declarative memory should retrieve. The result of a request is a chunk placed into a buffer and even the procedural system, which technically is separated from the declarative knowledge, tries to match the chunks in the buffers in the condition part. Additionally, the action of a rule is specified by slot-value pairs that are basically just partial chunk descriptions. 
 
 \subsubsection{Process of Rule Selection and Execution}
 \label{process_of_rule_selection_and_execution}
 
+\FIXME{add sources}
+
 As stated above, the procedural module can execute only one rule at a time. If no rule has been selected to fire -- so no rule is in progress -- the procedural module is \emph{free} and therefore can select a matching rule according to the recognize-act-cycle. If a rule has been selected, the module is \emph{busy} and cannot choose another rule to fire. Between selection and firing of a rule the module has to wait $50\,\mathrm{ms}$. Then all in-place actions of the rule like modifying or clearing a buffer are performed. Afterwards, the requests are stated and the module is free. However, the requested modules most likely will take a certain time to perform the request. During this time the procedural module can select and fire the next matching rule nevertheless.
 
-If at a certain time the procedural module is free, but there are no matching rules, the module waits, until the system reaches a state, where a rule matches. This is possible, since requests can take a certain time, where the procedural module is free and cannot find a matching rule. If the request has been performed, it usually has a change of buffers as an effect. At this point of time, when the content of a buffer has changed, this could cause the next rule to match and fire.
+If at a certain time the procedural module is free, but there are no matching rules, the module waits until the system reaches a state where a rule matches. This is possible, since requests can take a certain time in which the procedural module is free and cannot find a matching rule. If the request has been performed, it usually causes a change of buffers. When the content of a buffer has changed, this could provoke the next rule to match and fire.
 
 \subsection{Goal Module}
 
-An essential part of human cognition is the ability to keep track of the current goal to achieve and to subordinate all actions to the goal \cite[p. 1041]{anderson_integrated_2004}. For complex cognitive tasks, several rules have to be applied in series and intermediate results must be stored (without changing of the environment). Another important aspect is, that complex tasks can have different subgoals that have to be achieved to accomplish the main goal. For instance, if one wants to add two multi-digit numbers, he would add the columns and remember the results as intermediate results in each step.
-
-In ACT-R, the goal module with its goal buffer is used for this purpose: It is able to keep track of the current goal, introduce subgoals and remember intermediate results in its buffer. 
+An essential part of human cognition is the ability to keep track of the current goal to achieve and to subordinate all actions to the goal \cite[p. 1041]{anderson_integrated_2004}. For complex cognitive tasks, several rules have to be applied in series and intermediate results must be stored (without changing of the environment). Another important aspect is that complex tasks may consist of several subgoals which have to be achieved to accomplish the main goal. For instance, if one wants to add two multi-digit numbers, he would add the columns and remember the results as intermediate results in each step. In ACT-R, the goal module with its goal buffer is used for this purpose: It is able to keep track of the current goal, introduce subgoals and remember intermediate results in its buffer. 
 
 \subsubsection{Working memory}
 
-The goal module and buffer are often referred to as \emph{working memory} \cite[1041]{anderson_integrated_2004}, but actually it can have another meaning as stated in \cite{anderson_working_1996}: The usual definition in production systems is that everything which is present to the production rules and can match against them is part of the working memory. With this definition, all chunks in the buffers form the working memory.
+The goal module and buffer are often referred to as \emph{working memory} \cite[1041]{anderson_integrated_2004}, but actually, as stated in \cite{anderson_working_1996}, it also can have another meaning: The usual definition in production systems is that everything which is present to the production rules and can match against them is part of the working memory. With this definition, all chunks in the buffers form the working memory.
 
 In this work, the term \emph{working memory} will be used in this second meaning, since it discusses the topic from a computer science view and the second definition is related to production rule systems. When talking about the content of the goal buffer, this will be remarked explicitly.
 
@@ -115,19 +105,15 @@ In figure \ref{fig:modular_organization} some more modules are shown. In the fol
 
 \subsubsection{The Outside World}
 
-Since human cognition is embodied, there must be a way to interact with the outside world to simulate human cognition in realistic experiments. Therefore, ACT-R offers \emph{perceptual/motor modules} like the manual module for control of the hands, the visual module for perceiving and processing the visual field or the aural module to perceive sounds in the environment.
+Since human cognition is embodied, there must be a way to interact with the outside world to simulate human cognition in realistic experiments. Therefore, ACT-R offers \emph{perceptual/motor modules} like the manual module for control of the hands, the visual module for perceiving and processing the visual field or the aural module to perceive sounds in the environment. Like with every other module, communication is achieved through the buffers of those modules. In the following, the visual module is described to exemplify the functionality of perceptual modules.
 
-Like with every other module, communication is achieved through the buffers of those modules. 
+\paragraph{The Visual Module} The visual system of ACT-R separates vision into two parts: visual location and visual objects \cite[p. 1039]{anderson_integrated_2004}. There are two buffers for those purposes: the \emph{visual-location} buffer and the \emph{visual} buffer, which represents the visual objects \cite[unit~2]{actr_tutorial}. In the visual module it is not encoded how the light falls on the retina, but a more attentional approach has been chosen \cite[p. 1039]{anderson_integrated_2004}. 
 
-\paragraph{The Visual Module} The visual system of ACT-R separates vision into two parts: visual location and visual objects \cite[p. 1039]{anderson_integrated_2004}. There are two buffers for those purposes: the \emph{visual-location} buffer and the \emph{visual} buffer, which represents the visual objects \cite[unit~2]{actr_tutorial}.
+Requests to the \emph{visual-location buffer} specify a series of constraints in form of slot-value pairs and the visual module puts a chunk representing the location of an object meeting those constraints into the visual-location buffer. Possible constraints are properties of objects like the color or the spatial location. The visual system can process such requests in parallel, i.e. that the whole visual field is processed massively parallel and, for example, the time of finding one green object surrounded by blue objects is constant, regardless of the number of blue objects. If more than one object meets the constraints, one of them will be chosen at random \cites[1039]{anderson_integrated_2004}[68]{anderson_how_2007}.
 
-In the visual module it is not encoded how the light falls on the retina, but a more attentional approach has been chosen \cite[p. 1039]{anderson_integrated_2004}. 
+Requests to the \emph{visual-object system} specify a visual location and the visual module will move its attention to that location, create a new chunk representing the object at that location and put that chunk into the visual buffer \cite[unit 2, chapter 2.5.3]{actr_tutorial}. 
 
-Requests to the visual-location buffer specify a series of constraints in form of slot-value pairs and the visual module puts a chunk representing the location of an object meeting those constraints into the visual-location buffer. Possible constraints are properties of objects like the color or the spatial location. The visual system can process such requests in parallel, i.e. that the whole visual field is processed massively parallel and the time of finding one green object surrounded by blue objects is constant, regardless of the number of blue objects, for example. If more than one object meets the constraints, then one will be chosen at random \cites[1039]{anderson_integrated_2004}[68]{anderson_how_2007}.
-
-Requests to the visual-object system specify a visual location and the visual module will move its attention to that location, create a new chunk representing the object at that location and put that chunk into the visual buffer \cite[unit 2, chapter 2.5.3]{actr_tutorial}. 
-
-The two kinds of requests to the visual module are summarized in table~\ref{tab:visual_module_requests}.
+These two kinds of requests to the visual module are summarized in table~\ref{tab:visual_module_requests}.
 
 \begin{table}[hbt]
 \caption{Requests to the visual module}
@@ -135,7 +121,7 @@ The two kinds of requests to the visual module are summarized in table~\ref{tab:
 \begin{center}
 \begin{tabular}{|l|ll|}
 \hline
- & Visual location & Visual (object)\\
+ & Visual location buffer & Visual (object) buffer\\
 \hline
 Input & Object Constraints & Visual location\\
 Output & Visual location & Visual object\\
@@ -144,15 +130,15 @@ Output & Visual location & Visual object\\
 \end{center}
 \end{table}
 
-The visual system and its capabilities are described in detail in \cite[unit 2]{actr_tutorial} and also regards the implementational details of the system.
+The visual system and its capabilities are described in detail in \cite[unit 2]{actr_tutorial} where also the implementational details of the system are regarded.
 
 \subsubsection{The Imaginal Module}
 
-The imaginal module is capable of creating new chunks. This is useful, if for instance the visual module produces a lot of new information in sequence (like reading a sequence of letters). The visual-object buffer can hold only one chunk at once. A solution could be, to save all the information in slots of the goal chunk. However, since a goal chunk with a large amount of slots seems to be unplausible\footnote{As described in section \ref{millers_number}, one should stick to $7 \pm 2$ slots for each chunk.} and the number of read instances would have to be known in advance due to the static chunk-type definition, the best way to deal with this problem is to create new knowledge elements.
+The imaginal module is capable of creating new chunks. This is useful, if for instance the visual module produces a lot of new information in sequence (like reading a sequence of letters), but the visual-object buffer can hold only one chunk at once. To solve this problem, all the information could be stored in the slots of the goal chunk. However, since a goal chunk with a large amount of slots seems to be unplausible\footnote{As described in section \ref{millers_number}, one should stick to $7 \pm 2$ slots for each chunk.} and the number of read instances would have to be known in advance due to the static chunk-type definition, a better way to deal with this problem is to create new knowledge elements.
 
-This task can be achieved by using the imaginal module: On a request, it creates a new chunk of the type and with the slots stated in the request and puts it into its \emph{imaginal buffer}. Since with every clearing of a buffer the chunk in that buffer is stored in declarative memory\footnote{see section \ref{description_of_proc_actions}}, an unlimited amount of data can be produced and remembered by stating retrieval requests later on.
+This task can be achieved by using the imaginal module: On a request, it creates a new chunk of the type and with the slots stated in the request and puts it into its \emph{imaginal buffer}. Since the chunk in a buffer is stored in the declarative memory when the buffer is cleared\footnote{see section \ref{description_of_proc_actions}}, an unlimited amount of data can be produced and remembered by stating retrieval requests later on.
 
-It is important to mention, that it takes the imaginal module $.2\,\mathrm{ms}$ to create a chunk. This amount of time is constant, but can be set by the modeler. Additionally, the imaginal module can only produce one chunk at a time\footnote{like every module can only handle one request at a time}.
+It is important to mention that it takes the imaginal module $.2\,\mathrm{ms}$ to create a chunk. This amount of time is constant, but can be set by the modeler. Additionally, the imaginal module can only produce one chunk at a time\footnote{like every module can only handle one request at a time}.
 
 The imaginal module is described in \cite[unit 2]{actr_tutorial}.
 
@@ -161,7 +147,7 @@ The imaginal module is described in \cite[unit 2]{actr_tutorial}.
 
 The first ACT-R example model deals with the process of counting. This model relies on count facts a person has learned, e.g. ``the number after $2$ is $3$''. To model this in ACT-R, a chunk-type for those facts has to be defined: A chunk of type \emph{count-fact} has the slots \emph{first} and \emph{second}. The chunks in figure \ref{fig:example_counting_chunks} of this type model the facts that $3$ is the successor of $2$ and $4$ is the successor of $3$.
 
-The next step is to define the goal chunk stored in the goal buffer. In this chunk it somehow has to be encoded, that the current goal is to count. This can be modeled in ACT-R by the chunk-type. To track the current number in the counting process as an intermediate result, the goal chunk could have a slot, that always holds the current number that has been counted to. This leads to a goal chunk as illustrated in figure \ref{fig:example_counting_goal_chunk}, where the current number is $2$. In this example we assume that the model starts with this goal chunk in the goal buffer and the first count fact has been retrieved:
+The next step is to define the goal chunk stored in the goal buffer. In this chunk it somehow has to be encoded that the current goal is to count. This can be modeled in ACT-R by the chunk-type. To track the current number in the counting process as an intermediate result, the goal chunk could have a slot which always holds the current number that has been counted to. This leads to a goal chunk as illustrated in figure \ref{fig:example_counting_goal_chunk}, where the current number is $2$. In this example we assume that the model starts with this goal chunk in the goal buffer and the first count fact has been retrieved:
 
 \parbox{100mm}{\textbf{goal buffer:} goal-chunk of type count\\
 \noindent\hspace*{20mm} current-number $2$}
@@ -169,6 +155,8 @@ The next step is to define the goal chunk stored in the goal buffer. In this chu
 \parbox{100mm}{\textbf{retrieval buffer:} b of type count-fact\\
 \noindent\hspace*{20mm} first $2$\\
 \noindent\hspace*{20mm} second $3$}
+
+This notation indicates that the goal buffer holds a chunk with the name \emph{goal-chunk} of the type \emph{count}, which has the slot \emph{current-number} with the value $2$ (the same is valid analogously for the retrieval buffer).
 
 Now the rules to implement counting can be defined as:
 
@@ -190,9 +178,9 @@ After applying this rule, the current number will be $3$ and the next fact in th
 
 The count-rule will be applicable as long as there are \emph{count-facts} in the declarative memory. Figure \ref{fig:example_counting_execution} illustrates the counting process.
 
-In this example, the rules have been defined in a very informal way. In the following chapters that deal with implementation, a formalization of such rules will be discussed, that defines clearly, what kinds of rules are allowed and introduces a formalism to describe such rules uniquely and less verbosely. The following chapters will refer to this example and refine it gradually.
+In this example, the rules have been defined in a very informal way. In the following chapters which deal with implementation, a formalization of such rules will be discussed, that defines clearly what kinds of rules are allowed. Furthermore, it introduces a formalism to describe such rules uniquely and less verbosely. The following chapters will refer to this example and refine it gradually.
 
-The example also uses the concept of \emph{variables}, which will be introduced more formally in chapter \ref{implementation}, when talking about implementation. Variables allow rule conditions to act like patterns that can match various system states instead of defining a rule for each state, since computation is the same regardless of the actual values in the buffers.
+The example also uses the concept of \emph{variables}, which will be introduced more formally in chapter \ref{implementation} when talking about implementation. Variables allow rule conditions to act like patterns that can match various system states instead of defining a rule for each state, since computation is the same regardless of the actual values in the buffers.
 
 
 \FIXME{figures}

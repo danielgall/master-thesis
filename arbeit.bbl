@@ -299,6 +299,44 @@
   \field{year}{2000}
 \endentry
 
+\entry{balduccini_formalization_2010}{article}{}
+  \name{author}{2}{}{%
+    {{}%
+     {Balduccini}{B.}%
+     {Marcello}{M.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Girotto}{G.}%
+     {Sara}{S.}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{BMGS1}
+  \strng{fullhash}{BMGS1}
+  \field{labelalpha}{BG10}
+  \field{sortinit}{B}
+  \field{number}{4-6}
+  \field{pages}{725–740}
+  \field{title}{Formalization of psychological knowledge in answer set
+  programming and its application}
+  \verb{url}
+  \verb http://journals.cambridge.org/production/action/cjoGetFulltext?fulltext
+  \verb id=7834603
+  \endverb
+  \field{volume}{10}
+  \verb{file}
+  \verb ICLP-24.pdf:/home/dgall/.mozilla/firefox/r7xmse5h.default/zotero/storag
+  \verb e/59N8T7XW/ICLP-24.pdf:application/pdf
+  \endverb
+  \field{journaltitle}{Journal of Theory and Practice of Logic Programming
+  ({TPLP)}}
+  \field{year}{2010}
+  \field{urlday}{24}
+  \field{urlmonth}{04}
+  \field{urlyear}{2013}
+\endentry
+
 \entry{actr_reference}{manual}{}
   \name{author}{1}{}{%
     {{}%
@@ -357,8 +395,22 @@
   \field{year}{2009}
 \endentry
 
+\entry{jactr_benefits}{misc}{}
+  \field{labelalpha}{Jac}
+  \field{extraalpha}{1}
+  \field{sortinit}{J}
+  \field{title}{Benefits of jACT-R}
+  \verb{url}
+  \verb http://jactr.org/node/50
+  \endverb
+  \field{urlday}{13}
+  \field{urlmonth}{08}
+  \field{urlyear}{2013}
+\endentry
+
 \entry{jactr}{misc}{}
   \field{labelalpha}{Jac}
+  \field{extraalpha}{2}
   \field{sortinit}{J}
   \field{title}{The Homepage of jACT-R}
   \verb{url}
@@ -369,8 +421,22 @@
   \field{urlyear}{2013}
 \endentry
 
+\entry{java_actr_benefits}{misc}{}
+  \field{labelalpha}{Jav}
+  \field{extraalpha}{1}
+  \field{sortinit}{J}
+  \field{title}{About ACT-R: The Java Simulation \& Development Environment}
+  \verb{url}
+  \verb http://cog.cs.drexel.edu/act-r/about.html
+  \endverb
+  \field{urlday}{13}
+  \field{urlmonth}{08}
+  \field{urlyear}{2013}
+\endentry
+
 \entry{java_actr}{misc}{}
   \field{labelalpha}{Jav}
+  \field{extraalpha}{2}
   \field{sortinit}{J}
   \field{title}{ACT-R: The Java Simulation \& Development Environment --
   Homepage}
@@ -408,6 +474,29 @@
   }
 \endentry
 
+\entry{newell_unified_1990}{book}{}
+  \name{author}{1}{}{%
+    {{}%
+     {Newell}{N.}%
+     {Allen}{A.}%
+     {}{}%
+     {}{}}%
+  }
+  \list{publisher}{1}{%
+    {Harvard University Press}%
+  }
+  \strng{namehash}{NA1}
+  \strng{fullhash}{NA1}
+  \field{labelalpha}{New90}
+  \field{sortinit}{N}
+  \field{isbn}{0-674-92099-6}
+  \field{title}{Unified theories of cognition}
+  \list{location}{1}{%
+    {Cambridge, MA, USA}%
+  }
+  \field{year}{1990}
+\endentry
+
 \entry{ogb_dcg}{misc}{}
   \name{author}{1}{}{%
     {{}%
@@ -427,6 +516,32 @@
   \field{urlday}{12}
   \field{urlmonth}{08}
   \field{urlyear}{2013}
+\endentry
+
+\entry{pereira_modellingmorality_2007}{inproceedings}{}
+  \name{author}{2}{}{%
+    {{}%
+     {Pereira}{P.}%
+     {Luís~Moniz}{L.~M.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Saptawijaya}{S.}%
+     {Ari}{A.}%
+     {}{}%
+     {}{}}%
+  }
+  \list{publisher}{1}{%
+    {Springer}%
+  }
+  \strng{namehash}{PLMSA1}
+  \strng{fullhash}{PLMSA1}
+  \field{labelalpha}{PS07}
+  \field{sortinit}{P}
+  \field{booktitle}{Procs. 13th Portuguese Intl.Conf. on Artificial
+  Intelligence (EPIA’07), LNAI}
+  \field{title}{Modelling morality with prospective logic}
+  \field{year}{2007}
 \endentry
 
 \entry{rutledge2005can}{inproceedings}{}
