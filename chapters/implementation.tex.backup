@@ -1,7 +1,7 @@
 \chapter{Implementation of ACT-R in CHR}
 \label{implementation}
 
-After the comprehensive but at some point informal overview of the ACT-R theory in chapter \ref{actr_description}, this chapter presents a possible implementation of the described concepts of the ACT-R theory in CHR. Note that this work only regards the fundamental concepts of ACT-R and abstracts from some details. For example, the experiment environment as described in section~\ref{experiment_environment} is ignored.
+After the overview of the ACT-R theory in chapter \ref{actr_description}, this chapter goes more into detail and presents a possible implementation of the described concepts of the ACT-R theory in CHR, inspecting some implementational details of the theory and formalizing some basic concepts. Note that this work only regards the fundamental concepts of ACT-R and abstracts from some details. For example, the experiment environment as described in section~\ref{experiment_environment} is ignored.
 
 For the implementation, some special cases and details that are not exactly defined in theory have to be considered. Hence, some concepts of the theory that are implemented in this work are formalized first. The implementation in form of CHR rules sticks to those formalisms and is often very similar to them.
 
@@ -65,11 +65,11 @@ A chunk-store is \emph{type-consistent}, iff $\forall (c,(t,S)) \in Isa: \forall
 The following methods can be defined over a chunk store $\Sigma = (C, E, \mathcal{T}, HasSlot, Isa)$:
 
 \begin{description}
- \item[\texttt{chunk-type(name slot\textsubscript{1} slot\textsubscript{2} ... slot\textsubscript{n})}] adds the type $T = (\mathtt{name},\{\mathtt{slot_1}, \dots, \mathtt{slot_n}\})$ to the store, i.e. $\mathcal{T'} = \mathcal{T} \cup \{T\}$. 
- \item[\texttt{add-chunk(name isa type slot\textsubscript{1} val\textsubscript{1} ... slot\textsubscript{n} val\textsubscript{n})}] adds a new chunk to the store, i.e. $C' = C \cup \{ \mathtt{name} \}$, $Isa' = Isa \cup (\mathtt{name}, (\mathtt{type}, slots(\mathtt{type}))$ and $HasSlot' = \bigcup_{i = 1}^n{\mathtt{(name,slot_i,val_i)}} \cup HasSlot.$ Note, that due to the expansion of $C$, the condition that $C$ and $E$ have to be disjoint may be violated. To fix this violation, the element can be removed from $E$: $E' = (E \cup C) - (E \cap C).$ 
+ \item[\texttt{chunk-type(name slot\textsubscript{1} slot\textsubscript{2} ... slot\textsubscript{n})}] is a method for defining a new type $T = (\mathtt{name},\{\mathtt{slot_1}, \dots, \mathtt{slot_n}\})$ which is added to the store, i.e. $\mathcal{T'} = \mathcal{T} \cup \{T\}$. 
+ \item[\texttt{add-chunk(name isa type slot\textsubscript{1} val\textsubscript{1} ... slot\textsubscript{n} val\textsubscript{n})}] adds a chunk specified by a name and a list of slot-value pairs to the store, i.e. $C' = C \cup \{ \mathtt{name} \}$, $Isa' = Isa \enspace \cup \enspace (\mathtt{name}, (\mathtt{type}, slots(\mathtt{type}))$ and $HasSlot' = \bigcup_{i = 1}^n{\mathtt{(name,slot_i,val_i)}} \enspace \cup \enspace HasSlot.$ Note that due to the expansion of $C$, the condition that $C$ and $E$ have to be disjoint may be violated. To fix this violation, the element can be removed from $E$: $E' = (E \cup C) - (E \cap C).$ 
  
  Additionally, a valid mechanism to restore type-consistency may be introduced: It might happen, that not all slots are specified in the call of the \lstinline|add-chunk| method. Since it is claimed by the definition of $HasSlot$ that for all slots $s$ of a chunk $c$ there must be a $(c,s,v) \in HasSlot$, in implementations the unspecified slots are initialized as empty slots, represented by the empty value \lstinline|nil|. Furthermore, slots specified in the call of the method that are not a member of the chunk's type should cause an error to preserve type-consistency.
-  \item[\texttt{alter-slot(name slot\textsubscript{1} val\textsubscript{1} ... slot\textsubscript{n} val\textsubscript{n})}] changes the slot values of a chunk identified by its name. Only existing slots can be altered.
+  \item[\texttt{alter-slot(name slot\textsubscript{1} val\textsubscript{1} ... slot\textsubscript{n} val\textsubscript{n})}] changes the values of the specified slots of a chunk identified by its name to new values. Only existing slots can be altered, but the list of slot-value pairs may be a partial chunk-description. The values of the slots not in the list remain at their old values.
   \item[\texttt{remove-chunk(name)}] removes the chunk with the given name from $C$ and all of its occurrences in $Isa$ and $HasSlot$.
   \item[\texttt{return-chunk(name)}] gets a chunk name as input and returns a chunk specification, i.e. the name, type and all slot-value pairs of this chunk in the store.
 \end{description} 
@@ -150,7 +150,7 @@ chunk_has_slot(a,sum,7)
 
 A chunk store distinguishes between a set of chunks $C$ and a set of elements $E$. For implementational reasons it can be helpful if there are only chunks in the system, because elements just behave like chunks with no slots. Hence, a chunk-type \lstinline|chunk| with no slots will be added automatically to the store. Each element $e \in E$ and added as a chunk of type \lstinline|chunk| to the set of chunks $C$. After this operation $E = \emptyset$, and for every former element $e$ of $E$: $e \in C$, $(e,(chunk,\emptyset)) \in Isa$.
 
-So $E$ is represented now by $\{ c \in C | c Isa (chunk,\emptyset)$ in the implementation.
+So $E$ is now represented by $\{ c \in C | c \enspace Isa \enspace (chunk,\emptyset)$ in the implementation.
 
 \begin{example}
 The chunk representation from example~\ref{ex:addition_fact_chr} is changed to:
@@ -181,7 +181,7 @@ chunk(7,chunk)
 
 To implement the methods in definition~\ref{def:abstract_methods_chunk_store}, first a data type for chunk specifications has to be introduced. From this specification the correct constraints modeling the chunk-store are added or modified.
 
-The straight-forward definition of a data type for chunk specifications is just to use the specification like in definition~\ref{def:abstract_methods_chunk_store}: Since \lstinline|(name isa type slot_1 val_1 \dots slot_n val_n)| is just a list in LISP and specifies a chunk uniquely, a similar Prolog term can be used:
+The straight-forward definition of a data type for chunk specifications is just to use the specification like in definition~\ref{def:abstract_methods_chunk_store}: Since the term \lstinline[language=]|(name isa type slot_1 val_1 ... slot_n val_n)| is just a list in Lisp and specifies a chunk uniquely, a similar Prolog term can be used:
 
 \begin{lstlisting}
 :- chr_type chunk_def ---> nil; chunk(any, any, slot_list).
@@ -191,7 +191,7 @@ The straight-forward definition of a data type for chunk specifications is just 
 :- chr_type pair(T1,T2) ---> (T1,T2).
 \end{lstlisting}
 
-This definition states that a chunk is either \lstinline|nil|, i.e. an empty chunk, or a term \lstinline|chunk(Name, Type, SVP)|, where \lstinline|SVP| is a list of slot-value pairs. This is the direct translation of the chunk-specification used in the definition, amended by the \lstinline|nil| construct, that may be needed for later purposes.
+This definition states that a chunk is either \lstinline|nil|, i.e. an empty chunk, or a term \lstinline|chunk(Name,Type,SVP)|, where \lstinline|SVP| is a list of slot-value pairs. This is the direct translation of the chunk-specification used in the definition, amended by the \lstinline|nil| construct, that may be needed for later purposes.
 
 The default methods can be implemented as follows:
 
@@ -289,7 +289,7 @@ The first rule replaces the existing \lstinline|chunk_has_slot| constraint by a 
 
 \paragraph{remove\_chunk}
 
-This method removes all occurrences of a chunk.
+This method removes all occurrences of a chunk from the store. I.e., all \lstinline|chunk| and \lstinline|chunk_has_slot| constraints the chunk is involved in are removed.
 
 \begin{lstlisting}
 <<remove_chunk(Name)>> \ <<chunk(Name, _)>> <=> true.
@@ -429,7 +429,7 @@ For the right hand side of a rule the following actions are allowed:
   ...
 \end{lstlisting}
 
-They are indicated by the buffer modifier \lstinline|=| right before the buffer name and are specified through a list of slot-value pairs. Note, that this list can be incomplete and must not contain a \lstinline|isa| specification. It leads all slots mentioned in the modification action of a buffer to be replaced by the specified values.
+They are indicated by the buffer modifier \lstinline|=| right before the buffer name and are specified through a list of slot-value pairs. Note that this list can be incomplete and must not contain a \lstinline|isa| specification. It leads all slots mentioned in the modification action of a buffer to be replaced by the specified values.
 
  \item[Buffer Requests] of the form
 \begin{lstlisting}
@@ -538,7 +538,7 @@ For each action type a constraint
 buffer_action(buffer,chunk-specification)
 \end{lstlisting}
 
-with corresponding rules that handle the action have to be added. Note, that the buffer action is defined by the action name, the buffer name and a chunk specification, because actions in ACT-R are defined through a buffer modifier that specifies the action, the name of the buffer and a list of slot-value pairs. Hence, this is a direct translation to CHR.
+with corresponding rules that handle the action have to be added. Note that the buffer action is defined by the action name, the buffer name and a chunk specification, because actions in ACT-R are defined through a buffer modifier that specifies the action, the name of the buffer and a list of slot-value pairs. Hence, this is a direct translation to CHR.
 
 \paragraph{Buffer Modifications}
 
@@ -889,7 +889,7 @@ where \lstinline|#| is the placeholder for the built-in constraint that computes
 
 For arithmetic slot modifiers the values being compared have to be numbers. If a value is not a number, the arithmetic test will fail and the rule cannot be applied \cite{actr_reference}.
 
-Note, that slot tests with modifiers other than \lstinline|=| do not bind variables, but only perform simple checks, like it is with guards in CHR. If \lstinline|val| is an unbound variable and is never bound to a value on LHS, the default implementation throws a warning, and the rule will not match. Therefore, to handle this case, the rule translation scheme has to be extended by an additional guard check \lstinline|ground(Val)|, where \lstinline|Val| is the Prolog variable that replaces each occurrence of the variable \lstinline|val|.
+Note that slot tests with modifiers other than \lstinline|=| do not bind variables, but only perform simple checks, like it is with guards in CHR. If \lstinline|val| is an unbound variable and is never bound to a value on LHS, the default implementation throws a warning, and the rule will not match. Therefore, to handle this case, the rule translation scheme has to be extended by an additional guard check \lstinline|ground(Val)|, where \lstinline|Val| is the Prolog variable that replaces each occurrence of the variable \lstinline|val|.
 
 As with normal slot tests, it is important to mention that if there are several tests on the same slot, the \lstinline|chunk_has_slot| constraint must appear only once on the LHS of the CHR rule, since every slot-value pair is unique in the constraint store. Ie., if the first slot test of a particular slot appears on the LHS of the ACT-R rule, a \lstinline|chunk_has_slot| constraint has to be added to the LHS of the CHR rule. For every other occurrence of this slot in a slot test, only guard checks are added.
 
@@ -951,7 +951,7 @@ will match all chunks which have the same value in \lstinline|spam| and \lstinli
   <<<Bar==Eggs>>> | ...
 \end{lstlisting}
 
-Note, that in this case, no binding occurs, since both, \lstinline|Bar| and \lstinline|Eggs|, already occur in the head of the rule and are bound to some value. Hence, the test in the guard can be reduced to a simple syntactic equality test without binding (\lstinline|==|).
+Note that in this case, no binding occurs, since both, \lstinline|Bar| and \lstinline|Eggs|, already occur in the head of the rule and are bound to some value. Hence, the test in the guard can be reduced to a simple syntactic equality test without binding (\lstinline|==|).
 
 \end{example}
 
@@ -1239,7 +1239,7 @@ However, since the match set is distributed over a set of \lstinline|match_set| 
 
 The first rule merges two match sets to one singe merge set containing a list with all the chunks of the former sets, if the \lstinline|collect_matches| trigger is present. 
 
-In the second rule, if no two match sets are in the store, the result of the \lstinline|collect_matches| operation is the match set. The same applies for the last rule, where no match set is in the store and therefore the result is empty. Note, that this implies, that the rules have to be applied from top to bottom, left to right\footnote{This is called the refined operational semantics of CHR}.
+In the second rule, if no two match sets are in the store, the result of the \lstinline|collect_matches| operation is the match set. The same applies for the last rule, where no match set is in the store and therefore the result is empty. Note that this implies, that the rules have to be applied from top to bottom, left to right\footnote{This is called the refined operational semantics of CHR}.
 
 The symbolic layer does not implement any rule for which chunk will be returned, if there are more than one in the match set. In this implementation, the first chunk in the list is chosen. The module request is now implemented as follows:
 
@@ -1335,7 +1335,7 @@ Additionally, the newly created names can be deleted if the chunk was identical 
 In the declarative module, the chunk search must be extended to find merged chunks by both names. This can be achieved as follows:
 
 \begin{lstlisting}
-<<identical(C1,C2) \ find_chunk(C2,T2.Ss2)>> <=> 
+<<identical(C1,C2) \ find_chunk(C2,T2,Ss2)>> <=> 
   <<<ground(C2)>>> | 
   find_chunk(C1,T2,Ss2).
 \end{lstlisting}
@@ -1715,7 +1715,7 @@ If this rule is applied to exhaustion, only one \lstinline|base_level_part| cons
   A is log(B).
 \end{lstlisting}
 
-Note, that the rule has to be executed after the last rule cannot be applied anymore, because otherwise it would take an intermediate result as the actual result.
+Note that the rule has to be executed after the last rule cannot be applied anymore, because otherwise it would take an intermediate result as the actual result.
 
 With this set of rules, the base-level activation can be calculated according to its definition. There are some special cases, that can be handled implementation specifically (all cases, where the guards prevent the rules from firing are such cases that may need some kind of special treatment).
 
@@ -1733,7 +1733,7 @@ In the calculation process, the fan value $\mathrm{fan}_j$ of a chunk $j$ may be
   fan(C,F).
 \end{lstlisting}
 
-The first rule adds a fan of $1$ for each chunk. The next rule adds a fan of $1$ for a chunk \lstinline|C| for each slot where \lstinline|C| is the value. In the last rule, two fan values for one particular chunk are summed up to a single fan value. Note, that this has to be considered when deleting a chunk: For every chunk in the slots of the deleted chunk, the fan value must be decreased by one.
+The first rule adds a fan of $1$ for each chunk. The next rule adds a fan of $1$ for a chunk \lstinline|C| for each slot where \lstinline|C| is the value. In the last rule, two fan values for one particular chunk are summed up to a single fan value. Note that this has to be considered when deleting a chunk: For every chunk in the slots of the deleted chunk, the fan value must be decreased by one.
 
 As noted before in section~\ref{distinction_elements_chunks} on page~\pageref{distinction_elements_chunks}, primitive elements are stored as chunks of the type \lstinline|chunk| that has no slots. This is very important of the fan calculation as it is presented here, since the fan value depends on the presence of a \lstinline|chunk| constraint to calculate the proper fan value. Otherwise, the fan value of primitive elements would always be off by one.
 
@@ -1840,11 +1840,17 @@ module_request(+BufName, +ChunkDef, +Context, -ResChunk, -ResState, -ResTime)
 
 where \lstinline|Context| is a list of the chunk names that are in the current context (as defined in section~\ref{current_context} on page~\pageref{current_context}) and \lstinline|ResTime| is bound to the time the request will take. As described in section~\ref{changing_the_buffer_system} on page \pageref{changing_the_buffer_system}, the buffer actions are divided in two phases: The first only schedules the second phase at the time when the action is finished, whereas the second phase actually performs the action, i.e. the changes to the buffers.
 
-The same is valid for buffer requests: They are divided into two rules -- \lstinline|buffer_request/2| and \lstinline|do_buffer_request/2| -- as already described in section~\ref{changing_the_buffer_system} on page~\pageref{changing_the_buffer_system} for the other actions. The difference is, that the request is actually performed immediately when calling \lstinline|buffer_request|, but the effects to the buffers this request has are applied not until \lstinline|do_buffer_request| is called, which is scheduled at the result time (\lstinline|ResTime|) of the request. This is due to the dependence of the latency of a request on the activation values of the matching chunks, so the request has to be performed in advance to calculate the correct time it will take.
+A similar method is applied for buffer requests: They are divided into three rules -- \lstinline|buffer_request/2|, \lstinline|start_request/2| and \lstinline|do_buffer_request/2| -- as already described in section~\ref{changing_the_buffer_system} on page~\pageref{changing_the_buffer_system} for the other actions. The difference is, that the request is actually performed immediately when calling \lstinline|buffer_request|, but the effects to the buffers this request has are applied not until \lstinline|do_buffer_request| is called, which is scheduled at the result time (\lstinline|ResTime|) of the request. This is due to the dependence of the latency of a request on the activation values of the matching chunks, so the request has to be performed in advance to calculate the correct time it will take.
 
 This yields the following code in the buffer system:
 
-\begin{lstlisting}[label=Schedule buffer request, escapeinside={(*@}{@*)}]
+\begin{lstlisting}[label=Schedule start of buffer request, escapeinside={(*@}{@*)}]
+buffer(BufName, ModName, _) \ buffer_request(BufName, Chunk) <=>
+  get_now(Now),
+  add_q(Now,0,start_request(BufName,Chunk)).
+\end{lstlisting}
+
+\begin{lstlisting}[label=Schedule the result of buffer request, escapeinside={(*@}{@*)}]
 buffer(BufName, ModName, _) \ buffer_request(BufName, Chunk) <=> %% todo: check for free buffer!!
   write('Scheduled buffer request '),
   write(BufName),nl,
@@ -2021,10 +2027,10 @@ In the second rule, the firing of the last remaining rule is scheduled 50\,ms fr
 When the chosen rule is applied, its actions are performed and eventually, a \lstinline|conflict_resolution| constraint is added to the store. This constraint leads the next conflict resolution event to being scheduled:
 
 \begin{lstlisting}
-<<now(Time) \ conflict_resolution>> <=> add_q(Time,0,fire).
+<<now(Time) \ conflict_resolution>> <=> add_q(Time,-10,fire).
 \end{lstlisting}
 
-The event is scheduled at the current time with very low priority, so all the actions of the rule have had the chance to be executed.
+The event is scheduled at the current time with very low priority, i.e. a priority lower than all requests, so all the actions of the rule have had the chance to be executed.
 
 If there was no matching rule, the \lstinline|no_rule| constraint is in the store. This leads the next conflict resolution event to be scheduled after the next event (which may lead to a change of the system state):
 
@@ -2032,7 +2038,7 @@ If there was no matching rule, the \lstinline|no_rule| constraint is in the stor
 <<no_rule>> <=> after_next_event(fire).
 \end{lstlisting}
 
-Note, that the described method of implementing the conflict resolution process of ACT-R, matches exactly the description in the reference manual:
+Note that the described method of implementing the conflict resolution process of ACT-R, matches exactly the description in the reference manual:
 
 \begin{quote}
 ``The procedural module will automatically schedule conflict-resolution events. The first one is
@@ -2062,7 +2068,7 @@ The reward a rule can distribute, can be saved in a \lstinline|reward/2| constra
 <<apply_rule(P)>> ==> <<<P \== []>>> | get_now(Now), to_reward(P,Now).
 \end{lstlisting}
 
-Note, that the \lstinline|apply_rule/1| constraint from the last section is used to determine, when a rule is fired.
+Note that the \lstinline|apply_rule/1| constraint from the last section is used to determine, when a rule is fired.
 
 When a rule that can distribute a reward is applied, the reward is triggered:
 
@@ -2086,7 +2092,7 @@ calc_reward(R,FireTime,Reward) :- (*@\label{lst:trigger_reward:calc_reward}@*)
   Reward is R - (Now-FireTime).
 \end{lstlisting}
 
-Note, that in line~\ref{lst:trigger_reward:learning} the utility is adapted by the utility learning rule as shown in equation~\eqref{eq:utility_learning}. The reward the rule receives is calculated by the Prolog predicate in lines~\ref{lst:trigger_reward:calc_reward} sqq.: The more time passed since the rule application, the less the reward of the rule.
+Note that in line~\ref{lst:trigger_reward:learning} the utility is adapted by the utility learning rule as shown in equation~\eqref{eq:utility_learning}. The reward the rule receives is calculated by the Prolog predicate in lines~\ref{lst:trigger_reward:calc_reward} sqq.: The more time passed since the rule application, the less the reward of the rule.
 
 In the end, there has to be a rule that cleans up the reward trigger, after all the rules have been rewarded. This ensures, that the next \lstinline|to_reward| constraints are not immediately consumed by the last reward trigger:
 
@@ -2156,26 +2162,30 @@ produces the output list
 The basic idea for the implementation of such a tokenizer comes from~\cite[19\psqq]{prolog_tokenizer}. It basically follows a deterministic finite automaton with the state transitions as illustrated in figure~\ref{fig:tokenizer_automaton}.
 
 \begin{figure}[htb]
+\centering
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=5cm,
                     semithick]
-  \tikzstyle{every state}=[fill=none,draw,text=black]
+  \tikzstyle{every state}=[fill=none,draw,text=black,minimum size=1.5cm]
 
-  \node[initial,state] (start)                            {start};
-  \node[state]         (identifier) [right of=start]      {identifier};
-  \node[state]         (number)     [below of=start]      {number};
-  \node[state]         (fail)       [above left of=start] {fail};
+  \node[initial,state,accepting] (start)                            {start};
+  \node[state,accepting]         (identifier) [right of=start]      {identifier};
+  \node[state,accepting]         (number)     [below of=start]      {number};
+  \node[state]                   (fail)       [below right of=start] {fail};
 
-  \path (start)      edge [loop above] node {white-space, special character, keyword} (start)
-                     edge              node {letter} (identifier)
-                     edge              node {digit}  (number)
+  \path (start)      edge [loop above] node {break} (start)
+                     edge [bend left]  node {letter} (identifier)
+                     edge [bend left]  node {digit}  (number)
                      edge              node {otherwise} (fail)
         (identifier) edge [loop above] node {letter, number, \texttt{-}} (identifier)
-                     edge              node {special character (without \texttt{-}, white-space, keyword} (start)
+                     edge [bend left, above]  node {break $\setminus \{\texttt{-}\}$} (start)
+                     edge [bend left] node {otherwise} (fail)
         (number)     edge [loop below] node {number} (number)
-                     edge              node {special character, white-space, keyword} (start)
-                     edge              node {letter} (fail)
-        (fail)       edge [loop above] node {*} (fail);
+                     edge [bend left]  node {break} (start)
+                     edge [bend right]  node {letter} (fail)
+        (fail)       edge [loop below] node {*} (fail);
 \end{tikzpicture}
+\caption{The finite automaton implemented by the tokenizer. The labels of the arrows are sets of symbols, e.g. \emph{letter} denotes all characters that are letters. The class \emph{break} is the union of the classes  \emph{white-space}, \emph{keyword} and \emph{special character}.}
+\label{fig:tokenizer_automaton}
 \end{figure}
 
 
@@ -2227,7 +2237,7 @@ The arrow keyword is handled separately by a predicate, which consumes the three
 getToken(start, [61,61,62|Rest], Rest, '==>').
 \end{lstlisting}
 
-Note, that the processing fails, if a not-allowed symbol is read from input, so all of the \lstinline|getToken| predicates fail.
+Note that the processing fails, if a not-allowed symbol is read from input, so all of the \lstinline|getToken| predicates fail.
 
 \subsubsection{Parser}
 
@@ -2260,7 +2270,7 @@ For the variables in the rules, it uses a symbol table for each rule to ensure t
 
 \subsection{Problems with the Current Implementation}
 
-The current implementation can be improved at some points. First of all, it only can process a subset of the grammar, that actually is a subset of the simplified grammar shown in section~\ref{implementation:production_rule_grammar}. For example, it is only able to parse the negation slot-modifier, the others are not implemented yet, but can be added easily.
+The current implementation of the compiler can be improved at some points. First of all, it only can process a subset of the grammar, that actually is a subset of the simplified grammar shown in section~\ref{implementation:production_rule_grammar}. For example, it is only able to parse the negation slot-modifier, the others are not implemented yet, but can be added easily.
 
 The formulation of the grammar also differs from the original definition, so it would be nice to assimilate the two grammars. Additionally, lists have been implemented very complicated in the DCG rule grammar and could be simplified by using actual Prolog lists instead of constructs like \lstinline|tests --> test, tests; test|, which make the parse tree very complicated. Instead, the tree could be simplified to \lstinline[mathescape]|tests([t$_\mathtt{1}$, ..., t$_\mathtt{n}$)|.
 

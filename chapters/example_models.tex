@@ -4,6 +4,113 @@ In this chapter, some ACT-R models are translated into CHR and the results are d
 
 \section{The Counting Model}
 
+The first model is an extension of the example presented in section~\ref{example_counting}. The code has been published in unit 1 of \citetitle{actr_tutorial} \cite{actr_tutorial} as shipped with the source code of the vanilla ACT-R 6.0 implementation. Basically, the counting process is modeled by a set of static facts that a person has learned and retrieves for the counting process from declarative memory. The following model definition is discussed:
+
+\begin{lstlisting}[escapeinside={(*@}{@*)}]
+(define-model count (*@\label{appendix:lst:example_counting:define_model}@*)
+
+(chunk-type count-order first second) (*@\label{appendix:lst:example_counting:chunk_type}@*)
+(chunk-type count-from start end count)
+
+(add-dm (*@\label{appendix:lst:example_counting:add_dm}@*)
+ (b ISA count-order first 1 second 2)
+ (c ISA count-order first 2 second 3)
+ (d ISA count-order first 3 second 4)
+ (e ISA count-order first 4 second 5)
+ (f ISA count-order first 5 second 6)
+ (first-goal ISA count-from start 2 end 4)
+ ) (*@\label{appendix:lst:example_counting:add_dm_end}@*)
+
+(p start (*@\label{appendix:lst:example_counting:start}@*)
+   =goal>
+      ISA         count-from
+      start       =num1
+      count       nil
+ ==>
+   =goal>
+      count       =num1
+   +retrieval>
+      ISA         count-order
+      first       =num1
+)
+
+(P increment (*@\label{appendix:lst:example_counting:increment}@*)
+   =goal>
+      ISA         count-from
+      count       =num1
+    - end         =num1
+   =retrieval>
+      ISA         count-order
+      first       =num1
+      second      =num2
+ ==>
+   =goal>
+      count       =num2
+   +retrieval>
+      ISA         count-order
+      first       =num2
+   !output!       (=num1)
+)
+
+(P stop (*@\label{appendix:lst:example_counting:stop}@*)
+   =goal>
+      ISA         count-from
+      count       =num
+      end         =num
+ ==>
+   -goal>
+   !output!       (=num)
+
+)
+
+(goal-focus first-goal) (*@\label{appendix:lst:example_counting:goal_focus}@*)
+)
+\end{lstlisting}
+
+First of all, in line~\ref{appendix:lst:example_counting:define_model} the model definition is initiated and a model name is given. Line~\ref{appendix:lst:example_counting:chunk_type} sq. add the two necessary chunk-types: A chunk-type for the goal-chunks and a chunk-type for the actual declarative data. These chunk-type definitions are global to the system, i.e. they are added to all chunk stores. The goal-chunks have the slots \lstinline|start| and \lstinline|end| which encode from which number the counting process should start and where it should end. The value in the slot \lstinline|count| saves the current number of the count-process, analogously as in section~\ref{example_counting}. Then the chunks are added from line~\ref{appendix:lst:example_counting:add_dm} to~\ref{appendix:lst:example_counting:add_dm_end} and are representations of the order of the natural numbers from one to six. The last chunk is the goal-chunk. Note that only the start and end numbers are specified, the current number will be set to \lstinline|nil|.
+
+The first production rule \lstinline|start| in line~\ref{appendix:lst:example_counting:start} sqq. can only be applied, if the goal has an empty \lstinline|count| slot, but an actual value in the \lstinline|start| slot. This will be valid for the initial state as explained later. The production states a request for the first count-fact with the start number in its \lstinline|first| slot and sets the current number in the goal to the start number. The other slots in the goal buffer remain the same.
+
+In line~\ref{appendix:lst:example_counting:increment} sqq. the main rule \lstinline|increment| is defined. It assumes that a count-order fact which matches the current number in the goal has been retrieved. Additionally, the counting process must not end with this number, indicated by the negated slot test on the slot \lstinline|end|. The action part then states a new request for the next count-fact and increments the current number. Once the rule is applicable, it will be applicable as long there are count-facts in the declarative memory and the specified end has not been reached, yet.
+
+The last production rule \lstinline|stop| in line~\ref{appendix:lst:example_counting:stop} is applicable, as soon the \lstinline|increment| rule cannot be applied anymore due to the fact that the specified end of the counting process has been reached. Then, the last number will be printed and the goal buffer will be cleared.
+
+The last function call in line~\ref{appendix:lst:example_counting:goal_focus} is an initialization method, which simply puts the previously defined chunk \lstinline|first-goal| into the goal buffer. This leads to an initial state where the rule \lstinline|start| is applicable.
+
+The output of the model is:
+
+\begin{lstlisting}
+     0.000   GOAL             SET-BUFFER-CHUNK GOAL FIRST-GOAL 
+     0.000   PROCEDURAL       CONFLICT-RESOLUTION 
+     0.050   PROCEDURAL       PRODUCTION-FIRED START 
+     0.050   PROCEDURAL       CLEAR-BUFFER RETRIEVAL 
+     0.050   DECLARATIVE      START-RETRIEVAL 
+     0.050   DECLARATIVE      RETRIEVED-CHUNK C 
+     0.050   DECLARATIVE      SET-BUFFER-CHUNK RETRIEVAL C 
+     0.050   PROCEDURAL       CONFLICT-RESOLUTION 
+     0.100   PROCEDURAL       PRODUCTION-FIRED INCREMENT 
+2 
+     0.100   PROCEDURAL       CLEAR-BUFFER RETRIEVAL 
+     0.100   DECLARATIVE      START-RETRIEVAL 
+     0.100   DECLARATIVE      RETRIEVED-CHUNK D 
+     0.100   DECLARATIVE      SET-BUFFER-CHUNK RETRIEVAL D 
+     0.100   PROCEDURAL       CONFLICT-RESOLUTION 
+     0.150   PROCEDURAL       PRODUCTION-FIRED INCREMENT 
+3 
+     0.150   PROCEDURAL       CLEAR-BUFFER RETRIEVAL 
+     0.150   DECLARATIVE      START-RETRIEVAL 
+     0.150   DECLARATIVE      RETRIEVED-CHUNK E 
+     0.150   DECLARATIVE      SET-BUFFER-CHUNK RETRIEVAL E 
+     0.150   PROCEDURAL       CONFLICT-RESOLUTION 
+     0.200   PROCEDURAL       PRODUCTION-FIRED STOP 
+4 
+     0.200   PROCEDURAL       CLEAR-BUFFER GOAL 
+     0.200   PROCEDURAL       CONFLICT-RESOLUTION 
+     0.200   ------           Stopped because no events left to process 
+\end{lstlisting}
+
+
+
 \section{The Addition Model}
 
 \section{The Semantic Model}

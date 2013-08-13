@@ -220,7 +220,7 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {4.9.2}Conflict Resolution and Production Utility}{86}{subsection.4.9.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Conflict Resolution}{86}{section*.64}
+\contentsline {subsubsection}{Conflict Resolution}{87}{section*.64}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Computing the Utility Values}{90}{section*.65}
 \defcounter {refsection}{0}\relax 
@@ -246,24 +246,24 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {5.1}The Counting Model}{99}{section.5.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.2}The Addition Model}{99}{section.5.2}
+\contentsline {section}{\numberline {5.2}The Addition Model}{102}{section.5.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.3}The Semantic Model}{99}{section.5.3}
+\contentsline {section}{\numberline {5.3}The Semantic Model}{102}{section.5.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.4}The Fan Model}{99}{section.5.4}
+\contentsline {section}{\numberline {5.4}The Fan Model}{102}{section.5.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {6}Conclusion}{101}{chapter.6}
+\contentsline {chapter}{\numberline {6}Conclusion}{103}{chapter.6}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.1}Inventory: What does already work?}{101}{section.6.1}
+\contentsline {section}{\numberline {6.1}Inventory: What does already work?}{103}{section.6.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.2}Future Work}{101}{section.6.2}
+\contentsline {section}{\numberline {6.2}Future Work}{103}{section.6.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {A}Source Codes}{103}{appendix.A}
+\contentsline {chapter}{\numberline {A}Source Codes}{105}{appendix.A}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {B}Grammar for Production Rules}{105}{appendix.B}
+\contentsline {chapter}{\numberline {B}Grammar for Production Rules}{107}{appendix.B}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {C}Executable Examples}{107}{appendix.C}
+\contentsline {chapter}{\numberline {C}Executable Examples}{109}{appendix.C}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {C.1}Rule Order}{107}{section.C.1}
+\contentsline {section}{\numberline {C.1}Rule Order}{109}{section.C.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{Bibliography}{111}{appendix*.70}
+\contentsline {chapter}{Bibliography}{113}{appendix*.70}

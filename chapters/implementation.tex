@@ -150,7 +150,7 @@ chunk_has_slot(a,sum,7)
 
 A chunk store distinguishes between a set of chunks $C$ and a set of elements $E$. For implementational reasons it can be helpful if there are only chunks in the system, because elements just behave like chunks with no slots. Hence, a chunk-type \lstinline|chunk| with no slots will be added automatically to the store. Each element $e \in E$ and added as a chunk of type \lstinline|chunk| to the set of chunks $C$. After this operation $E = \emptyset$, and for every former element $e$ of $E$: $e \in C$, $(e,(chunk,\emptyset)) \in Isa$.
 
-So $E$ is represented now by $\{ c \in C | c Isa (chunk,\emptyset)$ in the implementation.
+So $E$ is now represented by $\{ c \in C | c \enspace Isa \enspace (chunk,\emptyset)$ in the implementation.
 
 \begin{example}
 The chunk representation from example~\ref{ex:addition_fact_chr} is changed to:
@@ -181,7 +181,7 @@ chunk(7,chunk)
 
 To implement the methods in definition~\ref{def:abstract_methods_chunk_store}, first a data type for chunk specifications has to be introduced. From this specification the correct constraints modeling the chunk-store are added or modified.
 
-The straight-forward definition of a data type for chunk specifications is just to use the specification like in definition~\ref{def:abstract_methods_chunk_store}: Since the term \lstinline[language=]|(name isa type slot_1 val_1 ... slot_n val_n)| is just a list in LISP and specifies a chunk uniquely, a similar Prolog term can be used:
+The straight-forward definition of a data type for chunk specifications is just to use the specification like in definition~\ref{def:abstract_methods_chunk_store}: Since the term \lstinline[language=]|(name isa type slot_1 val_1 ... slot_n val_n)| is just a list in Lisp and specifies a chunk uniquely, a similar Prolog term can be used:
 
 \begin{lstlisting}
 :- chr_type chunk_def ---> nil; chunk(any, any, slot_list).
@@ -1335,7 +1335,7 @@ Additionally, the newly created names can be deleted if the chunk was identical 
 In the declarative module, the chunk search must be extended to find merged chunks by both names. This can be achieved as follows:
 
 \begin{lstlisting}
-<<identical(C1,C2) \ find_chunk(C2,T2.Ss2)>> <=> 
+<<identical(C1,C2) \ find_chunk(C2,T2,Ss2)>> <=> 
   <<<ground(C2)>>> | 
   find_chunk(C1,T2,Ss2).
 \end{lstlisting}
@@ -1840,18 +1840,22 @@ module_request(+BufName, +ChunkDef, +Context, -ResChunk, -ResState, -ResTime)
 
 where \lstinline|Context| is a list of the chunk names that are in the current context (as defined in section~\ref{current_context} on page~\pageref{current_context}) and \lstinline|ResTime| is bound to the time the request will take. As described in section~\ref{changing_the_buffer_system} on page \pageref{changing_the_buffer_system}, the buffer actions are divided in two phases: The first only schedules the second phase at the time when the action is finished, whereas the second phase actually performs the action, i.e. the changes to the buffers.
 
-The same is valid for buffer requests: They are divided into two rules -- \lstinline|buffer_request/2| and \lstinline|do_buffer_request/2| -- as already described in section~\ref{changing_the_buffer_system} on page~\pageref{changing_the_buffer_system} for the other actions. The difference is, that the request is actually performed immediately when calling \lstinline|buffer_request|, but the effects to the buffers this request has are applied not until \lstinline|do_buffer_request| is called, which is scheduled at the result time (\lstinline|ResTime|) of the request. This is due to the dependence of the latency of a request on the activation values of the matching chunks, so the request has to be performed in advance to calculate the correct time it will take.
+A similar method is applied for buffer requests: They are divided into three rules -- \lstinline|buffer_request/2|, \lstinline|start_request/2| and \lstinline|do_buffer_request/2| -- similar to the division into two rules as already described in section~\ref{changing_the_buffer_system} on page~\pageref{changing_the_buffer_system} for the other actions. The difference is, that -- since a request may take a certain time -- the first rule schedules the start of the request with the priority \lstinline|0|, so all other types of buffer actions have been performed. The request is actually performed immediately when calling \lstinline|start_request|, but the effects to the buffers this request has are applied not until \lstinline|do_buffer_request| is called, which is scheduled at the result time (\lstinline|ResTime|) of the request. This is due to the dependence of the latency of a request on the activation values of the matching chunks, so the request has to be performed in advance to calculate the correct time it will take, so the result has to be known before the request ends in simulation time. This yields the following code in the buffer system:
 
-This yields the following code in the buffer system:
+\begin{lstlisting}[label=Schedule start of buffer request, escapeinside={(*@}{@*)}]
+buffer(BufName, ModName, _) \ buffer_request(BufName, Chunk) <=>
+  get_now(Now),
+  add_q(Now,0,start_request(BufName,Chunk)).
+\end{lstlisting}
 
-\begin{lstlisting}[label=Schedule buffer request, escapeinside={(*@}{@*)}]
-buffer(BufName, ModName, _) \ buffer_request(BufName, Chunk) <=> %% todo: check for free buffer!!
-  write('Scheduled buffer request '),
+\begin{lstlisting}[label=Schedule the result of buffer request, escapeinside={(*@}{@*)}]
+buffer(BufName, ModName, _) \ start_request(BufName, Chunk) <=> %% todo: check for free buffer!!
+  write('Started buffer request '),
   write(BufName),nl,
   get_now(Now),
   buffer_state(BufName,busy),
   do_buffer_clear(BufName), % clear buffer immediately
-  get_context(Context), (*@\label{lst:schedule_buffer_request:context}@*)
+  get_context(Context),
   ModName:module_request(BufName, Chunk, Context, ResChunk,ResState,RelTime),
   performed_request(BufName, ResChunk, ResState), % save result of request
   Time is Now + RelTime, 
@@ -2021,10 +2025,10 @@ In the second rule, the firing of the last remaining rule is scheduled 50\,ms fr
 When the chosen rule is applied, its actions are performed and eventually, a \lstinline|conflict_resolution| constraint is added to the store. This constraint leads the next conflict resolution event to being scheduled:
 
 \begin{lstlisting}
-<<now(Time) \ conflict_resolution>> <=> add_q(Time,0,fire).
+<<now(Time) \ conflict_resolution>> <=> add_q(Time,-10,fire).
 \end{lstlisting}
 
-The event is scheduled at the current time with very low priority, so all the actions of the rule have had the chance to be executed.
+The event is scheduled at the current time with very low priority, i.e. a priority lower than all requests, so all the actions of the rule have had the chance to be executed.
 
 If there was no matching rule, the \lstinline|no_rule| constraint is in the store. This leads the next conflict resolution event to be scheduled after the next event (which may lead to a change of the system state):
 
