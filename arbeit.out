@@ -28,82 +28,83 @@
 \BOOKMARK [3][-]{section*.15}{Fact Learning}{subsection.2.4.1}% 28
 \BOOKMARK [3][-]{section*.16}{Skill acquisition}{subsection.2.4.1}% 29
 \BOOKMARK [2][-]{subsection.2.4.2}{Subsymbolic Layer}{section.2.4}% 30
-\BOOKMARK [0][-]{chapter.3}{Constraint Handling Rules}{}% 31
-\BOOKMARK [0][-]{chapter.4}{Implementation of ACT-R in CHR}{}% 32
-\BOOKMARK [1][-]{section.4.1}{Declarative and Procedural Knowledge}{chapter.4}% 33
-\BOOKMARK [1][-]{section.4.2}{Chunk Stores}{chapter.4}% 34
-\BOOKMARK [2][-]{subsection.4.2.1}{Formal Representation of Chunks}{section.4.2}% 35
-\BOOKMARK [2][-]{subsection.4.2.2}{Representation of Chunks in CHR}{section.4.2}% 36
-\BOOKMARK [3][-]{section*.17}{Distinction of Elements and Chunks}{subsection.4.2.2}% 37
-\BOOKMARK [3][-]{section*.18}{Simple Implementation of the Default Methods}{subsection.4.2.2}% 38
-\BOOKMARK [3][-]{section*.24}{Checking Consistency and Type-Consistency}{subsection.4.2.2}% 39
-\BOOKMARK [1][-]{section.4.3}{Procedural Module}{chapter.4}% 40
-\BOOKMARK [2][-]{subsection.4.3.1}{Buffer System}{section.4.3}% 41
-\BOOKMARK [3][-]{section*.25}{Destructive Assignment and Consistency}{subsection.4.3.1}% 42
-\BOOKMARK [3][-]{section*.26}{Buffer States}{subsection.4.3.1}% 43
-\BOOKMARK [2][-]{subsection.4.3.2}{Production Rules}{section.4.3}% 44
-\BOOKMARK [3][-]{section*.27}{The Left Hand Side of a Rule}{subsection.4.3.2}% 45
-\BOOKMARK [3][-]{section*.28}{The Right Hand Side of a Rule}{subsection.4.3.2}% 46
-\BOOKMARK [3][-]{section*.29}{Direct Translation of Buffer Tests}{subsection.4.3.2}% 47
-\BOOKMARK [3][-]{section*.30}{Translation of Actions}{subsection.4.3.2}% 48
-\BOOKMARK [3][-]{section*.34}{Translation of Buffer Queries}{subsection.4.3.2}% 49
-\BOOKMARK [2][-]{subsection.4.3.3}{The Production Rule Grammar}{section.4.3}% 50
-\BOOKMARK [3][-]{section*.35}{The Order of Rule Applications}{subsection.4.3.3}% 51
-\BOOKMARK [3][-]{section*.36}{Bound and Unbound Variables}{subsection.4.3.3}% 52
-\BOOKMARK [3][-]{section*.37}{Duplicate Slot Tests}{subsection.4.3.3}% 53
-\BOOKMARK [3][-]{section*.38}{Slot Modifiers}{subsection.4.3.3}% 54
-\BOOKMARK [3][-]{section*.40}{Empty Slots}{subsection.4.3.3}% 55
-\BOOKMARK [3][-]{section*.41}{Outputs}{subsection.4.3.3}% 56
-\BOOKMARK [1][-]{section.4.4}{Modular Organization}{chapter.4}% 57
-\BOOKMARK [2][-]{subsection.4.4.1}{Prolog Modules}{section.4.4}% 58
-\BOOKMARK [2][-]{subsection.4.4.2}{Interface for Module Requests}{section.4.4}% 59
-\BOOKMARK [2][-]{subsection.4.4.3}{How the Buffer System States a Request}{section.4.4}% 60
-\BOOKMARK [2][-]{subsection.4.4.4}{Components of the Implementation}{section.4.4}% 61
-\BOOKMARK [1][-]{section.4.5}{Declarative Module}{chapter.4}% 62
-\BOOKMARK [2][-]{subsection.4.5.1}{Global Method for Adding Chunks}{section.4.5}% 63
-\BOOKMARK [2][-]{subsection.4.5.2}{Retrieval Requests}{section.4.5}% 64
-\BOOKMARK [3][-]{section*.42}{Chunk Patterns}{subsection.4.5.2}% 65
-\BOOKMARK [3][-]{section*.43}{Finding Chunks}{subsection.4.5.2}% 66
-\BOOKMARK [2][-]{subsection.4.5.3}{Chunk Merging}{section.4.5}% 67
-\BOOKMARK [1][-]{section.4.6}{Initialization}{chapter.4}% 68
-\BOOKMARK [1][-]{section.4.7}{Timing in ACT-R}{chapter.4}% 69
-\BOOKMARK [2][-]{subsection.4.7.1}{Priority Queue}{section.4.7}% 70
-\BOOKMARK [3][-]{section*.44}{Objects}{subsection.4.7.1}% 71
-\BOOKMARK [3][-]{section*.45}{Representation of the Queue}{subsection.4.7.1}% 72
-\BOOKMARK [3][-]{section*.46}{Special Operation for ACT-R}{subsection.4.7.1}% 73
-\BOOKMARK [2][-]{subsection.4.7.2}{Scheduler}{section.4.7}% 74
-\BOOKMARK [3][-]{section*.47}{Current Time}{subsection.4.7.2}% 75
-\BOOKMARK [3][-]{section*.48}{Recognize-Act Cycle}{subsection.4.7.2}% 76
-\BOOKMARK [1][-]{section.4.8}{Lisp Functions}{chapter.4}% 77
-\BOOKMARK [2][-]{subsection.4.8.1}{General Translation}{section.4.8}% 78
-\BOOKMARK [2][-]{subsection.4.8.2}{Configuration Variables}{section.4.8}% 79
-\BOOKMARK [3][-]{section*.53}{The Observer Pattern}{subsection.4.8.2}% 80
-\BOOKMARK [1][-]{section.4.9}{Subsymbolic Layer}{chapter.4}% 81
-\BOOKMARK [2][-]{subsection.4.9.1}{Activation of Chunks}{section.4.9}% 82
-\BOOKMARK [3][-]{section*.54}{Base-Level Learning}{subsection.4.9.1}% 83
-\BOOKMARK [3][-]{section*.63}{Configuration of the Retrieval}{subsection.4.9.1}% 84
-\BOOKMARK [2][-]{subsection.4.9.2}{Conflict Resolution and Production Utility}{section.4.9}% 85
-\BOOKMARK [3][-]{section*.64}{Conflict Resolution}{subsection.4.9.2}% 86
-\BOOKMARK [3][-]{section*.65}{Computing the Utility Values}{subsection.4.9.2}% 87
-\BOOKMARK [3][-]{section*.66}{Configuration of the Conflict Resolution}{subsection.4.9.2}% 88
-\BOOKMARK [2][-]{subsection.4.9.3}{Extended Component Diagram}{section.4.9}% 89
-\BOOKMARK [1][-]{section.4.10}{Compiler}{chapter.4}% 90
-\BOOKMARK [2][-]{subsection.4.10.1}{Basic Idea}{section.4.10}% 91
-\BOOKMARK [2][-]{subsection.4.10.2}{Compiling}{section.4.10}% 92
-\BOOKMARK [3][-]{section*.67}{Tokenizer}{subsection.4.10.2}% 93
-\BOOKMARK [3][-]{section*.68}{Parser}{subsection.4.10.2}% 94
-\BOOKMARK [3][-]{section*.69}{Translation Component}{subsection.4.10.2}% 95
-\BOOKMARK [2][-]{subsection.4.10.3}{Problems with the Current Implementation}{section.4.10}% 96
-\BOOKMARK [0][-]{chapter.5}{Example Models}{}% 97
-\BOOKMARK [1][-]{section.5.1}{The Counting Model}{chapter.5}% 98
-\BOOKMARK [1][-]{section.5.2}{The Addition Model}{chapter.5}% 99
-\BOOKMARK [1][-]{section.5.3}{The Semantic Model}{chapter.5}% 100
-\BOOKMARK [1][-]{section.5.4}{The Fan Model}{chapter.5}% 101
-\BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 102
-\BOOKMARK [1][-]{section.6.1}{Inventory: What does already work?}{chapter.6}% 103
-\BOOKMARK [1][-]{section.6.2}{Future Work}{chapter.6}% 104
-\BOOKMARK [0][-]{appendix.A}{Source Codes}{}% 105
-\BOOKMARK [0][-]{appendix.B}{Grammar for Production Rules}{}% 106
-\BOOKMARK [0][-]{appendix.C}{Executable Examples}{}% 107
-\BOOKMARK [1][-]{section.C.1}{Rule Order}{appendix.C}% 108
-\BOOKMARK [0][-]{appendix*.70}{Bibliography}{}% 109
+\BOOKMARK [1][-]{section.2.5}{Experiment Environment}{chapter.2}% 31
+\BOOKMARK [0][-]{chapter.3}{Constraint Handling Rules}{}% 32
+\BOOKMARK [0][-]{chapter.4}{Implementation of ACT-R in CHR}{}% 33
+\BOOKMARK [1][-]{section.4.1}{Declarative and Procedural Knowledge}{chapter.4}% 34
+\BOOKMARK [1][-]{section.4.2}{Chunk Stores}{chapter.4}% 35
+\BOOKMARK [2][-]{subsection.4.2.1}{Formal Representation of Chunks}{section.4.2}% 36
+\BOOKMARK [2][-]{subsection.4.2.2}{Representation of Chunks in CHR}{section.4.2}% 37
+\BOOKMARK [3][-]{section*.17}{Distinction of Elements and Chunks}{subsection.4.2.2}% 38
+\BOOKMARK [3][-]{section*.18}{Simple Implementation of the Default Methods}{subsection.4.2.2}% 39
+\BOOKMARK [3][-]{section*.24}{Checking Consistency and Type-Consistency}{subsection.4.2.2}% 40
+\BOOKMARK [1][-]{section.4.3}{Procedural Module}{chapter.4}% 41
+\BOOKMARK [2][-]{subsection.4.3.1}{Buffer System}{section.4.3}% 42
+\BOOKMARK [3][-]{section*.25}{Destructive Assignment and Consistency}{subsection.4.3.1}% 43
+\BOOKMARK [3][-]{section*.26}{Buffer States}{subsection.4.3.1}% 44
+\BOOKMARK [2][-]{subsection.4.3.2}{Production Rules}{section.4.3}% 45
+\BOOKMARK [3][-]{section*.27}{The Left Hand Side of a Rule}{subsection.4.3.2}% 46
+\BOOKMARK [3][-]{section*.28}{The Right Hand Side of a Rule}{subsection.4.3.2}% 47
+\BOOKMARK [3][-]{section*.29}{Direct Translation of Buffer Tests}{subsection.4.3.2}% 48
+\BOOKMARK [3][-]{section*.30}{Translation of Actions}{subsection.4.3.2}% 49
+\BOOKMARK [3][-]{section*.34}{Translation of Buffer Queries}{subsection.4.3.2}% 50
+\BOOKMARK [2][-]{subsection.4.3.3}{The Production Rule Grammar}{section.4.3}% 51
+\BOOKMARK [3][-]{section*.35}{The Order of Rule Applications}{subsection.4.3.3}% 52
+\BOOKMARK [3][-]{section*.36}{Bound and Unbound Variables}{subsection.4.3.3}% 53
+\BOOKMARK [3][-]{section*.37}{Duplicate Slot Tests}{subsection.4.3.3}% 54
+\BOOKMARK [3][-]{section*.38}{Slot Modifiers}{subsection.4.3.3}% 55
+\BOOKMARK [3][-]{section*.40}{Empty Slots}{subsection.4.3.3}% 56
+\BOOKMARK [3][-]{section*.41}{Outputs}{subsection.4.3.3}% 57
+\BOOKMARK [1][-]{section.4.4}{Modular Organization}{chapter.4}% 58
+\BOOKMARK [2][-]{subsection.4.4.1}{Prolog Modules}{section.4.4}% 59
+\BOOKMARK [2][-]{subsection.4.4.2}{Interface for Module Requests}{section.4.4}% 60
+\BOOKMARK [2][-]{subsection.4.4.3}{How the Buffer System States a Request}{section.4.4}% 61
+\BOOKMARK [2][-]{subsection.4.4.4}{Components of the Implementation}{section.4.4}% 62
+\BOOKMARK [1][-]{section.4.5}{Declarative Module}{chapter.4}% 63
+\BOOKMARK [2][-]{subsection.4.5.1}{Global Method for Adding Chunks}{section.4.5}% 64
+\BOOKMARK [2][-]{subsection.4.5.2}{Retrieval Requests}{section.4.5}% 65
+\BOOKMARK [3][-]{section*.42}{Chunk Patterns}{subsection.4.5.2}% 66
+\BOOKMARK [3][-]{section*.43}{Finding Chunks}{subsection.4.5.2}% 67
+\BOOKMARK [2][-]{subsection.4.5.3}{Chunk Merging}{section.4.5}% 68
+\BOOKMARK [1][-]{section.4.6}{Initialization}{chapter.4}% 69
+\BOOKMARK [1][-]{section.4.7}{Timing in ACT-R}{chapter.4}% 70
+\BOOKMARK [2][-]{subsection.4.7.1}{Priority Queue}{section.4.7}% 71
+\BOOKMARK [3][-]{section*.44}{Objects}{subsection.4.7.1}% 72
+\BOOKMARK [3][-]{section*.45}{Representation of the Queue}{subsection.4.7.1}% 73
+\BOOKMARK [3][-]{section*.46}{Special Operation for ACT-R}{subsection.4.7.1}% 74
+\BOOKMARK [2][-]{subsection.4.7.2}{Scheduler}{section.4.7}% 75
+\BOOKMARK [3][-]{section*.47}{Current Time}{subsection.4.7.2}% 76
+\BOOKMARK [3][-]{section*.48}{Recognize-Act Cycle}{subsection.4.7.2}% 77
+\BOOKMARK [1][-]{section.4.8}{Lisp Functions}{chapter.4}% 78
+\BOOKMARK [2][-]{subsection.4.8.1}{General Translation}{section.4.8}% 79
+\BOOKMARK [2][-]{subsection.4.8.2}{Configuration Variables}{section.4.8}% 80
+\BOOKMARK [3][-]{section*.53}{The Observer Pattern}{subsection.4.8.2}% 81
+\BOOKMARK [1][-]{section.4.9}{Subsymbolic Layer}{chapter.4}% 82
+\BOOKMARK [2][-]{subsection.4.9.1}{Activation of Chunks}{section.4.9}% 83
+\BOOKMARK [3][-]{section*.54}{Base-Level Learning}{subsection.4.9.1}% 84
+\BOOKMARK [3][-]{section*.63}{Configuration of the Retrieval}{subsection.4.9.1}% 85
+\BOOKMARK [2][-]{subsection.4.9.2}{Conflict Resolution and Production Utility}{section.4.9}% 86
+\BOOKMARK [3][-]{section*.64}{Conflict Resolution}{subsection.4.9.2}% 87
+\BOOKMARK [3][-]{section*.65}{Computing the Utility Values}{subsection.4.9.2}% 88
+\BOOKMARK [3][-]{section*.66}{Configuration of the Conflict Resolution}{subsection.4.9.2}% 89
+\BOOKMARK [2][-]{subsection.4.9.3}{Extended Component Diagram}{section.4.9}% 90
+\BOOKMARK [1][-]{section.4.10}{Compiler}{chapter.4}% 91
+\BOOKMARK [2][-]{subsection.4.10.1}{Basic Idea}{section.4.10}% 92
+\BOOKMARK [2][-]{subsection.4.10.2}{Compiling}{section.4.10}% 93
+\BOOKMARK [3][-]{section*.67}{Tokenizer}{subsection.4.10.2}% 94
+\BOOKMARK [3][-]{section*.68}{Parser}{subsection.4.10.2}% 95
+\BOOKMARK [3][-]{section*.69}{Translation Component}{subsection.4.10.2}% 96
+\BOOKMARK [2][-]{subsection.4.10.3}{Problems with the Current Implementation}{section.4.10}% 97
+\BOOKMARK [0][-]{chapter.5}{Example Models}{}% 98
+\BOOKMARK [1][-]{section.5.1}{The Counting Model}{chapter.5}% 99
+\BOOKMARK [1][-]{section.5.2}{The Addition Model}{chapter.5}% 100
+\BOOKMARK [1][-]{section.5.3}{The Semantic Model}{chapter.5}% 101
+\BOOKMARK [1][-]{section.5.4}{The Fan Model}{chapter.5}% 102
+\BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 103
+\BOOKMARK [1][-]{section.6.1}{Inventory: What does already work?}{chapter.6}% 104
+\BOOKMARK [1][-]{section.6.2}{Future Work}{chapter.6}% 105
+\BOOKMARK [0][-]{appendix.A}{Source Codes}{}% 106
+\BOOKMARK [0][-]{appendix.B}{Grammar for Production Rules}{}% 107
+\BOOKMARK [0][-]{appendix.C}{Executable Examples}{}% 108
+\BOOKMARK [1][-]{section.C.1}{Rule Order}{appendix.C}% 109
+\BOOKMARK [0][-]{appendix*.70}{Bibliography}{}% 110

@@ -25,7 +25,7 @@ A rule can be applied on the constraint store, if there are constraints in the s
 \begin{example}[Minimum]
 \label{ex:minimum}
 
-This simple example has been taken from \cite[19\psqq]{fru_chr_book_2009} and describes a CHR program that computes the minimum among the numbers $n_i$ given as multiset of numbers in the query \lstinline[mathescape]|min($n_1$), ..., min($n_k$)|. The \lstinline|min/1| constraint is interpeted such that its containing number is a minimum candidate. The minimum computation is achieved by specifying one simpagation rule:
+This simple example has been taken from \cite[19\psqq]{fru_chr_book_2009} and describes a CHR program that computes the minimum among the numbers $n_i$ given as multiset of numbers in the query \lstinline[mathescape]|min($n_1$), ... , min($n_k$)|. The \lstinline|min/1| constraint is interpeted such that its containing number is a minimum candidate. The minimum computation is achieved by specifying one simpagation rule:
 
 \begin{lstlisting}[caption={Minimum program}]
 min(N) \ min(M) <=> N=<M | true.

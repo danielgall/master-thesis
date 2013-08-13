@@ -133,6 +133,7 @@ Output & Visual location & Visual object\\
 The visual system and its capabilities are described in detail in \cite[unit 2]{actr_tutorial} where also the implementational details of the system are regarded.
 
 \subsubsection{The Imaginal Module}
+\label{actr:imaginal_module}
 
 The imaginal module is capable of creating new chunks. This is useful, if for instance the visual module produces a lot of new information in sequence (like reading a sequence of letters), but the visual-object buffer can hold only one chunk at once. To solve this problem, all the information could be stored in the slots of the goal chunk. However, since a goal chunk with a large amount of slots seems to be unplausible\footnote{As described in section \ref{millers_number}, one should stick to $7 \pm 2$ slots for each chunk.} and the number of read instances would have to be known in advance due to the static chunk-type definition, a better way to deal with this problem is to create new knowledge elements.
 
@@ -261,6 +262,7 @@ The values for $W_j$ determines how much activation can come from a single sourc
 Figure \ref{fig:activation_spreading} illustrates the activation spreading process.
 
 \paragraph{Strength of Association and Fan effect}
+\label{actr:fan_effect}
 
 In equation \eqref{eq:activation_equation} the strength of association $S_{ji}$ from a chunk $j$ to a chunk $i$ is used to determine the activation of a chunk $i$.  In the ACT-R theory, the value of $S_{ji}$ is determined by the following rule: If chunk $j$ is not a value in the slots of chunk $i$ and $j \neq i$, then $S_{ji}$ is set to 0. Otherwise $S_{ji}$ is set to: 
 
@@ -348,13 +350,15 @@ Subsymbolic & Strengthening & Conditioning\\
 
 \subsection{Symbolic Layer}
 
-Symbolic learning somehow influences the objects of the symbolic layer, i.e. chunks and production rules, in a way that new objects are created or objects are merged. Those learning possibilities are described in the following.
+Symbolic learning somehow influences the objects of the symbolic layer, i.e. chunks and production rules, in a way that new objects are created or objects are merged. Those learning possibilities are described very briefly in the following, but are not yet part of the implementation discussed in this work. However, it may become part of the implementation in future work.
 
 \subsubsection{Fact Learning}
 
-
+Fact learning is the creation of new chunks. In ACT-R, the imaginal module is capable of this as described in section~\ref{actr:imaginal_module} on page~\pageref{actr:imaginal_module}. The chunks usually are created because of external input from the environment, but it is also possible to create a chunk that holds the result of a production rule application. Furthermore, due to buffer modification chunks can be altered and may be stored in the declarative module by buffer clearing which basically creates a new chunk. In this case, the input may come from the external world or is the result of of a production rule application \cite[7]{whitehill_understanding}.
 
 \subsubsection{Skill acquisition}
+
+In \cite{taatgen_production_2003}, \citeauthor{taatgen_production_2003} present the method of \emph{production rule compilation} as a method of skill acquisition, i.e. the creation of new production rules. ``Production compilation combines two mechanisms [\dots] -- proceduralization and composition -- into a single mechanism'' \cite[62]{taatgen_production_2003}. \emph{Proceduralization} is based on the idea, that some rules containing variables are applied very often on the same values for the variables. If this is the case, a new rule can be introduced, which replaces the variables with ground values \cite[7]{whitehill_understanding}. \emph{Composition} takes two production rules which are performed in sequence very often and creates a new rule which performs all the steps of those rules at once. Since each application of a rule takes a certain time, this can speed up the computation process \cite[7]{whitehill_understanding}.
 
 \subsection{Subsymbolic Layer}
 
@@ -362,6 +366,7 @@ The concepts introduced in section~\ref{subsymbolic_layer} are a kind of learnin
 
 The same is valid for production rules: Over time, the experience tells us, which strategies might be successful in certain situations and which are not. This process is also called \emph{conditioning} and described in equation~\eqref{eq:utility_learning}.
 
+\section{Experiment Environment}
+\label{experiment_environment}
 
-\cite[chapter 4]{whitehill_understanding}
-\FIXME{mention experiment environment}
+In experiments conducted with humans, the test subjects are confronted with visual or aural stimuli very often, for instance in the fan effect experiment described in section~\ref{actr:fan_effect} on page~\pageref{actr:fan_effect} a permutation of sentences over some objects have been shown and people had to remember the combinations. ACT-R provides an environment, where visual stimuli, mouse gestures or clicks, window openings etc. can be produced or measured respectively, so experiments can be run with both humans and the implemented model using the same environment. The model is then able to perform clicks or write text on the same graphical user interface as the humans are confronted with. However, this part of ACT-R will not be subject of this particular work, which examines the fundamental concept of the ACT-R theory first.

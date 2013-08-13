@@ -399,7 +399,7 @@
   \field{labelalpha}{Jac}
   \field{extraalpha}{1}
   \field{sortinit}{J}
-  \field{title}{Benefits of jACT-R}
+  \field{title}{Benefits of jACT-R (part of the {FAQ} section of the homepage)}
   \verb{url}
   \verb http://jactr.org/node/50
   \endverb
@@ -558,7 +558,7 @@
   \field{sortinit}{R}
   \field{booktitle}{Proceedings of the 27th annual meeting of the Cognitive
   Science Society}
-  \field{title}{Can ACT-R realize” Newell’s dream”}
+  \field{title}{Can ACT-R realize `Newell's dream'?}
   \field{year}{2005}
 \endentry
 
@@ -778,6 +778,44 @@
   \endverb
   \field{urlday}{10}
   \field{urlmonth}{08}
+  \field{urlyear}{2013}
+\endentry
+
+\entry{taatgen_production_2003}{article}{}
+  \name{author}{2}{}{%
+    {{}%
+     {Taatgen}{T.}%
+     {Niels~A.}{N.~A.}%
+     {}{}%
+     {}{}}%
+    {{}%
+     {Lee}{L.}%
+     {Frank~J.}{F.~J.}%
+     {}{}%
+     {}{}}%
+  }
+  \strng{namehash}{TNALFJ1}
+  \strng{fullhash}{TNALFJ1}
+  \field{labelalpha}{TL03}
+  \field{sortinit}{T}
+  \field{number}{1}
+  \field{pages}{61–76}
+  \field{shorttitle}{Production compilation}
+  \field{title}{Production compilation: A simple mechanism to model complex
+  skill acquisition}
+  \verb{url}
+  \verb http://hfs.sagepub.com/content/45/1/61.short
+  \endverb
+  \field{volume}{45}
+  \verb{file}
+  \verb Taatgen ,r2.qxd - HF-published.pdf:/home/dgall/.mozilla/firefox/r7xmse5
+  \verb h.default/zotero/storage/DRNKIFXH/HF-published.pdf:application/pdf
+  \endverb
+  \field{journaltitle}{Human Factors: The Journal of the Human Factors and
+  Ergonomics Society}
+  \field{year}{2003}
+  \field{urlday}{05}
+  \field{urlmonth}{04}
   \field{urlyear}{2013}
 \endentry
 

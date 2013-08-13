@@ -1,7 +1,7 @@
 \chapter{Implementation of ACT-R in CHR}
 \label{implementation}
 
-After the comprehensive but at some point informal overview of the ACT-R theory in chapter \ref{actr_description}, this chapter presents a possible implementation of the described concepts of the ACT-R theory in CHR. Note that this work only regards the fundamental concepts of ACT-R and abstracts from some details. For example, the experiment environment as described in section~\ref{experiment_environment} is ignored.
+After the overview of the ACT-R theory in chapter \ref{actr_description}, this chapter goes more into detail and presents a possible implementation of the described concepts of the ACT-R theory in CHR, inspecting some implementational details of the theory and formalizing some basic concepts. Note that this work only regards the fundamental concepts of ACT-R and abstracts from some details. For example, the experiment environment as described in section~\ref{experiment_environment} is ignored.
 
 For the implementation, some special cases and details that are not exactly defined in theory have to be considered. Hence, some concepts of the theory that are implemented in this work are formalized first. The implementation in form of CHR rules sticks to those formalisms and is often very similar to them.
 
@@ -65,11 +65,11 @@ A chunk-store is \emph{type-consistent}, iff $\forall (c,(t,S)) \in Isa: \forall
 The following methods can be defined over a chunk store $\Sigma = (C, E, \mathcal{T}, HasSlot, Isa)$:
 
 \begin{description}
- \item[\texttt{chunk-type(name slot\textsubscript{1} slot\textsubscript{2} ... slot\textsubscript{n})}] adds the type $T = (\mathtt{name},\{\mathtt{slot_1}, \dots, \mathtt{slot_n}\})$ to the store, i.e. $\mathcal{T'} = \mathcal{T} \cup \{T\}$. 
- \item[\texttt{add-chunk(name isa type slot\textsubscript{1} val\textsubscript{1} ... slot\textsubscript{n} val\textsubscript{n})}] adds a new chunk to the store, i.e. $C' = C \cup \{ \mathtt{name} \}$, $Isa' = Isa \cup (\mathtt{name}, (\mathtt{type}, slots(\mathtt{type}))$ and $HasSlot' = \bigcup_{i = 1}^n{\mathtt{(name,slot_i,val_i)}} \cup HasSlot.$ Note, that due to the expansion of $C$, the condition that $C$ and $E$ have to be disjoint may be violated. To fix this violation, the element can be removed from $E$: $E' = (E \cup C) - (E \cap C).$ 
+ \item[\texttt{chunk-type(name slot\textsubscript{1} slot\textsubscript{2} ... slot\textsubscript{n})}] is a method for defining a new type $T = (\mathtt{name},\{\mathtt{slot_1}, \dots, \mathtt{slot_n}\})$ which is added to the store, i.e. $\mathcal{T'} = \mathcal{T} \cup \{T\}$. 
+ \item[\texttt{add-chunk(name isa type slot\textsubscript{1} val\textsubscript{1} ... slot\textsubscript{n} val\textsubscript{n})}] adds a chunk specified by a name and a list of slot-value pairs to the store, i.e. $C' = C \cup \{ \mathtt{name} \}$, $Isa' = Isa \enspace \cup \enspace (\mathtt{name}, (\mathtt{type}, slots(\mathtt{type}))$ and $HasSlot' = \bigcup_{i = 1}^n{\mathtt{(name,slot_i,val_i)}} \enspace \cup \enspace HasSlot.$ Note, that due to the expansion of $C$, the condition that $C$ and $E$ have to be disjoint may be violated. To fix this violation, the element can be removed from $E$: $E' = (E \cup C) - (E \cap C).$ 
  
  Additionally, a valid mechanism to restore type-consistency may be introduced: It might happen, that not all slots are specified in the call of the \lstinline|add-chunk| method. Since it is claimed by the definition of $HasSlot$ that for all slots $s$ of a chunk $c$ there must be a $(c,s,v) \in HasSlot$, in implementations the unspecified slots are initialized as empty slots, represented by the empty value \lstinline|nil|. Furthermore, slots specified in the call of the method that are not a member of the chunk's type should cause an error to preserve type-consistency.
-  \item[\texttt{alter-slot(name slot\textsubscript{1} val\textsubscript{1} ... slot\textsubscript{n} val\textsubscript{n})}] changes the slot values of a chunk identified by its name. Only existing slots can be altered.
+  \item[\texttt{alter-slot(name slot\textsubscript{1} val\textsubscript{1} ... slot\textsubscript{n} val\textsubscript{n})}] changes the values of the specified slots of a chunk identified by its name to new values. Only existing slots can be altered, but the list of slot-value pairs may be a partial chunk-description. The values of the slots not in the list remain at their old values.
   \item[\texttt{remove-chunk(name)}] removes the chunk with the given name from $C$ and all of its occurrences in $Isa$ and $HasSlot$.
   \item[\texttt{return-chunk(name)}] gets a chunk name as input and returns a chunk specification, i.e. the name, type and all slot-value pairs of this chunk in the store.
 \end{description} 
@@ -181,7 +181,7 @@ chunk(7,chunk)
 
 To implement the methods in definition~\ref{def:abstract_methods_chunk_store}, first a data type for chunk specifications has to be introduced. From this specification the correct constraints modeling the chunk-store are added or modified.
 
-The straight-forward definition of a data type for chunk specifications is just to use the specification like in definition~\ref{def:abstract_methods_chunk_store}: Since \lstinline|(name isa type slot_1 val_1 \dots slot_n val_n)| is just a list in LISP and specifies a chunk uniquely, a similar Prolog term can be used:
+The straight-forward definition of a data type for chunk specifications is just to use the specification like in definition~\ref{def:abstract_methods_chunk_store}: Since the term \lstinline[language=]|(name isa type slot_1 val_1 ... slot_n val_n)| is just a list in LISP and specifies a chunk uniquely, a similar Prolog term can be used:
 
 \begin{lstlisting}
 :- chr_type chunk_def ---> nil; chunk(any, any, slot_list).
@@ -191,7 +191,7 @@ The straight-forward definition of a data type for chunk specifications is just 
 :- chr_type pair(T1,T2) ---> (T1,T2).
 \end{lstlisting}
 
-This definition states that a chunk is either \lstinline|nil|, i.e. an empty chunk, or a term \lstinline|chunk(Name, Type, SVP)|, where \lstinline|SVP| is a list of slot-value pairs. This is the direct translation of the chunk-specification used in the definition, amended by the \lstinline|nil| construct, that may be needed for later purposes.
+This definition states that a chunk is either \lstinline|nil|, i.e. an empty chunk, or a term \lstinline|chunk(Name,Type,SVP)|, where \lstinline|SVP| is a list of slot-value pairs. This is the direct translation of the chunk-specification used in the definition, amended by the \lstinline|nil| construct, that may be needed for later purposes.
 
 The default methods can be implemented as follows:
 
@@ -289,7 +289,7 @@ The first rule replaces the existing \lstinline|chunk_has_slot| constraint by a 
 
 \paragraph{remove\_chunk}
 
-This method removes all occurrences of a chunk.
+This method removes all occurrences of a chunk from the store. I.e., all \lstinline|chunk| and \lstinline|chunk_has_slot| constraints the chunk is involved in are removed.
 
 \begin{lstlisting}
 <<remove_chunk(Name)>> \ <<chunk(Name, _)>> <=> true.
