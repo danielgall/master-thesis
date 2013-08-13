@@ -14,7 +14,7 @@ Rules consist of a \emph{head}~\lstinline[mathescape]|H$_\mathtt{*}$|, which is 
 
 At the beginning of a program, the user provides an initial constraint store, which is also called \emph{query} or \emph{goal} and the CHR program then begins to operate on this initial store by applying rules.
 
-A rule can be applied on the constraint store, if there are constraints in the store that match the head of the rule, i.e. the constraints in the store are ``an instance of the head, [\dots so] the head serves as pattern'' \cite[11]{fru_chr_book_2009}. Note, that in the matching process, no variables of the query are bound, since CHR is a committed-choice language, so rule applications cannot be made undone by backtracking. If matching constraints have been found, the guard is checked and if it holds, the rule is applied. The result of the rule application is dependent on the type of the rule:
+A rule can be applied on the constraint store, if there are constraints in the store that match the head of the rule, i.e. the constraints in the store are ``an instance of the head, [\dots so] the head serves as pattern'' \cite[11]{fru_chr_book_2009}. Note that in the matching process no variables of the query are bound, since CHR is a committed-choice language, so rule applications cannot be made undone by backtracking. If matching constraints have been found, the guard is checked and if it holds, the rule is applied. The result of the rule application is dependent on the type of the rule:
 
 \begin{description}
  \item[Simplification rules (as in line~\ref{lst:chr_rule_types:simplification})] remove the constraints which match the head \lstinline[mathescape]|H$_\mathtt{r}$| (the \emph{``heads removed''}) from the store and add the constraints in the body \lstinline|B| to the store.
@@ -33,7 +33,7 @@ min(N) \ min(M) <=> N=<M | true.
 
 For every pair of numbers in the store, the rule removes the greater one and keeps the smaller one. If this rule is applied to exhaustion, only one constraint is left -- the minimum. Then the rule is not applicable any more, since it lacks a partner constraint for the single \lstinline|min| constraint to match the head.
 
-Note, that in pure CHR no assumptions on the order of the application of the rules and the involved constraints are made. One possible derivation of the result could be (the constraints the rule is applied to are underlined in each step):
+Note that in pure CHR no assumptions on the order of the application of the rules and the involved constraints are made. One possible derivation of the result could be (the constraints the rule is applied to are underlined in each step):
 
 \begin{lstlisting}[escapeinside={(*@}{@*)},caption={Sample derivation of the minimum example},label=lst:sample_derivation_min]
 (*@\underline{min(3)}@*), (*@\underline{min(1)}@*), min(4), min(0), min(2)

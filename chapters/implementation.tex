@@ -66,7 +66,7 @@ The following methods can be defined over a chunk store $\Sigma = (C, E, \mathca
 
 \begin{description}
  \item[\texttt{chunk-type(name slot\textsubscript{1} slot\textsubscript{2} ... slot\textsubscript{n})}] is a method for defining a new type $T = (\mathtt{name},\{\mathtt{slot_1}, \dots, \mathtt{slot_n}\})$ which is added to the store, i.e. $\mathcal{T'} = \mathcal{T} \cup \{T\}$. 
- \item[\texttt{add-chunk(name isa type slot\textsubscript{1} val\textsubscript{1} ... slot\textsubscript{n} val\textsubscript{n})}] adds a chunk specified by a name and a list of slot-value pairs to the store, i.e. $C' = C \cup \{ \mathtt{name} \}$, $Isa' = Isa \enspace \cup \enspace (\mathtt{name}, (\mathtt{type}, slots(\mathtt{type}))$ and $HasSlot' = \bigcup_{i = 1}^n{\mathtt{(name,slot_i,val_i)}} \enspace \cup \enspace HasSlot.$ Note, that due to the expansion of $C$, the condition that $C$ and $E$ have to be disjoint may be violated. To fix this violation, the element can be removed from $E$: $E' = (E \cup C) - (E \cap C).$ 
+ \item[\texttt{add-chunk(name isa type slot\textsubscript{1} val\textsubscript{1} ... slot\textsubscript{n} val\textsubscript{n})}] adds a chunk specified by a name and a list of slot-value pairs to the store, i.e. $C' = C \cup \{ \mathtt{name} \}$, $Isa' = Isa \enspace \cup \enspace (\mathtt{name}, (\mathtt{type}, slots(\mathtt{type}))$ and $HasSlot' = \bigcup_{i = 1}^n{\mathtt{(name,slot_i,val_i)}} \enspace \cup \enspace HasSlot.$ Note that due to the expansion of $C$, the condition that $C$ and $E$ have to be disjoint may be violated. To fix this violation, the element can be removed from $E$: $E' = (E \cup C) - (E \cap C).$ 
  
  Additionally, a valid mechanism to restore type-consistency may be introduced: It might happen, that not all slots are specified in the call of the \lstinline|add-chunk| method. Since it is claimed by the definition of $HasSlot$ that for all slots $s$ of a chunk $c$ there must be a $(c,s,v) \in HasSlot$, in implementations the unspecified slots are initialized as empty slots, represented by the empty value \lstinline|nil|. Furthermore, slots specified in the call of the method that are not a member of the chunk's type should cause an error to preserve type-consistency.
   \item[\texttt{alter-slot(name slot\textsubscript{1} val\textsubscript{1} ... slot\textsubscript{n} val\textsubscript{n})}] changes the values of the specified slots of a chunk identified by its name to new values. Only existing slots can be altered, but the list of slot-value pairs may be a partial chunk-description. The values of the slots not in the list remain at their old values.
@@ -429,7 +429,7 @@ For the right hand side of a rule the following actions are allowed:
   ...
 \end{lstlisting}
 
-They are indicated by the buffer modifier \lstinline|=| right before the buffer name and are specified through a list of slot-value pairs. Note, that this list can be incomplete and must not contain a \lstinline|isa| specification. It leads all slots mentioned in the modification action of a buffer to be replaced by the specified values.
+They are indicated by the buffer modifier \lstinline|=| right before the buffer name and are specified through a list of slot-value pairs. Note that this list can be incomplete and must not contain a \lstinline|isa| specification. It leads all slots mentioned in the modification action of a buffer to be replaced by the specified values.
 
  \item[Buffer Requests] of the form
 \begin{lstlisting}
@@ -538,7 +538,7 @@ For each action type a constraint
 buffer_action(buffer,chunk-specification)
 \end{lstlisting}
 
-with corresponding rules that handle the action have to be added. Note, that the buffer action is defined by the action name, the buffer name and a chunk specification, because actions in ACT-R are defined through a buffer modifier that specifies the action, the name of the buffer and a list of slot-value pairs. Hence, this is a direct translation to CHR.
+with corresponding rules that handle the action have to be added. Note that the buffer action is defined by the action name, the buffer name and a chunk specification, because actions in ACT-R are defined through a buffer modifier that specifies the action, the name of the buffer and a list of slot-value pairs. Hence, this is a direct translation to CHR.
 
 \paragraph{Buffer Modifications}
 
@@ -889,7 +889,7 @@ where \lstinline|#| is the placeholder for the built-in constraint that computes
 
 For arithmetic slot modifiers the values being compared have to be numbers. If a value is not a number, the arithmetic test will fail and the rule cannot be applied \cite{actr_reference}.
 
-Note, that slot tests with modifiers other than \lstinline|=| do not bind variables, but only perform simple checks, like it is with guards in CHR. If \lstinline|val| is an unbound variable and is never bound to a value on LHS, the default implementation throws a warning, and the rule will not match. Therefore, to handle this case, the rule translation scheme has to be extended by an additional guard check \lstinline|ground(Val)|, where \lstinline|Val| is the Prolog variable that replaces each occurrence of the variable \lstinline|val|.
+Note that slot tests with modifiers other than \lstinline|=| do not bind variables, but only perform simple checks, like it is with guards in CHR. If \lstinline|val| is an unbound variable and is never bound to a value on LHS, the default implementation throws a warning, and the rule will not match. Therefore, to handle this case, the rule translation scheme has to be extended by an additional guard check \lstinline|ground(Val)|, where \lstinline|Val| is the Prolog variable that replaces each occurrence of the variable \lstinline|val|.
 
 As with normal slot tests, it is important to mention that if there are several tests on the same slot, the \lstinline|chunk_has_slot| constraint must appear only once on the LHS of the CHR rule, since every slot-value pair is unique in the constraint store. Ie., if the first slot test of a particular slot appears on the LHS of the ACT-R rule, a \lstinline|chunk_has_slot| constraint has to be added to the LHS of the CHR rule. For every other occurrence of this slot in a slot test, only guard checks are added.
 
@@ -951,7 +951,7 @@ will match all chunks which have the same value in \lstinline|spam| and \lstinli
   <<<Bar==Eggs>>> | ...
 \end{lstlisting}
 
-Note, that in this case, no binding occurs, since both, \lstinline|Bar| and \lstinline|Eggs|, already occur in the head of the rule and are bound to some value. Hence, the test in the guard can be reduced to a simple syntactic equality test without binding (\lstinline|==|).
+Note that in this case, no binding occurs, since both, \lstinline|Bar| and \lstinline|Eggs|, already occur in the head of the rule and are bound to some value. Hence, the test in the guard can be reduced to a simple syntactic equality test without binding (\lstinline|==|).
 
 \end{example}
 
@@ -1239,7 +1239,7 @@ However, since the match set is distributed over a set of \lstinline|match_set| 
 
 The first rule merges two match sets to one singe merge set containing a list with all the chunks of the former sets, if the \lstinline|collect_matches| trigger is present. 
 
-In the second rule, if no two match sets are in the store, the result of the \lstinline|collect_matches| operation is the match set. The same applies for the last rule, where no match set is in the store and therefore the result is empty. Note, that this implies, that the rules have to be applied from top to bottom, left to right\footnote{This is called the refined operational semantics of CHR}.
+In the second rule, if no two match sets are in the store, the result of the \lstinline|collect_matches| operation is the match set. The same applies for the last rule, where no match set is in the store and therefore the result is empty. Note that this implies, that the rules have to be applied from top to bottom, left to right\footnote{This is called the refined operational semantics of CHR}.
 
 The symbolic layer does not implement any rule for which chunk will be returned, if there are more than one in the match set. In this implementation, the first chunk in the list is chosen. The module request is now implemented as follows:
 
@@ -1715,7 +1715,7 @@ If this rule is applied to exhaustion, only one \lstinline|base_level_part| cons
   A is log(B).
 \end{lstlisting}
 
-Note, that the rule has to be executed after the last rule cannot be applied anymore, because otherwise it would take an intermediate result as the actual result.
+Note that the rule has to be executed after the last rule cannot be applied anymore, because otherwise it would take an intermediate result as the actual result.
 
 With this set of rules, the base-level activation can be calculated according to its definition. There are some special cases, that can be handled implementation specifically (all cases, where the guards prevent the rules from firing are such cases that may need some kind of special treatment).
 
@@ -1733,7 +1733,7 @@ In the calculation process, the fan value $\mathrm{fan}_j$ of a chunk $j$ may be
   fan(C,F).
 \end{lstlisting}
 
-The first rule adds a fan of $1$ for each chunk. The next rule adds a fan of $1$ for a chunk \lstinline|C| for each slot where \lstinline|C| is the value. In the last rule, two fan values for one particular chunk are summed up to a single fan value. Note, that this has to be considered when deleting a chunk: For every chunk in the slots of the deleted chunk, the fan value must be decreased by one.
+The first rule adds a fan of $1$ for each chunk. The next rule adds a fan of $1$ for a chunk \lstinline|C| for each slot where \lstinline|C| is the value. In the last rule, two fan values for one particular chunk are summed up to a single fan value. Note that this has to be considered when deleting a chunk: For every chunk in the slots of the deleted chunk, the fan value must be decreased by one.
 
 As noted before in section~\ref{distinction_elements_chunks} on page~\pageref{distinction_elements_chunks}, primitive elements are stored as chunks of the type \lstinline|chunk| that has no slots. This is very important of the fan calculation as it is presented here, since the fan value depends on the presence of a \lstinline|chunk| constraint to calculate the proper fan value. Otherwise, the fan value of primitive elements would always be off by one.
 
@@ -2032,7 +2032,7 @@ If there was no matching rule, the \lstinline|no_rule| constraint is in the stor
 <<no_rule>> <=> after_next_event(fire).
 \end{lstlisting}
 
-Note, that the described method of implementing the conflict resolution process of ACT-R, matches exactly the description in the reference manual:
+Note that the described method of implementing the conflict resolution process of ACT-R, matches exactly the description in the reference manual:
 
 \begin{quote}
 ``The procedural module will automatically schedule conflict-resolution events. The first one is
@@ -2062,7 +2062,7 @@ The reward a rule can distribute, can be saved in a \lstinline|reward/2| constra
 <<apply_rule(P)>> ==> <<<P \== []>>> | get_now(Now), to_reward(P,Now).
 \end{lstlisting}
 
-Note, that the \lstinline|apply_rule/1| constraint from the last section is used to determine, when a rule is fired.
+Note that the \lstinline|apply_rule/1| constraint from the last section is used to determine, when a rule is fired.
 
 When a rule that can distribute a reward is applied, the reward is triggered:
 
@@ -2086,7 +2086,7 @@ calc_reward(R,FireTime,Reward) :- (*@\label{lst:trigger_reward:calc_reward}@*)
   Reward is R - (Now-FireTime).
 \end{lstlisting}
 
-Note, that in line~\ref{lst:trigger_reward:learning} the utility is adapted by the utility learning rule as shown in equation~\eqref{eq:utility_learning}. The reward the rule receives is calculated by the Prolog predicate in lines~\ref{lst:trigger_reward:calc_reward} sqq.: The more time passed since the rule application, the less the reward of the rule.
+Note that in line~\ref{lst:trigger_reward:learning} the utility is adapted by the utility learning rule as shown in equation~\eqref{eq:utility_learning}. The reward the rule receives is calculated by the Prolog predicate in lines~\ref{lst:trigger_reward:calc_reward} sqq.: The more time passed since the rule application, the less the reward of the rule.
 
 In the end, there has to be a rule that cleans up the reward trigger, after all the rules have been rewarded. This ensures, that the next \lstinline|to_reward| constraints are not immediately consumed by the last reward trigger:
 
@@ -2231,7 +2231,7 @@ The arrow keyword is handled separately by a predicate, which consumes the three
 getToken(start, [61,61,62|Rest], Rest, '==>').
 \end{lstlisting}
 
-Note, that the processing fails, if a not-allowed symbol is read from input, so all of the \lstinline|getToken| predicates fail.
+Note that the processing fails, if a not-allowed symbol is read from input, so all of the \lstinline|getToken| predicates fail.
 
 \subsubsection{Parser}
 
