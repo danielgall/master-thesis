@@ -172,7 +172,6 @@ chunk(5,chunk)
 chunk(2,chunk)
 chunk(7,chunk)
 \end{lstlisting}
-
 \end{example}
 
 
@@ -247,7 +246,7 @@ The second rule deals with the case, that a slot-value pair has to be added with
 
 The next rule ensures that the helper chunk specification \lstinline|nil| will not get a chunk in the store, even if it is in the slots of a chunk.
 
-Otherwise, if the value of the slot to be added is not \lstinline|nil|, the next rule can fire and the slot with the actual value will replace the previously \lstinline|nil|-initialized slot with the actual value. Additionally, since the first rule obviously did not fire for this constellation, \lstinline|V| is a value different from \lstinline|nil| that does not have a chunk in the store. Hence, it must be a primitive element. Thus a new chunk of type \lstinline|chunk| is added to the store for this value.
+Otherwise, if the value of the slot to be added is not \lstinline|nil|, the next rule can fire and the slot with the actual value will replace the previously \lstinline|nil|-initialized slot with the actual value. Additionally, since the first rule obviously did not fire for this constellation, \lstinline|V| is a value different from \lstinline|nil| that does not have a chunk in the store. Hence, it must be a primitive element. Thus a new chunk of type \lstinline|chunk| is added to the store for this value as described in section~\ref{distinction_elements_chunks} (see page~\pageref{distinction_elements_chunks}).
 
 If no rule matches, the user tried to create a chunk with slots that are not specified in the chunk-type. This leads to an error.
 
@@ -560,8 +559,6 @@ This implementation uses a generalization of the \lstinline|alter_slot| method a
 
 Note that types cannot be changed. This corresponds to the grammar definition of ACT-R as presented in section~\ref{production_rule_grammar}.
 
-\FIXME{add some rules! What about chunk type and chunk name -> not allowed in buffer modification -> mention in text}
-
 \paragraph{Buffer Clearings}
 
 When clearing a buffer, the chunk that was stored in the buffer will be removed from the chunk store and \lstinline|nil| will be written to the store. Additionally, the chunk goes to the declarative memory.
@@ -663,6 +660,7 @@ an explicit binding in the production
 Some of the details in this grammar that have not been discussed yet are presented in the following.
 
 \subsubsection{The Order of Rule Applications}
+\label{implementation:rule_application_order}
 
 In the current translation scheme, the order of the rule applications does not match the semantics as described in the ACT-R theory\footnote{see section~\ref{procedural_knowledge}}. Consider the following rules in a compact notation:
 
@@ -1112,6 +1110,8 @@ A buffer request can now be handled as follows:
 
 When getting a buffer request, the buffer state is set to \lstinline|busy| first. Then the buffer is cleared immediately, which leads the chunk in the buffer being added to the declarative memory. Then the module request is stated according to the interface. If the resulting state is \lstinline|error|, then the buffer gets this state and the content of the buffer is \lstinline|nil|, otherwise, if the resulting state is \lstinline|free|, the result will be added to the buffer and the state will eventually be set to \lstinline|free|. 
 
+It is important to mention, that the received chunk will be created explicitly in the chunk store of the buffer system and therefore is a copy of a possibly existing identical chunk in the module that has been requested.
+
 \subsection{Components of the Implementation}
 
 uml component diagram + discussion
@@ -1120,7 +1120,7 @@ uml component diagram + discussion
 
 \section{Declarative Module}
 
-The Declarative Module is a \emph{chunk store}, that additionally implements the \emph{module} interface. Therefore some rules to handle requests that find certain chunks in the chunk store have to be implemented. 
+The Declarative Module is a \emph{chunk store}, that additionally implements the \emph{module} interface. Therefore some rules to handle requests that find certain chunks in the chunk store have to be implemented. The chunk-store is separated from the buffer system which has its own chunk-store. Hence, all chunks requested by the buffer system from the declarative module are copies and therefore changes on those chunk do not affect the chunks in the declarative memory directly.
 
 \subsection{Global Method for Adding Chunks}
 \label{global_method_for_adding_chunks}
@@ -1130,8 +1130,6 @@ Since the declarative module is very important to the whole theory it kind of is
 \begin{lstlisting}
 <<add_dm(ChunkDef)>> <=> add_chunk(ChunkDef).
 \end{lstlisting}
-
-
 
 \subsection{Retrieval Requests}
 \label{retrieval_requests}
@@ -1352,7 +1350,17 @@ The process of chunk merging is described in \cite[??]{actr_reference}. The trea
 
 In the examples the models had to be run by stating complex queries which create all necessary buffers and add all chunk types and chunks to the declarative memory manually. In the original ACT-R implementation, the command \lstinline|run| is used to run a model. This behaviour can be transferred to the CHR implementation easily by adding a \lstinline|run| constraint and a rule for this constraint, that performs all the initialization work.
 
-\FIXME{modify count example from above}
+\begin{lstlisting}
+init @ 
+  <<run>> <=> 
+  add_buffer(retrieval,declarative_module),
+  add_chunk_type(...),
+  add_dm(...),
+  goal_focus(...),
+  fire.
+\end{lstlisting}
+
+This example assumes that there are implmentation of the called methods that perform the partial initialization work. A typical initialization routine could create all buffers at first, then add all needed chunk-types (note, that this might include the artificial chunk-type \lstinline|chunk| as defined in section~\ref{distinction_elements_chunks} (see page~\pageref{distinction_elements_chunks}). Then the initial declarative memory chunks are added. The \lstinline|goal-focus| method selects a created chunk and copies it to the declarative memory. The adding of the \lstinline|fire| constraint eventually starts the computation after the initialization is finished as described in section~\ref{implementation:rule_application_order} (see page~\pageref{implementation:rule_application_order}).
 
 \section{Timing in ACT-R}
 
@@ -1613,15 +1621,28 @@ lisp_chunktype([Type|Slots]) <=>
   declarative_module:add_chunk_type(Type,Slots).
 \end{lstlisting}
 
+Note that this function adds the chunk-types both to the declarative module and the buffer system, since types are global to the system.
+
 \subsection{Configuration Variables}
 \label{configuration}
 
 In ACT-R, configuration variables which control the behaviour of the architecture are set with the Lisp function \lstinline|(sgp :Var Val)|, which sets the variable \lstinline|Var| to \lstinline|Val|. To handle such configuration variables, a configuration module can be added to the CHR implementation, that offers an interface to set variables and to ask for their values:
 
 \begin{description}
- \item[Set configuration variables]
- \item[Get the value of a configuration variable]
+ \item[Set configuration variables] By calling \lstinline|set_conf(+Var,+Val)| the configuration variable \lstinline|Var| is set to the value \lstinline|Val|.
+ \item[Get the value of a configuration variable] The call of \lstinline|get_conf(+Var,-Val)| binds the value of the configuration variable \lstinline|Var| to the argument \lstinline|Val|.
 \end{description}
+
+The \lstinline|(sgp ...)| call can then be translated to:
+
+\begin{lstlisting}
+lisp_sgp([]) <=>
+  true.
+
+lisp_sgp([:,Var,Val|Rest]) <=>
+  set_conf(Var,Val),
+  lisp_sgp(Rest).
+\end{lstlisting}
 
 \subsubsection{The Observer Pattern}
 
@@ -2275,7 +2296,7 @@ For the variables in the rules, it uses a symbol table for each rule to ensure t
 
 The current implementation of the compiler can be improved at some points. First of all, it only can process a subset of the grammar, that actually is a subset of the simplified grammar shown in section~\ref{implementation:production_rule_grammar}. For example, it is only able to parse the negation slot-modifier, the others are not implemented yet, but can be added easily.
 
-The formulation of the grammar also differs from the original definition, so it would be nice to assimilate the two grammars. Additionally, lists have been implemented very complicated in the DCG rule grammar and could be simplified by using actual Prolog lists instead of constructs like \lstinline|tests --> test, tests; test|, which make the parse tree very complicated. Instead, the tree could be simplified to \lstinline[mathescape]|tests([t$_\mathtt{1}$, ..., t$_\mathtt{n}$)|.
+The formulation of the grammar also differs from the original definition, so it would be nice to assimilate the two grammars. Additionally, lists have been implemented very complicated in the DCG rule grammar and could be simplified by using actual Prolog lists instead of constructs like \lstinline|tests --> test, tests; test|, which make the parse tree very complicated. Instead, the tree could be simplified to \lstinline[mathescape]|tests([t$_\mathtt{1}$, ... , t$_\mathtt{n}$])|.
 
 Another problem is that duplicate slot tests as shown in section~\ref{implementation:duplicate_slot_tests} on page~\pageref{implementation:duplicate_slot_tests} cannot be handled by the compiler, yet.
 

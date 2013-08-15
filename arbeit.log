@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.8.10)  15 AUG 2013 14:13
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.8.10)  15 AUG 2013 17:05
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1449,14 +1449,14 @@ LaTeX Info: Redefining \nameref on input line 231.
 \@outlinefile=\write6
 \openout6 = `arbeit.out'.
 
- <images/unilogo_bild.pdf, id=461, 199.74625pt x 199.74625pt>
+ <images/unilogo_bild.pdf, id=469, 199.74625pt x 199.74625pt>
 File: images/unilogo_bild.pdf Graphic file (type pdf)
 
 <use images/unilogo_bild.pdf>
 Package pdftex.def Info: images/unilogo_bild.pdf used on input line 246.
 (pdftex.def)             Requested size: 51.21349pt x 51.21504pt.
 
-<images/unilogo_wort.pdf, id=462, 761.34438pt x 183.18437pt>
+<images/unilogo_wort.pdf, id=470, 761.34438pt x 183.18437pt>
 File: images/unilogo_wort.pdf Graphic file (type pdf)
 
 <use images/unilogo_wort.pdf>
@@ -1564,37 +1564,49 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <10> on input line 7.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <7> on input line 7.
- [5]
-Underfull \vbox (badness 1721) has occurred while \output is active []
+ [5] [6]
+Overfull \hbox (1.17978pt too wide) detected at line 243
+ []\T1/phv/m/n/10 100
+ []
 
- [6]
-Overfull \hbox (1.17978pt too wide) detected at line 247
- []\T1/phv/m/n/10 101
+
+Overfull \hbox (1.17978pt too wide) detected at line 245
+ []\T1/phv/m/n/10 100
  []
 
 
 Overfull \hbox (1.17978pt too wide) detected at line 249
+ []\T1/phv/m/n/10 101
+ []
+
+
+Overfull \hbox (1.17978pt too wide) detected at line 251
  []\T1/phv/m/n/10 116
  []
 
 
-Overfull \hbox (1.17978pt too wide) detected at line 253
- []\T1/phv/m/n/10 117
- []
-
-
 Overfull \hbox (1.17978pt too wide) detected at line 255
- []\T1/phv/m/n/10 117
+ []\T1/phv/m/n/10 119
  []
 
 
-Overfull \hbox (1.17978pt too wide) detected at line 263
- []\T1/phv/m/n/10 123
+Overfull \hbox (1.17978pt too wide) detected at line 257
+ []\T1/phv/m/n/10 119
+ []
+
+
+Overfull \hbox (1.17978pt too wide) detected at line 265
+ []\T1/phv/m/n/10 125
  []
 
 [7]
-Overfull \hbox (1.17978pt too wide) detected at line 265
- []\T1/phv/m/n/10 125
+Overfull \hbox (1.17978pt too wide) detected at line 267
+ []\T1/phv/m/n/10 127
+ []
+
+
+Overfull \hbox (1.17978pt too wide) detected at line 269
+ []\T1/phv/m/n/10 127
  []
 
 )
@@ -1605,6 +1617,10 @@ Overfull \hbox (1.17978pt too wide) detected at line 265
 Chapter 1.
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10> not available
 (Font)              Font shape `T1/phv/m/sl' tried instead on input line 3.
+
+LaTeX Warning: Reference `fig:cognitive_modeling_exp' on page 1 undefined on in
+put line 3.
+
 [1
 
 
@@ -1613,10 +1629,17 @@ LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10> not available
 ]
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 15.
- [2]) (./chapters/actr.tex [3] [4
 
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-]
+ [2]
+Underfull \vbox (badness 1424) has occurred while \output is active []
+
+ [3]
+
+LaTeX Warning: Reference `conclusion' on page 4 undefined on input line 35.
+
+) (./chapters/actr.tex [4]
 Chapter 2.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 16.
@@ -1624,7 +1647,10 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
 LaTeX Warning: Reference `fig:modular_organization' on page 5 undefined on inpu
 t line 18.
 
-[5]
+[5
+
+
+]
 
 LaTeX Warning: Reference `fig:recognize_act' on page 6 undefined on input line 
 24.
@@ -1698,10 +1724,10 @@ e 333.
 ]
 Chapter 3.
 LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <10> not available
-(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 8.
+(Font)              Font shape `T1/pcr/m/sl' tried instead on input line 9.
 LaTeX Font Info:    Font shape `T1/pcr/bx/n' in size <10> not available
-(Font)              Font shape `T1/pcr/b/n' tried instead on input line 8.
-LaTeX Font Info:    Try loading font information for OT1+lmtt on input line 8.
+(Font)              Font shape `T1/pcr/b/n' tried instead on input line 9.
+LaTeX Font Info:    Try loading font information for OT1+lmtt on input line 9.
 (/usr/share/texmf-dist/tex/latex/lm/ot1lmtt.fd
 File: ot1lmtt.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
@@ -1711,9 +1737,9 @@ Package microtype Info: Loading generic settings for font family
 (microtype)             See the microtype manual for details.
  [25]
 LaTeX Font Info:    Font shape `T1/pcr/bx/it' in size <10> not available
-(Font)              Font shape `T1/pcr/b/it' tried instead on input line 31.
+(Font)              Font shape `T1/pcr/b/it' tried instead on input line 32.
 LaTeX Font Info:    Font shape `T1/pcr/b/it' in size <10> not available
-(Font)              Font shape `T1/pcr/b/sl' tried instead on input line 31.
+(Font)              Font shape `T1/pcr/b/sl' tried instead on input line 32.
  [26] [27])
 (./chapters/implementation.tex [28]
 Chapter 4.
@@ -1803,58 +1829,60 @@ line 1508.
 Underfull \vbox (badness 2111) has occurred while \output is active []
 
  [75]
-[76] [77]
-Underfull \vbox (badness 2799) has occurred while \output is active []
-
- [78]
-[79]
-Overfull \hbox (65.34625pt too wide) in paragraph at lines 1683--1684
+[76] [77] [78] [79] [80]
+Overfull \hbox (65.34625pt too wide) in paragraph at lines 1705--1706
 \T1/phv/m/n/10 (-20) of a set of chunks has to be cal-cu-lated. There-fore, a c
 on-straint [][][][][][]
  []
 
-[80] [81] [82] [83] [84] [85]
-Overfull \hbox (45.40611pt too wide) in paragraph at lines 1855--1856
+[81] [82] [83]
+Underfull \vbox (badness 1681) has occurred while \output is active []
+
+ [84]
+[85]
+Overfull \hbox (45.40611pt too wide) in paragraph at lines 1877--1878
 []\T1/phv/m/n/10 (-20) A sim-i-lar method is ap-plied for buffer re-quests: The
 y are di-vided into three rules -- [][][][],
  []
 
-
-LaTeX Warning: Reference `lst:schedule_buffer_request:context' on page 86 undef
-ined on input line 1877.
-
 [86]
 
-LaTeX Warning: Reference `tab:action_priorities' on page 87 undefined on input 
-line 1893.
+LaTeX Warning: Reference `lst:schedule_buffer_request:context' on page 87 undef
+ined on input line 1899.
 
-[87] [88] [89]
-Overfull \hbox (0.81894pt too wide) in paragraph at lines 2017--2018
+[87]
+
+LaTeX Warning: Reference `tab:action_priorities' on page 88 undefined on input 
+line 1915.
+
+[88] [89] [90]
+Overfull \hbox (0.81894pt too wide) in paragraph at lines 2039--2040
 []\T1/phv/m/n/10 (-20) The first rule deletes the empty [][][] con-straint, if 
 there are other [][][]
  []
 
-[90]
-Overfull \hbox (3.0493pt too wide) in paragraph at lines 2034--2035
+
+Overfull \hbox (3.0493pt too wide) in paragraph at lines 2056--2057
 []\T1/phv/m/n/10 (-20) The first rule is only ap-pli-ca-ble, if there were no m
 atch-ing rules and the empty [][][]
  []
 
+[91]
 
-LaTeX Warning: Reference `lst:conflict_resolution_scheme' on page 91 undefined 
-on input line 2036.
+LaTeX Warning: Reference `lst:conflict_resolution_scheme' on page 92 undefined 
+on input line 2058.
 
 
-Overfull \hbox (38.41306pt too wide) in paragraph at lines 2038--2039
+Overfull \hbox (38.41306pt too wide) in paragraph at lines 2060--2061
 []\T1/phv/m/n/10 (-20) When the cho-sen rule is ap-plied, its ac-tions are per-
 formed and even-tu-ally, a [][][]
  []
 
-[91] [92] [93]
-Underfull \vbox (badness 3240) has occurred while \output is active []
+[92] [93] [94] [95] [96] [97] [98]
+Underfull \vbox (badness 4467) has occurred while \output is active []
 
- [94]
-[95] [96] [97] [98] [99]) (./chapters/example_models.tex [100]
+ [99])
+(./chapters/example_models.tex [100]
 Chapter 5.
 [101
 
@@ -1871,11 +1899,11 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [106]
 
-LaTeX Warning: Reference `empty_slots' on page 107 undefined on input line 224.
+LaTeX Warning: Reference `empty_slots' on page 107 undefined on input line 225.
 
 
 
-LaTeX Warning: Reference `empty_slots' on page 107 undefined on input line 224.
+LaTeX Warning: Reference `empty_slots' on page 107 undefined on input line 225.
 
 
 [107]
@@ -1895,51 +1923,64 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  [113]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [114])
-(./chapters/conclusion.tex
+ [114]
+
+LaTeX Warning: Reference `fig:semantic_model_example' on page 115 undefined on 
+input line 484.
+
+
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [115]
-[116]
+Overfull \hbox (18.1006pt too wide) in paragraph at lines 518--519
+[]\T1/phv/m/n/10 (-20) I.e., the du-pli-cate slot test for the slot [][][], is 
+re-duced to one [][][][][][]
+ []
+
+
+Underfull \vbox (badness 1910) has occurred while \output is active []
+
+ [116])
+(./chapters/conclusion.tex [117] [118
+
+
+]
 Chapter 6.
-) (./chapters/sources.tex [117
-
-
-] [118
+) (./chapters/sources.tex [119] [120
 
 
 ]
 Appendix A.
-) (./chapters/production_grammar.tex [119] [120
+) (./chapters/production_grammar.tex [121] [122
 
 
 ]
 Appendix B.
-[121]) (./chapters/appendix_examples.tex [122]
+[123]) (./chapters/appendix_examples.tex [124]
 Appendix C.
-[123
+[125
 
 
 ]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [124])
-[125] [126
+ [126])
+[127] [128
 
 
-] [127
+] [129
 
 
-] [128]
+] [130]
 Overfull \hbox (1.13774pt too wide) in paragraph at lines 371--371
 \T1/phv/m/n/10 (-20) 298^^U303.  \T1/phv/m/sc/10 (-20) url\T1/phv/m/n/10 (-20) 
 : []$\T1/pcr/m/n/10 http : / / actr . psy . cmu . edu / papers / 641 / stewartP
 aper .
  []
 
-[129] [130]
+[131] [132]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 387.
- [131
+ [133
 
 
 ]
@@ -1948,7 +1989,7 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 387.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 387.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 387.
 Package rerunfilecheck Info: File `arbeit.out' has not changed.
-(rerunfilecheck)             Checksum: CC5272D52A842E9927936B1D9BBCE6E0;7852.
+(rerunfilecheck)             Checksum: B0D8204B3BFC68D65A0304A8715A22A0;7949.
 
 
 LaTeX Warning: There were undefined references.
@@ -1958,10 +1999,10 @@ Package logreq Info: Writing requests to 'arbeit.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 32238 strings out of 493315
- 564224 string characters out of 6143704
+ 32324 strings out of 493315
+ 565558 string characters out of 6143704
  998424 words of memory out of 5000000
- 33064 multiletter control sequences out of 15000+600000
+ 33108 multiletter control sequences out of 15000+600000
  94359 words of font info for 223 fonts, out of 8000000 for 9000
  958 hyphenation exceptions out of 8191
  65i,12n,76p,1611b,3156s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1988,10 +2029,10 @@ r8a.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/
 texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-dist/fonts/typ
 e1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvr
 o8a.pfb>
-Output written on arbeit.pdf (139 pages, 861914 bytes).
+Output written on arbeit.pdf (141 pages, 868674 bytes).
 PDF statistics:
- 3545 PDF objects out of 3580 (max. 8388607)
- 3324 compressed objects within 34 object streams
- 1799 named destinations out of 2073 (max. 500000)
- 39391 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 3622 PDF objects out of 4296 (max. 8388607)
+ 3399 compressed objects within 34 object streams
+ 1841 named destinations out of 2073 (max. 500000)
+ 39407 words of extra memory for PDF output out of 42996 (max. 10000000)
 

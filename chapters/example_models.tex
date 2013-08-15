@@ -1,6 +1,7 @@
 \chapter{Example Models}
+\label{example_models}
 
-In this chapter, some ACT-R models are translated into CHR and the results are discussed. The examples are taken from \citetitle{actr_tutorial} \cite{actr_tutorial}.
+In this chapter, two ACT-R models are translated into CHR and the results are discussed. The examples are taken from \citetitle{actr_tutorial} \cite{actr_tutorial}.
 
 \section{The Counting Model}
 
@@ -480,6 +481,42 @@ Note that the times may vary from the execution of the same model in the vanilla
 
 \section{The Semantic Model}
 
+In this example, a taxonomy of categories and properties, illustrated in figure~\ref{fig:semantic_model_example}, is modeled \cite[unit 1, pp. 24\psqq]{actr_tutorial}. The goal chunks of this model represent queries like ``Is a canary a bird?'' or ``Is a shark dangerous?''. The full model code and translation can be found in appendix~\ref{app:ex:semantic_model}. The model uses the concept of duplicate slot tests as described in section~\ref{implementation:duplicate_slot_tests} (see page~\pageref{implementation:duplicate_slot_tests}). However, the compiler cannot handle those tests in the current version and hence the compiled model has to be edited using the pattern from section~\ref{implementation:duplicate_slot_tests}:
+
+\begin{lstlisting}
+=retrieval>
+      ISA         property
+      object      =obj1
+      attribute   category
+      value       =obj2
+    - value       =cat 
+\end{lstlisting}
+
+has to be translated to:
+
+\begin{lstlisting}
+chain-category@
+  buffer(goal,_,A),
+    chunk(A,is-member),
+    chunk_has_slot(A,object,C),
+    chunk_has_slot(A,category,D),
+    chunk_has_slot(A,judgment,pending),
+  buffer(retrieval,_,B),
+    chunk(B,property),
+    chunk_has_slot(B,object,C),
+    chunk_has_slot(B,attribute,category),
+    chunk_has_slot(B,value,E)
+  \ apply_rule(chain-category) 
+<=> 
+  C\==nil,
+  D\==nil,
+  E\==nil,
+  E\==D |
+  ...
+\end{lstlisting}
+
+I.e., the duplicate slot test for the slot \lstinline|value|, is reduced to one \lstinline|chunk_has_slot(B,value,E)| head constraint and a guard, which states that \lstinline|=obj2| $\neq$ \lstinline|=cat|: \lstinline|E \== D|. After this small change, the model can be run with various queries, i.e. goal chunks as described in \cite[unit 1, pp. 24\psqq]{actr_tutorial} and appendix~\ref{app:ex:semantic_model}.
+
 %\section{The Fan Model}
 
-simplified version of fan model
+%simplified version of fan model
