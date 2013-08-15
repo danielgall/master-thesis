@@ -172,7 +172,6 @@ chunk(5,chunk)
 chunk(2,chunk)
 chunk(7,chunk)
 \end{lstlisting}
-
 \end{example}
 
 
@@ -247,7 +246,7 @@ The second rule deals with the case, that a slot-value pair has to be added with
 
 The next rule ensures that the helper chunk specification \lstinline|nil| will not get a chunk in the store, even if it is in the slots of a chunk.
 
-Otherwise, if the value of the slot to be added is not \lstinline|nil|, the next rule can fire and the slot with the actual value will replace the previously \lstinline|nil|-initialized slot with the actual value. Additionally, since the first rule obviously did not fire for this constellation, \lstinline|V| is a value different from \lstinline|nil| that does not have a chunk in the store. Hence, it must be a primitive element. Thus a new chunk of type \lstinline|chunk| is added to the store for this value.
+Otherwise, if the value of the slot to be added is not \lstinline|nil|, the next rule can fire and the slot with the actual value will replace the previously \lstinline|nil|-initialized slot with the actual value. Additionally, since the first rule obviously did not fire for this constellation, \lstinline|V| is a value different from \lstinline|nil| that does not have a chunk in the store. Hence, it must be a primitive element. Thus a new chunk of type \lstinline|chunk| is added to the store for this value as described in section~\ref{distinction_elements_chunks} (see page~\pageref{distinction_elements_chunks}).
 
 If no rule matches, the user tried to create a chunk with slots that are not specified in the chunk-type. This leads to an error.
 
@@ -560,8 +559,6 @@ This implementation uses a generalization of the \lstinline|alter_slot| method a
 
 Note that types cannot be changed. This corresponds to the grammar definition of ACT-R as presented in section~\ref{production_rule_grammar}.
 
-\FIXME{add some rules! What about chunk type and chunk name -> not allowed in buffer modification -> mention in text}
-
 \paragraph{Buffer Clearings}
 
 When clearing a buffer, the chunk that was stored in the buffer will be removed from the chunk store and \lstinline|nil| will be written to the store. Additionally, the chunk goes to the declarative memory.
@@ -663,6 +660,7 @@ an explicit binding in the production
 Some of the details in this grammar that have not been discussed yet are presented in the following.
 
 \subsubsection{The Order of Rule Applications}
+\label{implementation:rule_application_order}
 
 In the current translation scheme, the order of the rule applications does not match the semantics as described in the ACT-R theory\footnote{see section~\ref{procedural_knowledge}}. Consider the following rules in a compact notation:
 
@@ -1112,6 +1110,8 @@ A buffer request can now be handled as follows:
 
 When getting a buffer request, the buffer state is set to \lstinline|busy| first. Then the buffer is cleared immediately, which leads the chunk in the buffer being added to the declarative memory. Then the module request is stated according to the interface. If the resulting state is \lstinline|error|, then the buffer gets this state and the content of the buffer is \lstinline|nil|, otherwise, if the resulting state is \lstinline|free|, the result will be added to the buffer and the state will eventually be set to \lstinline|free|. 
 
+It is important to mention, that the received chunk will be created explicitly in the chunk store of the buffer system and therefore is a copy of a possibly existing identical chunk in the module that has been requested.
+
 \subsection{Components of the Implementation}
 
 uml component diagram + discussion
@@ -1120,7 +1120,7 @@ uml component diagram + discussion
 
 \section{Declarative Module}
 
-The Declarative Module is a \emph{chunk store}, that additionally implements the \emph{module} interface. Therefore some rules to handle requests that find certain chunks in the chunk store have to be implemented. 
+The Declarative Module is a \emph{chunk store}, that additionally implements the \emph{module} interface. Therefore some rules to handle requests that find certain chunks in the chunk store have to be implemented. The chunk-store is separated from the buffer system which has its own chunk-store. Hence, all chunks requested by the buffer system from the declarative module are copies and therefore changes on those chunk do not affect the chunks in the declarative memory directly.
 
 \subsection{Global Method for Adding Chunks}
 \label{global_method_for_adding_chunks}
@@ -1130,8 +1130,6 @@ Since the declarative module is very important to the whole theory it kind of is
 \begin{lstlisting}
 <<add_dm(ChunkDef)>> <=> add_chunk(ChunkDef).
 \end{lstlisting}
-
-
 
 \subsection{Retrieval Requests}
 \label{retrieval_requests}
@@ -1326,10 +1324,13 @@ For the easier use of the identical constraint at other points, transitive ident
   identical(C1,C3).
 \end{lstlisting}
 
-Additionally, the newly created names can be deleted if the chunk was identical to another chunk with a real name, since the new nomenclature was only store internal, so only the original name must be kept:
+Additionally, identical chunks should not be added to the store explicitly, since they are just a copy of antoher chunk and their name is a reference to this actual chunk. The helper chunks with the artificial \lstinline|:new| suffix are also not added to the store and their identical information is deleted in the end, since their nomenclature was only store internal, so only the original name must be kept:
 
 \begin{lstlisting}
-<<identical(C,C:new)>> <=> true.
+% do not add help chunks with :new tag and remove identical information
+add_chunk(chunk(C:new,T,S)), identical(C,C:new) <=> true. 
+% do not add identical chunk, but keep identical information
+identical(C1,C2) \ add_chunk(chunk(C2,T,S)) <=> true. 
 \end{lstlisting}
 
 In the declarative module, the chunk search must be extended to find merged chunks by both names. This can be achieved as follows:
@@ -1349,7 +1350,17 @@ The process of chunk merging is described in \cite[??]{actr_reference}. The trea
 
 In the examples the models had to be run by stating complex queries which create all necessary buffers and add all chunk types and chunks to the declarative memory manually. In the original ACT-R implementation, the command \lstinline|run| is used to run a model. This behaviour can be transferred to the CHR implementation easily by adding a \lstinline|run| constraint and a rule for this constraint, that performs all the initialization work.
 
-\FIXME{modify count example from above}
+\begin{lstlisting}
+init @ 
+  <<run>> <=> 
+  add_buffer(retrieval,declarative_module),
+  add_chunk_type(...),
+  add_dm(...),
+  goal_focus(...),
+  fire.
+\end{lstlisting}
+
+This example assumes that there are implmentation of the called methods that perform the partial initialization work. A typical initialization routine could create all buffers at first, then add all needed chunk-types (note, that this might include the artificial chunk-type \lstinline|chunk| as defined in section~\ref{distinction_elements_chunks} (see page~\pageref{distinction_elements_chunks}). Then the initial declarative memory chunks are added. The \lstinline|goal-focus| method selects a created chunk and copies it to the declarative memory. The adding of the \lstinline|fire| constraint eventually starts the computation after the initialization is finished as described in section~\ref{implementation:rule_application_order} (see page~\pageref{implementation:rule_application_order}).
 
 \section{Timing in ACT-R}
 
@@ -1488,6 +1499,7 @@ The current time can be saved in a \lstinline|now/1| constraint. It is important
 Other modules can access the time only by a \lstinline|get_now/1| that only returns the current time saved in the \lstinline|now/1| constraint. The current time cannot be set from outside, but is determined by the last event dequeued from the priority queue.
 
 \subsubsection{Recognize-Act Cycle}
+\label{implementation:scheduler:recognize-act}
 
 As described before, the procedural module can only fire one rule at a time. When executing the RHS of a rule, all its actions are added to the scheduler with the time point when their execution is finished. For example: If on the RHS of the firing rule a retrieval request has to be performed, an event will be added to the priority queue with the time $Now + Duration$, so the chunk retrieved from the declarative memory will be written to the retrieval buffer at this time point.
 
@@ -1843,7 +1855,7 @@ where \lstinline|Context| is a list of the chunk names that are in the current c
 A similar method is applied for buffer requests: They are divided into three rules -- \lstinline|buffer_request/2|, \lstinline|start_request/2| and \lstinline|do_buffer_request/2| -- similar to the division into two rules as already described in section~\ref{changing_the_buffer_system} on page~\pageref{changing_the_buffer_system} for the other actions. The difference is, that -- since a request may take a certain time -- the first rule schedules the start of the request with the priority \lstinline|0|, so all other types of buffer actions have been performed. The request is actually performed immediately when calling \lstinline|start_request|, but the effects to the buffers this request has are applied not until \lstinline|do_buffer_request| is called, which is scheduled at the result time (\lstinline|ResTime|) of the request. This is due to the dependence of the latency of a request on the activation values of the matching chunks, so the request has to be performed in advance to calculate the correct time it will take, so the result has to be known before the request ends in simulation time. This yields the following code in the buffer system:
 
 \begin{lstlisting}[label=Schedule start of buffer request, escapeinside={(*@}{@*)}]
-buffer(BufName, ModName, _) \ buffer_request(BufName, Chunk) <=>
+buffer_request(BufName, Chunk) <=>
   get_now(Now),
   add_q(Now,0,start_request(BufName,Chunk)).
 \end{lstlisting}
@@ -1962,6 +1974,7 @@ set_conf(rt,RT) ==> LF is 0.35*exp(RT), set_conf(lf,LF).
 If there are competing strategies that match a current state, the production system selects the rule with the highest production utility to fire. This process is called \emph{conflict resolution} in the terminology of production rule systems and is described in the following.
 
 \subsubsection{Conflict Resolution}
+\label{implementation:conflict_resolution}
 
 In \cite[151\psqq]{fru_chr_book_2009} a general implementation of conflict resolution in CHR is described. This approach can be easily adapted to the needs of ACT-R.
 

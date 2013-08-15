@@ -28,7 +28,7 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.1.4}Goal Module}{10}{subsection.2.1.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Working memory}{10}{section*.7}
+\contentsline {subsubsection}{Working memory}{11}{section*.7}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.1.5}Other Modules}{11}{subsection.2.1.5}
 \defcounter {refsection}{0}\relax 
@@ -40,7 +40,7 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.1.6}Example: Counting}{13}{subsection.2.1.6}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.2}Serial and Parallel Aspects of ACT-R}{14}{section.2.2}
+\contentsline {section}{\numberline {2.2}Serial and Parallel Aspects of ACT-R}{15}{section.2.2}
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {2.3}Subsymbolic layer}{15}{section.2.3}
 \defcounter {refsection}{0}\relax 
@@ -54,7 +54,7 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Latency of Retrieval}{19}{section*.14}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.3.2}Production Utility}{19}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {2.3.2}Production Utility}{20}{subsection.2.3.2}
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {2.4}Learning}{21}{section.2.4}
 \defcounter {refsection}{0}\relax 
@@ -62,208 +62,206 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Fact Learning}{21}{section*.15}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Skill acquisition}{21}{section*.16}
+\contentsline {subsubsection}{Skill acquisition}{22}{section*.16}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.4.2}Subsymbolic Layer}{22}{subsection.2.4.2}
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {2.5}Experiment Environment}{22}{section.2.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {3}Constraint Handling Rules}{23}{chapter.3}
+\contentsline {chapter}{\numberline {3}Constraint Handling Rules}{25}{chapter.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {4}Implementation of ACT-R in CHR}{27}{chapter.4}
+\contentsline {chapter}{\numberline {4}Implementation of ACT-R in CHR}{29}{chapter.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.1}Declarative and Procedural Knowledge}{27}{section.4.1}
+\contentsline {section}{\numberline {4.1}Declarative and Procedural Knowledge}{29}{section.4.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.2}Chunk Stores}{28}{section.4.2}
+\contentsline {section}{\numberline {4.2}Chunk Stores}{30}{section.4.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.2.1}Formal Representation of Chunks}{28}{subsection.4.2.1}
+\contentsline {subsection}{\numberline {4.2.1}Formal Representation of Chunks}{30}{subsection.4.2.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.2.2}Representation of Chunks in CHR}{30}{subsection.4.2.2}
+\contentsline {subsection}{\numberline {4.2.2}Representation of Chunks in CHR}{32}{subsection.4.2.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Distinction of Elements and Chunks}{31}{section*.17}
+\contentsline {subsubsection}{Distinction of Elements and Chunks}{33}{section*.17}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Simple Implementation of the Default Methods}{32}{section*.18}
+\contentsline {subsubsection}{Simple Implementation of the Default Methods}{34}{section*.18}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{add\_chunk}{33}{section*.19}
+\contentsline {paragraph}{add\_chunk}{35}{section*.19}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{add\_chunk\_type}{35}{section*.20}
+\contentsline {paragraph}{add\_chunk\_type}{37}{section*.20}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{alter\_slot}{35}{section*.21}
+\contentsline {paragraph}{alter\_slot}{37}{section*.21}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{remove\_chunk}{36}{section*.22}
+\contentsline {paragraph}{remove\_chunk}{38}{section*.22}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{return\_chunk}{36}{section*.23}
+\contentsline {paragraph}{return\_chunk}{38}{section*.23}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Checking Consistency and Type-Consistency}{36}{section*.24}
+\contentsline {subsubsection}{Checking Consistency and Type-Consistency}{38}{section*.24}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.3}Procedural Module}{37}{section.4.3}
+\contentsline {section}{\numberline {4.3}Procedural Module}{39}{section.4.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.3.1}Buffer System}{37}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.1}Buffer System}{39}{subsection.4.3.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Destructive Assignment and Consistency}{38}{section*.25}
+\contentsline {subsubsection}{Destructive Assignment and Consistency}{40}{section*.25}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Buffer States}{38}{section*.26}
+\contentsline {subsubsection}{Buffer States}{40}{section*.26}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.3.2}Production Rules}{39}{subsection.4.3.2}
+\contentsline {subsection}{\numberline {4.3.2}Production Rules}{41}{subsection.4.3.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{The Left Hand Side of a Rule}{39}{section*.27}
+\contentsline {subsubsection}{The Left Hand Side of a Rule}{41}{section*.27}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{The Right Hand Side of a Rule}{40}{section*.28}
+\contentsline {subsubsection}{The Right Hand Side of a Rule}{42}{section*.28}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Direct Translation of Buffer Tests}{41}{section*.29}
+\contentsline {subsubsection}{Direct Translation of Buffer Tests}{43}{section*.29}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Translation of Actions}{43}{section*.30}
+\contentsline {subsubsection}{Translation of Actions}{45}{section*.30}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Buffer Modifications}{43}{section*.31}
+\contentsline {paragraph}{Buffer Modifications}{45}{section*.31}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Buffer Clearings}{44}{section*.32}
+\contentsline {paragraph}{Buffer Clearings}{46}{section*.32}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Buffer Requests}{44}{section*.33}
+\contentsline {paragraph}{Buffer Requests}{46}{section*.33}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Translation of Buffer Queries}{45}{section*.34}
+\contentsline {subsubsection}{Translation of Buffer Queries}{47}{section*.34}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.3.3}The Production Rule Grammar}{45}{subsection.4.3.3}
+\contentsline {subsection}{\numberline {4.3.3}The Production Rule Grammar}{47}{subsection.4.3.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{The Order of Rule Applications}{47}{section*.35}
+\contentsline {subsubsection}{The Order of Rule Applications}{48}{section*.35}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Bound and Unbound Variables}{50}{section*.36}
+\contentsline {subsubsection}{Bound and Unbound Variables}{52}{section*.36}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Duplicate Slot Tests}{50}{section*.37}
+\contentsline {subsubsection}{Duplicate Slot Tests}{52}{section*.37}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Slot Modifiers}{52}{section*.38}
+\contentsline {subsubsection}{Slot Modifiers}{53}{section*.38}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Relation to Negation-as-Absence}{54}{section*.39}
+\contentsline {paragraph}{Relation to Negation-as-Absence}{56}{section*.39}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Empty Slots}{55}{section*.40}
+\contentsline {subsubsection}{Empty Slots}{57}{section*.40}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Outputs}{55}{section*.41}
+\contentsline {subsubsection}{Outputs}{57}{section*.41}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.4}Modular Organization}{56}{section.4.4}
+\contentsline {section}{\numberline {4.4}Modular Organization}{58}{section.4.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.4.1}Prolog Modules}{57}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.1}Prolog Modules}{58}{subsection.4.4.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.4.2}Interface for Module Requests}{58}{subsection.4.4.2}
+\contentsline {subsection}{\numberline {4.4.2}Interface for Module Requests}{60}{subsection.4.4.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.4.3}How the Buffer System States a Request}{59}{subsection.4.4.3}
+\contentsline {subsection}{\numberline {4.4.3}How the Buffer System States a Request}{60}{subsection.4.4.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.4.4}Components of the Implementation}{60}{subsection.4.4.4}
+\contentsline {subsection}{\numberline {4.4.4}Components of the Implementation}{62}{subsection.4.4.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.5}Declarative Module}{60}{section.4.5}
+\contentsline {section}{\numberline {4.5}Declarative Module}{62}{section.4.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.5.1}Global Method for Adding Chunks}{60}{subsection.4.5.1}
+\contentsline {subsection}{\numberline {4.5.1}Global Method for Adding Chunks}{62}{subsection.4.5.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.5.2}Retrieval Requests}{60}{subsection.4.5.2}
+\contentsline {subsection}{\numberline {4.5.2}Retrieval Requests}{62}{subsection.4.5.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Chunk Patterns}{60}{section*.42}
+\contentsline {subsubsection}{Chunk Patterns}{62}{section*.42}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Finding Chunks}{61}{section*.43}
+\contentsline {subsubsection}{Finding Chunks}{63}{section*.43}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.5.3}Chunk Merging}{64}{subsection.4.5.3}
+\contentsline {subsection}{\numberline {4.5.3}Chunk Merging}{66}{subsection.4.5.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.6}Initialization}{67}{section.4.6}
+\contentsline {section}{\numberline {4.6}Initialization}{69}{section.4.6}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.7}Timing in ACT-R}{67}{section.4.7}
+\contentsline {section}{\numberline {4.7}Timing in ACT-R}{70}{section.4.7}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.7.1}Priority Queue}{68}{subsection.4.7.1}
+\contentsline {subsection}{\numberline {4.7.1}Priority Queue}{71}{subsection.4.7.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Objects}{68}{section*.44}
+\contentsline {subsubsection}{Objects}{71}{section*.44}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Representation of the Queue}{68}{section*.45}
+\contentsline {subsubsection}{Representation of the Queue}{71}{section*.45}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Special Operation for ACT-R}{70}{section*.46}
+\contentsline {subsubsection}{Special Operation for ACT-R}{73}{section*.46}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.7.2}Scheduler}{71}{subsection.4.7.2}
+\contentsline {subsection}{\numberline {4.7.2}Scheduler}{74}{subsection.4.7.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Current Time}{72}{section*.47}
+\contentsline {subsubsection}{Current Time}{74}{section*.47}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Recognize-Act Cycle}{72}{section*.48}
+\contentsline {subsubsection}{Recognize-Act Cycle}{75}{section*.48}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Start Next Cycle}{73}{section*.49}
+\contentsline {paragraph}{Start Next Cycle}{76}{section*.49}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Call an Event}{73}{section*.50}
+\contentsline {paragraph}{Call an Event}{76}{section*.50}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Changing the Buffer System}{74}{section*.51}
+\contentsline {paragraph}{Changing the Buffer System}{77}{section*.51}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Production Rules}{74}{section*.52}
+\contentsline {paragraph}{Production Rules}{77}{section*.52}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.8}Lisp Functions}{75}{section.4.8}
+\contentsline {section}{\numberline {4.8}Lisp Functions}{78}{section.4.8}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.8.1}General Translation}{75}{subsection.4.8.1}
+\contentsline {subsection}{\numberline {4.8.1}General Translation}{78}{subsection.4.8.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.8.2}Configuration Variables}{76}{subsection.4.8.2}
+\contentsline {subsection}{\numberline {4.8.2}Configuration Variables}{78}{subsection.4.8.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{The Observer Pattern}{76}{section*.53}
+\contentsline {subsubsection}{The Observer Pattern}{79}{section*.53}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.9}Subsymbolic Layer}{76}{section.4.9}
+\contentsline {section}{\numberline {4.9}Subsymbolic Layer}{79}{section.4.9}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.9.1}Activation of Chunks}{76}{subsection.4.9.1}
+\contentsline {subsection}{\numberline {4.9.1}Activation of Chunks}{79}{subsection.4.9.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Base-Level Learning}{76}{section*.54}
+\contentsline {subsubsection}{Base-Level Learning}{79}{section*.54}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Presentations of a Chunk}{77}{section*.55}
+\contentsline {paragraph}{Presentations of a Chunk}{79}{section*.55}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Calculating the Base-Level Value}{77}{section*.56}
+\contentsline {paragraph}{Calculating the Base-Level Value}{80}{section*.56}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Fan Values}{79}{section*.57}
+\contentsline {paragraph}{Fan Values}{82}{section*.57}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Associative Weights}{80}{section*.58}
+\contentsline {paragraph}{Associative Weights}{82}{section*.58}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Calculate the Overall-Activations}{80}{section*.59}
+\contentsline {paragraph}{Calculate the Overall-Activations}{83}{section*.59}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Threshold and Maximum}{81}{section*.60}
+\contentsline {paragraph}{Threshold and Maximum}{84}{section*.60}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{New Module Request Interface}{82}{section*.61}
+\contentsline {paragraph}{New Module Request Interface}{85}{section*.61}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Adapting the Retrieval Request}{84}{section*.62}
+\contentsline {paragraph}{Adapting the Retrieval Request}{87}{section*.62}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Configuration of the Retrieval}{85}{section*.63}
+\contentsline {subsubsection}{Configuration of the Retrieval}{88}{section*.63}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.9.2}Conflict Resolution and Production Utility}{86}{subsection.4.9.2}
+\contentsline {subsection}{\numberline {4.9.2}Conflict Resolution and Production Utility}{89}{subsection.4.9.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Conflict Resolution}{87}{section*.64}
+\contentsline {subsubsection}{Conflict Resolution}{89}{section*.64}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Computing the Utility Values}{90}{section*.65}
+\contentsline {subsubsection}{Computing the Utility Values}{92}{section*.65}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Configuration of the Conflict Resolution}{91}{section*.66}
+\contentsline {subsubsection}{Configuration of the Conflict Resolution}{94}{section*.66}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.9.3}Extended Component Diagram}{92}{subsection.4.9.3}
+\contentsline {subsection}{\numberline {4.9.3}Extended Component Diagram}{94}{subsection.4.9.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.10}Compiler}{92}{section.4.10}
+\contentsline {section}{\numberline {4.10}Compiler}{94}{section.4.10}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.10.1}Basic Idea}{92}{subsection.4.10.1}
+\contentsline {subsection}{\numberline {4.10.1}Basic Idea}{95}{subsection.4.10.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.10.2}Compiling}{92}{subsection.4.10.2}
+\contentsline {subsection}{\numberline {4.10.2}Compiling}{95}{subsection.4.10.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Tokenizer}{92}{section*.67}
+\contentsline {subsubsection}{Tokenizer}{95}{section*.67}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Parser}{96}{section*.68}
+\contentsline {subsubsection}{Parser}{98}{section*.68}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Translation Component}{96}{section*.69}
+\contentsline {subsubsection}{Translation Component}{99}{section*.69}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.10.3}Problems with the Current Implementation}{97}{subsection.4.10.3}
+\contentsline {subsection}{\numberline {4.10.3}Problems with the Current Implementation}{99}{subsection.4.10.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {5}Example Models}{99}{chapter.5}
+\contentsline {chapter}{\numberline {5}Example Models}{101}{chapter.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.1}The Counting Model}{99}{section.5.1}
+\contentsline {section}{\numberline {5.1}The Counting Model}{101}{section.5.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.2}The Addition Model}{102}{section.5.2}
+\contentsline {section}{\numberline {5.2}The Semantic Model}{116}{section.5.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.3}The Semantic Model}{102}{section.5.3}
+\contentsline {chapter}{\numberline {6}Conclusion}{117}{chapter.6}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.4}The Fan Model}{102}{section.5.4}
+\contentsline {section}{\numberline {6.1}Inventory: What does already work?}{117}{section.6.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {6}Conclusion}{103}{chapter.6}
+\contentsline {section}{\numberline {6.2}Future Work}{117}{section.6.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.1}Inventory: What does already work?}{103}{section.6.1}
+\contentsline {chapter}{\numberline {A}Source Codes}{119}{appendix.A}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.2}Future Work}{103}{section.6.2}
+\contentsline {chapter}{\numberline {B}Grammar for Production Rules}{121}{appendix.B}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {A}Source Codes}{105}{appendix.A}
+\contentsline {chapter}{\numberline {C}Executable Examples}{123}{appendix.C}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {B}Grammar for Production Rules}{107}{appendix.B}
+\contentsline {section}{\numberline {C.1}Rule Order}{123}{section.C.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {C}Executable Examples}{109}{appendix.C}
+\contentsline {section}{\numberline {C.2}Subsymbolic Layer}{125}{section.C.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {C.1}Rule Order}{109}{section.C.1}
-\defcounter {refsection}{0}\relax 
-\contentsline {chapter}{Bibliography}{113}{appendix*.70}
+\contentsline {chapter}{Bibliography}{127}{appendix*.70}

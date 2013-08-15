@@ -27,7 +27,7 @@ Since chunks are the central data-structure of ACT-R used for representation of 
 
 \subsection{Formal Representation of Chunks}
 
-In multiple parts of ACT-R it is necessary to store chunks and then operate on then. Hence, the abstract data structure of such a chunk store is defined.
+In multiple parts of ACT-R it is necessary to store chunks and then operate on them. Hence, the abstract data structure of such a chunk store is defined.
 
 Since chunk stores have been referred to as networks in the previous chapters, the general idea of this definition of a chunk store bases upon a relation that represents such a network.
 
@@ -1326,10 +1326,13 @@ For the easier use of the identical constraint at other points, transitive ident
   identical(C1,C3).
 \end{lstlisting}
 
-Additionally, the newly created names can be deleted if the chunk was identical to another chunk with a real name, since the new nomenclature was only store internal, so only the original name must be kept:
+Additionally, identical chunks should not be added to the store explicitly, since they are just a copy of antoher chunk and their name is a reference to this actual chunk. The helper chunks with the artificial \lstinline|:new| suffix are also not added to the store and their identical information is deleted in the end, since their nomenclature was only store internal, so only the original name must be kept:
 
 \begin{lstlisting}
-<<identical(C,C:new)>> <=> true.
+% do not add help chunks with :new tag and remove identical information
+add_chunk(chunk(C:new,T,S)), identical(C,C:new) <=> true. 
+% do not add identical chunk, but keep identical information
+identical(C1,C2) \ add_chunk(chunk(C2,T,S)) <=> true. 
 \end{lstlisting}
 
 In the declarative module, the chunk search must be extended to find merged chunks by both names. This can be achieved as follows:
@@ -1488,6 +1491,7 @@ The current time can be saved in a \lstinline|now/1| constraint. It is important
 Other modules can access the time only by a \lstinline|get_now/1| that only returns the current time saved in the \lstinline|now/1| constraint. The current time cannot be set from outside, but is determined by the last event dequeued from the priority queue.
 
 \subsubsection{Recognize-Act Cycle}
+\label{implementation:scheduler:recognize-act}
 
 As described before, the procedural module can only fire one rule at a time. When executing the RHS of a rule, all its actions are added to the scheduler with the time point when their execution is finished. For example: If on the RHS of the firing rule a retrieval request has to be performed, an event will be added to the priority queue with the time $Now + Duration$, so the chunk retrieved from the declarative memory will be written to the retrieval buffer at this time point.
 
@@ -1840,24 +1844,22 @@ module_request(+BufName, +ChunkDef, +Context, -ResChunk, -ResState, -ResTime)
 
 where \lstinline|Context| is a list of the chunk names that are in the current context (as defined in section~\ref{current_context} on page~\pageref{current_context}) and \lstinline|ResTime| is bound to the time the request will take. As described in section~\ref{changing_the_buffer_system} on page \pageref{changing_the_buffer_system}, the buffer actions are divided in two phases: The first only schedules the second phase at the time when the action is finished, whereas the second phase actually performs the action, i.e. the changes to the buffers.
 
-A similar method is applied for buffer requests: They are divided into three rules -- \lstinline|buffer_request/2|, \lstinline|start_request/2| and \lstinline|do_buffer_request/2| -- as already described in section~\ref{changing_the_buffer_system} on page~\pageref{changing_the_buffer_system} for the other actions. The difference is, that the request is actually performed immediately when calling \lstinline|buffer_request|, but the effects to the buffers this request has are applied not until \lstinline|do_buffer_request| is called, which is scheduled at the result time (\lstinline|ResTime|) of the request. This is due to the dependence of the latency of a request on the activation values of the matching chunks, so the request has to be performed in advance to calculate the correct time it will take.
-
-This yields the following code in the buffer system:
+A similar method is applied for buffer requests: They are divided into three rules -- \lstinline|buffer_request/2|, \lstinline|start_request/2| and \lstinline|do_buffer_request/2| -- similar to the division into two rules as already described in section~\ref{changing_the_buffer_system} on page~\pageref{changing_the_buffer_system} for the other actions. The difference is, that -- since a request may take a certain time -- the first rule schedules the start of the request with the priority \lstinline|0|, so all other types of buffer actions have been performed. The request is actually performed immediately when calling \lstinline|start_request|, but the effects to the buffers this request has are applied not until \lstinline|do_buffer_request| is called, which is scheduled at the result time (\lstinline|ResTime|) of the request. This is due to the dependence of the latency of a request on the activation values of the matching chunks, so the request has to be performed in advance to calculate the correct time it will take, so the result has to be known before the request ends in simulation time. This yields the following code in the buffer system:
 
 \begin{lstlisting}[label=Schedule start of buffer request, escapeinside={(*@}{@*)}]
-buffer(BufName, ModName, _) \ buffer_request(BufName, Chunk) <=>
+buffer_request(BufName, Chunk) <=>
   get_now(Now),
   add_q(Now,0,start_request(BufName,Chunk)).
 \end{lstlisting}
 
 \begin{lstlisting}[label=Schedule the result of buffer request, escapeinside={(*@}{@*)}]
-buffer(BufName, ModName, _) \ buffer_request(BufName, Chunk) <=> %% todo: check for free buffer!!
-  write('Scheduled buffer request '),
+buffer(BufName, ModName, _) \ start_request(BufName, Chunk) <=> %% todo: check for free buffer!!
+  write('Started buffer request '),
   write(BufName),nl,
   get_now(Now),
   buffer_state(BufName,busy),
   do_buffer_clear(BufName), % clear buffer immediately
-  get_context(Context), (*@\label{lst:schedule_buffer_request:context}@*)
+  get_context(Context),
   ModName:module_request(BufName, Chunk, Context, ResChunk,ResState,RelTime),
   performed_request(BufName, ResChunk, ResState), % save result of request
   Time is Now + RelTime, 
@@ -1964,6 +1966,7 @@ set_conf(rt,RT) ==> LF is 0.35*exp(RT), set_conf(lf,LF).
 If there are competing strategies that match a current state, the production system selects the rule with the highest production utility to fire. This process is called \emph{conflict resolution} in the terminology of production rule systems and is described in the following.
 
 \subsubsection{Conflict Resolution}
+\label{implementation:conflict_resolution}
 
 In \cite[151\psqq]{fru_chr_book_2009} a general implementation of conflict resolution in CHR is described. This approach can be easily adapted to the needs of ACT-R.
 

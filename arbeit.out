@@ -97,14 +97,13 @@
 \BOOKMARK [2][-]{subsection.4.10.3}{Problems with the Current Implementation}{section.4.10}% 97
 \BOOKMARK [0][-]{chapter.5}{Example Models}{}% 98
 \BOOKMARK [1][-]{section.5.1}{The Counting Model}{chapter.5}% 99
-\BOOKMARK [1][-]{section.5.2}{The Addition Model}{chapter.5}% 100
-\BOOKMARK [1][-]{section.5.3}{The Semantic Model}{chapter.5}% 101
-\BOOKMARK [1][-]{section.5.4}{The Fan Model}{chapter.5}% 102
-\BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 103
-\BOOKMARK [1][-]{section.6.1}{Inventory: What does already work?}{chapter.6}% 104
-\BOOKMARK [1][-]{section.6.2}{Future Work}{chapter.6}% 105
-\BOOKMARK [0][-]{appendix.A}{Source Codes}{}% 106
-\BOOKMARK [0][-]{appendix.B}{Grammar for Production Rules}{}% 107
-\BOOKMARK [0][-]{appendix.C}{Executable Examples}{}% 108
-\BOOKMARK [1][-]{section.C.1}{Rule Order}{appendix.C}% 109
-\BOOKMARK [0][-]{appendix*.70}{Bibliography}{}% 110
+\BOOKMARK [1][-]{section.5.2}{The Semantic Model}{chapter.5}% 100
+\BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 101
+\BOOKMARK [1][-]{section.6.1}{Inventory: What does already work?}{chapter.6}% 102
+\BOOKMARK [1][-]{section.6.2}{Future Work}{chapter.6}% 103
+\BOOKMARK [0][-]{appendix.A}{Source Codes}{}% 104
+\BOOKMARK [0][-]{appendix.B}{Grammar for Production Rules}{}% 105
+\BOOKMARK [0][-]{appendix.C}{Executable Examples}{}% 106
+\BOOKMARK [1][-]{section.C.1}{Rule Order}{appendix.C}% 107
+\BOOKMARK [1][-]{section.C.2}{Subsymbolic Layer}{appendix.C}% 108
+\BOOKMARK [0][-]{appendix*.70}{Bibliography}{}% 109

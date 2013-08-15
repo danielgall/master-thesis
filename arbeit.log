@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.8.10)  13 AUG 2013 21:37
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.8.10)  15 AUG 2013 14:13
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1449,14 +1449,14 @@ LaTeX Info: Redefining \nameref on input line 231.
 \@outlinefile=\write6
 \openout6 = `arbeit.out'.
 
- <images/unilogo_bild.pdf, id=465, 199.74625pt x 199.74625pt>
+ <images/unilogo_bild.pdf, id=461, 199.74625pt x 199.74625pt>
 File: images/unilogo_bild.pdf Graphic file (type pdf)
 
 <use images/unilogo_bild.pdf>
 Package pdftex.def Info: images/unilogo_bild.pdf used on input line 246.
 (pdftex.def)             Requested size: 51.21349pt x 51.21504pt.
 
-<images/unilogo_wort.pdf, id=466, 761.34438pt x 183.18437pt>
+<images/unilogo_wort.pdf, id=462, 761.34438pt x 183.18437pt>
 File: images/unilogo_wort.pdf Graphic file (type pdf)
 
 <use images/unilogo_wort.pdf>
@@ -1568,33 +1568,33 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 Underfull \vbox (badness 1721) has occurred while \output is active []
 
  [6]
-Overfull \hbox (1.17978pt too wide) detected at line 249
- []\T1/phv/m/n/10 102
+Overfull \hbox (1.17978pt too wide) detected at line 247
+ []\T1/phv/m/n/10 101
  []
 
 
-Overfull \hbox (1.17978pt too wide) detected at line 251
- []\T1/phv/m/n/10 102
+Overfull \hbox (1.17978pt too wide) detected at line 249
+ []\T1/phv/m/n/10 116
  []
 
 
 Overfull \hbox (1.17978pt too wide) detected at line 253
- []\T1/phv/m/n/10 102
+ []\T1/phv/m/n/10 117
  []
 
 
-Overfull \hbox (1.17978pt too wide) detected at line 257
- []\T1/phv/m/n/10 103
+Overfull \hbox (1.17978pt too wide) detected at line 255
+ []\T1/phv/m/n/10 117
  []
 
 
-Overfull \hbox (1.17978pt too wide) detected at line 259
- []\T1/phv/m/n/10 103
+Overfull \hbox (1.17978pt too wide) detected at line 263
+ []\T1/phv/m/n/10 123
  []
 
 [7]
-Overfull \hbox (1.17978pt too wide) detected at line 267
- []\T1/phv/m/n/10 109
+Overfull \hbox (1.17978pt too wide) detected at line 265
+ []\T1/phv/m/n/10 125
  []
 
 )
@@ -1605,10 +1605,7 @@ Overfull \hbox (1.17978pt too wide) detected at line 267
 Chapter 1.
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10> not available
 (Font)              Font shape `T1/phv/m/sl' tried instead on input line 3.
-
-Underfull \vbox (badness 4832) has occurred while \output is active []
-
- [1
+[1
 
 
 
@@ -1616,8 +1613,7 @@ Underfull \vbox (badness 4832) has occurred while \output is active []
 ]
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 15.
-
-[2]) (./chapters/actr.tex [3] [4
+ [2]) (./chapters/actr.tex [3] [4
 
 
 ]
@@ -1650,29 +1646,27 @@ LaTeX Warning: Reference `fig:chunk_addition_fact' on page 7 undefined on input
 LaTeX Warning: Reference `fig:modular_organization' on page 11 undefined on inp
 ut line 104.
 
-[11]
+[11] [12]
 
-LaTeX Warning: Reference `fig:example_counting_chunks' on page 12 undefined on 
+LaTeX Warning: Reference `fig:example_counting_chunks' on page 13 undefined on 
 input line 149.
 
-[12]
 
 LaTeX Warning: Reference `fig:example_counting_goal_chunk' on page 13 undefined
  on input line 151.
 
 
-Underfull \vbox (badness 4608) has occurred while \output is active []
+Underfull \vbox (badness 6592) has occurred while \output is active []
 
  [13]
 
 LaTeX Warning: Reference `fig:example_counting_execution' on page 14 undefined 
 on input line 180.
 
-[14]
-Underfull \vbox (badness 5862) has occurred while \output is active []
+[14] [15]
+Underfull \vbox (badness 1033) has occurred while \output is active []
 
- [15]
-[16]
+ [16]
 
 LaTeX Warning: Reference `fig:chunk_activation' on page 17 undefined on input l
 ine 258.
@@ -1687,18 +1681,21 @@ LaTeX Warning: Reference `fig:fan_network' on page 18 undefined on input line 2
 86.
 
 
-LaTeX Warning: Reference `fig:fans' on page 18 undefined on input line 288.
+Underfull \vbox (badness 2150) has occurred while \output is active []
 
-[18] [19]
+ [18]
 
-LaTeX Warning: Reference `tab:learning_types' on page 20 undefined on input lin
+LaTeX Warning: Reference `fig:fans' on page 19 undefined on input line 288.
+
+[19] [20]
+
+LaTeX Warning: Reference `tab:learning_types' on page 21 undefined on input lin
 e 333.
 
+[21]) (./chapters/chr.tex [22] [23] [24
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [20]
-[21]) (./chapters/chr.tex [22]
+]
 Chapter 3.
 LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <10> not available
 (Font)              Font shape `T1/pcr/m/sl' tried instead on input line 8.
@@ -1712,24 +1709,21 @@ Package microtype Info: Loading generic settings for font family
 (microtype)             `lmtt' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
- [23
-
-
-]
+ [25]
 LaTeX Font Info:    Font shape `T1/pcr/bx/it' in size <10> not available
 (Font)              Font shape `T1/pcr/b/it' tried instead on input line 31.
 LaTeX Font Info:    Font shape `T1/pcr/b/it' in size <10> not available
 (Font)              Font shape `T1/pcr/b/sl' tried instead on input line 31.
- [24] [25])
-(./chapters/implementation.tex [26]
+ [26] [27])
+(./chapters/implementation.tex [28]
 Chapter 4.
-[27
+[29
 
 
 ]
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <7> not available
 (Font)              Font shape `T1/phv/m/sl' tried instead on input line 35.
- [28]
+ [30]
 LaTeX Font Info:    Font shape `T1/phv/bx/it' in size <10> not available
 (Font)              Font shape `T1/phv/b/it' tried instead on input line 68.
 LaTeX Font Info:    Font shape `T1/phv/b/it' in size <10> not available
@@ -1740,179 +1734,212 @@ LaTeX Font Info:    Font shape `T1/pcr/b/it' in size <7> not available
 (Font)              Font shape `T1/pcr/b/sl' tried instead on input line 68.
 
 
-LaTeX Warning: Reference `fig:chunk_addition_fact' on page 29 undefined on inpu
+LaTeX Warning: Reference `fig:chunk_addition_fact' on page 31 undefined on inpu
 t line 80.
 
-[29] [30] [31]
-Overfull \hbox (55.4831pt too wide) in paragraph at lines 194--195
+[31] [32] [33]
+Overfull \hbox (55.4831pt too wide) in paragraph at lines 193--194
 []\T1/phv/m/n/10 (-20) This def-i-ni-tion states that a chunk is ei-ther [][][]
 , i.e. an empty chunk, or a term [][][][][][],
  []
 
-[32] [33] [34] [35] [36] [37]
-
-LaTeX Warning: Reference `fig:buffer_system' on page 38 undefined on input line
- 361.
-
-[38] [39] [40] [41] [42] [43]
-
-LaTeX Warning: Reference `production_rule_grammar' on page 44 undefined on inpu
-t line 561.
-
-
-Overfull \hbox (185.85225pt too wide) in paragraph at lines 563--564
-[][][][][][][] 
- []
-
-[44] [45]
+[34] [35]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [46]
-[47] [48] [49]
+ [36]
+[37] [38] [39]
 
-LaTeX Warning: Reference `lst:production_rule_grammar' on page 50 undefined on 
-input line 793.
+LaTeX Warning: Reference `fig:buffer_system' on page 40 undefined on input line
+ 360.
 
-[50]
-Underfull \vbox (badness 1838) has occurred while \output is active []
+[40] [41] [42] [43] [44] [45]
+
+LaTeX Warning: Reference `production_rule_grammar' on page 46 undefined on inpu
+t line 560.
+
+[46] [47] [48] [49] [50]
+
+LaTeX Warning: Reference `lst:production_rule_grammar' on page 51 undefined on 
+input line 791.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [51]
-[52] [53] [54] [55]
-Underfull \vbox (badness 4686) has occurred while \output is active []
+[52] [53] [54] [55] [56] [57] [58] [59] [60]
+Underfull \vbox (badness 3209) has occurred while \output is active []
 
- [56]
-[57]
-Underfull \vbox (badness 6316) has occurred while \output is active []
-
- [58]
-[59] [60]
-Overfull \hbox (14.90367pt too wide) in paragraph at lines 1176--1177
+ [61]
+[62]
+Overfull \hbox (14.90367pt too wide) in paragraph at lines 1174--1175
 \T1/phv/m/n/10 (-20) In this sec-tion, a CHR con-straint [][][][] will be de-fi
 ned, that pro-duces a [][][][]
  []
 
-[61] [62] [63] [64] [65]
-Overfull \hbox (340.8917pt too wide) in paragraph at lines 1343--1344
+[63] [64] [65] [66] [67] [68]
+Overfull \hbox (340.8917pt too wide) in paragraph at lines 1344--1345
 \T1/phv/m/n/10 (-20) search of this chunk. [][][][][][] 
  []
 
-[66]
+[69]
 
-LaTeX Warning: Reference `fig:scheduler' on page 67 undefined on input line 136
-2.
+LaTeX Warning: Reference `fig:scheduler' on page 70 undefined on input line 137
+3.
 
-[67] [68] [69] [70]
-Underfull \vbox (badness 4621) has occurred while \output is active []
 
- [71]
+Underfull \vbox (badness 6775) has occurred while \output is active []
 
-LaTeX Warning: Reference `tab:action_priorities' on page 72 undefined on input 
-line 1496.
+ [70]
+[71]
+Underfull \vbox (badness 3009) has occurred while \output is active []
 
-[72] [73] [74] [75] [76]
-Overfull \hbox (65.34625pt too wide) in paragraph at lines 1671--1672
+ [72]
+[73] [74]
+
+LaTeX Warning: Reference `tab:action_priorities' on page 75 undefined on input 
+line 1508.
+
+
+Underfull \vbox (badness 2111) has occurred while \output is active []
+
+ [75]
+[76] [77]
+Underfull \vbox (badness 2799) has occurred while \output is active []
+
+ [78]
+[79]
+Overfull \hbox (65.34625pt too wide) in paragraph at lines 1683--1684
 \T1/phv/m/n/10 (-20) of a set of chunks has to be cal-cu-lated. There-fore, a c
 on-straint [][][][][][]
  []
 
-[77] [78] [79] [80] [81] [82]
-Overfull \hbox (45.40611pt too wide) in paragraph at lines 1843--1844
+[80] [81] [82] [83] [84] [85]
+Overfull \hbox (45.40611pt too wide) in paragraph at lines 1855--1856
 []\T1/phv/m/n/10 (-20) A sim-i-lar method is ap-plied for buffer re-quests: The
 y are di-vided into three rules -- [][][][],
  []
 
-[83]
 
-LaTeX Warning: Reference `lst:schedule_buffer_request:context' on page 84 undef
-ined on input line 1865.
+LaTeX Warning: Reference `lst:schedule_buffer_request:context' on page 86 undef
+ined on input line 1877.
 
+[86]
 
-LaTeX Warning: Reference `tab:action_priorities' on page 84 undefined on input 
-line 1881.
+LaTeX Warning: Reference `tab:action_priorities' on page 87 undefined on input 
+line 1893.
 
-[84] [85]
-Underfull \vbox (badness 6542) has occurred while \output is active []
-
- [86]
-[87]
-Overfull \hbox (0.81894pt too wide) in paragraph at lines 2004--2005
+[87] [88] [89]
+Overfull \hbox (0.81894pt too wide) in paragraph at lines 2017--2018
 []\T1/phv/m/n/10 (-20) The first rule deletes the empty [][][] con-straint, if 
 there are other [][][]
  []
 
-
-Overfull \hbox (3.0493pt too wide) in paragraph at lines 2021--2022
+[90]
+Overfull \hbox (3.0493pt too wide) in paragraph at lines 2034--2035
 []\T1/phv/m/n/10 (-20) The first rule is only ap-pli-ca-ble, if there were no m
 atch-ing rules and the empty [][][]
  []
 
 
-LaTeX Warning: Reference `lst:conflict_resolution_scheme' on page 88 undefined 
-on input line 2023.
+LaTeX Warning: Reference `lst:conflict_resolution_scheme' on page 91 undefined 
+on input line 2036.
 
 
-Overfull \hbox (38.41306pt too wide) in paragraph at lines 2025--2026
+Overfull \hbox (38.41306pt too wide) in paragraph at lines 2038--2039
 []\T1/phv/m/n/10 (-20) When the cho-sen rule is ap-plied, its ac-tions are per-
 formed and even-tu-ally, a [][][]
  []
 
-[88] [89] [90]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+[91] [92] [93]
+Underfull \vbox (badness 3240) has occurred while \output is active []
 
- [91]
-[92] [93] [94]
-Underfull \vbox (badness 3029) has occurred while \output is active []
-
- [95]
-[96]) (./chapters/example_models.tex [97] [98
+ [94]
+[95] [96] [97] [98] [99]) (./chapters/example_models.tex [100]
+Chapter 5.
+[101
 
 
 ]
-Chapter 5.
-[99]
-Underfull \vbox (badness 3271) has occurred while \output is active []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [100]
-[101]) (./chapters/conclusion.tex [102]
+ [102]
+[103] [104]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [105]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [106]
+
+LaTeX Warning: Reference `empty_slots' on page 107 undefined on input line 224.
+
+
+
+LaTeX Warning: Reference `empty_slots' on page 107 undefined on input line 224.
+
+
+[107]
+Underfull \vbox (badness 2698) has occurred while \output is active []
+
+ [108]
+[109]
+Underfull \vbox (badness 2698) has occurred while \output is active []
+
+ [110]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [111]
+[112]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [113]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [114])
+(./chapters/conclusion.tex
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [115]
+[116]
 Chapter 6.
-) (./chapters/sources.tex [103
+) (./chapters/sources.tex [117
 
 
-] [104
+] [118
 
 
 ]
 Appendix A.
-) (./chapters/production_grammar.tex [105] [106
+) (./chapters/production_grammar.tex [119] [120
 
 
 ]
 Appendix B.
-[107]) (./chapters/appendix_examples.tex [108]
+[121]) (./chapters/appendix_examples.tex [122]
 Appendix C.
-[109
+[123
 
 
 ]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [110])
-[111] [112
+ [124])
+[125] [126
 
 
-] [113
+] [127
 
 
-] [114]
+] [128]
 Overfull \hbox (1.13774pt too wide) in paragraph at lines 371--371
 \T1/phv/m/n/10 (-20) 298^^U303.  \T1/phv/m/sc/10 (-20) url\T1/phv/m/n/10 (-20) 
 : []$\T1/pcr/m/n/10 http : / / actr . psy . cmu . edu / papers / 641 / stewartP
 aper .
  []
 
-[115] [116]
+[129] [130]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 387.
- [117
+ [131
 
 
 ]
@@ -1921,7 +1948,7 @@ Package atveryend Info: Empty hook `AfterLastShipout' on input line 387.
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 387.
 Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 387.
 Package rerunfilecheck Info: File `arbeit.out' has not changed.
-(rerunfilecheck)             Checksum: F7F87FA84161CDC9B642F5780DCA568F;7913.
+(rerunfilecheck)             Checksum: CC5272D52A842E9927936B1D9BBCE6E0;7852.
 
 
 LaTeX Warning: There were undefined references.
@@ -1931,10 +1958,10 @@ Package logreq Info: Writing requests to 'arbeit.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 31750 strings out of 493315
- 556211 string characters out of 6143704
- 1001424 words of memory out of 5000000
- 32931 multiletter control sequences out of 15000+600000
+ 32238 strings out of 493315
+ 564224 string characters out of 6143704
+ 998424 words of memory out of 5000000
+ 33064 multiletter control sequences out of 15000+600000
  94359 words of font info for 223 fonts, out of 8000000 for 9000
  958 hyphenation exceptions out of 8191
  65i,12n,76p,1611b,3156s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1961,10 +1988,10 @@ r8a.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/
 texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-dist/fonts/typ
 e1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvr
 o8a.pfb>
-Output written on arbeit.pdf (125 pages, 828572 bytes).
+Output written on arbeit.pdf (139 pages, 861914 bytes).
 PDF statistics:
- 3052 PDF objects out of 3580 (max. 8388607)
- 2850 compressed objects within 29 object streams
- 1444 named destinations out of 1728 (max. 500000)
- 39399 words of extra memory for PDF output out of 42996 (max. 10000000)
+ 3545 PDF objects out of 3580 (max. 8388607)
+ 3324 compressed objects within 34 object streams
+ 1799 named destinations out of 2073 (max. 500000)
+ 39391 words of extra memory for PDF output out of 42996 (max. 10000000)
 
