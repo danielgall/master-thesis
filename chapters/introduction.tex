@@ -2,13 +2,70 @@
 
 \emph{Computational psychology} or \emph{computational cognitive modeling} is a research field in the cognitive sciences. Among the other approaches -- mathematical and verbal-conceptual modeling, ``computational modeling appears to be the most promising approach in many ways and offers the flexibility and the expressive power that no other approaches can match'' \cite[vii]{sun_introduction_2008}. It explores human cognition by implementing detailed computational models that enable computers to execute them and simulate human behaviour \cite[3]{sun_introduction_2008}. By conducting the same experiments with humans and with simulations of the suggested underlying cognitive models, the plausibility of models can be checked and models can be improved gradually. This approach is illustrated in figure~\ref{fig:cognitive_modeling_exp}. Furthermore, an important benefit of computational models is that they are -- as a matter of principle -- very detailed and have a very clear semantics, in order that they can be executed by a computer. 
 
+\begin{figure}[hbt]
+\centering
+% Define block styles
+\tikzstyle{decision} = [diamond, draw, fill=blue!20, 
+    text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
+\tikzstyle{block} = [rectangle, draw, fill=blue!20, 
+    text width=5em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm,
+    minimum height=2em]
+    
+\begin{tikzpicture}[node distance = 2cm, auto]
+    % Place nodes
+    \node [block] (experiment) {experiment};
+    \node [cloud, below left of=experiment] (humansub) {\parbox{2cm}{\centering human subjects}};
+    \node [cloud, below right of=experiment] (cogmod) {\parbox{2cm}{\centering cognitive model}};
+    \node [decision, below of=experiment, node distance=4cm] (match) {match?};
+    \node [block, below of=match, node distance=3cm] (update) {update model};
+    % Draw edges
+    \path [line] (experiment) -- (humansub);
+    \path [line] (experiment) -- (cogmod);
+    \path [line] (humansub) -- (match);
+    \path [line] (cogmod) -- (match);
+    \path [line] (match) -- node {no}(update);
+    \path [line] (update) -| (cogmod);
+    \path [line,dashed] (cogmod) |- node[pos=0.4,above right] {predictions}  (experiment);
+\end{tikzpicture}
+\caption{A typical workflow in computational cognitive modeling. After a model has been created, an experiment is built which is performed by humans and the cognitive model. Afterwards the results are checked and the model may be adapted. \cite{about_actr_homepage}}
+\label{fig:cognitive_modeling_exp}
+\end{figure}
+
+
 However, psychology is experiencing a movement towards specialization \cite{anderson_integrated_2004}, i.e. there are a lot of independent, highly specialized fields that lack a more global view, which impedes cognitive modeling where a very detailed and complete view is necessary for execution:
 
 \begin{quote}
 ``In 1972, [\dots it] seemed to me, also, that the cognitive revolution was already well in hand and established. Yet, I found myself concerned about the theory psychology was developing. [\dots] I tried to make that point by noting that what psychologists mostly did for theory was to go from dichotomy to dichotomy.'' \cite[1\psq]{newell_unified_1990}
 \end{quote}
 
-\citeauthor{newell_unified_1990} suggested in his book from \citeyear{newell_unified_1990} \cite{newell_unified_1990}, that for developing consistent models of cognition it is necessary to create a theory that tries to put all those highly specialized components together \cite[1036]{anderson_integrated_2004}. He therefore introduced the term \emph{cognitive architecture} \cite[5]{anderson_how_2007}, which today can be defined as ``a specification of the structure of the brain at a level of abstraction that explains how it achieves the function of the mind'' \cite[7]{anderson_how_2007}. A cognitive architecture provides the ability to create models for specific cognitive tasks \cite[29]{taatgen_modeling_2006} by offering ``representational formats together with reasoning and learning mechanisms to facilitate modeling'' \cite[29]{taatgen_modeling_2006}. Nevertheless, a cognitive architecture should also constrain modeling -- ideally it should only allow ``cognitive models that are cognitively plausible'' \cite[29]{taatgen_modeling_2006}.
+\citeauthor{newell_unified_1990} suggested in his book from \citeyear{newell_unified_1990} \cite{newell_unified_1990}, that for developing consistent models of cognition it is necessary to create a theory that tries to put all those highly specialized components together \cite[1036]{anderson_integrated_2004}. He therefore introduced the term \emph{cognitive architecture} \cite[5]{anderson_how_2007}, which today can be defined as ``a specification of the structure of the brain at a level of abstraction that explains how it achieves the function of the mind'' \cite[7]{anderson_how_2007}. A cognitive architecture provides the ability to create models for specific cognitive tasks \cite[29]{taatgen_modeling_2006} by offering ``representational formats together with reasoning and learning mechanisms to facilitate modeling'' \cite[29]{taatgen_modeling_2006}. Nevertheless, a cognitive architecture should also constrain modeling -- ideally it should only allow ``cognitive models that are cognitively plausible'' \cite[29]{taatgen_modeling_2006}. The relation of cognitive models and architecture is illustrated in figure~\ref{fig:cognitive_models_architecture}.
+
+\begin{figure}[hbt]
+\centering
+% Define block styles
+\tikzstyle{block} = [rectangle, draw, fill=blue!20, 
+    text width=5em, text centered, rounded corners, minimum height=4em]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm,
+    minimum height=2cm]
+    
+\begin{tikzpicture}[node distance = 2cm, auto]
+    % Place nodes
+    \node[cloud]  (experiment) {\parbox{3cm}{\centering subset of psychology experiments}};
+    \node [block, below of=experiment, node distance=3cm] (cogarch) {cognitive architecture};
+ \node [cloud, right of=experiment, node distance=5cm] (assumptions) {\parbox{3cm}{\centering assumptions about a particular domain}};
+  \node [block, below right of=cogarch, node distance=3cm] (cogmod) {cognitive model};
+
+    % Draw edges
+ \path [line] (experiment) -- (cogarch);
+ \path [line] (assumptions) |- (cogmod);
+ \path [line] (cogarch) |- (cogmod);
+\end{tikzpicture}
+\caption{Cognitive models usually are built upon a cognitive architecture by adding domain specific knowledge to the context of the architecture. The cognitive architecture contains general knowledge derived from psychological experiments \cite{about_actr_homepage}.}
+\label{fig:cognitive_models_architecture}
+\end{figure}
 
 Adaptive Control of Thought-Rational  (ACT-R) is a cognitive architecture, that ``is capable of interacting with the outside world, has been mapped onto brain structures, and is able to learn to interact with complex dynamic tasks'' \cite[29]{taatgen_modeling_2006}, so its theory is well-investigated. It also is one of the most popular cognitive architectures in the field \cite{rutledge2005can} and provides an implementation that allows modelers to execute their models by a computer and hence offers a platform for computational cognitive modeling as defined above.
 
@@ -34,4 +91,4 @@ There are approaches to implement psychological models using declarative and log
 
 This work is divided in several parts. First of all, an important task was the identification of the fundamental parts of the ACT-R theory. Hence, a description of the theory is given in chapter~\ref{actr_description}. Chapter~\ref{chr_introduction} gives a very brief introduction to Constraint Handling Rules. The result of the implementation of ACT-R in CHR is described in chapter~\ref{implementation}, which first formalizes some of the parts of the ACT-R theory before it suggests how to implement the afore described concepts in Constraint Handling Rules. Afterwards, the work of chapter~\ref{implementation} is demonstrated in some example models in section~\ref{example_models}. Chapter~\ref{conclusion} summarizes the work and gives an outlook to future work.
 
-The work has an accompanying CD with the source code and a digital version of the text (see appendix~\ref{appendix:cd_content}). The current version of the source code can also be downloaded at GitHub.
+The work is accompanied by a CD with the source code and a digital version of the text (see appendix~\ref{appendix:cd_content}). The current version of the source code can also be downloaded at GitHub.

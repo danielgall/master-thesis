@@ -16,6 +16,18 @@
   {}
 \endgroup
 
+\entry{about_actr_homepage}{misc}{}
+  \field{labelalpha}{Abo}
+  \field{sortinit}{A}
+  \field{title}{About {ACT-R}}
+  \verb{url}
+  \verb http://act-r.psy.cmu.edu/about/
+  \endverb
+  \field{urlday}{19}
+  \field{urlmonth}{08}
+  \field{urlyear}{2013}
+\endentry
+
 \entry{actr_homepage}{misc}{}
   \field{labelalpha}{Act}
   \field{extraalpha}{1}
