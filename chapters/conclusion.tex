@@ -1,17 +1,17 @@
 \chapter{Conclusion}
 
+The goal of this thesis was to investigate the cognitive architecture \emph{ACT-R} to develop a translation scheme and implementation of its fundamental concepts using Constraint Handling Rules. It has been shown, that the fundamental aspects of the system can be implemented very elegantly and easily in CHR. Furthermore, the translation process can be automated. 
 
-easy translation
-ACT-R avoids some of the problems production rule systems have by grounding everything.
-problem: scheduling/cycle a little bit complicated
+Compared to other rule-based systems, the production rules of ACT-R are very simple. For instance, the system does not allow to introduce new variables on the right hand side of a rule. Hence, all checks on the left hand side of an ACT-R production rule are simple matchings or comparisons of known values. This leads to very simple guard checks in the CHR translation; a lot of rules can even be reduced to a simple matching problem which is already supported automatically by CHR. The actions of a production rule are very limited, since they only affect the buffer system, i.e. an implementation only has to offer a limited amount of actions which can then be translated very easily.
 
+One of the most complicated aspects of ACT-R implementations is the timing and the scheduling of conflict-resolution and module request events. However, even these concepts can be implemented elegantly using trigger constraints. The conflict resolution of ACT-R can be implemented by automated rule compilation, which produces two CHR rules out of one production rule.
 
+\paragraph{Inventory and Future Work}
 
-\section{Inventory: What does already work?}
+This work presents some of the fundamental concepts of ACT-R and mechanisms to translate them to CHR. However, there are some parts of the theory and common implementations which have not been regarded in this thesis. Simple ACT-R production rules without modified slot tests can be translated correctly. At the moment, the compiler lacks of translation methods for some allowed modifiers. Rules with duplicate slot tests cannot be translated correctly. Section~\ref{implementation:compiler:problems} gives a more detailed overview of the problems of the compiler.
 
-\section{Future Work}
+ACT-R furthermore provides an experiment environment which allows the modeler to create graphical frontends which can be used by both ACT-R models and humans. This environment is called \emph{ACT-R GUI Interface (AGI)} \cite{agi_reference} and communication is realized by a network interface. The perceptual/motor modules usually are used in combination with the AGI and therefore have not been implemented, yet. The implementation is also lacking the imaginal module, since the fundamental concepts can be shown using only the declarative and the goal module.
 
-other modules
-compiler as described in section...
-experiment environment -> link to the REST interface by ...
-adapt timings, set some constants to the correct values
+Additionally, only a subset of the production rule grammar has been implemented, yet, so modification requests, strict harvesting, explicit variable bindings and evaluation functions which may produce side-effects have been ignored in the current implementation and may be part of future versions.
+
+In future work, the concepts of skill acquisition, i.e. the creation of new procedural knowledge, especially the concept of production rule compilation, may be investigated in addition. Furthermore, the possibilities of the analysis of ACT-R rules and the evaluation of experiments may be inspected.

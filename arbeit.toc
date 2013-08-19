@@ -234,7 +234,7 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {4.10.1}Basic Idea}{95}{subsection.4.10.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.10.2}Compiling}{95}{subsection.4.10.2}
+\contentsline {subsection}{\numberline {4.10.2}Compiling}{96}{subsection.4.10.2}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Tokenizer}{96}{section*.67}
 \defcounter {refsection}{0}\relax 
@@ -252,20 +252,20 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {chapter}{\numberline {6}Conclusion}{119}{chapter.6}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.1}Inventory: What does already work?}{119}{section.6.1}
+\contentsline {paragraph}{Inventory and Future Work}{119}{section*.70}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {6.2}Future Work}{119}{section.6.2}
+\contentsline {chapter}{\numberline {A}CD Content}{121}{appendix.A}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {A}Source Codes}{121}{appendix.A}
+\contentsline {chapter}{\numberline {B}Source Codes}{123}{appendix.B}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {B}Grammar for Production Rules}{123}{appendix.B}
+\contentsline {chapter}{\numberline {C}Grammar for Production Rules}{125}{appendix.C}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {C}Executable Examples}{125}{appendix.C}
+\contentsline {chapter}{\numberline {D}Executable Examples}{127}{appendix.D}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {C.1}Rule Order}{125}{section.C.1}
+\contentsline {section}{\numberline {D.1}Rule Order}{127}{section.D.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {C.2}Subsymbolic Layer}{127}{section.C.2}
+\contentsline {section}{\numberline {D.2}Subsymbolic Layer}{129}{section.D.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {C.3}Semantic Model}{127}{section.C.3}
+\contentsline {section}{\numberline {D.3}Semantic Model}{129}{section.D.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{Bibliography}{129}{appendix*.70}
+\contentsline {chapter}{Bibliography}{131}{appendix*.71}

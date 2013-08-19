@@ -337,6 +337,28 @@
   \field{urlyear}{2013}
 \endentry
 
+\entry{agi_reference}{manual}{}
+  \name{author}{1}{}{%
+    {{}%
+     {Bothell}{B.}%
+     {Dan}{D.}%
+     {}{}%
+     {}{}}%
+  }
+  \list{organization}{1}{%
+    {Department of Psychology, Carnegie Mellon University}%
+  }
+  \strng{namehash}{BD1}
+  \strng{fullhash}{BD1}
+  \field{labelalpha}{Bot}
+  \field{extraalpha}{1}
+  \field{sortinit}{B}
+  \field{title}{ACT-R 6.0 AGI Manual}
+  \list{location}{1}{%
+    {Pittsburgh, Pennsylvania 15213}%
+  }
+\endentry
+
 \entry{actr_reference}{manual}{}
   \name{author}{1}{}{%
     {{}%
@@ -351,6 +373,7 @@
   \strng{namehash}{BD1}
   \strng{fullhash}{BD1}
   \field{labelalpha}{Bot}
+  \field{extraalpha}{2}
   \field{sortinit}{B}
   \field{title}{ACT-R 6.0 Reference Manual -- Working Draft}
   \list{location}{1}{%

@@ -56,7 +56,7 @@ The procedural system can only fire one rule at once and it takes 50\,ms for a r
 \subsubsection{Description of Procedural Actions}
 \label{description_of_proc_actions}
 
-In this section, the actions that can be performed by a production rule are described in more detail than before. The information in this section has been taken from \FIXME{source} and is -- in this degree of detail -- not part of the theory, but focuses more on the implementation to give a more detailed understanding of the concepts needed in chapter~\ref{implementation}.
+In this section, the actions that can be performed by a production rule are described in more detail than before. The information in this section has been taken from \cite[168\psqq]{actr_reference} and is -- in this degree of detail -- not part of the theory, but focuses more on the implementation to give a more detailed understanding of the concepts needed in chapter~\ref{implementation}.
 
 \begin{description}
  \item[Buffer Modification:] 
@@ -83,9 +83,7 @@ As may have become obvious in the previous sections, chunks are the central data
 \subsubsection{Process of Rule Selection and Execution}
 \label{process_of_rule_selection_and_execution}
 
-\FIXME{add sources}
-
-As stated above, the procedural module can execute only one rule at a time. If no rule has been selected to fire -- so no rule is in progress -- the procedural module is \emph{free} and therefore can select a matching rule according to the recognize-act-cycle. If a rule has been selected, the module is \emph{busy} and cannot choose another rule to fire. As mentioned before, the module has to wait 50\,ms between selection and firing of a rule. Then all in-place actions of the rule like modifying or clearing a buffer are performed. Afterwards, the requests are stated and the module is free. However, the requested modules most likely will take a certain time to perform the request. During this time the procedural module can select and fire the next matching rule nevertheless.
+As stated above, the procedural module can execute only one rule at a time. If no rule has been selected to fire -- so no rule is in progress -- the procedural module is \emph{free} and therefore can select a matching rule according to the recognize-act-cycle as soon as it is available. If a rule has been selected, the module is \emph{busy} and cannot choose another rule to fire. As mentioned before, the module has to wait 50\,ms between selection and firing of a rule. Then all in-place actions of the rule like modifying or clearing a buffer are performed. Afterwards, the requests are stated and the module is free. However, the requested modules most likely will take a certain time to perform the request. During this time the procedural module can select and fire the next matching rule nevertheless.
 
 If at a certain time the procedural module is free, but there are no matching rules, the module waits until the system reaches a state where a rule matches. This is possible, since requests can take a certain time in which the procedural module is free and cannot find a matching rule. If the request has been performed, it usually causes a change of buffers. When the content of a buffer has changed, this could provoke the next rule to match and fire.
 

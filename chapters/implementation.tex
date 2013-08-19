@@ -148,9 +148,7 @@ chunk_has_slot(a,sum,7)
 \subsubsection{Distinction of Elements and Chunks}
 \label{distinction_elements_chunks}
 
-A chunk store distinguishes between a set of chunks $C$ and a set of elements $E$. For implementational reasons it can be helpful if there are only chunks in the system, because elements just behave like chunks with no slots. Hence, a chunk-type \lstinline|chunk| with no slots will be added automatically to the store. Each element $e \in E$ and added as a chunk of type \lstinline|chunk| to the set of chunks $C$. After this operation $E = \emptyset$, and for every former element $e$ of $E$: $e \in C$, $(e,(chunk,\emptyset)) \in Isa$.
-
-So $E$ is now represented by $\{ c \in C | c \enspace Isa \enspace (chunk,\emptyset)$ in the implementation.
+A chunk store distinguishes between a set of chunks $C$ and a set of elements $E$. For implementational reasons it can be helpful if there are only chunks in the system, because elements just behave like chunks with no slots. Hence, a chunk-type \lstinline|chunk| with no slots will be added automatically to the store. Each element $e \in E$ and added as a chunk of type \lstinline|chunk| to the set of chunks $C$. After this operation $E = \emptyset$, and for every former element $e$ of $E$: $e \in C$, $(e,(chunk,\emptyset)) \in Isa$. So $E$ is now represented by $\{ c \in C \enspace | \enspace c \enspace Isa \enspace (chunk,\emptyset) \}$ in the implementation.
 
 \begin{example}
 The chunk representation from example~\ref{ex:addition_fact_chr} is changed to:
@@ -1509,7 +1507,6 @@ Many of the buffer actions are performed immediately, so an event with the curre
 
 If no rule is applicable, the next time that a rule could be applicable is after having performed the next event. So, the next \lstinline|fire| event is scheduled directly after the first event in the queue. This simulates the behaviour that the procedural module stays ready to fire the next rule, without polling at every time point if a rule is applicable, but only reacting on changes to the buffer system. 
 
-
 The following enumeration summarizes the recognize-act cycle with a scheduler:
 
 \begin{enumerate}
@@ -1609,7 +1606,7 @@ which removes the fire constraint if still present and states that no rule has b
 \section{Lisp Functions}
 \label{lisp_functions}
 
-In ACT-R, it is possible to call some Lisp functions in the model definitions, for example to add chunk-types and declarative memory or set configuration variables. Since those functions cannot be called in the CHR/Prolog environment, there has to be a mechanism to implement missing functions.
+In ACT-R, it is possible to call Lisp functions in the model definitions, for example to add chunk-types and declarative memory or to set configuration variables. Since those functions cannot be called in the CHR/Prolog environment, there has to be a mechanism to implement missing functions.
 
 \subsection{General Translation}
 
@@ -1874,7 +1871,7 @@ module_request(+BufName, +ChunkDef, +Context, -ResChunk, -ResState, -ResTime)
 
 where \lstinline|Context| is a list of the chunk names that are in the current context (as defined in section~\ref{current_context} on page~\pageref{current_context}) and \lstinline|ResTime| is bound to the time the request will take. As described in section~\ref{changing_the_buffer_system} on page \pageref{changing_the_buffer_system}, the buffer actions are divided in two phases: The first only schedules the second phase at the time when the action is finished, whereas the second phase actually performs the action, i.e. the changes to the buffers.
 
-A similar method is applied for buffer requests: They are divided into three rules -- \lstinline|buffer_request/2|, \lstinline|start_request/2| and \lstinline|do_buffer_request/2| -- similar to the division into two rules as already described in section~\ref{changing_the_buffer_system} on page~\pageref{changing_the_buffer_system} for the other actions. The difference is, that -- since a request may take a certain time -- the first rule schedules the start of the request with the priority \lstinline|0|, so all other types of buffer actions have been performed. The request is actually performed immediately when calling \lstinline|start_request|, but the effects to the buffers this request has are applied not until \lstinline|do_buffer_request| is called, which is scheduled at the result time (\lstinline|ResTime|) of the request. This is due to the dependence of the latency of a request on the activation values of the matching chunks, so the request has to be performed in advance to calculate the correct time it will take, so the result has to be known before the request ends in simulation time. This yields the following code in the buffer system:
+A similar method is applied for buffer requests: They are divided into three rules with three trigger constraints -- \lstinline|buffer_request/2|, \lstinline|start_request/2| and \lstinline|do_buffer_request/2| -- similar to the division into two rules as already described in section~\ref{changing_the_buffer_system} on page~\pageref{changing_the_buffer_system} for the other actions. The difference is, that -- since a request may take a certain time -- the first rule schedules the start of the request with the priority \lstinline|0|, so all other types of buffer actions have been performed. The request is actually performed immediately when calling \lstinline|start_request|, but the effects to the buffers this request has are applied not until \lstinline|do_buffer_request| is called, which is scheduled at the result time (\lstinline|ResTime|) of the request. This is due to the dependence of the latency of a request on the activation values of the matching chunks, so the request has to be performed in advance to calculate the correct time it will take, so the result has to be known before the request ends in simulation time. This yields the following code in the buffer system:
 
 \begin{lstlisting}[label=Schedule start of buffer request, escapeinside={(*@}{@*)}]
 buffer_request(BufName, Chunk) <=>
@@ -2201,8 +2198,8 @@ The basic idea for the implementation of such a tokenizer comes from~\cite[19\ps
   \tikzstyle{every state}=[fill=none,draw,text=black,minimum size=1.5cm]
 
   \node[initial,state,accepting] (start)                            {start};
-  \node[state,accepting]         (identifier) [right of=start]      {identifier};
-  \node[state,accepting]         (number)     [below of=start]      {number};
+  \node[state]                   (identifier) [right of=start]      {identifier};
+  \node[state]                   (number)     [below of=start]      {number};
   \node[state]                   (fail)       [below right of=start] {fail};
 
   \path (start)      edge [loop above] node {break} (start)
@@ -2281,7 +2278,7 @@ s --> [a], s, [b].
 s --> [].
 \end{lstlisting}
 
-This program recognizes the language $\{ a^nb^n \enspace | \enspace n \leq 0 \}$. The query \lstinline|s([a,a,b,b],[])| returns \lstinline|true|, whereas \lstinline|s([a,b,b])| returns \lstinline|false|. An introduction to DCG rules is given in~\cite{ogb_dcg}.
+This program recognizes the language $\{ a^nb^n \enspace | \enspace n \leq 0 \}$. The query \lstinline|s([a,a,b,b],[])| returns \lstinline|true|, whereas \lstinline|s([a,b,b],[])| returns \lstinline|false|. An introduction to DCG rules is given in~\cite{ogb_dcg}.
 
 Hence, the grammar in section~\ref{implementation:production_rule_grammar} can be translated almost directly to such DCG rules. However, this only returns if the input list is a word of the defined grammar. To get a parse-tree out of the parsing process, the rules can be extended according to the following scheme:
 
@@ -2302,6 +2299,7 @@ The translation component also organizes the complete parsing process: It loads 
 For the variables in the rules, it uses a symbol table for each rule to ensure that the same variable is always translated to the same Prolog variable in the result.
 
 \subsection{Problems with the Current Implementation}
+\label{implementation:compiler:problems}
 
 The current implementation of the compiler can be improved at some points. First of all, it only can process a subset of the grammar, that actually is a subset of the simplified grammar shown in section~\ref{implementation:production_rule_grammar}. For example, it is only able to parse the negation slot-modifier, the others are not implemented yet, but can be added easily.
 
