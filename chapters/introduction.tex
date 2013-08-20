@@ -48,18 +48,23 @@ However, psychology is experiencing a movement towards specialization \cite{ande
 \tikzstyle{block} = [rectangle, draw, fill=blue!20, 
     text width=5em, text centered, rounded corners, minimum height=4em]
 \tikzstyle{line} = [draw, -latex']
-\tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm,
-    minimum height=2cm]
+\tikzstyle{cloud} = [draw, ellipse,fill=red!20]
     
 \begin{tikzpicture}[node distance = 2cm, auto]
+ \matrix[row sep=5mm] {
+ \node[cloud] (experiment) {\parbox{3cm}{\centering subset of psychology experiments}}; \\
     % Place nodes
-    \node[cloud]  (experiment) {\parbox{3cm}{\centering subset of psychology experiments}};
-    \node [block, below of=experiment, node distance=3cm] (cogarch) {cognitive architecture};
- \node [cloud, right of=experiment, node distance=5cm] (assumptions) {\parbox{3cm}{\centering assumptions about a particular domain}};
-  \node [block, below right of=cogarch, node distance=3cm] (cogmod) {cognitive model};
+    \node[cloud] (genassumpt) {\parbox{3cm}{\centering general assumptions about human cognition}}; &
+&
+ \node [cloud]  (assumptions) {\parbox{3cm}{\centering assumptions about a particular domain}};\\
 
+ \node [block] (cogarch) {cognitive architecture};\\
+ &
+  \node [block] at (1,) (cogmod) {cognitive model}; \\
+};
     % Draw edges
- \path [line] (experiment) -- (cogarch);
+ \path [line] (experiment) -- (genassumpt);
+\path [line] (genassumpt) -- (cogarch);
  \path [line] (assumptions) |- (cogmod);
  \path [line] (cogarch) |- (cogmod);
 \end{tikzpicture}

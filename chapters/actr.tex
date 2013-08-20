@@ -17,6 +17,64 @@ A central idea of ACT-R is the distinction between \emph{declarative} and \emph{
 
 This approach leads to a modular organization of ACT-R with modules for each purpose needed to simulate human cognition. Figure \ref{fig:modular_organization} provides an overview of some of the default modules of ACT-R. For example, the declarative module stores the factual information (the declarative knowledge), the visual module perceives and processes the visual field, the procedural module holds the procedural information and controls the computational process. 
 
+\begin{figure}[hbt]
+\begin{center}
+% Define block styles
+\tikzstyle{module} = [rectangle, draw, fill=blue!20, 
+    text width=5em, text centered, rounded corners, minimum height=3em]
+\tikzstyle{buffer} = [rectangle, draw, fill=yellow!20, 
+    text width=5em, text centered, rounded corners, minimum height=3em]
+\tikzstyle{line} = [draw, -latex']
+    
+\begin{tikzpicture}[node distance = 2cm, auto]
+ \matrix[row sep=2mm] (modules) {
+ \node[module] (goalmod) {goal module}; 
+ \node[buffer, below right of=goalmod] (goalbuf) {goal buffer}; 
+&  \node[module] (imaginalmod) {imaginal module}; 
+ \draw let
+    \p1=(goalbuf.center),
+    \p2=(imaginalmod.south) in
+ node[buffer] at (\x2,\y1) (imaginalbuf) {imaginal buffer}; &
+ \node[module] (declmod) {declarative module}; 
+ \node[buffer, below left of=declmod] (declbuf) {declarative buffer}; 
+\\
+ & \node[module, minimum height=4cm, minimum width=3cm] (procmod) {procedural module}; \\
+
+ \node[module] (visualmod) {visual module}; 
+ \node[buffer, above right of=visualmod] (visualbuf) {visual buffer}; 
+& &
+ \node[module] (manualmod) {manual module}; 
+ \node[buffer, above left of=manualmod] (manualbuf) {manual buffer}; 
+\\
+};
+
+\draw let
+    \p1=(procmod.center),
+    \p2=(visualmod.south),
+     \p3=(visualmod.west),
+    \p4=(manualmod.east) in
+ node[module,  fill=red!20,  minimum width=\x4-\x3] at (\x1,\y2-7mm) (environment) {environment}; 
+
+    % Draw edges
+  \path [line, <->] (goalmod) -- (goalbuf);
+\path [line, <->] (goalbuf) -- (procmod);
+ \path [line, <->] (declmod) -- (declbuf);
+\path [line, <->] (declbuf) -- (procmod);
+ \path [line, <->] (imaginalmod) -- (imaginalbuf);
+\path [line, <->] (imaginalbuf) -- (procmod);
+  \path [line, <->] (visualmod) -- (visualbuf);
+\path [line, <->] (visualbuf) -- (procmod);
+ \path [line, <->] (manualmod) -- (manualbuf);
+\path [line, <->] (manualbuf) -- (procmod);
+\path [line] (environment) -- (visualmod);
+ \path [line] (manualmod) -- (environment);
+\end{tikzpicture}
+\caption{The modular organization of ACT-R. Each module has an associated buffer which can communicate with the procedural module. The perceptual/motor modules can interact with the external world. \cite[fig. 1]{anderson_integrated_2004}}
+\label{fig:modular_organization}
+\end{center}
+\end{figure}
+
+
 Each module is independent from the other modules and computations in the modules can be performed parallel to other modules, for instance: The declarative module can search a specific fact while the visual module processes the visual field. Additionally, within one module computations are executed massively parallel, e.g., the visual module can process the entire visual field at once to determine the location of a certain object, which implies the processing of a huge amount of data at a time.
 
 However, each module can perform its computation only locally and has no access to computations of other modules. To communicate, modules have associated \emph{buffers}, where they can put a limited amount of information -- one primitive knowledge element -- and the procedural module can access each of these buffers. The information in a buffer could be one single fact retrieved from declarative memory or one visual object from the visual field perceived by the visual module. Information between modules is exchanged by the procedural module taking information from one buffer and putting it into another (with an optional computation on the way). This leads to a serial bottleneck in the computation, since every communication between modules has to go its way through the procedural module.

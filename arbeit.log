@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.8.10)  19 AUG 2013 17:45
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.8.10)  20 AUG 2013 14:21
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1002,6 +1002,10 @@ File: pgflibraryarrows.code.tex 2008/10/27 v2.10 (rcs-revision 1.9)
 (/usr/share/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrary
 automata.code.tex
 File: tikzlibraryautomata.code.tex 2008/07/14 v2.10 (rcs-revision 1.3)
+)
+(/usr/share/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrary
+calc.code.tex
+File: tikzlibrarycalc.code.tex 2009/09/04 v2.10 (rcs-revision 1.6)
 ) (/usr/share/texmf-dist/tex/latex/koma-script/scrhack.sty
 Package: scrhack 2012/07/29 v3.11b KOMA-Script package (hacking other packages)
 
@@ -1617,99 +1621,81 @@ LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10> not available
 
 
 
-]
-Underfull \vbox (badness 2376) has occurred while \output is active []
-
- [2]
+] [2]
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 72.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [3]
-Underfull \vbox (badness 1424) has occurred while \output is active []
-
- [4])
-(./chapters/actr.tex [5] [6
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 77.
+ [3] [4]) (./chapters/actr.tex [5] [6
 
 
 ]
 Chapter 2.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 16.
-
-LaTeX Warning: Reference `fig:modular_organization' on page 7 undefined on inpu
-t line 18.
-
 [7]
+Overfull \hbox (3.719pt too wide) in paragraph at lines 56--56
+ [][][][]\T1/phv/m/n/10 (-20) environment 
+ []
 
-LaTeX Warning: Reference `fig:recognize_act' on page 8 undefined on input line 
-24.
+[8]
 
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [8]
-
-LaTeX Warning: Reference `fig:chunk_addition_fact' on page 9 undefined on input
- line 30.
+LaTeX Warning: Reference `fig:recognize_act' on page 9 undefined on input line 
+82.
 
 
 LaTeX Warning: Reference `fig:chunk_addition_fact' on page 9 undefined on input
- line 34.
+ line 88.
 
-[9] [10] [11] [12]
+[9]
 
-LaTeX Warning: Reference `fig:modular_organization' on page 13 undefined on inp
-ut line 102.
+LaTeX Warning: Reference `fig:chunk_addition_fact' on page 10 undefined on inpu
+t line 92.
 
-[13] [14]
+[10] [11] [12]
+Underfull \vbox (badness 6608) has occurred while \output is active []
+
+ [13]
+[14]
 
 LaTeX Warning: Reference `fig:example_counting_chunks' on page 15 undefined on 
-input line 147.
+input line 205.
 
+[15]
 
-LaTeX Warning: Reference `fig:example_counting_goal_chunk' on page 15 undefined
- on input line 149.
+LaTeX Warning: Reference `fig:example_counting_goal_chunk' on page 16 undefined
+ on input line 207.
 
+[16]
 
-Underfull \vbox (badness 6592) has occurred while \output is active []
+LaTeX Warning: Reference `fig:example_counting_execution' on page 17 undefined 
+on input line 236.
 
- [15]
+[17] [18] [19]
 
-LaTeX Warning: Reference `fig:example_counting_execution' on page 16 undefined 
-on input line 178.
+LaTeX Warning: Reference `fig:chunk_activation' on page 20 undefined on input l
+ine 314.
 
-[16] [17]
-Underfull \vbox (badness 1033) has occurred while \output is active []
-
- [18]
-
-LaTeX Warning: Reference `fig:chunk_activation' on page 19 undefined on input l
-ine 256.
-
-[19]
 
 LaTeX Warning: Reference `fig:activation_spreading' on page 20 undefined on inp
-ut line 261.
+ut line 319.
+
+[20]
+
+LaTeX Warning: Reference `fig:fan_network' on page 21 undefined on input line 3
+42.
 
 
-LaTeX Warning: Reference `fig:fan_network' on page 20 undefined on input line 2
-84.
-
-
-Underfull \vbox (badness 2150) has occurred while \output is active []
-
- [20]
-
-LaTeX Warning: Reference `fig:fans' on page 21 undefined on input line 286.
+LaTeX Warning: Reference `fig:fans' on page 21 undefined on input line 344.
 
 [21] [22]
 
 LaTeX Warning: Reference `tab:learning_types' on page 23 undefined on input lin
-e 331.
+e 389.
 
-[23]) (./chapters/chr.tex [24] [25] [26
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [23]
+[24]) (./chapters/chr.tex [25] [26
 
 
 ]
@@ -1984,13 +1970,13 @@ Package logreq Info: Writing requests to 'arbeit.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 32420 strings out of 493315
- 567419 string characters out of 6143704
- 998424 words of memory out of 5000000
- 33193 multiletter control sequences out of 15000+600000
+ 32648 strings out of 493315
+ 572231 string characters out of 6143704
+ 1000028 words of memory out of 5000000
+ 33417 multiletter control sequences out of 15000+600000
  94359 words of font info for 223 fonts, out of 8000000 for 9000
  958 hyphenation exceptions out of 8191
- 65i,12n,76p,1611b,3156s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 65i,16n,76p,1611b,3156s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf-dist/fo
 nts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-mat
 hit.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-rmtt.enc}{/usr/share/texmf
@@ -2014,10 +2000,10 @@ r8a.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/
 texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-dist/fonts/typ
 e1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvr
 o8a.pfb>
-Output written on arbeit.pdf (145 pages, 876190 bytes).
+Output written on arbeit.pdf (145 pages, 878699 bytes).
 PDF statistics:
- 3656 PDF objects out of 4296 (max. 8388607)
- 3426 compressed objects within 35 object streams
- 1849 named destinations out of 2073 (max. 500000)
+ 3661 PDF objects out of 4296 (max. 8388607)
+ 3430 compressed objects within 35 object streams
+ 1850 named destinations out of 2073 (max. 500000)
  39399 words of extra memory for PDF output out of 42996 (max. 10000000)
 

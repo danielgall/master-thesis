@@ -18,57 +18,57 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.1.2}Declarative Knowledge}{9}{subsection.2.1.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Buffers}{9}{section*.3}
+\contentsline {subsubsection}{Buffers}{10}{section*.3}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.1.3}Procedural Knowledge}{10}{subsection.2.1.3}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Description of Procedural Actions}{11}{section*.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Chunks as Central Data Structure}{11}{section*.5}
+\contentsline {subsubsection}{Chunks as Central Data Structure}{12}{section*.5}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Process of Rule Selection and Execution}{12}{section*.6}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.1.4}Goal Module}{12}{subsection.2.1.4}
+\contentsline {subsection}{\numberline {2.1.4}Goal Module}{13}{subsection.2.1.4}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Working memory}{13}{section*.7}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.1.5}Other Modules}{13}{subsection.2.1.5}
+\contentsline {subsection}{\numberline {2.1.5}Other Modules}{14}{subsection.2.1.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{The Outside World}{13}{section*.8}
+\contentsline {subsubsection}{The Outside World}{14}{section*.8}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{The Visual Module}{13}{section*.9}
+\contentsline {paragraph}{The Visual Module}{14}{section*.9}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{The Imaginal Module}{14}{section*.10}
+\contentsline {subsubsection}{The Imaginal Module}{15}{section*.10}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.1.6}Example: Counting}{15}{subsection.2.1.6}
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {2.2}Serial and Parallel Aspects of ACT-R}{17}{section.2.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.3}Subsymbolic layer}{17}{section.2.3}
+\contentsline {section}{\numberline {2.3}Subsymbolic layer}{18}{section.2.3}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.3.1}Activation of Chunks}{18}{subsection.2.3.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Base-Level Activation}{18}{section*.11}
+\contentsline {subsubsection}{Base-Level Activation}{19}{section*.11}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Activation Spreading}{19}{section*.12}
+\contentsline {subsubsection}{Activation Spreading}{20}{section*.12}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Strength of Association and Fan effect}{20}{section*.13}
+\contentsline {paragraph}{Strength of Association and Fan effect}{21}{section*.13}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Latency of Retrieval}{21}{section*.14}
+\contentsline {subsubsection}{Latency of Retrieval}{22}{section*.14}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.3.2}Production Utility}{22}{subsection.2.3.2}
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {2.4}Learning}{23}{section.2.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.4.1}Symbolic Layer}{23}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {2.4.1}Symbolic Layer}{24}{subsection.2.4.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Fact Learning}{23}{section*.15}
+\contentsline {subsubsection}{Fact Learning}{24}{section*.15}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Skill acquisition}{24}{section*.16}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.4.2}Subsymbolic Layer}{24}{subsection.2.4.2}
+\contentsline {subsection}{\numberline {2.4.2}Subsymbolic Layer}{25}{subsection.2.4.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.5}Experiment Environment}{24}{section.2.5}
+\contentsline {section}{\numberline {2.5}Experiment Environment}{25}{section.2.5}
 \defcounter {refsection}{0}\relax 
 \contentsline {chapter}{\numberline {3}Constraint Handling Rules}{27}{chapter.3}
 \defcounter {refsection}{0}\relax 
