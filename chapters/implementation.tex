@@ -355,7 +355,7 @@ This rule ensures that only one \lstinline|buffer| constraint exists for each bu
 
 At the beginning of the program, a \lstinline|buffer| constraint has to be added for all the available buffers of the modules. This problem is discussed in section~\ref{initialization}.
 
-In addition, if a new chunk is put into a buffer, it also has to be present in the chunk-store, since the production system relies on the knowledge about the chunks in its buffers and chunks are essentially defined by their slots (\emph{consistency property} in definition~\ref{def:buffer_system}). Hence, every time a chunk is stored in a buffer, the \lstinline|add_chunk| method described in definition~\ref{def:abstract_methods_chunk_store} has to be called. However, the chunks in the slots are not loaded, since they are not present for working memory. They only appear as primitive elements in the chunk-store. Figure~\ref{fig:buffer_system}
+In addition, if a new chunk is put into a buffer, it also has to be present in the chunk-store, since the production system relies on the knowledge about the chunks in its buffers and chunks are essentially defined by their slots (\emph{consistency property} in definition~\ref{def:buffer_system}). Hence, every time a chunk is stored in a buffer, the \lstinline|add_chunk| method described in definition~\ref{def:abstract_methods_chunk_store} has to be called. However, the chunks in the slots are not loaded, since they are not present for working memory. They only appear as primitive elements in the chunk-store. Figure~\ref{fig:buffer_system} \FIXME{something's missing -> abbildung in meinen aufschrieben?}
 
 %This process is discussed later when talking about buffer requests in section~\ref{buffer_requests}.
 
@@ -624,7 +624,7 @@ on the LHS of a production rule can be translated to the following CHR rule head
 The discussed concepts lead to the following grammar for production rules, which is a simplified version of the actual grammar used in the original ACT-R implementation \cite[p. 162]{actr_reference}. 
 
 
-\begin{lstlisting}{caption={The ACT-R production rule grammar} label=lst:production_rule_grammar}
+\begin{lstlisting}[caption={The ACT-R production rule grammar}, label=lst:production_rule_grammar]
 production-definition ::= (p name condition* ==> action*)
 name ::= a symbol that serves as the name of the production for reference
 condition ::= [ buffer-test | query ]
@@ -960,6 +960,7 @@ At the first glance, the slot modifiers seem to implement this concept, but this
 With these restrictions, ACT-R avoids the problems that come with negation-as-absence as they are explained in \cite[147\psqq]{fru_chr_book_2009} and the translation of such tests to CHR is very simple.
 
 \subsubsection{Empty Slots}
+\label{empty_slots}
 
 An important special case in the semantics of ACT-R production rules is, that if there is a slot test specified, then a potential chunk only matches, if it really has a value in this slot. Chunks that have \lstinline|nil| in a slot specified in a buffer test, will not match the test. Hence, variables can not be used to test if two slots have the same value and the value is \lstinline|nil|, since every positive slot test involving \lstinline|nil| fails automatically \cite[p. 164, section ``Variables'', last sentence]{actr_reference}.
 
@@ -1364,13 +1365,36 @@ This example assumes that there are implmentation of the called methods that per
 
 So far, the execution order of the production rules has been controlled by the \lstinline|fire| constraint -- a phase constraint that simulated the occupation of the production system while a rule is executed.
 
-However, certain buffer actions like buffer requests may take some time until they are finished. The procedural system is free to fire the next rule after all actions have been started\footnote{see chapters \ref{serial_parallel_aspects} and \ref{process_of_rule_selection_and_execution}} and the requests are performed in parallel to that.
-
-Additionally, for the simulation it may be interesting to explore how much time certain actions have taken, especially when it comes to the subsymbolic layer.
+However, certain buffer actions like buffer requests may take some time until they are finished. The procedural system is free to fire the next rule after all actions have been started\footnote{see chapters \ref{process_of_rule_selection_and_execution} and \ref{serial_parallel_aspects}} and the requests are performed in parallel to that. Additionally, for the simulation it may be interesting to explore how much time certain actions have taken, especially when it comes to the subsymbolic layer.
 
 Those aspects cannot be implemented easily using the current approach with phase constraints. Hence, the idea of introducing a central scheduling unit is a possible solution of those requirements: The unit has a serialized ordered list of events with particular timings. If a new event is scheduled, the time it is executed must be known. The scheduling unit inserts the event at the right position of the list preserving the ordered time condition. Figure~\ref{fig:scheduler} illustrates this approach.
 
-The system just removes such events from the queue and executes them, which leads to new events in the queue. The queue organizes the right order of the events.
+\begin{figure}[htb]
+\centering
+\tikzstyle{event} = [circle, draw]
+\tikzstyle{line} = [draw, ->]
+
+\begin{tikzpicture}[node distance = 3cm, auto]
+ \node[event] (e1) {\parbox{1cm}{\centering $e_1$\\ $t_1$}}; 
+ \node[event, right of=e1] (e2) {\parbox{1cm}{\centering $e_2$\\ $t_2$}}; 
+ \node[event, right of=e2] (e3) {\parbox{1cm}{\centering $e_3$\\ $t_3$}}; 
+ \node[right of=e3] (dots) {\dots}; 
+\draw let 
+  \p1 = (e1.west),
+ \p2 = (dots.east)
+in
+node[node distance=2cm, minimum width=\x2-\x1] at ({(\x2+\x1)/2},\y1-15mm) {$t_1 \le t_2 \le t_3 \le \dots$};
+
+    % Draw edges
+ \path[line] (e1) -- (e2);
+ \path[line] (e2) -- (e3);
+ \path[line] (e3) -- (dots);
+\end{tikzpicture}
+\caption{The scheduler stores the events $e_i$ with their corresponding times $t_i$ in a queue which is sorted by the times. If an event should be executed, the first event $e_1$ of the queue is removed. The current time is set to the time $t_1$ and the event is executed.}
+\label{fig:scheduler}
+\end{figure}
+
+The system periodically removes the first event from the queue, sets the current time to the time of the event and executes it which leads to new events in the queue. The queue organizes the right order of the events automatically.
 
 With this approach, the simulation of a parallel execution of ACT-R can be achieved: Each buffer action on the RHS of a rule just schedules an event that actually performs the action at a specified time (the current time plus its duration). 
 
@@ -1873,20 +1897,20 @@ where \lstinline|Context| is a list of the chunk names that are in the current c
 
 A similar method is applied for buffer requests: They are divided into three rules with three trigger constraints -- \lstinline|buffer_request/2|, \lstinline|start_request/2| and \lstinline|do_buffer_request/2| -- similar to the division into two rules as already described in section~\ref{changing_the_buffer_system} on page~\pageref{changing_the_buffer_system} for the other actions. The difference is, that -- since a request may take a certain time -- the first rule schedules the start of the request with the priority \lstinline|0|, so all other types of buffer actions have been performed. The request is actually performed immediately when calling \lstinline|start_request|, but the effects to the buffers this request has are applied not until \lstinline|do_buffer_request| is called, which is scheduled at the result time (\lstinline|ResTime|) of the request. This is due to the dependence of the latency of a request on the activation values of the matching chunks, so the request has to be performed in advance to calculate the correct time it will take, so the result has to be known before the request ends in simulation time. This yields the following code in the buffer system:
 
-\begin{lstlisting}[label=Schedule start of buffer request, escapeinside={(*@}{@*)}]
+\begin{lstlisting}[caption=Schedule the start of a buffer request, escapeinside={(*@}{@*)}]
 buffer_request(BufName, Chunk) <=>
   get_now(Now),
   add_q(Now,0,start_request(BufName,Chunk)).
 \end{lstlisting}
 
-\begin{lstlisting}[label=Schedule the result of buffer request, escapeinside={(*@}{@*)}]
-buffer(BufName, ModName, _) \ start_request(BufName, Chunk) <=> %% todo: check for free buffer!!
+\begin{lstlisting}[caption=Execute the buffer request and schedule time the result is applied, label=lst:schedule_buffer_request, escapeinside={(*@}{@*)}]
+buffer(BufName, ModName, _) \ start_request(BufName, Chunk) <=> 
   write('Started buffer request '),
   write(BufName),nl,
   get_now(Now),
   buffer_state(BufName,busy),
   do_buffer_clear(BufName), % clear buffer immediately
-  get_context(Context),
+  get_context(Context), (*@\label{lst:schedule_buffer_request:context}@*)
   ModName:module_request(BufName, Chunk, Context, ResChunk,ResState,RelTime),
   performed_request(BufName, ResChunk, ResState), % save result of request
   Time is Now + RelTime, 
@@ -1895,8 +1919,8 @@ buffer(BufName, ModName, _) \ start_request(BufName, Chunk) <=> %% todo: check f
 
 In line~\ref{lst:schedule_buffer_request:context} the current context is calculated and bound in form of a list of chunk names to the variable \lstinline|Context|.
   
-\begin{lstlisting}[label=Handle buffer request]
-do_buffer_request(BufName, _), buffer(BufName, ModName, _), buffer_state(BufName,_), performed_request(BufName, ResChunk, ResState) <=>  %% todo: check for free buffer!!
+\begin{lstlisting}[caption=Apply the results of the buffer request]
+do_buffer_request(BufName, _), buffer(BufName, ModName, _), buffer_state(BufName,_), performed_request(BufName, ResChunk, ResState) <=>  
   write('performing request: '),write(BufName),nl,
   (ResState=error, 
   buffer(BufName, ModName, nil),
@@ -2005,7 +2029,7 @@ Replace every production rule
 
 with two rules
 
-\begin{lstlisting}{caption={Translation scheme for production rules regarding conflict resolution}, label=lst:conflict_resolution_scheme}
+\begin{lstlisting}[caption={Translation scheme for production rules regarding conflict resolution}, label=lst:conflict_resolution_scheme]
 <<<delay-name>>> @
   <<fire, {buffer tests}>> ==> {guard} | conflict_set(name).
 <<<name>>> @
@@ -2161,7 +2185,7 @@ The tokenizer gets the file with the model definition as input and does some pre
 
 \begin{description}
  \item[Special Characters] are individual tokens and are defined as all allowed characters that are not letters, numbers or white-space. In ACT-R: \lstinline|!, (, ), +, -, =, >, ?|. Some special characters of ACT-R are missing in this list, but are not implemented in the compiler, yet.
- \item[Keywords] are treated like a special character, but contains more than one symbol. In ACT-R, a keyword is \lstinline|==>|, separating the LHS from the RHS of a production rule.
+ \item[Keywords] are treated like a special character, but contains more than one symbol. In ACT-R, one of the keywords is \lstinline|==>|, separating the LHS from the RHS of a production rule.
  \item[Identifiers] Everything that starts with a letter and contains only letters or numbers. An identifier ends, if a special character or a white-space is read from the input. The \lstinline|-| character is an exception, because it can be used within identifiers, although it is a special character.
  
  \emph{Example:} \lstinline|count, addition-fact, chunk1|
@@ -2206,7 +2230,7 @@ The basic idea for the implementation of such a tokenizer comes from~\cite[19\ps
                      edge [bend left]  node {letter} (identifier)
                      edge [bend left]  node {digit}  (number)
                      edge              node {otherwise} (fail)
-        (identifier) edge [loop above] node {letter, number, \texttt{-}} (identifier)
+        (identifier) edge [loop above] node {letter, number, $\{ \mathtt{-} \}$} (identifier)
                      edge [bend left, above]  node {break $\setminus \{\texttt{-}\}$} (start)
                      edge [bend left] node {otherwise} (fail)
         (number)     edge [loop below] node {number} (number)

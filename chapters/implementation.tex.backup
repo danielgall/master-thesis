@@ -148,9 +148,7 @@ chunk_has_slot(a,sum,7)
 \subsubsection{Distinction of Elements and Chunks}
 \label{distinction_elements_chunks}
 
-A chunk store distinguishes between a set of chunks $C$ and a set of elements $E$. For implementational reasons it can be helpful if there are only chunks in the system, because elements just behave like chunks with no slots. Hence, a chunk-type \lstinline|chunk| with no slots will be added automatically to the store. Each element $e \in E$ and added as a chunk of type \lstinline|chunk| to the set of chunks $C$. After this operation $E = \emptyset$, and for every former element $e$ of $E$: $e \in C$, $(e,(chunk,\emptyset)) \in Isa$.
-
-So $E$ is now represented by $\{ c \in C | c \enspace Isa \enspace (chunk,\emptyset)$ in the implementation.
+A chunk store distinguishes between a set of chunks $C$ and a set of elements $E$. For implementational reasons it can be helpful if there are only chunks in the system, because elements just behave like chunks with no slots. Hence, a chunk-type \lstinline|chunk| with no slots will be added automatically to the store. Each element $e \in E$ and added as a chunk of type \lstinline|chunk| to the set of chunks $C$. After this operation $E = \emptyset$, and for every former element $e$ of $E$: $e \in C$, $(e,(chunk,\emptyset)) \in Isa$. So $E$ is now represented by $\{ c \in C \enspace | \enspace c \enspace Isa \enspace (chunk,\emptyset) \}$ in the implementation.
 
 \begin{example}
 The chunk representation from example~\ref{ex:addition_fact_chr} is changed to:
@@ -557,7 +555,7 @@ This implementation uses a generalization of the \lstinline|alter_slot| method a
   alter_slots(Chunk,SVs). 
 \end{lstlisting}
 
-Note that types cannot be changed. This corresponds to the grammar definition of ACT-R as presented in section~\ref{production_rule_grammar}.
+Note that types cannot be changed. This corresponds to the grammar definition of ACT-R as presented in section~\ref{implementation:production_rule_grammar}.
 
 \paragraph{Buffer Clearings}
 
@@ -962,6 +960,7 @@ At the first glance, the slot modifiers seem to implement this concept, but this
 With these restrictions, ACT-R avoids the problems that come with negation-as-absence as they are explained in \cite[147\psqq]{fru_chr_book_2009} and the translation of such tests to CHR is very simple.
 
 \subsubsection{Empty Slots}
+\label{empty_slots}
 
 An important special case in the semantics of ACT-R production rules is, that if there is a slot test specified, then a potential chunk only matches, if it really has a value in this slot. Chunks that have \lstinline|nil| in a slot specified in a buffer test, will not match the test. Hence, variables can not be used to test if two slots have the same value and the value is \lstinline|nil|, since every positive slot test involving \lstinline|nil| fails automatically \cite[p. 164, section ``Variables'', last sentence]{actr_reference}.
 
@@ -1372,7 +1371,32 @@ Additionally, for the simulation it may be interesting to explore how much time 
 
 Those aspects cannot be implemented easily using the current approach with phase constraints. Hence, the idea of introducing a central scheduling unit is a possible solution of those requirements: The unit has a serialized ordered list of events with particular timings. If a new event is scheduled, the time it is executed must be known. The scheduling unit inserts the event at the right position of the list preserving the ordered time condition. Figure~\ref{fig:scheduler} illustrates this approach.
 
-The system just removes such events from the queue and executes them, which leads to new events in the queue. The queue organizes the right order of the events.
+\begin{figure}[htb]
+\centering
+\tikzstyle{event} = [circle, draw]
+\tikzstyle{line} = [draw, ->]
+
+\begin{tikzpicture}[node distance = 3cm, auto]
+ \node[event] (e1) {\parbox{1cm}{\centering $e_1$\\ $t_1$}}; 
+ \node[event, right of=e1] (e2) {\parbox{1cm}{\centering $e_2$\\ $t_2$}}; 
+ \node[event, right of=e2] (e3) {\parbox{1cm}{\centering $e_3$\\ $t_3$}}; 
+ \node[right of=e3] (dots) {\dots}; 
+\draw let 
+  \p1 = (e1.west),
+ \p2 = (dots.east)
+in
+node[node distance=2cm, minimum width=\x2-\x1] at ({(\x2-\x1)/2},\y1-15mm) {$t_1 \le t_2 \le t_3 \le \dots$};
+
+    % Draw edges
+ \path[line] (e1) -- (e2);
+ \path[line] (e2) -- (e3);
+ \path[line] (e3) -- (dots);
+\end{tikzpicture}
+\caption{The scheduler stores the events $e_i$ with their corresponding times $t_i$ in a queue which is sorted by the times. If an event should be executed, the first event $e_1$ of the queue is removed. The current time is set to the time $t_1$ and the event is executed.}
+\label{fig:scheduler}
+\end{figure}
+
+The system periodically removes the first event from the queue, sets the current time to the time of the event and executes it which leads to new events in the queue. The queue organizes the right order of the events automatically.
 
 With this approach, the simulation of a parallel execution of ACT-R can be achieved: Each buffer action on the RHS of a rule just schedules an event that actually performs the action at a specified time (the current time plus its duration). 
 
@@ -1509,7 +1533,6 @@ Many of the buffer actions are performed immediately, so an event with the curre
 
 If no rule is applicable, the next time that a rule could be applicable is after having performed the next event. So, the next \lstinline|fire| event is scheduled directly after the first event in the queue. This simulates the behaviour that the procedural module stays ready to fire the next rule, without polling at every time point if a rule is applicable, but only reacting on changes to the buffer system. 
 
-
 The following enumeration summarizes the recognize-act cycle with a scheduler:
 
 \begin{enumerate}
@@ -1609,7 +1632,7 @@ which removes the fire constraint if still present and states that no rule has b
 \section{Lisp Functions}
 \label{lisp_functions}
 
-In ACT-R, it is possible to call some Lisp functions in the model definitions, for example to add chunk-types and declarative memory or set configuration variables. Since those functions cannot be called in the CHR/Prolog environment, there has to be a mechanism to implement missing functions.
+In ACT-R, it is possible to call Lisp functions in the model definitions, for example to add chunk-types and declarative memory or to set configuration variables. Since those functions cannot be called in the CHR/Prolog environment, there has to be a mechanism to implement missing functions.
 
 \subsection{General Translation}
 
@@ -1646,7 +1669,16 @@ lisp_sgp([:,Var,Val|Rest]) <=>
 
 \subsubsection{The Observer Pattern}
 
+Sometimes it is necessary for a module to get informed about the change of a configuration variable. Therefore, the configuration module implements the \emph{Observable} interface, which offers an abstract method \lstinline|add_config_observer(Module,Var)|. Thereby a module can register at the configuration module for update notifications of a particular variable. If the variable is changed by a \lstinline|set_conf| call, all observers of this variable can be notified by the following code:
 
+\begin{lstlisting}
+observer(Module,Var), set_conf(Var,_) ==> notify(Module,Var).
+... { set the variable }
+notify_all(Var), notify(Module,Var) ==> Module:update. % perform all pending notifications
+notify_all(_) <=> true. % no notifications pending -> Clean up
+\end{lstlisting}
+
+The constraint \lstinline|observer(Module,Var)| states that the module \lstinline|Module| observes the variable \lstinline|Var|. The observer modules have to declare a \lstinline|update/0| contraint which may trigger some action related to the change of a configuration variable.
 
 \section{Subsymbolic Layer}
 
@@ -1865,22 +1897,22 @@ module_request(+BufName, +ChunkDef, +Context, -ResChunk, -ResState, -ResTime)
 
 where \lstinline|Context| is a list of the chunk names that are in the current context (as defined in section~\ref{current_context} on page~\pageref{current_context}) and \lstinline|ResTime| is bound to the time the request will take. As described in section~\ref{changing_the_buffer_system} on page \pageref{changing_the_buffer_system}, the buffer actions are divided in two phases: The first only schedules the second phase at the time when the action is finished, whereas the second phase actually performs the action, i.e. the changes to the buffers.
 
-A similar method is applied for buffer requests: They are divided into three rules -- \lstinline|buffer_request/2|, \lstinline|start_request/2| and \lstinline|do_buffer_request/2| -- similar to the division into two rules as already described in section~\ref{changing_the_buffer_system} on page~\pageref{changing_the_buffer_system} for the other actions. The difference is, that -- since a request may take a certain time -- the first rule schedules the start of the request with the priority \lstinline|0|, so all other types of buffer actions have been performed. The request is actually performed immediately when calling \lstinline|start_request|, but the effects to the buffers this request has are applied not until \lstinline|do_buffer_request| is called, which is scheduled at the result time (\lstinline|ResTime|) of the request. This is due to the dependence of the latency of a request on the activation values of the matching chunks, so the request has to be performed in advance to calculate the correct time it will take, so the result has to be known before the request ends in simulation time. This yields the following code in the buffer system:
+A similar method is applied for buffer requests: They are divided into three rules with three trigger constraints -- \lstinline|buffer_request/2|, \lstinline|start_request/2| and \lstinline|do_buffer_request/2| -- similar to the division into two rules as already described in section~\ref{changing_the_buffer_system} on page~\pageref{changing_the_buffer_system} for the other actions. The difference is, that -- since a request may take a certain time -- the first rule schedules the start of the request with the priority \lstinline|0|, so all other types of buffer actions have been performed. The request is actually performed immediately when calling \lstinline|start_request|, but the effects to the buffers this request has are applied not until \lstinline|do_buffer_request| is called, which is scheduled at the result time (\lstinline|ResTime|) of the request. This is due to the dependence of the latency of a request on the activation values of the matching chunks, so the request has to be performed in advance to calculate the correct time it will take, so the result has to be known before the request ends in simulation time. This yields the following code in the buffer system:
 
-\begin{lstlisting}[label=Schedule start of buffer request, escapeinside={(*@}{@*)}]
+\begin{lstlisting}[caption=Schedule the start of a buffer request, escapeinside={(*@}{@*)}]
 buffer_request(BufName, Chunk) <=>
   get_now(Now),
   add_q(Now,0,start_request(BufName,Chunk)).
 \end{lstlisting}
 
-\begin{lstlisting}[label=Schedule the result of buffer request, escapeinside={(*@}{@*)}]
-buffer(BufName, ModName, _) \ start_request(BufName, Chunk) <=> %% todo: check for free buffer!!
+\begin{lstlisting}[caption=Schedule the execution of a buffer request, label=lst:schedule_buffer_request, escapeinside={(*@}{@*)}]
+buffer(BufName, ModName, _) \ start_request(BufName, Chunk) <=> 
   write('Started buffer request '),
   write(BufName),nl,
   get_now(Now),
   buffer_state(BufName,busy),
   do_buffer_clear(BufName), % clear buffer immediately
-  get_context(Context),
+  get_context(Context), (*@\label{lst:schedule_buffer_request:context}@*)
   ModName:module_request(BufName, Chunk, Context, ResChunk,ResState,RelTime),
   performed_request(BufName, ResChunk, ResState), % save result of request
   Time is Now + RelTime, 
@@ -1889,8 +1921,8 @@ buffer(BufName, ModName, _) \ start_request(BufName, Chunk) <=> %% todo: check f
 
 In line~\ref{lst:schedule_buffer_request:context} the current context is calculated and bound in form of a list of chunk names to the variable \lstinline|Context|.
   
-\begin{lstlisting}[label=Handle buffer request]
-do_buffer_request(BufName, _), buffer(BufName, ModName, _), buffer_state(BufName,_), performed_request(BufName, ResChunk, ResState) <=>  %% todo: check for free buffer!!
+\begin{lstlisting}[caption=Apply the results of the buffer request]
+do_buffer_request(BufName, _), buffer(BufName, ModName, _), buffer_state(BufName,_), performed_request(BufName, ResChunk, ResState) <=>  
   write('performing request: '),write(BufName),nl,
   (ResState=error, 
   buffer(BufName, ModName, nil),
@@ -1999,7 +2031,7 @@ Replace every production rule
 
 with two rules
 
-\begin{lstlisting}{caption={Translation scheme for production rules regarding conflict resolution}, label=lst:conflict_resolution_scheme}
+\begin{lstlisting}[caption={Translation scheme for production rules regarding conflict resolution}, label=lst:conflict_resolution_scheme]
 <<<delay-name>>> @
   <<fire, {buffer tests}>> ==> {guard} | conflict_set(name).
 <<<name>>> @
@@ -2192,8 +2224,8 @@ The basic idea for the implementation of such a tokenizer comes from~\cite[19\ps
   \tikzstyle{every state}=[fill=none,draw,text=black,minimum size=1.5cm]
 
   \node[initial,state,accepting] (start)                            {start};
-  \node[state,accepting]         (identifier) [right of=start]      {identifier};
-  \node[state,accepting]         (number)     [below of=start]      {number};
+  \node[state]                   (identifier) [right of=start]      {identifier};
+  \node[state]                   (number)     [below of=start]      {number};
   \node[state]                   (fail)       [below right of=start] {fail};
 
   \path (start)      edge [loop above] node {break} (start)
@@ -2272,7 +2304,7 @@ s --> [a], s, [b].
 s --> [].
 \end{lstlisting}
 
-This program recognizes the language $\{ a^nb^n \enspace | \enspace n \leq 0 \}$. The query \lstinline|s([a,a,b,b],[])| returns \lstinline|true|, whereas \lstinline|s([a,b,b])| returns \lstinline|false|. An introduction to DCG rules is given in~\cite{ogb_dcg}.
+This program recognizes the language $\{ a^nb^n \enspace | \enspace n \leq 0 \}$. The query \lstinline|s([a,a,b,b],[])| returns \lstinline|true|, whereas \lstinline|s([a,b,b],[])| returns \lstinline|false|. An introduction to DCG rules is given in~\cite{ogb_dcg}.
 
 Hence, the grammar in section~\ref{implementation:production_rule_grammar} can be translated almost directly to such DCG rules. However, this only returns if the input list is a word of the defined grammar. To get a parse-tree out of the parsing process, the rules can be extended according to the following scheme:
 
@@ -2293,6 +2325,7 @@ The translation component also organizes the complete parsing process: It loads 
 For the variables in the rules, it uses a symbol table for each rule to ensure that the same variable is always translated to the same Prolog variable in the result.
 
 \subsection{Problems with the Current Implementation}
+\label{implementation:compiler:problems}
 
 The current implementation of the compiler can be improved at some points. First of all, it only can process a subset of the grammar, that actually is a subset of the simplified grammar shown in section~\ref{implementation:production_rule_grammar}. For example, it is only able to parse the negation slot-modifier, the others are not implemented yet, but can be added easily.
 

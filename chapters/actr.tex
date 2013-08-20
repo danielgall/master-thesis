@@ -376,10 +376,32 @@ In ACT-R, the basic idea of activation is that it consists of two parts: The bas
 
 where $W_j$ the \emph{attentional weighting} of chunk $j$, $S_{ji}$ the \emph{associative strength} from chunk $j$ to chunk $i$ and $C$ is the \emph{current context}\label{current_context}, usually defined as the set of all chunks that are in a buffer \cites[1042]{anderson_integrated_2004}[33]{taatgen_modeling_2006}[unit 5]{actr_tutorial}. $\varepsilon$ is a noise value ``generated according to a logistic distribution'' \cite[unit 4, p. 4]{actr_tutorial}. Figure \ref{fig:chunk_activation} illustrates the addition-fact $5 + 2 = 7$ with the corresponding quantities introduced in the last equation. 
 
-The values for $W_j$ determine how much activation can spread from a single source of activation in the current context. A source of activation is a chunk in the goal buffer or in all buffers, %\footnote{This is called the current context: Usually it means the set of all chunks in all buffers, but there are definitions in literature, that only call the chunk in the goal buffer current context.}, 
-depending on the version of the ACT-R theory \cites[1042]{anderson_integrated_2004}[33]{taatgen_modeling_2006}[unit 5, p. 1]{actr_tutorial}. To limit the total amount of source of activation, $W_j$ is set to $\frac{1}{n}$, where $n$ is the number of sources of activation. With this equation, the total amount of activation that can spread over declarative memory is limited, since the more chunks are in the current context, the less important a particular connection between a chunk from the context with a chunk from declarative memory becomes.
+\begin{figure}[htb]
+\centering
+\tikzstyle{chunk} = [ellipse, draw]
+\tikzstyle{element} = [] 
+\tikzstyle{slot} = [draw, <-, very thick]   
 
-Figure \ref{fig:activation_spreading} illustrates the activation spreading process.
+\begin{tikzpicture}[node distance = 4cm, auto]
+ \node[chunk] (addition-fact) {\parbox{2cm}{\centering addition-fact\\ $B_i$}}; 
+ \draw node[element, left of=addition-fact] (arg1) {5}
+       node[element, below=1mm of arg1] (arg1wj) {$W_j$}; 
+ \node[element, right of=addition-fact] (arg2) {2}; 
+ \node[element, below=1mm of arg2] (arg2wj) {$W_j$}; 
+ \node[element, below of=addition-fact, node distance=2cm] (sum) {7}; 
+
+    % Draw edges
+  \path[slot] (addition-fact) -- node[above] {arg1} node[below] {$S_{ji}$} (arg1);
+  \path[slot] (addition-fact) -- node[above] {arg2} node[below] {$S_{ji}$} (arg2);
+  \path[slot] (addition-fact) -- node[left]  {sum}  node[right] {$S_{ji}$} (sum);
+  
+\end{tikzpicture}
+\caption{The \emph{addition-fact} chunk from figure~\ref{fig:chunk_addition_fact}. The arrows in this figure indicate the activation spreading: The elements 5 and 2 are supposed to be in the working memory and therefore have a value for the attentional weighting $W_j$. The chunk itself has a base-level activation $B_i$. The $S_{ji}$ values are the associative strengths from the elements to the chunk. \cite[fig.~5]{anderson_integrated_2004}}
+\label{fig:chunk_activation}
+\end{figure}
+
+The values for $W_j$ determine how much activation can spread from a single source of activation in the current context. A source of activation is a chunk in the goal buffer or in all buffers, %\footnote{This is called the current context: Usually it means the set of all chunks in all buffers, but there are definitions in literature, that only call the chunk in the goal buffer current context.}, 
+depending on the version of the ACT-R theory \cites[1042]{anderson_integrated_2004}[33]{taatgen_modeling_2006}[unit 5, p. 1]{actr_tutorial}. To limit the total amount of source of activation, $W_j$ is set to $\frac{1}{n}$, where $n$ is the number of sources of activation. With this equation, the total amount of activation that can spread over declarative memory is limited, since the more chunks are in the current context, the less important a particular connection between a chunk from the context with a chunk from declarative memory becomes. Figure \ref{fig:activation_spreading} illustrates the activation spreading process.
 
 \paragraph{Strength of Association and Fan effect}
 \label{actr:fan_effect}
