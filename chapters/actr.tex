@@ -85,7 +85,29 @@ In figure \ref{fig:recognize_act} the general computational process is illustrat
 
 The declarative module organizes the factual knowledge as an associative memory. I.e., it consists of a set of concepts that are connected to each other in a certain way. Such elementary concepts are represented in form of chunks that can be seen as basic knowledge elements. They can have names, but those names are not critical for the description of the facts and just for readability in the theory. So, the definition of a chunk is based only on its connections. 
 
-Chunks can have slots that are connected to other chunks or elements. Such an element can be regarded as a chunk without any slots. For instance, the fact $5 + 2 = 7$ can be modeled as a chunk that is connected to the numbers 5, 2 and 7 (see figure \ref{fig:chunk_addition_fact}). Notice that in the figure each slot has an individual name. This is necessary to distinguish the connections of the chunks, otherwise the summands would be indistinguishable from the sum in the example.
+Chunks can have slots that are connected to other chunks or primitive elements. Such an element can be regarded as a chunk without any slots. For instance, the fact $5 + 2 = 7$ can be modeled as a chunk that is connected to the numbers 5, 2 and 7 (see figure \ref{fig:chunk_addition_fact}). Notice that in the figure each slot has an individual name. This is necessary to distinguish the connections of the chunks, otherwise the summands would be indistinguishable from the sum in the example.
+
+\begin{figure}[htb]
+\centering
+\tikzstyle{chunk} = [ellipse, draw]
+\tikzstyle{element} = [] 
+\tikzstyle{slot} = [draw, ->]   
+
+\begin{tikzpicture}[node distance = 3cm, auto]
+ \node[chunk] (addition-fact) {addition-fact}; 
+ \node[element, left of=addition-fact] (arg1) {5}; 
+ \node[element, right of=addition-fact] (arg2) {2}; 
+ \node[element, below of=addition-fact, node distance=1.5cm] (sum) {7}; 
+
+    % Draw edges
+  \path[slot] (addition-fact) -- node[above] {arg1} (arg1);
+  \path[slot] (addition-fact) -- node[above] {arg2} (arg2);
+  \path[slot] (addition-fact) -- node {sum} (sum);
+\end{tikzpicture}
+\caption{A chunk of type \emph{addition-fact} and slots \emph{arg1}, \emph{arg2} and \emph{sum} which models the fact 5 + 2 = 7. The slots are connected to the primitive elements 5, 2 and 7.}
+\label{fig:chunk_addition_fact}
+\end{figure}
+
 
 Thus, chunks are defined by their name and the values of their slots. When talking about chunk descriptions, often the term \emph{slot-value pairs} is used especially for partial chunk descriptions, i.e. descriptions which do not have a value for all possible slots. This simply refers to an arbitrary chunk that has the specified values in its slots (and the others are ignored).
 
@@ -204,7 +226,52 @@ The imaginal module is described in \cite[unit 2]{actr_tutorial}.
 
 The first ACT-R example model deals with the process of counting. This model relies on count facts a person has learned, e.g. ``the number after $2$ is $3$''. To model this in ACT-R, a chunk-type for those facts has to be defined: A chunk of type \emph{count-fact} has the slots \emph{first} and \emph{second}. The chunks in figure \ref{fig:example_counting_chunks} of this type model the facts that $3$ is the successor of $2$ and $4$ is the successor of $3$.
 
-The next step is to define the goal chunk stored in the goal buffer. In this chunk it somehow has to be encoded that the current goal is to count. This can be modeled in ACT-R by the chunk-type. To track the current number in the counting process as an intermediate result, the goal chunk could have a slot which always holds the current number that has been counted to. This leads to a goal chunk as illustrated in figure \ref{fig:example_counting_goal_chunk}, where the current number is $2$. In this example we assume that the model starts with this goal chunk in the goal buffer and the first count fact has been retrieved:
+\begin{figure}[htb]
+\centering
+\tikzstyle{chunk} = [ellipse, draw]
+\tikzstyle{element} = [] 
+\tikzstyle{slot} = [draw, ->]   
+
+\begin{tikzpicture}[node distance = 4cm, auto]
+ \node[chunk] (b) {b: count-fact}; 
+ \node[element, above of=b, node distance=1.5cm] (b-first) {2}; 
+ \node[element, right of=b] (b-second) {3}; 
+
+ \node[chunk, right of=b-second] (c) {c: count-fact}; 
+ \node[element, above of=c, node distance=1.5cm] (c-second) {4}; 
+
+    % Draw edges
+ \path[slot] (b) -- node {first} (b-first);
+ \path[slot] (b) -- node[above] {second} (b-second);
+ \path[slot] (c) -- node[above] {first} (b-second);
+ \path[slot] (c) -- node {second} (c-second);
+\end{tikzpicture}
+\caption{Two count facts with names \emph{b} and \emph{c} which model the counting chain 2, 3, 4.}
+\label{fig:example_counting_chunks}
+\end{figure}
+
+
+The next step is to define the goal chunk stored in the goal buffer. In this chunk it somehow has to be encoded that the current goal is to count. This can be modeled in ACT-R by the chunk-type. To track the current number in the counting process as an intermediate result, the goal chunk could have a slot which always holds the current number that has been counted to. This leads to a goal chunk as illustrated in figure \ref{fig:example_counting_goal_chunk}, where the current number is $2$.
+
+\begin{figure}[hbt]
+\centering
+\tikzstyle{chunk} = [ellipse, draw]
+\tikzstyle{element} = [] 
+\tikzstyle{slot} = [draw, ->]   
+
+\begin{tikzpicture}[node distance = 4cm, auto]
+ \node[chunk] (goal-chunk) {goal-chunk: count}; 
+ \node[element, above of=goal-chunk, node distance=1.5cm] (current-number) {2}; 
+
+    % Draw edges
+ \path[slot] (goal-chunk) -- node {current-number} (current-number);
+\end{tikzpicture}
+\caption{The goal-chunk of type \emph{count} with the current number 2.}
+\label{fig:example_counting_goal_chunk}
+\end{figure}
+
+
+In this example we assume that the model starts with this goal chunk in the goal buffer and the first count fact has been retrieved:
 
 \parbox{100mm}{\textbf{goal buffer:} goal-chunk of type count\\
 \noindent\hspace*{20mm} current-number $2$}
@@ -238,10 +305,6 @@ The count-rule will be applicable as long as there are \emph{count-facts} in the
 In this example, the rules have been defined in a very informal way. In the following chapters which deal with implementation, a formalization of such rules will be discussed, that defines clearly what kinds of rules are allowed. Furthermore, it introduces a formalism to describe such rules uniquely and less verbosely. The following chapters will refer to this example and refine it gradually.
 
 The example also uses the concept of \emph{variables}, which will be introduced more formally in chapter \ref{implementation} when talking about implementation. Variables allow rule conditions to act like patterns that can match various system states instead of defining a rule for each state, since computation is the same regardless of the actual values in the buffers.
-
-
-\FIXME{figures}
-
 
 \section{Serial and Parallel Aspects of ACT-R}
 \label{serial_parallel_aspects}
