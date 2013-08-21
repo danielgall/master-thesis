@@ -54,19 +54,19 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {paragraph}{Strength of Association and Fan effect}{21}{section*.13}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Latency of Retrieval}{22}{section*.14}
+\contentsline {subsubsection}{Latency of Retrieval}{23}{section*.14}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.3.2}Production Utility}{23}{subsection.2.3.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.4}Learning}{24}{section.2.4}
+\contentsline {section}{\numberline {2.4}Learning}{25}{section.2.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.4.1}Symbolic Layer}{24}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {2.4.1}Symbolic Layer}{25}{subsection.2.4.1}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Fact Learning}{25}{section*.15}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Skill acquisition}{25}{section*.16}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.4.2}Subsymbolic Layer}{25}{subsection.2.4.2}
+\contentsline {subsection}{\numberline {2.4.2}Subsymbolic Layer}{26}{subsection.2.4.2}
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {2.5}Experiment Environment}{26}{section.2.5}
 \defcounter {refsection}{0}\relax 

@@ -25,6 +25,7 @@ This approach leads to a modular organization of ACT-R with modules for each pur
 \tikzstyle{buffer} = [rectangle, draw, fill=yellow!20, 
     text width=5em, text centered, rounded corners, minimum height=3em]
 \tikzstyle{line} = [draw, -latex']
+\tikzstyle{doubleline} = [draw, latex-latex']
     
 \begin{tikzpicture}[node distance = 2cm, auto]
  \matrix[row sep=2mm] (modules) {
@@ -56,16 +57,16 @@ This approach leads to a modular organization of ACT-R with modules for each pur
  node[module,  fill=red!20,  minimum width=\x4-\x3] at (\x1,\y2-7mm) (environment) {environment}; 
 
     % Draw edges
-  \path [line, <->] (goalmod) -- (goalbuf);
-\path [line, <->] (goalbuf) -- (procmod);
- \path [line, <->] (declmod) -- (declbuf);
-\path [line, <->] (declbuf) -- (procmod);
- \path [line, <->] (imaginalmod) -- (imaginalbuf);
-\path [line, <->] (imaginalbuf) -- (procmod);
-  \path [line, <->] (visualmod) -- (visualbuf);
-\path [line, <->] (visualbuf) -- (procmod);
- \path [line, <->] (manualmod) -- (manualbuf);
-\path [line, <->] (manualbuf) -- (procmod);
+  \path [doubleline] (goalmod) -- (goalbuf);
+\path [doubleline] (goalbuf) -- (procmod);
+ \path [doubleline] (declmod) -- (declbuf);
+\path [doubleline] (declbuf) -- (procmod);
+ \path [doubleline] (imaginalmod) -- (imaginalbuf);
+\path [doubleline] (imaginalbuf) -- (procmod);
+  \path [doubleline] (visualmod) -- (visualbuf);
+\path [doubleline] (visualbuf) -- (procmod);
+ \path [doubleline] (manualmod) -- (manualbuf);
+\path [doubleline] (manualbuf) -- (procmod);
 \path [line] (environment) -- (visualmod);
  \path [line] (manualmod) -- (environment);
 \end{tikzpicture}
@@ -91,7 +92,7 @@ Chunks can have slots that are connected to other chunks or primitive elements. 
 \centering
 \tikzstyle{chunk} = [ellipse, draw]
 \tikzstyle{element} = [] 
-\tikzstyle{slot} = [draw, ->]   
+\tikzstyle{slot} = [draw, -latex]   
 
 \begin{tikzpicture}[node distance = 3cm, auto]
  \node[chunk] (addition-fact) {addition-fact}; 
@@ -230,7 +231,7 @@ The first ACT-R example model deals with the process of counting. This model rel
 \centering
 \tikzstyle{chunk} = [ellipse, draw]
 \tikzstyle{element} = [] 
-\tikzstyle{slot} = [draw, ->]   
+\tikzstyle{slot} = [draw, -latex]   
 
 \begin{tikzpicture}[node distance = 4cm, auto]
  \node[chunk] (b) {b: count-fact}; 
@@ -245,14 +246,33 @@ The first ACT-R example model deals with the process of counting. This model rel
  \path[slot] (b) -- node[above] {second} (b-second);
  \path[slot] (c) -- node[above] {first} (b-second);
  \path[slot] (c) -- node {second} (c-second);
-
 \end{tikzpicture}
 \caption{Two count facts with names \emph{b} and \emph{c} which model the counting chain 2, 3, 4.}
 \label{fig:example_counting_chunks}
 \end{figure}
 
 
-The next step is to define the goal chunk stored in the goal buffer. In this chunk it somehow has to be encoded that the current goal is to count. This can be modeled in ACT-R by the chunk-type. To track the current number in the counting process as an intermediate result, the goal chunk could have a slot which always holds the current number that has been counted to. This leads to a goal chunk as illustrated in figure \ref{fig:example_counting_goal_chunk}, where the current number is $2$. In this example we assume that the model starts with this goal chunk in the goal buffer and the first count fact has been retrieved:
+The next step is to define the goal chunk stored in the goal buffer. In this chunk it somehow has to be encoded that the current goal is to count. This can be modeled in ACT-R by the chunk-type. To track the current number in the counting process as an intermediate result, the goal chunk could have a slot which always holds the current number that has been counted to. This leads to a goal chunk as illustrated in figure \ref{fig:example_counting_goal_chunk}, where the current number is $2$.
+
+\begin{figure}[hbt]
+\centering
+\tikzstyle{chunk} = [ellipse, draw]
+\tikzstyle{element} = [] 
+\tikzstyle{slot} = [draw, -latex]   
+
+\begin{tikzpicture}[node distance = 4cm, auto]
+ \node[chunk] (goal-chunk) {goal-chunk: count}; 
+ \node[element, above of=goal-chunk, node distance=1.5cm] (current-number) {2}; 
+
+    % Draw edges
+ \path[slot] (goal-chunk) -- node {current-number} (current-number);
+\end{tikzpicture}
+\caption{The goal-chunk of type \emph{count} with the current number 2.}
+\label{fig:example_counting_goal_chunk}
+\end{figure}
+
+
+In this example we assume that the model starts with this goal chunk in the goal buffer and the first count fact has been retrieved:
 
 \parbox{100mm}{\textbf{goal buffer:} goal-chunk of type count\\
 \noindent\hspace*{20mm} current-number $2$}
@@ -357,10 +377,33 @@ In ACT-R, the basic idea of activation is that it consists of two parts: The bas
 
 where $W_j$ the \emph{attentional weighting} of chunk $j$, $S_{ji}$ the \emph{associative strength} from chunk $j$ to chunk $i$ and $C$ is the \emph{current context}\label{current_context}, usually defined as the set of all chunks that are in a buffer \cites[1042]{anderson_integrated_2004}[33]{taatgen_modeling_2006}[unit 5]{actr_tutorial}. $\varepsilon$ is a noise value ``generated according to a logistic distribution'' \cite[unit 4, p. 4]{actr_tutorial}. Figure \ref{fig:chunk_activation} illustrates the addition-fact $5 + 2 = 7$ with the corresponding quantities introduced in the last equation. 
 
-The values for $W_j$ determine how much activation can spread from a single source of activation in the current context. A source of activation is a chunk in the goal buffer or in all buffers, %\footnote{This is called the current context: Usually it means the set of all chunks in all buffers, but there are definitions in literature, that only call the chunk in the goal buffer current context.}, 
-depending on the version of the ACT-R theory \cites[1042]{anderson_integrated_2004}[33]{taatgen_modeling_2006}[unit 5, p. 1]{actr_tutorial}. To limit the total amount of source of activation, $W_j$ is set to $\frac{1}{n}$, where $n$ is the number of sources of activation. With this equation, the total amount of activation that can spread over declarative memory is limited, since the more chunks are in the current context, the less important a particular connection between a chunk from the context with a chunk from declarative memory becomes.
+\begin{figure}[htb]
+\centering
+\tikzstyle{chunk} = [ellipse, draw]
+\tikzstyle{element} = [] 
+\tikzstyle{slot} = [draw, latex-diamond]   
 
-Figure \ref{fig:activation_spreading} illustrates the activation spreading process.
+\begin{tikzpicture}[node distance = 4cm, auto]
+ \node[chunk] (addition-fact) {\parbox{2cm}{\centering addition-fact\\ $B_i$}}; 
+ \draw node[element, left of=addition-fact] (arg1) {5}
+       node[element, below=1mm of arg1] (arg1wj) {$W_j$}; 
+ \node[element, right of=addition-fact] (arg2) {2}; 
+ \node[element, below=1mm of arg2] (arg2wj) {$W_j$}; 
+ \node[element, below of=addition-fact, node distance=2cm] (sum) {7}; 
+
+    % Draw edges
+  \path[slot] (addition-fact) -- node[above] {arg1} node[below] {$S_{ji}$} (arg1);
+  \path[slot] (addition-fact) -- node[above] {arg2} node[below] {$S_{ji}$} (arg2);
+  \path[slot] (addition-fact) -- node[left]  {sum}  node[right] {$S_{ji}$} (sum);
+  
+\end{tikzpicture}
+\caption[The \emph{addition-fact} chunk from figure~\ref{fig:chunk_addition_fact} with subsymbolic quantities.]
+{The \emph{addition-fact} chunk from figure~\ref{fig:chunk_addition_fact} with subsymbolic quantities. The special arrows (\tikz[baseline=-0.5ex]{\draw [diamond-latex] (0,0) -- (0.5,0);}) in this figure indicate the direction of the activation spreading: The chunks $j$ are at the start (\tikz[baseline=-0.5ex]{\draw [diamond-] (0,0) -- (0.5,0);}) of the arrow, the chunk which receives the activation is at the end (\tikz[baseline=-0.5ex]{\draw [-latex] (0,0) -- (0.5,0);}). The elements 5 and 2 are supposed to be in the working memory and therefore have a value for the attentional weighting $W_j$. The chunk itself has a base-level activation $B_i$. The $S_{ji}$ values are the associative strengths from the elements to the chunk. \cite[fig.~5]{anderson_integrated_2004}}
+\label{fig:chunk_activation}
+\end{figure}
+
+The values for $W_j$ determine how much activation can spread from a single source of activation in the current context. A source of activation is a chunk in the goal buffer or in all buffers, %\footnote{This is called the current context: Usually it means the set of all chunks in all buffers, but there are definitions in literature, that only call the chunk in the goal buffer current context.}, 
+depending on the version of the ACT-R theory \cites[1042]{anderson_integrated_2004}[33]{taatgen_modeling_2006}[unit 5, p. 1]{actr_tutorial}. To limit the total amount of source of activation, $W_j$ is set to $\frac{1}{n}$, where $n$ is the number of sources of activation. With this equation, the total amount of activation that can spread over declarative memory is limited, since the more chunks are in the current context, the less important a particular connection between a chunk from the context with a chunk from declarative memory becomes. Figure \ref{fig:activation_spreading} illustrates the activation spreading process.
 
 \paragraph{Strength of Association and Fan effect}
 \label{actr:fan_effect}
@@ -383,9 +426,55 @@ This is due to the \emph{fan effect:} The more facts a person studies about a ce
  \item \dots
 \end{itemize}
 
-For every person the participants studied either one, two or three facts. Afterwards, they were asked to identify targets, that are sentences they studied, and foils, i.e. sentences constructed from the same persons and locations, but that were not in the original set of sentences. Figure \ref{fig:fan_network} represents an example chunk network of the studied sentences (based on \cite[fig.~1]{anderson_fan_1999}).
+For every person the participants studied either one, two or three facts. Afterwards, they were asked to identify targets, that are sentences they studied, and foils, i.e. sentences constructed from the same persons and locations, but that were not in the original set of sentences. Figure~\ref{fig:fan_network} represents an example chunk network of the studied sentences (based on~\cite[fig.~1]{anderson_fan_1999}).
 
-``The term \emph{fan} refers to the number of facts associated with a particular concept'' \cite[186]{anderson_fan_1999}. In figure \ref{fig:fans}, some facts are shown with their fan, $S_{ji}$ and $B_i$ values.
+``The term \emph{fan} refers to the number of facts associated with a particular concept'' \cite[186]{anderson_fan_1999}. In figure~\ref{fig:fans}, some facts are shown with their fan, $S_{ji}$ and $B_i$ values.
+
+\tikzstyle{chunk} = [ellipse, draw, text centered, text width=3em, minimum height=1cm]
+\tikzstyle{empty} = [ellipse, text centered, text width=3em, minimum height=1cm]
+\tikzstyle{line} = [draw,diamond-latex]
+
+\begin{figure}[htb]
+\centering
+\tikzstyle{chunk} = [ellipse, draw, text centered, text width=3em, minimum height=1cm]
+\tikzstyle{empty} = [ellipse, text centered, text width=3em, minimum height=1cm]
+\tikzstyle{line} = [draw,diamond-latex]
+
+\begin{tikzpicture}
+\matrix[row sep=1mm,column sep=2cm]{
+\node (fireman) {fireman}; &
+\node[chunk] (a) {1 -- 1};&
+\node (bank) {bank};\\
+& \node[chunk] (b) {3 -- 1};
+& \node (store) {store};\\
+& \node[empty] (c) {}; \\
+\node (hippie)  {hippie};
+&\node[chunk, fill=blue!20] (d) {3 -- 3};
+&\node (park) {park};\\
+& \node[empty] (e) {};\\
+\node (doctor) {doctor};
+& \node[chunk] (f) {1 -- 3};
+\\
+};
+
+\path[line] (fireman.east) -- node (arrowfire) {} (a.west);
+\path[line] (hippie.north east) -- (b.west);
+\path[line] (hippie.east) -- (d.west);
+\path[line] (hippie.south east) -- (e.west);
+\path[line] (doctor.east) -- node (arrowdoc) {} (f.west);
+
+\path[line] (bank.west) -- (a.east);
+\path[line] (store.west) -- (b.east);
+\path[line] (park.north west) -- (c.east);
+\path[line] (park.west) -- (d.east);
+\path[line] (park.south west) -- (e.east);
+
+\node[draw,ellipse, minimum height=3cm, very thick] (fan) at (intersection of arrowfire.center--arrowdoc.center and hippie.east--d.west) {};
+\node[above right of=fan, node distance=14mm] (fanlabel) {$\mathrm{fan_{hippie}}$};
+
+\path[draw] (fan) -- (fanlabel);
+\end{tikzpicture}
+\end{figure}
 
 The result of the experiment was, that the more facts are associated with a certain concept, the higher the retrieval time for a particular fact about that concept was.
 
@@ -434,6 +523,7 @@ Learning in ACT-R can be divided into four categories depending on the involveme
 
 \begin{table}[hbt]
 \caption{ACT-R's Taxonomy of Learning \cite[92--95]{anderson_how_2007}}
+\label{tab:learning_types}
 \begin{center}
 \begin{tabular}{|l|ll|}
 \hline

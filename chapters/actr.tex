@@ -426,9 +426,54 @@ This is due to the \emph{fan effect:} The more facts a person studies about a ce
  \item \dots
 \end{itemize}
 
-For every person the participants studied either one, two or three facts. Afterwards, they were asked to identify targets, that are sentences they studied, and foils, i.e. sentences constructed from the same persons and locations, but that were not in the original set of sentences. Figure \ref{fig:fan_network} represents an example chunk network of the studied sentences (based on \cite[fig.~1]{anderson_fan_1999}).
+For every person the participants studied either one, two or three facts. Afterwards, they were asked to identify targets, that are sentences they studied, and foils, i.e. sentences constructed from the same persons and locations, but that were not in the original set of sentences. ``The term \emph{fan} refers to the number of facts associated with a particular concept'' \cite[186]{anderson_fan_1999}. Figure~\ref{fig:fans} represents an example chunk network of the studied sentences with their fan, $S_{ji}$ and $B_i$ values.
 
-``The term \emph{fan} refers to the number of facts associated with a particular concept'' \cite[186]{anderson_fan_1999}. In figure \ref{fig:fans}, some facts are shown with their fan, $S_{ji}$ and $B_i$ values.
+\begin{figure}[htb]
+\centering
+\tikzstyle{chunk} = [ellipse, draw, text centered, text width=3em, minimum height=1cm]
+\tikzstyle{empty} = [ellipse, text centered, text width=3em, minimum height=1cm]
+\tikzstyle{line} = [draw,diamond-latex]
+
+\begin{tikzpicture}
+\matrix[row sep=4mm,column sep=2cm]{
+\node (fireman) {fireman}; &
+\node[chunk] (a) {1 -- 1};&
+\node (bank) {bank};\\
+& \node[chunk] (b) {3 -- 1};
+& \node (store) {store};\\
+& \node[empty] (c) {}; \\
+\node (hippie)  {hippie};
+&\node[chunk, fill=blue!20] (d) {3 -- 3};
+&\node (park) {park};\\
+& \node[empty] (e) {};\\
+\node (doctor) {doctor};
+& \node[chunk] (f) {1 -- 3};
+\\
+};
+
+\path[line] (fireman.east) -- node (arrowfire) {} (a.west);
+\path[line] (hippie.north east) -- (b.west);
+\path[line] (hippie.east) -- (d.west);
+\path[line] (hippie.south east) -- (e.west);
+\path[line] (doctor.east) -- node (arrowdoc) {} (f.west);
+
+\path[line] (bank.west) -- (a.east);
+\path[line] (store.west) -- (b.east);
+\path[line] (park.north west) -- (c.east);
+\path[line] (park.west) -- (d.east);
+\path[line] (park.south west) -- (e.east);
+
+\node[draw,ellipse, minimum height=3.5cm, very thick] (fan) at (intersection of arrowfire.center--arrowdoc.center and hippie.east--d.west) {};
+\node[above right of=fan, node distance=14mm] (fanlabel) {$\mathrm{fan_{hippie}}$};
+
+\node[above right of=d, node distance=12mm] (bi) {$B_i$};
+
+\path[draw] (fan) -- (fanlabel);
+\path[draw] (bi) -- (d);
+\end{tikzpicture}
+\caption{The ellipses represent chunks which encode one fact like ``a hippie is in the park'' (marked chunk $i$). The words are primitive elements. The special arrows show the direction of activation spreading from an element to a chunk. The numbers in the chunks signify the fan of the associated element, e.g. the fan of the element \emph{hippie} is 3. The associative strength of the element hippie to the marked chunk $i$ is $S_{\mathrm{hippie},i} = S - \mathrm{ln}(\mathrm{fan_{hippie}}) = S - \mathrm{ln}(3)$. \cite[fig.~6]{anderson_integrated_2004}}
+\label{fig:fans}
+\end{figure}
 
 The result of the experiment was, that the more facts are associated with a certain concept, the higher the retrieval time for a particular fact about that concept was.
 
