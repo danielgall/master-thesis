@@ -387,7 +387,7 @@ In addition, if a new chunk is put into a buffer, it also has to be present in t
 };
 
 \path[line] (b1) -- node[left] {$Holds$} (c);
-\path[line] (b2) -- node[left] {$Holds$} (nil);
+\path[line] (b2) -- node[right] {$Holds$} (nil);
 \path[line] (c) -- node[left] {$Isa$} (t);
 \path[line] (c) -- node[left] {$HasSlot$} (v1);
 \path[line] (c) -- node {$s_1$} (v1);
@@ -1570,6 +1570,23 @@ As described before, the procedural module can only fire one rule at a time. Whe
 After all events of the RHS have been added to the scheduler, the procedural module is free again and therefore the next rule can fire. The event of firing will be added to the priority queue as well by the \lstinline|fire| constraint at the end of each production rule. The rule will be added at the current time point, but with low priority, since it has to be ensured, that every action of the previously executed rule has been performed yet (in the sense that a corresponding event has been added at the specified time point). In many cases, no other rule will be applicable at this time, because most of the meaningful production rules have to wait for the results of the production rule before. 
 
 Many of the buffer actions are performed immediately, so an event with the current time point is added for the buffer modifications or clearings. They are performed in a certain order defined by their priority as shown in table~\ref{tab:action_priorities}. The request actions are performed at last, but they perform a buffer clearing immediately and then start their calculation which can take some time. 
+
+\begin{table}[htb]
+\begin{center}
+\caption{Priorities of buffer actions}
+\label{tab:action_priorities}
+\begin{tabular}{|l|l|}
+\hline
+Priority & Action\\
+\hline
+100 & Buffer modification\\
+50 & Module requests\\
+10 & Buffer clearings\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
 
 If no rule is applicable, the next time that a rule could be applicable is after having performed the next event. So, the next \lstinline|fire| event is scheduled directly after the first event in the queue. This simulates the behaviour that the procedural module stays ready to fire the next rule, without polling at every time point if a rule is applicable, but only reacting on changes to the buffer system. 
 

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.8.10)  21 AUG 2013 16:27
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.8.10)  21 AUG 2013 18:18
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -76,12 +76,12 @@ Package typearea Info: You've used standard option `a4paper'.
 \ta@temp=\skip44
 Package typearea Info: These are the values describing the layout:
 (typearea)             DIV  = 9
-(typearea)             BCOR = 0.0pt
+(typearea)             BCOR = 19.91692pt
 (typearea)             \paperwidth      = 597.50793pt
-(typearea)              \textwidth      = 398.33862pt
-(typearea)              DIV departure   = -11%
-(typearea)              \evensidemargin = 60.50955pt
-(typearea)              \oddsidemargin  = -5.88022pt
+(typearea)              \textwidth      = 385.0607pt
+(typearea)              DIV departure   = -7%
+(typearea)              \evensidemargin = 56.08356pt
+(typearea)              \oddsidemargin  = 11.8237pt
 (typearea)             \paperheight     = 845.04694pt
 (typearea)              \textheight     = 574.0pt
 (typearea)              \topmargin      = -11.37589pt
@@ -1336,12 +1336,12 @@ File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
 )
 Package typearea Info: These are the values describing the layout:
 (typearea)             DIV  = 9
-(typearea)             BCOR = 0.0pt
+(typearea)             BCOR = 19.91692pt
 (typearea)             \paperwidth      = 597.50793pt
-(typearea)              \textwidth      = 398.33862pt
-(typearea)              DIV departure   = -12%
-(typearea)              \evensidemargin = 60.50955pt
-(typearea)              \oddsidemargin  = -5.88022pt
+(typearea)              \textwidth      = 385.0607pt
+(typearea)              DIV departure   = -8%
+(typearea)              \evensidemargin = 56.08356pt
+(typearea)              \oddsidemargin  = 11.8237pt
 (typearea)             \paperheight     = 845.04694pt
 (typearea)              \textheight     = 574.0pt
 (typearea)              \topmargin      = -11.37589pt
@@ -1561,54 +1561,14 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <17.28> not available
 
 
 ]
-Package tocbasic Info: character protrusion at toc deactivated on input line 33
-3.
+Package tocbasic Info: character protrusion at toc deactivated on input line 34
+0.
  (./arbeit.toc
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <10> on input line 7.
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <7> on input line 7.
- [5] [6]
-Overfull \hbox (1.17978pt too wide) detected at line 241
- []\T1/phv/m/n/10 102
- []
-
-
-Overfull \hbox (1.17978pt too wide) detected at line 243
- []\T1/phv/m/n/10 103
- []
-
-
-Overfull \hbox (1.17978pt too wide) detected at line 245
- []\T1/phv/m/n/10 103
- []
-
-
-Overfull \hbox (1.17978pt too wide) detected at line 249
- []\T1/phv/m/n/10 105
- []
-
-
-Overfull \hbox (1.17978pt too wide) detected at line 251
- []\T1/phv/m/n/10 120
- []
-
-
-Overfull \hbox (1.17978pt too wide) detected at line 265
- []\T1/phv/m/n/10 131
- []
-
-[7]
-Overfull \hbox (1.17978pt too wide) detected at line 267
- []\T1/phv/m/n/10 133
- []
-
-
-Overfull \hbox (1.17978pt too wide) detected at line 269
- []\T1/phv/m/n/10 133
- []
-
-)
+ [5] [6] [7])
 \tf@toc=\write7
 \openout7 = `arbeit.toc'.
 
@@ -1641,33 +1601,39 @@ Overfull \hbox (3.719pt too wide) in paragraph at lines 57--57
 LaTeX Warning: Reference `fig:recognize_act' on page 9 undefined on input line 
 83.
 
-[9]
+[9] [10]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [10]
-[11] [12] [13] [14] [15] [16]
+ [11]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-LaTeX Warning: Reference `fig:example_counting_execution' on page 17 undefined 
-on input line 304.
+ [12]
+[13] [14]
+Underfull \vbox (badness 1735) has occurred while \output is active []
 
-[17] [18]
-Underfull \vbox (badness 1033) has occurred while \output is active []
+ [15]
+[16] [17] [18]
+Underfull \vbox (badness 1708) has occurred while \output is active []
 
  [19]
-[20]
-
-LaTeX Warning: Reference `fig:activation_spreading' on page 21 undefined on inp
-ut line 406.
-
-[21]
-Underfull \vbox (badness 4569) has occurred while \output is active []
-
- [22]
-[23]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [24]
-[25]) (./chapters/chr.tex [26]
+ [20]
+[21]
+Overfull \hbox (0.99443pt too wide) in paragraph at lines 486--486
+ [][][][]$[]$ 
+ []
+
+
+Overfull \hbox (1.59235pt too wide) in paragraph at lines 499--499
+ [][][][]$[]$ 
+ []
+
+[22]
+Underfull \vbox (badness 5504) has occurred while \output is active []
+
+ [23]
+[24] [25] [26]) (./chapters/chr.tex [27] [28]
 Chapter 3.
 LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <10> not available
 (Font)              Font shape `T1/pcr/m/sl' tried instead on input line 9.
@@ -1681,7 +1647,7 @@ Package microtype Info: Loading generic settings for font family
 (microtype)             `lmtt' (encoding: OT1).
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
- [27
+ [29
 
 
 ]
@@ -1689,16 +1655,16 @@ LaTeX Font Info:    Font shape `T1/pcr/bx/it' in size <10> not available
 (Font)              Font shape `T1/pcr/b/it' tried instead on input line 32.
 LaTeX Font Info:    Font shape `T1/pcr/b/it' in size <10> not available
 (Font)              Font shape `T1/pcr/b/sl' tried instead on input line 32.
- [28] [29])
-(./chapters/implementation.tex [30]
+ [30] [31])
+(./chapters/implementation.tex [32]
 Chapter 4.
-[31
+[33
 
 
 ]
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <7> not available
 (Font)              Font shape `T1/phv/m/sl' tried instead on input line 35.
- [32]
+ [34]
 LaTeX Font Info:    Font shape `T1/phv/bx/it' in size <10> not available
 (Font)              Font shape `T1/phv/b/it' tried instead on input line 68.
 LaTeX Font Info:    Font shape `T1/phv/b/it' in size <10> not available
@@ -1707,187 +1673,249 @@ LaTeX Font Info:    Font shape `T1/pcr/bx/it' in size <7> not available
 (Font)              Font shape `T1/pcr/b/it' tried instead on input line 68.
 LaTeX Font Info:    Font shape `T1/pcr/b/it' in size <7> not available
 (Font)              Font shape `T1/pcr/b/sl' tried instead on input line 68.
- [33] [34] [35]
-Overfull \hbox (55.4831pt too wide) in paragraph at lines 191--192
-[]\T1/phv/m/n/10 (-20) This def-i-ni-tion states that a chunk is ei-ther [][][]
-, i.e. an empty chunk, or a term [][][][][][],
+
+Overfull \hbox (5.46861pt too wide) in paragraph at lines 69--70
+[]\T1/phv/m/sl/10 adds a chunk spec-
  []
 
-[36] [37] [38] [39] [40] [41] [42] [43] [44] [45] [46]
-Underfull \vbox (badness 2547) has occurred while \output is active []
 
- [47]
-[48] [49] [50] [51] [52] [53] [54] [55] [56] [57] [58] [59] [60] [61] [62]
-[63]
-Underfull \vbox (badness 4181) has occurred while \output is active []
-
- [64]
-[65]
-Overfull \hbox (14.90367pt too wide) in paragraph at lines 1215--1216
-\T1/phv/m/n/10 (-20) In this sec-tion, a CHR con-straint [][][][] will be de-fi
-ned, that pro-duces a [][][][]
+Overfull \hbox (7.87987pt too wide) in paragraph at lines 69--70
+\OML/lmm/m/it/10 Isa[] \OT1/lmr/m/n/10 = \OML/lmm/m/it/10 Isa \OMS/lmsy/m/n/10 
+[ \OT1/lmr/m/n/10 ([]\OML/lmm/m/it/10 ; \OT1/lmr/m/n/10 ([]\OML/lmm/m/it/10 ; s
+lots\OT1/lmr/m/n/10 ([]))$ \T1/phv/m/sl/10 and $\OML/lmm/m/it/10 HasSlot[] \OT1
+/lmr/m/n/10 = [][] [] \OMS/lmsy/m/n/10 [
  []
 
-[66] [67] [68] [69] [70]
-Overfull \hbox (340.8917pt too wide) in paragraph at lines 1385--1386
-\T1/phv/m/n/10 (-20) search of this chunk. [][][][][][] 
+
+Overfull \hbox (10.37784pt too wide) in paragraph at lines 72--73
+[]\T1/phv/m/sl/10 changes the val-ues of the spec-
  []
 
-[71] [72] [73] [74] [75] [76] [77]
 
-LaTeX Warning: Reference `tab:action_priorities' on page 78 undefined on input 
-line 1572.
+Underfull \vbox (badness 1158) has occurred while \output is active []
 
-
-Underfull \vbox (badness 1189) has occurred while \output is active []
-
- [78]
-[79]
-Underfull \vbox (badness 2237) has occurred while \output is active []
-
- [80]
-[81] [82] [83]
-Overfull \hbox (65.34625pt too wide) in paragraph at lines 1768--1769
-\T1/phv/m/n/10 (-20) of a set of chunks has to be cal-cu-lated. There-fore, a c
-on-straint [][][][][][]
+ [35]
+Overfull \hbox (3.61684pt too wide) in paragraph at lines 95--96
+[]$\OML/lmm/m/it/10 slots\OT1/lmr/m/n/10 (\OML/lmm/m/it/10 a\OT1/lmr/m/n/10 ) =
+ \OMS/lmsy/m/n/10 f\OT1/lmr/m/n/10 (\OML/lmm/m/it/10 arg\OT1/lmr/m/n/10 1\OML/l
+mm/m/it/10 ; \OT1/lmr/m/n/10 5)\OML/lmm/m/it/10 ; \OT1/lmr/m/n/10 (\OML/lmm/m/i
+t/10 arg\OT1/lmr/m/n/10 2\OML/lmm/m/it/10 ; \OT1/lmr/m/n/10 2)\OML/lmm/m/it/10 
+; \OT1/lmr/m/n/10 (\OML/lmm/m/it/10 sum; \OT1/lmr/m/n/10 7)\OMS/lmsy/m/n/10 g$ 
+\T1/phv/m/sl/10 and $\OML/lmm/m/it/10 slots\OT1/lmr/m/n/10 ((\OML/lmm/m/it/10 a
+ddition \OMS/lmsy/m/n/10 ^^@ \OML/lmm/m/it/10 fact; \OMS/lmsy/m/n/10 f\OML/lmm/
+m/it/10 arg\OT1/lmr/m/n/10 1\OML/lmm/m/it/10 ; arg\OT1/lmr/m/n/10 2\OML/lmm/m/i
+t/10 ; sum\OMS/lmsy/m/n/10 g\OT1/lmr/m/n/10 ) =
  []
 
-[84] [85] [86]
-Underfull \vbox (badness 1681) has occurred while \output is active []
+[36]
+Underfull \vbox (badness 6236) has occurred while \output is active []
 
- [87]
-[88]
-Overfull \hbox (0.47568pt too wide) in paragraph at lines 1940--1941
-\T1/phv/m/n/10 (-20) ger con-straints -- [][][][], [][][][] and [][][][]
+ [37]
+[38] [39] [40] [41] [42] [43] [44]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [45]
+[46] [47] [48] [49]
+Overfull \hbox (21.97882pt too wide) in paragraph at lines 565--566
+\T1/phv/m/n/10 (-20) present, but the chunk store will not hold any of the re-q
+uired [][][] or [][][]
  []
 
-[89] [90]
+[50] [51] [52]
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-LaTeX Warning: Reference `tab:action_priorities' on page 91 undefined on input 
-line 1978.
+ [53]
+[54] [55]
+Underfull \vbox (badness 6125) has occurred while \output is active []
 
-[91] [92] [93]
-Overfull \hbox (0.81894pt too wide) in paragraph at lines 2102--2103
+ [56]
+[57] [58] [59] [60] [61] [62] [63] [64]
+Underfull \vbox (badness 6316) has occurred while \output is active []
+
+ [65]
+[66] [67] [68] [69]
+Overfull \hbox (8.5817pt too wide) in paragraph at lines 1263--1264
+\T1/phv/m/n/10 (-20) deletes it from the match set. [][][][][][] 
+ []
+
+
+Overfull \hbox (8.44083pt too wide) in paragraph at lines 1281--1282
+[]\T1/phv/m/n/10 (-20) In the sec-ond rule, if no two match sets are in the sto
+re, the re-sult of the [][][]
+ []
+
+
+Underfull \vbox (badness 6575) has occurred while \output is active []
+
+ [70]
+[71] [72]
+Overfull \hbox (8.9429pt too wide) in paragraph at lines 1343--1344
+[][][][][][][][][][][][][][] 
+ []
+
+
+Underfull \vbox (badness 2285) has occurred while \output is active []
+
+ [73]
+Overfull \hbox (369.91135pt too wide) in paragraph at lines 1385--1386
+\T1/phv/m/n/10 (-20) the search of this chunk. [][][][][][] 
+ []
+
+[74] [75] [76] [77] [78] [79] [80] [81] [82]
+Underfull \vbox (badness 1603) has occurred while \output is active []
+
+ [83]
+[84] [85]
+Overfull \hbox (96.54147pt too wide) in paragraph at lines 1785--1786
+\T1/phv/m/n/10 (-20) tion of a set of chunks has to be cal-cu-lated. There-fore
+, a con-straint [][][][][][]
+ []
+
+[86] [87] [88] [89] [90] [91]
+Overfull \hbox (27.51543pt too wide) in paragraph at lines 1957--1958
+\T1/phv/m/n/10 (-20) trig-ger con-straints -- [][][][], [][][][] and [][][][]
+ []
+
+[92]
+Underfull \vbox (badness 1400) has occurred while \output is active []
+
+ [93]
+Overfull \hbox (8.62102pt too wide) in paragraph at lines 2023--2024
+[]\T1/phv/m/n/10 (-20) The re-sult-ing state [][][] is [][][],
+ []
+
+[94]
+Overfull \hbox (0.86296pt too wide) in paragraph at lines 2058--2059
+[]\T1/phv/m/n/10 (-20) For each rule only in-volved in the sub-sym-bolic layer,
+ the con-straint [][][][]
+ []
+
+[95] [96]
+Overfull \hbox (14.09686pt too wide) in paragraph at lines 2119--2120
 []\T1/phv/m/n/10 (-20) The first rule deletes the empty [][][] con-straint, if 
 there are other [][][]
  []
 
-[94]
-Overfull \hbox (3.0493pt too wide) in paragraph at lines 2119--2120
+
+Overfull \hbox (16.32722pt too wide) in paragraph at lines 2136--2137
 []\T1/phv/m/n/10 (-20) The first rule is only ap-pli-ca-ble, if there were no m
 atch-ing rules and the empty [][][]
  []
 
-
-Overfull \hbox (38.41306pt too wide) in paragraph at lines 2123--2124
+[97]
+Overfull \hbox (51.69098pt too wide) in paragraph at lines 2140--2141
 []\T1/phv/m/n/10 (-20) When the cho-sen rule is ap-plied, its ac-tions are per-
 formed and even-tu-ally, a [][][]
  []
 
-[95] [96] [97] [98] [99] [100] [101] [102]) (./chapters/example_models.tex
-[103] [104
+[98] [99] [100]
+Underfull \vbox (badness 7925) has occurred while \output is active []
+
+ [101]
+[102] [103] [104] [105] [106]) (./chapters/example_models.tex [107] [108
 
 
 ]
 Chapter 5.
-[105]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [106]
-[107] [108]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [109]
+[109]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [110]
-[111]
-Underfull \vbox (badness 2698) has occurred while \output is active []
-
- [112]
-[113]
-Underfull \vbox (badness 2698) has occurred while \output is active []
-
- [114]
+[111] [112]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [115]
-[116]
+ [113]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [114]
+[115]
+Underfull \vbox (badness 1895) has occurred while \output is active []
+
+ [116]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [117]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [118]
-
-LaTeX Warning: Reference `fig:semantic_model_example' on page 119 undefined on 
-input line 484.
-
-
+[118]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [119]
-Overfull \hbox (15.24432pt too wide) in paragraph at lines 518--519
+[120]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [121]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [122]
+[123]
+
+LaTeX Warning: Reference `fig:semantic_model_example' on page 124 undefined on 
+input line 484.
+
+[124]
+Overfull \hbox (28.52225pt too wide) in paragraph at lines 518--519
 []\T1/phv/m/n/10 (-20) I.e., the du-pli-cate slot test for the slot [][][] is r
 e-duced to one [][][][][][]
  []
 
-
-Underfull \vbox (badness 1910) has occurred while \output is active []
-
- [120])
-(./chapters/conclusion.tex [121] [122
+) (./chapters/conclusion.tex [125] [126
 
 
 ]
 Chapter 6.
-[123]) (./chapters/appendix_cdcontent.tex [124]
+[127]) (./chapters/appendix_cdcontent.tex [128]
 Appendix A.
-) (./chapters/sources.tex [125
+) (./chapters/sources.tex [129
 
 
-] [126
+] [130
 
 
 ]
 Appendix B.
-) (./chapters/production_grammar.tex [127] [128
+) (./chapters/production_grammar.tex [131] [132
 
 
 ]
 Appendix C.
-[129]) (./chapters/appendix_examples.tex [130]
+[133]) (./chapters/appendix_examples.tex [134]
 Appendix D.
-[131
+[135
 
 
 ]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [132])
-[133] [134
-
-
-] [135
-
-
-] [136]
-Overfull \hbox (1.13774pt too wide) in paragraph at lines 371--371
-\T1/phv/m/n/10 (-20) 298^^U303.  \T1/phv/m/sc/10 (-20) url\T1/phv/m/n/10 (-20) 
-: []$\T1/pcr/m/n/10 http : / / actr . psy . cmu . edu / papers / 641 / stewartP
-aper .
- []
-
-[137] [138]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 387.
- [139
+ [136])
+[137] [138
 
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 387.
+Overfull \hbox (6.01566pt too wide) in paragraph at lines 379--379
+\T1/phv/m/n/10 (-20) 221^^U256.  \T1/phv/m/sc/10 (-20) url\T1/phv/m/n/10 (-20) 
+: []$\T1/pcr/m/n/10 http : / / citeseerx . ist . psu . edu / viewdoc / download
+ ?
+ []
+
+[139
+
+
+]
+Overfull \hbox (7.75334pt too wide) in paragraph at lines 379--379
+[][]\T1/phv/m/sl/10 The Home-page of jACT-R\T1/phv/m/n/10 (-20) .  \T1/phv/m/sc
+/10 (-20) url\T1/phv/m/n/10 (-20) : []$\T1/pcr/m/n/10 http : / / jactr . org/$[
+] \T1/phv/m/n/10 (-20) (vis-ited on 08/12/2013). 
+ []
+
+[140] [141] [142]
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 395.
+ [143
+
+
+]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 395.
  (./arbeit.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 387.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 387.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 395.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 395.
 Package rerunfilecheck Info: File `arbeit.out' has not changed.
 (rerunfilecheck)             Checksum: B01167950B778076C90962A46C72F544;7856.
 
@@ -1899,13 +1927,13 @@ Package logreq Info: Writing requests to 'arbeit.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 32976 strings out of 493315
- 577585 string characters out of 6143704
- 1000028 words of memory out of 5000000
- 33734 multiletter control sequences out of 15000+600000
- 94359 words of font info for 223 fonts, out of 8000000 for 9000
+ 33063 strings out of 493315
+ 579119 string characters out of 6143704
+ 1001055 words of memory out of 5000000
+ 33820 multiletter control sequences out of 15000+600000
+ 94109 words of font info for 219 fonts, out of 8000000 for 9000
  958 hyphenation exceptions out of 8191
- 65i,16n,76p,1611b,3163s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 65i,19n,76p,1611b,3154s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf-dist/fo
 nts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-mat
 hit.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-rmtt.enc}{/usr/share/texmf
@@ -1929,10 +1957,10 @@ r8a.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/
 texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-dist/fonts/typ
 e1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvr
 o8a.pfb>
-Output written on arbeit.pdf (147 pages, 892565 bytes).
+Output written on arbeit.pdf (151 pages, 900129 bytes).
 PDF statistics:
- 3700 PDF objects out of 4296 (max. 8388607)
- 3464 compressed objects within 35 object streams
- 1861 named destinations out of 2073 (max. 500000)
+ 3719 PDF objects out of 4296 (max. 8388607)
+ 3479 compressed objects within 35 object streams
+ 1867 named destinations out of 2073 (max. 500000)
  39399 words of extra memory for PDF output out of 42996 (max. 10000000)
 

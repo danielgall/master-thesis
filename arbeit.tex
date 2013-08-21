@@ -11,7 +11,7 @@
     numbers=noenddot,
     headings=normal,
     DIV=9,
-    %BCOR=10mm,
+    BCOR=7mm,
     parskip
     %,draft
 ]{scrbook}
@@ -327,10 +327,18 @@ hyperref=true
 
 \input{chapters/abstract}
 
+% fix badboxes in toc
+\makeatletter
+\renewcommand{\@pnumwidth}{2em} 
+\renewcommand{\@tocrmarg}{3em}
+\makeatother
+
 %%
 %% Inhaltsverzeichnis
 %%
+\microtypesetup{protrusion=false}
 \tableofcontents
+\microtypesetup{protrusion=true}
 
 %%
 %% Hauptteil
