@@ -34,7 +34,7 @@ Since chunk stores have been referred to as networks in the previous chapters, t
 \begin{definition}[chunk-store]
 A \emph{chunk-store} $\Sigma$ is a tuple $(C,E,\mathcal{T},HasSlot,Isa)$, where $C$ is a set of chunks and $E$ a set of primitive elements, with $C \cap E = \emptyset$. $V = C \cup E \cup \{ \mathtt{nil} \}$ are the \emph{values} of~$\Sigma$ and $\mathcal{T}$ a set of chunk-types. A chunk-type $T = (t,S) \in \mathcal{T}$ is a tuple with a \emph{unique}\footnote{$\forall (t,S), (t',S') \in \mathcal{T}: t = t' \Rightarrow S = S'$ } type name $t$ and a set of slots $S$. The set of all slot-names is $\mathcal{S}$. 
 
-$HasSlot \subseteq C \times \mathcal{S} \times V$ and $Isa \subseteq C \times T$ are relations and are defined as follows:
+$HasSlot \subseteq C \times \mathcal{S} \times V$ and $Isa \subseteq C \times \mathcal{T}$ are relations and are defined as follows:
 
 \begin{itemize}
  \item $c \enspace Isa \enspace T \Leftrightarrow$ chunk $c$ is of type $T$.
@@ -355,7 +355,49 @@ This rule ensures that only one \lstinline|buffer| constraint exists for each bu
 
 At the beginning of the program, a \lstinline|buffer| constraint has to be added for all the available buffers of the modules. This problem is discussed in section~\ref{initialization}.
 
-In addition, if a new chunk is put into a buffer, it also has to be present in the chunk-store, since the production system relies on the knowledge about the chunks in its buffers and chunks are essentially defined by their slots (\emph{consistency property} in definition~\ref{def:buffer_system}). Hence, every time a chunk is stored in a buffer, the \lstinline|add_chunk| method described in definition~\ref{def:abstract_methods_chunk_store} has to be called. However, the chunks in the slots are not loaded, since they are not present for working memory. They only appear as primitive elements in the chunk-store. Figure~\ref{fig:buffer_system}
+In addition, if a new chunk is put into a buffer, it also has to be present in the chunk-store, since the production system relies on the knowledge about the chunks in its buffers and chunks are essentially defined by their slots (\emph{consistency property} in definition~\ref{def:buffer_system}). Hence, every time a chunk is stored in a buffer, the \lstinline|add_chunk| method described in definition~\ref{def:abstract_methods_chunk_store} has to be called. However, the chunks in the slots are not loaded, since they are not present for working memory. They only appear as primitive elements in the chunk-store. Figure~\ref{fig:buffer_system} \FIXME{something's missing -> abbildung in meinen aufschrieben?}
+
+\begin{figure}[htb]
+\centering
+\tikzstyle{buffer} = [rectangle, draw, fill=yellow!20, 
+    text width=5em, text centered, rounded corners, minimum height=3em]
+\tikzstyle{chunk} = [circle, draw, fill=blue!20, text centered, text width=1em]
+\tikzstyle{line} = [draw, -latex]
+
+\begin{tikzpicture}[node distance=4cm,auto]
+\matrix[row sep = 2cm] {
+\node  {$B = \{$}; & 
+\node[buffer] (b1) {$b_1$}; &
+& \node[buffer] (b2) {$b_2$}; 
+& \node {$\}$};
+\\
+\node  {$C = \{$}; & 
+\node[chunk] (c) {$c$};
+\node[chunk, below left of=c] (t) {$T$}; 
+\node[chunk, below of=c] (v1) {$v_1$}; 
+\node[chunk, below right of=c] (v2) {$v_2$}; 
+\node[below of=t, node distance=9mm] {\parbox{2cm}{\centering \rotatebox{270}{$\in$} \\\vspace{1mm}$\mathcal{T}$}};
+\node[below of=v1, node distance=9mm] {\parbox{2cm}{\centering \rotatebox{270}{$\in$} \\\vspace{1mm}$C \cup E$}};
+\node[below of=v2, node distance=9mm] {\parbox{2cm}{\centering \rotatebox{270}{$\in$} \\\vspace{1mm}$C \cup E$}};
+&
+ \node {$\}$};
+&
+\node (nil) {$\mathtt{nil}$}; 
+\\
+};
+
+\path[line] (b1) -- node[left] {$Holds$} (c);
+\path[line] (b2) -- node[left] {$Holds$} (nil);
+\path[line] (c) -- node[left] {$Isa$} (t);
+\path[line] (c) -- node[left] {$HasSlot$} (v1);
+\path[line] (c) -- node {$s_1$} (v1);
+\path[line] (c) -- node[right] {$HasSlot$} (v2);
+\path[line] (c) -- node[left] {$s_2$} (v2);
+\end{tikzpicture}
+\caption{A buffer system $(B,\Sigma,Holds)$ with two buffers $b_1, b_2 \in B$ and a chunk store $\Sigma = (C, E, \mathcal{T}, HasSlot, Isa)$. The relations $Holds$, $Isa$ and $HasSlot$ are illustrated by arrows. The buffer $b_1$ holds a chunk $c$ of type $T = (t,\{s_1, s_2\})$ and with values $v_1$ and $v_2$. Buffer $b_2$ is empty. The buffer system is clean, since only the chunks which are held by a buffer are in the set of chunks $C$ of the chunk store.}
+\label{fig:buffer_system}
+\end{figure}
+
 
 %This process is discussed later when talking about buffer requests in section~\ref{buffer_requests}.
 
@@ -624,7 +666,7 @@ on the LHS of a production rule can be translated to the following CHR rule head
 The discussed concepts lead to the following grammar for production rules, which is a simplified version of the actual grammar used in the original ACT-R implementation \cite[p. 162]{actr_reference}. 
 
 
-\begin{lstlisting}{caption={The ACT-R production rule grammar} label=lst:production_rule_grammar}
+\begin{lstlisting}[caption={The ACT-R production rule grammar}, label=lst:production_rule_grammar]
 production-definition ::= (p name condition* ==> action*)
 name ::= a symbol that serves as the name of the production for reference
 condition ::= [ buffer-test | query ]
@@ -1365,9 +1407,7 @@ This example assumes that there are implmentation of the called methods that per
 
 So far, the execution order of the production rules has been controlled by the \lstinline|fire| constraint -- a phase constraint that simulated the occupation of the production system while a rule is executed.
 
-However, certain buffer actions like buffer requests may take some time until they are finished. The procedural system is free to fire the next rule after all actions have been started\footnote{see chapters \ref{serial_parallel_aspects} and \ref{process_of_rule_selection_and_execution}} and the requests are performed in parallel to that.
-
-Additionally, for the simulation it may be interesting to explore how much time certain actions have taken, especially when it comes to the subsymbolic layer.
+However, certain buffer actions like buffer requests may take some time until they are finished. The procedural system is free to fire the next rule after all actions have been started\footnote{see chapters \ref{process_of_rule_selection_and_execution} and \ref{serial_parallel_aspects}} and the requests are performed in parallel to that. Additionally, for the simulation it may be interesting to explore how much time certain actions have taken, especially when it comes to the subsymbolic layer.
 
 Those aspects cannot be implemented easily using the current approach with phase constraints. Hence, the idea of introducing a central scheduling unit is a possible solution of those requirements: The unit has a serialized ordered list of events with particular timings. If a new event is scheduled, the time it is executed must be known. The scheduling unit inserts the event at the right position of the list preserving the ordered time condition. Figure~\ref{fig:scheduler} illustrates this approach.
 
@@ -1385,7 +1425,7 @@ Those aspects cannot be implemented easily using the current approach with phase
   \p1 = (e1.west),
  \p2 = (dots.east)
 in
-node[node distance=2cm, minimum width=\x2-\x1] at ({(\x2-\x1)/2},\y1-15mm) {$t_1 \le t_2 \le t_3 \le \dots$};
+node[node distance=2cm, minimum width=\x2-\x1] at ({(\x2+\x1)/2},\y1-15mm) {$t_1 \le t_2 \le t_3 \le \dots$};
 
     % Draw edges
  \path[line] (e1) -- (e2);
@@ -1905,7 +1945,7 @@ buffer_request(BufName, Chunk) <=>
   add_q(Now,0,start_request(BufName,Chunk)).
 \end{lstlisting}
 
-\begin{lstlisting}[caption=Schedule the execution of a buffer request, label=lst:schedule_buffer_request, escapeinside={(*@}{@*)}]
+\begin{lstlisting}[caption=Execute the buffer request and schedule time the result is applied, label=lst:schedule_buffer_request, escapeinside={(*@}{@*)}]
 buffer(BufName, ModName, _) \ start_request(BufName, Chunk) <=> 
   write('Started buffer request '),
   write(BufName),nl,
@@ -2187,7 +2227,7 @@ The tokenizer gets the file with the model definition as input and does some pre
 
 \begin{description}
  \item[Special Characters] are individual tokens and are defined as all allowed characters that are not letters, numbers or white-space. In ACT-R: \lstinline|!, (, ), +, -, =, >, ?|. Some special characters of ACT-R are missing in this list, but are not implemented in the compiler, yet.
- \item[Keywords] are treated like a special character, but contains more than one symbol. In ACT-R, a keyword is \lstinline|==>|, separating the LHS from the RHS of a production rule.
+ \item[Keywords] are treated like a special character, but contains more than one symbol. In ACT-R, one of the keywords is \lstinline|==>|, separating the LHS from the RHS of a production rule.
  \item[Identifiers] Everything that starts with a letter and contains only letters or numbers. An identifier ends, if a special character or a white-space is read from the input. The \lstinline|-| character is an exception, because it can be used within identifiers, although it is a special character.
  
  \emph{Example:} \lstinline|count, addition-fact, chunk1|
@@ -2232,7 +2272,7 @@ The basic idea for the implementation of such a tokenizer comes from~\cite[19\ps
                      edge [bend left]  node {letter} (identifier)
                      edge [bend left]  node {digit}  (number)
                      edge              node {otherwise} (fail)
-        (identifier) edge [loop above] node {letter, number, \texttt{-}} (identifier)
+        (identifier) edge [loop above] node {letter, number, $\{ \mathtt{-} \}$} (identifier)
                      edge [bend left, above]  node {break $\setminus \{\texttt{-}\}$} (start)
                      edge [bend left] node {otherwise} (fail)
         (number)     edge [loop below] node {number} (number)

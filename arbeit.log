@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.8.10)  21 AUG 2013 00:29
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.8.10)  21 AUG 2013 14:28
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1575,7 +1575,7 @@ Overfull \hbox (1.17978pt too wide) detected at line 241
 
 
 Overfull \hbox (1.17978pt too wide) detected at line 243
- []\T1/phv/m/n/10 102
+ []\T1/phv/m/n/10 103
  []
 
 
@@ -1632,14 +1632,14 @@ Chapter 2.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 16.
 [7]
-Overfull \hbox (3.719pt too wide) in paragraph at lines 56--56
+Overfull \hbox (3.719pt too wide) in paragraph at lines 57--57
  [][][][]\T1/phv/m/n/10 (-20) environment 
  []
 
 [8]
 
 LaTeX Warning: Reference `fig:recognize_act' on page 9 undefined on input line 
-82.
+83.
 
 [9]
 Underfull \vbox (badness 10000) has occurred while \output is active []
@@ -1648,7 +1648,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 [11] [12] [13] [14] [15] [16]
 
 LaTeX Warning: Reference `fig:example_counting_execution' on page 17 undefined 
-on input line 303.
+on input line 304.
 
 [17] [18]
 Underfull \vbox (badness 1033) has occurred while \output is active []
@@ -1657,25 +1657,17 @@ Underfull \vbox (badness 1033) has occurred while \output is active []
 [20]
 
 LaTeX Warning: Reference `fig:activation_spreading' on page 21 undefined on inp
-ut line 404.
+ut line 406.
 
-
-Underfull \vbox (badness 2012) has occurred while \output is active []
-
- [21]
+[21]
 
 LaTeX Warning: Reference `fig:fan_network' on page 22 undefined on input line 4
-27.
+29.
 
 
-LaTeX Warning: Reference `fig:fans' on page 22 undefined on input line 429.
+LaTeX Warning: Reference `fig:fans' on page 22 undefined on input line 431.
 
-[22] [23]
-
-LaTeX Warning: Reference `tab:learning_types' on page 24 undefined on input lin
-e 474.
-
-[24]) (./chapters/chr.tex [25] [26]
+[22] [23] [24]) (./chapters/chr.tex [25] [26]
 Chapter 3.
 LaTeX Font Info:    Font shape `T1/pcr/m/it' in size <10> not available
 (Font)              Font shape `T1/pcr/m/sl' tried instead on input line 9.
@@ -1721,100 +1713,79 @@ Overfull \hbox (55.4831pt too wide) in paragraph at lines 191--192
 , i.e. an empty chunk, or a term [][][][][][],
  []
 
-[36] [37] [38] [39] [40] [41]
+[36] [37] [38] [39] [40] [41] [42] [43] [44] [45] [46]
+Underfull \vbox (badness 2547) has occurred while \output is active []
 
-LaTeX Warning: Reference `fig:buffer_system' on page 42 undefined on input line
- 358.
+ [47]
+[48] [49] [50] [51] [52] [53] [54] [55] [56] [57] [58] [59] [60] [61] [62]
+[63]
+Underfull \vbox (badness 4181) has occurred while \output is active []
 
-[42] [43] [44] [45] [46] [47] [48] [49]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [50]
-[51] [52] [53] [54]
-Underfull \vbox (badness 1838) has occurred while \output is active []
-
- [55]
-[56] [57] [58] [59]
-Underfull \vbox (badness 4686) has occurred while \output is active []
-
- [60]
-[61]
-Underfull \vbox (badness 6316) has occurred while \output is active []
-
- [62]
-[63] [64]
-Overfull \hbox (14.90367pt too wide) in paragraph at lines 1173--1174
+ [64]
+[65]
+Overfull \hbox (14.90367pt too wide) in paragraph at lines 1215--1216
 \T1/phv/m/n/10 (-20) In this sec-tion, a CHR con-straint [][][][] will be de-fi
 ned, that pro-duces a [][][][]
  []
 
-[65] [66]
-Underfull \vbox (badness 5446) has occurred while \output is active []
-
- [67]
-[68] [69] [70]
-Overfull \hbox (340.8917pt too wide) in paragraph at lines 1343--1344
+[66] [67] [68] [69] [70]
+Overfull \hbox (340.8917pt too wide) in paragraph at lines 1385--1386
 \T1/phv/m/n/10 (-20) search of this chunk. [][][][][][] 
  []
 
-[71] [72]
-Underfull \vbox (badness 1675) has occurred while \output is active []
+[71] [72] [73] [74] [75] [76] [77]
 
- [73]
-[74]
-Underfull \vbox (badness 3219) has occurred while \output is active []
+LaTeX Warning: Reference `tab:action_priorities' on page 78 undefined on input 
+line 1572.
 
- [75]
-Underfull \vbox (badness 7238) has occurred while \output is active []
 
- [76]
+Underfull \vbox (badness 1189) has occurred while \output is active []
 
-LaTeX Warning: Reference `tab:action_priorities' on page 77 undefined on input 
-line 1530.
+ [78]
+[79]
+Underfull \vbox (badness 2237) has occurred while \output is active []
 
-[77] [78] [79] [80] [81] [82]
-Overfull \hbox (65.34625pt too wide) in paragraph at lines 1726--1727
+ [80]
+[81] [82] [83]
+Overfull \hbox (65.34625pt too wide) in paragraph at lines 1768--1769
 \T1/phv/m/n/10 (-20) of a set of chunks has to be cal-cu-lated. There-fore, a c
 on-straint [][][][][][]
  []
 
-[83] [84] [85] [86] [87] [88]
-Overfull \hbox (0.47568pt too wide) in paragraph at lines 1898--1899
+[84] [85] [86]
+Underfull \vbox (badness 1681) has occurred while \output is active []
+
+ [87]
+[88]
+Overfull \hbox (0.47568pt too wide) in paragraph at lines 1940--1941
 \T1/phv/m/n/10 (-20) ger con-straints -- [][][][], [][][][] and [][][][]
  []
 
-[89]
+[89] [90]
 
-LaTeX Warning: Reference `tab:action_priorities' on page 90 undefined on input 
-line 1936.
+LaTeX Warning: Reference `tab:action_priorities' on page 91 undefined on input 
+line 1978.
 
-[90] [91] [92] [93]
-Overfull \hbox (0.81894pt too wide) in paragraph at lines 2060--2061
+[91] [92] [93]
+Overfull \hbox (0.81894pt too wide) in paragraph at lines 2102--2103
 []\T1/phv/m/n/10 (-20) The first rule deletes the empty [][][] con-straint, if 
 there are other [][][]
  []
 
-
-Overfull \hbox (3.0493pt too wide) in paragraph at lines 2077--2078
+[94]
+Overfull \hbox (3.0493pt too wide) in paragraph at lines 2119--2120
 []\T1/phv/m/n/10 (-20) The first rule is only ap-pli-ca-ble, if there were no m
 atch-ing rules and the empty [][][]
  []
 
 
-Overfull \hbox (38.41306pt too wide) in paragraph at lines 2081--2082
+Overfull \hbox (38.41306pt too wide) in paragraph at lines 2123--2124
 []\T1/phv/m/n/10 (-20) When the cho-sen rule is ap-plied, its ac-tions are per-
 formed and even-tu-ally, a [][][]
  []
 
-[94] [95] [96]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [97]
-[98] [99] [100]
-Underfull \vbox (badness 3029) has occurred while \output is active []
-
- [101]
-[102]) (./chapters/example_models.tex [103] [104
+[95] [96] [97] [98] [99] [100] [101] [102]) (./chapters/example_models.tex
+[103] [104
 
 
 ]
@@ -1928,13 +1899,13 @@ Package logreq Info: Writing requests to 'arbeit.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 32770 strings out of 493315
- 573981 string characters out of 6143704
- 1001026 words of memory out of 5000000
- 33532 multiletter control sequences out of 15000+600000
+ 32848 strings out of 493315
+ 575377 string characters out of 6143704
+ 1000028 words of memory out of 5000000
+ 33607 multiletter control sequences out of 15000+600000
  94359 words of font info for 223 fonts, out of 8000000 for 9000
  958 hyphenation exceptions out of 8191
- 65i,16n,76p,1611b,3156s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 65i,16n,76p,1611b,3163s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf-dist/fo
 nts/enc/dvips/lm/lm-mathsy.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-mat
 hit.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-rmtt.enc}{/usr/share/texmf
@@ -1958,10 +1929,10 @@ r8a.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/
 texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-dist/fonts/typ
 e1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvr
 o8a.pfb>
-Output written on arbeit.pdf (147 pages, 885134 bytes).
+Output written on arbeit.pdf (147 pages, 887917 bytes).
 PDF statistics:
- 3691 PDF objects out of 4296 (max. 8388607)
- 3456 compressed objects within 35 object streams
- 1857 named destinations out of 2073 (max. 500000)
+ 3696 PDF objects out of 4296 (max. 8388607)
+ 3461 compressed objects within 35 object streams
+ 1860 named destinations out of 2073 (max. 500000)
  39399 words of extra memory for PDF output out of 42996 (max. 10000000)
 

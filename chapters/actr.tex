@@ -25,6 +25,7 @@ This approach leads to a modular organization of ACT-R with modules for each pur
 \tikzstyle{buffer} = [rectangle, draw, fill=yellow!20, 
     text width=5em, text centered, rounded corners, minimum height=3em]
 \tikzstyle{line} = [draw, -latex']
+\tikzstyle{doubleline} = [draw, latex-latex']
     
 \begin{tikzpicture}[node distance = 2cm, auto]
  \matrix[row sep=2mm] (modules) {
@@ -56,16 +57,16 @@ This approach leads to a modular organization of ACT-R with modules for each pur
  node[module,  fill=red!20,  minimum width=\x4-\x3] at (\x1,\y2-7mm) (environment) {environment}; 
 
     % Draw edges
-  \path [line, <->] (goalmod) -- (goalbuf);
-\path [line, <->] (goalbuf) -- (procmod);
- \path [line, <->] (declmod) -- (declbuf);
-\path [line, <->] (declbuf) -- (procmod);
- \path [line, <->] (imaginalmod) -- (imaginalbuf);
-\path [line, <->] (imaginalbuf) -- (procmod);
-  \path [line, <->] (visualmod) -- (visualbuf);
-\path [line, <->] (visualbuf) -- (procmod);
- \path [line, <->] (manualmod) -- (manualbuf);
-\path [line, <->] (manualbuf) -- (procmod);
+  \path [doubleline] (goalmod) -- (goalbuf);
+\path [doubleline] (goalbuf) -- (procmod);
+ \path [doubleline] (declmod) -- (declbuf);
+\path [doubleline] (declbuf) -- (procmod);
+ \path [doubleline] (imaginalmod) -- (imaginalbuf);
+\path [doubleline] (imaginalbuf) -- (procmod);
+  \path [doubleline] (visualmod) -- (visualbuf);
+\path [doubleline] (visualbuf) -- (procmod);
+ \path [doubleline] (manualmod) -- (manualbuf);
+\path [doubleline] (manualbuf) -- (procmod);
 \path [line] (environment) -- (visualmod);
  \path [line] (manualmod) -- (environment);
 \end{tikzpicture}
@@ -91,7 +92,7 @@ Chunks can have slots that are connected to other chunks or primitive elements. 
 \centering
 \tikzstyle{chunk} = [ellipse, draw]
 \tikzstyle{element} = [] 
-\tikzstyle{slot} = [draw, ->]   
+\tikzstyle{slot} = [draw, -latex]   
 
 \begin{tikzpicture}[node distance = 3cm, auto]
  \node[chunk] (addition-fact) {addition-fact}; 
@@ -230,7 +231,7 @@ The first ACT-R example model deals with the process of counting. This model rel
 \centering
 \tikzstyle{chunk} = [ellipse, draw]
 \tikzstyle{element} = [] 
-\tikzstyle{slot} = [draw, ->]   
+\tikzstyle{slot} = [draw, -latex]   
 
 \begin{tikzpicture}[node distance = 4cm, auto]
  \node[chunk] (b) {b: count-fact}; 
@@ -257,7 +258,7 @@ The next step is to define the goal chunk stored in the goal buffer. In this chu
 \centering
 \tikzstyle{chunk} = [ellipse, draw]
 \tikzstyle{element} = [] 
-\tikzstyle{slot} = [draw, ->]   
+\tikzstyle{slot} = [draw, -latex]   
 
 \begin{tikzpicture}[node distance = 4cm, auto]
  \node[chunk] (goal-chunk) {goal-chunk: count}; 
@@ -380,7 +381,7 @@ where $W_j$ the \emph{attentional weighting} of chunk $j$, $S_{ji}$ the \emph{as
 \centering
 \tikzstyle{chunk} = [ellipse, draw]
 \tikzstyle{element} = [] 
-\tikzstyle{slot} = [draw, <-, very thick]   
+\tikzstyle{slot} = [draw, latex-diamond]   
 
 \begin{tikzpicture}[node distance = 4cm, auto]
  \node[chunk] (addition-fact) {\parbox{2cm}{\centering addition-fact\\ $B_i$}}; 
@@ -396,7 +397,8 @@ where $W_j$ the \emph{attentional weighting} of chunk $j$, $S_{ji}$ the \emph{as
   \path[slot] (addition-fact) -- node[left]  {sum}  node[right] {$S_{ji}$} (sum);
   
 \end{tikzpicture}
-\caption{The \emph{addition-fact} chunk from figure~\ref{fig:chunk_addition_fact}. The arrows in this figure indicate the activation spreading: The elements 5 and 2 are supposed to be in the working memory and therefore have a value for the attentional weighting $W_j$. The chunk itself has a base-level activation $B_i$. The $S_{ji}$ values are the associative strengths from the elements to the chunk. \cite[fig.~5]{anderson_integrated_2004}}
+\caption[The \emph{addition-fact} chunk from figure~\ref{fig:chunk_addition_fact} with subsymbolic quantities.]
+{The \emph{addition-fact} chunk from figure~\ref{fig:chunk_addition_fact} with subsymbolic quantities. The special arrows (\tikz[baseline=-0.5ex]{\draw [diamond-latex] (0,0) -- (0.5,0);}) in this figure indicate the direction of the activation spreading: The chunks $j$ are at the start (\tikz[baseline=-0.5ex]{\draw [diamond-] (0,0) -- (0.5,0);}) of the arrow, the chunk which receives the activation is at the end (\tikz[baseline=-0.5ex]{\draw [-latex] (0,0) -- (0.5,0);}). The elements 5 and 2 are supposed to be in the working memory and therefore have a value for the attentional weighting $W_j$. The chunk itself has a base-level activation $B_i$. The $S_{ji}$ values are the associative strengths from the elements to the chunk. \cite[fig.~5]{anderson_integrated_2004}}
 \label{fig:chunk_activation}
 \end{figure}
 
@@ -475,6 +477,7 @@ Learning in ACT-R can be divided into four categories depending on the involveme
 
 \begin{table}[hbt]
 \caption{ACT-R's Taxonomy of Learning \cite[92--95]{anderson_how_2007}}
+\label{tab:learning_types}
 \begin{center}
 \begin{tabular}{|l|ll|}
 \hline
