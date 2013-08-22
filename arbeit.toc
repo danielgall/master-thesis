@@ -18,35 +18,35 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.1.2}Declarative Knowledge}{9}{subsection.2.1.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Buffers}{10}{section*.3}
+\contentsline {subsubsection}{Buffers}{11}{section*.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.1.3}Procedural Knowledge}{10}{subsection.2.1.3}
+\contentsline {subsection}{\numberline {2.1.3}Procedural Knowledge}{11}{subsection.2.1.3}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Description of Procedural Actions}{12}{section*.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Chunks as Central Data Structure}{12}{section*.5}
+\contentsline {subsubsection}{Chunks as Central Data Structure}{13}{section*.5}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Process of Rule Selection and Execution}{13}{section*.6}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.1.4}Goal Module}{13}{subsection.2.1.4}
+\contentsline {subsection}{\numberline {2.1.4}Goal Module}{14}{subsection.2.1.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Working memory}{13}{section*.7}
+\contentsline {subsubsection}{Working memory}{14}{section*.7}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.1.5}Other Modules}{14}{subsection.2.1.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{The Outside World}{14}{section*.8}
+\contentsline {subsubsection}{The Outside World}{15}{section*.8}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{The Visual Module}{14}{section*.9}
+\contentsline {paragraph}{The Visual Module}{15}{section*.9}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{The Imaginal Module}{15}{section*.10}
+\contentsline {subsubsection}{The Imaginal Module}{16}{section*.10}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {2.1.6}Example: Counting}{16}{subsection.2.1.6}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.2}Serial and Parallel Aspects of ACT-R}{18}{section.2.2}
+\contentsline {section}{\numberline {2.2}Serial and Parallel Aspects of ACT-R}{19}{section.2.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.3}Subsymbolic layer}{19}{section.2.3}
+\contentsline {section}{\numberline {2.3}Subsymbolic layer}{20}{section.2.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.3.1}Activation of Chunks}{19}{subsection.2.3.1}
+\contentsline {subsection}{\numberline {2.3.1}Activation of Chunks}{20}{subsection.2.3.1}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Base-Level Activation}{20}{section*.11}
 \defcounter {refsection}{0}\relax 
@@ -56,19 +56,19 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Latency of Retrieval}{23}{section*.14}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.3.2}Production Utility}{24}{subsection.2.3.2}
+\contentsline {subsection}{\numberline {2.3.2}Production Utility}{25}{subsection.2.3.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.4}Learning}{26}{section.2.4}
+\contentsline {section}{\numberline {2.4}Learning}{27}{section.2.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.4.1}Symbolic Layer}{26}{subsection.2.4.1}
+\contentsline {subsection}{\numberline {2.4.1}Symbolic Layer}{27}{subsection.2.4.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Fact Learning}{26}{section*.15}
+\contentsline {subsubsection}{Fact Learning}{27}{section*.15}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Skill acquisition}{27}{section*.16}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {2.4.2}Subsymbolic Layer}{27}{subsection.2.4.2}
+\contentsline {subsection}{\numberline {2.4.2}Subsymbolic Layer}{28}{subsection.2.4.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {2.5}Experiment Environment}{27}{section.2.5}
+\contentsline {section}{\numberline {2.5}Experiment Environment}{28}{section.2.5}
 \defcounter {refsection}{0}\relax 
 \contentsline {chapter}{\numberline {3}Constraint Handling Rules}{29}{chapter.3}
 \defcounter {refsection}{0}\relax 
@@ -126,13 +126,13 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {4.3.3}The Production Rule Grammar}{52}{subsection.4.3.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{The Order of Rule Applications}{54}{section*.35}
+\contentsline {subsubsection}{The Order of Rule Applications}{53}{section*.35}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Bound and Unbound Variables}{57}{section*.36}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Duplicate Slot Tests}{57}{section*.37}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Slot Modifiers}{59}{section*.38}
+\contentsline {subsubsection}{Slot Modifiers}{58}{section*.38}
 \defcounter {refsection}{0}\relax 
 \contentsline {paragraph}{Relation to Negation-as-Absence}{61}{section*.39}
 \defcounter {refsection}{0}\relax 
@@ -142,11 +142,11 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {4.4}Modular Organization}{63}{section.4.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.4.1}Prolog Modules}{64}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.1}Prolog Modules}{63}{subsection.4.4.1}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {4.4.2}Interface for Module Requests}{65}{subsection.4.4.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.4.3}How the Buffer System States a Request}{66}{subsection.4.4.3}
+\contentsline {subsection}{\numberline {4.4.3}How the Buffer System States a Request}{65}{subsection.4.4.3}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {4.4.4}Components of the Implementation}{67}{subsection.4.4.4}
 \defcounter {refsection}{0}\relax 
@@ -156,7 +156,7 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {4.5.2}Retrieval Requests}{67}{subsection.4.5.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Chunk Patterns}{68}{section*.42}
+\contentsline {subsubsection}{Chunk Patterns}{67}{section*.42}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Finding Chunks}{68}{section*.43}
 \defcounter {refsection}{0}\relax 
@@ -180,17 +180,17 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Recognize-Act Cycle}{80}{section*.48}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Start Next Cycle}{82}{section*.49}
+\contentsline {paragraph}{Start Next Cycle}{81}{section*.49}
 \defcounter {refsection}{0}\relax 
 \contentsline {paragraph}{Call an Event}{82}{section*.50}
 \defcounter {refsection}{0}\relax 
 \contentsline {paragraph}{Changing the Buffer System}{82}{section*.51}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Production Rules}{83}{section*.52}
+\contentsline {paragraph}{Production Rules}{82}{section*.52}
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {4.8}Lisp Functions}{83}{section.4.8}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.8.1}General Translation}{84}{subsection.4.8.1}
+\contentsline {subsection}{\numberline {4.8.1}General Translation}{83}{subsection.4.8.1}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {4.8.2}Configuration Variables}{84}{subsection.4.8.2}
 \defcounter {refsection}{0}\relax 

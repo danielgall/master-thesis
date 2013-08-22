@@ -80,7 +80,74 @@ Each module is independent from the other modules and computations in the module
 
 However, each module can perform its computation only locally and has no access to computations of other modules. To communicate, modules have associated \emph{buffers}, where they can put a limited amount of information -- one primitive knowledge element -- and the procedural module can access each of these buffers. The information in a buffer could be one single fact retrieved from declarative memory or one visual object from the visual field perceived by the visual module. Information between modules is exchanged by the procedural module taking information from one buffer and putting it into another (with an optional computation on the way). This leads to a serial bottleneck in the computation, since every communication between modules has to go its way through the procedural module.
 
-In figure \ref{fig:recognize_act} the general computational process is illustrated by showing the \emph{recognize-act-cycle}: The procedural information is stored as rules that have a \emph{condition} and an \emph{action}. The condition refers to the so-called \emph{working memory}, which basically is the content of all the buffers. In the recognize-phase of the cycle, a suitable rule that matches the current state of the working memory is searched. If the condition of a rule holds, it \emph{fires} and performs its actions -- this is the act-phase of the cycle. Those actions can cause changes on the buffers, so the next rule may match the current state in the next recognize-part of the cycle. In the following sections, some of the modules and their precise interaction will be described in more detail.
+In figure \ref{fig:recognize_act} the general functionality of ACT-R is illustrated: The computational process is controled by the \emph{recognize-act-cycle}: The procedural information is stored as rules that have a \emph{condition} and an \emph{action}. The condition refers to the so-called \emph{working memory}, which basically is the content of all the buffers. In the recognize-phase of the cycle, a suitable rule that matches the current state of the working memory is searched. If the condition of a rule holds, it \emph{fires} and performs its actions -- this is the act-phase of the cycle. Those actions can cause changes on the buffers, so the next rule may match the current state in the next recognize-part of the cycle. In the following sections, some of the modules and their precise interaction will be described in more detail.
+
+\begin{figure}[hbt]
+\centering
+% Define block styles
+\tikzstyle{module} = [rectangle, draw, fill=blue!20, 
+    text width=6em, text centered, rounded corners, minimum height=3em]
+\tikzstyle{procmodule} = [rectangle, draw, fill=blue!20,  text centered, rounded corners, minimum height=3em]
+\tikzstyle{buffer} = [rectangle, draw, fill=yellow!20, 
+    text width=6em, text centered, rounded corners, minimum height=3em]
+\tikzstyle{line} = [draw, -latex']
+\tikzstyle{doubleline} = [draw, latex-latex']
+
+\begin{tikzpicture}[remember picture, auto]
+\matrix[row sep=5mm, column sep=5mm] {
+& \coordinate (helper0) {};   \coordinate[right of=helper0] (helper1) {}; \\ 
+\coordinate (helper2) {}; &
+\node[procmodule, rectangle split, rectangle split parts=2, inner sep=2mm] (procmod) {
+procedural module
+\nodepart{second}
+\begin{tikzpicture}[node distance=3.5cm]
+\node[module] (procmem) {procedural memory};
+\node[module, right of=procmem] (patmatch) {pattern matching};
+\node[module, below of=patmatch, node distance=2cm] (prodexec) {production execution};
+\end{tikzpicture}
+};
+&
+\node[module] (declarative) {declarative module};
+\\
+&
+\node[buffer] (buffers) {buffers};
+\\
+\node[module] (visual) {visual module};
+&
+\node[module,  fill=red!20] (environment) {environment}; 
+&
+\node[module] (manual) {manual module};
+\\
+};
+
+\path (buffers.west) ++(0,-0.3) coordinate (bufsouthwest);
+\path[line] (visual) |- (bufsouthwest);
+\path (buffers.east) ++(0,-0.3) coordinate (bufsoutheast);
+\path[line] (manual) |- (bufsoutheast);
+\path[line] (environment) -- (visual);
+\path[line,latex-latex] (environment) -- (manual);
+
+%\path (patmatch.north) ++(0,0) coordinate (helper3);
+\path[line] (buffers) -| (helper2) |- (helper1) -| (patmatch.north);
+\path[line] (procmem) -- (patmatch);
+\path[line] (patmatch) -- (prodexec);
+
+\path[line] (declarative) |- (buffers.east);
+
+\path (buffers.east) ++(0,+0.3) coordinate (bufnortheast);
+\path[line] (prodexec) |- (bufnortheast);
+
+%\path  (prodexec.south)+(0,-1) node (belowprodex) {};
+%\path[draw] (prodexec.south)--(belowprodex.north);
+%\path 
+%\path[draw]  (belowprodex.north) -| (belowdecl);
+%(intersection of prodexec.east--prodexec.west and declarative.south east--declarative.north east)+(1,0) ;
+
+%\path[draw] (prodexec.south) -- + (0,-1) -|  (intersection of prodexec.east--prodexec.west and declarative.south east--declarative.north east) |- (buffers) ;
+\end{tikzpicture}
+\caption{Modules and communication in ACT-R. The procedural module is the heart of the computational system and consists of a procedural memory containing all the production rules, a pattern matching unit and an execution unit. The pattern matching unit checks if the current content of the buffers match the condition of a rule in the procedural memory. If a rule matches, it is executed by the execution unit. The execution may lead to buffer changes or requests. Additionally, the other modules may change the content of their buffers by a request which may lead to new rules matching the current content of the buffer. The procedural module can only apply one rule at a time. \cite{about_actr_homepage}}
+\label{fig:recognize_act}
+\end{figure}
 
 \subsection{Declarative Knowledge}
 
@@ -105,7 +172,7 @@ Chunks can have slots that are connected to other chunks or primitive elements. 
   \path[slot] (addition-fact) -- node[above] {arg2} (arg2);
   \path[slot] (addition-fact) -- node {sum} (sum);
 \end{tikzpicture}
-\caption{A chunk of type \emph{addition-fact} and slots \emph{arg1}, \emph{arg2} and \emph{sum} which models the fact 5 + 2 = 7. The slots are connected to the primitive elements 5, 2 and 7.}
+\caption[A chunk of type \emph{addition-fact} and slots \emph{arg1}, \emph{arg2} and \emph{sum} which models the fact 5 + 2 = 7. The slots are connected to the primitive elements 5, 2 and 7.]{A chunk of type \emph{addition-fact} and slots \emph{arg1}, \emph{arg2} and \emph{sum} which models the fact 5 + 2 = 7. The slots are connected to the primitive elements 5, 2 and 7. Chunks are illustrated as ellipses, whereas primitive elements are simple text. A simple arrow (\tikz[baseline=-0.5ex]{\draw [slot] (0,0) -- (0.5,0);}) signifies that the chunk at the start of the arrow has the value at the end of the arrow in the slot with the name of the label of the arrow.}
 \label{fig:chunk_addition_fact}
 \end{figure}
 

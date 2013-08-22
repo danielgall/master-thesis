@@ -370,7 +370,7 @@ In ACT-R, the basic idea of activation is that it consists of two parts: The bas
  A_i = B_i + \sum_{j \in C}{W_j S_{ji}} + \varepsilon
 \end{equation}
 
-where $W_j$ the \emph{attentional weighting} of chunk $j$, $S_{ji}$ the \emph{associative strength} from chunk $j$ to chunk $i$ and $C$ is the \emph{current context}\label{current_context}, usually defined as the set of all chunks that are in a buffer \cites[1042]{anderson_integrated_2004}[33]{taatgen_modeling_2006}[unit 5]{actr_tutorial}. $\varepsilon$ is a noise value ``generated according to a logistic distribution'' \cite[unit 4, p. 4]{actr_tutorial}. Figure \ref{fig:chunk_activation} illustrates the addition-fact $5 + 2 = 7$ with the corresponding quantities introduced in the last equation. 
+where $W_j$ the \emph{attentional weighting} of chunk $j$, $S_{ji}$ the \emph{associative strength} from chunk $j$ to chunk $i$ and $C$ is the \emph{current context}\label{current_context}, usually defined as the set of all chunks that are in a buffer \cites[1042]{anderson_integrated_2004}[33]{taatgen_modeling_2006}[unit 5]{actr_tutorial}. The chunks in the current context are often referred to as \emph{sources of activation}. $\varepsilon$ is a noise value ``generated according to a logistic distribution'' \cite[unit 4, p. 4]{actr_tutorial}. Figure \ref{fig:chunk_activation} illustrates the addition-fact $5 + 2 = 7$ with the corresponding quantities introduced in the last equation. 
 
 \begin{figure}[htb]
 \centering
@@ -397,50 +397,7 @@ where $W_j$ the \emph{attentional weighting} of chunk $j$, $S_{ji}$ the \emph{as
 \end{figure}
 
 The values for $W_j$ determine how much activation can spread from a single source of activation in the current context. A source of activation is a chunk in the goal buffer or in all buffers, %\footnote{This is called the current context: Usually it means the set of all chunks in all buffers, but there are definitions in literature, that only call the chunk in the goal buffer current context.}, 
-depending on the version of the ACT-R theory \cites[1042]{anderson_integrated_2004}[33]{taatgen_modeling_2006}[unit 5, p. 1]{actr_tutorial}. To limit the total amount of source of activation, $W_j$ is set to $\frac{1}{n}$, where $n$ is the number of sources of activation. With this equation, the total amount of activation that can spread over declarative memory is limited, since the more chunks are in the current context, the less important a particular connection between a chunk from the context with a chunk from declarative memory becomes. Figure \ref{fig:activation_spreading} illustrates the activation spreading process.
-
-\begin{figure}[htb]
-\centering
-\tikzstyle{chunk} = [ellipse, fill=blue!20, draw, text centered, text width=3em, minimum height=1cm]
-\tikzstyle{source} = [rectangle, fill=blue!20, draw, text centered, text width=3em, minimum height=1cm]
-\tikzstyle{buffer} = [rectangle, fill=yellow!20, draw, text centered, minimum height=1cm]
-\tikzstyle{empty} = [ellipse, text centered, text width=3em, minimum height=1cm]
-\tikzstyle{line} = [draw,diamond-latex]
-
-\begin{tikzpicture}[remember picture]
-\matrix[column sep=2cm,row sep=5mm] {
-&\node[source] (source1) {$\mathsf{source_1}$}; 
-& &
-\node[chunk] (c1) {$\mathsf{chunk_1}$};\\
-\node[buffer] (goal) {
-\begin{tikzpicture}
-\node (bufname) {\textbf{goal}};
-\node[below of=bufname] (slot1) {$\mathsf{slot_1}$};
-\node[below of=slot1] (slot2) {$\mathsf{slot_2}$};
-\end{tikzpicture}
-
-}; & & &
-\node[chunk] (c2) {$\mathsf{chunk_2}$};\\\
-&
-\node[source] (source2) {$\mathsf{source_2}$};
-& & \node[chunk] (c3) {$\mathsf{chunk_3}$};
-\\
-};
-
-\path[line] (slot1.east) -- node[above left] {$W_1$} (source1);
-\path[line] (source1.north east) -- node[above, near start] {$S_{1,1}$} (c1.west);
-\path[line] (source1.east) --  node[right, near start] {$S_{1,2}$} (c2.west);
-\path[line] (source1.south east) --  node[right, near start] {$S_{1,3}$} (c3.west);
-
-\path[line] (slot2.east) -- node[above right] {$W_2$} (source2);
-\path[line] (source2.north east) -- node[right, near start] {$S_{2,1}$} (c1.west);
-\path[line] (source2.east) --  node[below right, near start] {$S_{2,2}$} (c2.west);
-\path[line] (source2.south east) --  node[below right, near start] {$S_{2,3}$} (c3.west);
-\end{tikzpicture}
-\caption{}
-\label{fig:activation_spreading}
-\end{figure}
-
+depending on the version of the ACT-R theory \cites[1042]{anderson_integrated_2004}[33]{taatgen_modeling_2006}[unit 5, p. 1]{actr_tutorial}. To limit the total amount of source of activation, $W_j$ is set to $\frac{1}{n}$, where $n$ is the number of sources of activation. With this equation, the total amount of activation that can spread over declarative memory is limited, since the more chunks are in the current context, the less important a particular connection between a chunk from the context with a chunk from declarative memory becomes. 
 
 \paragraph{Strength of Association and Fan effect}
 \label{actr:fan_effect}
@@ -514,7 +471,49 @@ For every person the participants studied either one, two or three facts. Afterw
 
 The result of the experiment was, that the more facts are associated with a certain concept, the higher the retrieval time for a particular fact about that concept was.
 
-In the ACT-R theory, this result has been integrated in the calculation of the strengths of association: In equation \eqref{eq:assoc_strength} the associative strength decreases with the number of associated elements. The value $S$ is a model-dependent constant, but in many models estimated about 2 \cite[1042]{anderson_integrated_2004}. Modelers should take notice of setting $S$ high enough that all associative strengths in the model are positive \cite[unit 5, p. 3]{actr_tutorial}.
+In the ACT-R theory, this result has been integrated in the calculation of the strengths of association: In equation \eqref{eq:assoc_strength} the associative strength decreases with the number of associated elements. The value $S$ is a model-dependent constant, but in many models estimated about 2 \cite[1042]{anderson_integrated_2004}. Modelers should take notice of setting $S$ high enough that all associative strengths in the model are positive \cite[unit 5, p. 3]{actr_tutorial}. Figure \ref{fig:activation_spreading} illustrates the activation spreading process with respect to the associative strengths.
+
+\begin{figure}[htb]
+\centering
+\tikzstyle{chunk} = [ellipse, fill=blue!20, draw, text centered, text width=3em, minimum height=1cm]
+\tikzstyle{source} = [rectangle, fill=blue!20, draw, text centered, text width=3em, minimum height=1cm]
+\tikzstyle{buffer} = [rectangle, fill=yellow!20, draw, text centered, minimum height=1cm]
+\tikzstyle{empty} = [ellipse, text centered, text width=3em, minimum height=1cm]
+\tikzstyle{line} = [draw,diamond-latex]
+
+\begin{tikzpicture}[remember picture]
+\matrix[column sep=2cm,row sep=5mm] {
+&\node[source] (source1) {$\mathrm{source_1}$}; 
+& &
+\node[chunk] (c1) {$\mathrm{chunk_1}$};\\
+\node[buffer] (goal) {
+\begin{tikzpicture}
+\node (bufname) {\textbf{goal}};
+\node[below of=bufname] (slot1) {$\mathrm{slot_1}$};
+\node[below of=slot1] (slot2) {$\mathrm{slot_2}$};
+\end{tikzpicture}
+
+}; & & &
+\node[chunk] (c2) {$\mathrm{chunk_2}$};\\\
+&
+\node[source] (source2) {$\mathrm{source_2}$};
+& & \node[chunk] (c3) {$\mathrm{chunk_3}$};
+\\
+};
+
+\path[line] (slot1.east) -- node[above left] {$W_1$} (source1);
+\path[line] (source1.north east) -- node[above, near start] {$S_{1,1}$} (c1.west);
+\path[line] (source1.east) --  node[right, near start] {$S_{1,2}$} (c2.west);
+\path[line] (source1.south east) --  node[right, near start] {$S_{1,3}$} (c3.west);
+
+\path[line] (slot2.east) -- node[above right] {$W_2$} (source2);
+\path[line] (source2.north east) -- node[right, near start] {$S_{2,1}$} (c1.west);
+\path[line] (source2.east) --  node[below right, near start] {$S_{2,2}$} (c2.west);
+\path[line] (source2.south east) --  node[below right, near start] {$S_{2,3}$} (c3.west);
+\end{tikzpicture}
+\caption{The goal buffer holds a chunk with two slots wich therefore are sources of activation. The special arrows signify the spreading of activation from those sources to the chunks in the declarative memory. The attentional weighting values $W_1$ and $W_2$ determine how much of the overall amount of activation spreads from each single source. If there are only those two sources, the $W_i$ are set to $\frac{1}{2}$. From each source the activation may spread to the chunks in the declarative memory. The amount of spreading activation depends on the connection between the source chunk and the chunk in the memory. If the source chunk does not appear in the slots of a chunk, the value of the associative strength from the source $j$ to the chunk $i$ is $S_{ji} = 0$. Otherwise, if the source appears in the slots of a chunk, the associative strength depends on the fan value of the source chunk -- the higher the fan of the source, the lower the associative strength. I.e. if the source chunk appears in the slots of many chunks, the value of the associative strength will be lower than if the connection is exclusive.}
+\label{fig:activation_spreading}
+\end{figure}
 
 \subsubsection{Latency of Retrieval}
 

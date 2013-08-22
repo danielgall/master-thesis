@@ -663,7 +663,7 @@ on the LHS of a production rule can be translated to the following CHR rule head
 \subsection{The Production Rule Grammar}
 \label{implementation:production_rule_grammar}
 
-The discussed concepts lead to the following grammar for production rules, which is a simplified version of the actual grammar used in the original ACT-R implementation \cite[p. 162]{actr_reference}. 
+The discussed concepts lead to the following grammar for production rules, which is a simplified version of the actual grammar used in the original ACT-R implementation \cite[p. 162]{actr_reference}. Some of the details in this grammar that have not been discussed yet are presented in the following sections.
 
 
 \begin{lstlisting}[caption={The ACT-R production rule grammar}, label=lst:production_rule_grammar]
@@ -696,8 +696,6 @@ bound-variable ::= a variable which is used in the buffer-test conditions of the
 variable which names the buffer that is tested in a buffer-test or dynamic-buffer-test) or is bound with
 an explicit binding in the production
 \end{lstlisting}
-
-Some of the details in this grammar that have not been discussed yet are presented in the following.
 
 \subsubsection{The Order of Rule Applications}
 \label{implementation:rule_application_order}
