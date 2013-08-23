@@ -1,13 +1,11 @@
 \chapter{Implementation of ACT-R in CHR}
 \label{implementation}
 
-After the overview of the ACT-R theory in chapter \ref{actr_description}, this chapter goes more into detail and presents a possible implementation of the described concepts of the ACT-R theory in CHR, inspecting some implementational details of the theory and formalizing some basic concepts. Note that this work only regards the fundamental concepts of ACT-R and abstracts from some details. For example, the experiment environment as described in section~\ref{experiment_environment} is ignored.
+After the overview of the ACT-R theory in chapter \ref{actr_description}, this chapter gives a more detailed survey and presents a possible implementation of the described concepts of the ACT-R theory in CHR, inspecting some implementational details of the theory and formalizing some basic concepts. Note that this work only regards the fundamental concepts of ACT-R and abstracts from some details. For example, the experiment environment as described in section~\ref{experiment_environment} is ignored.
 
 For the implementation, some special cases and details that are not exactly defined in theory have to be considered. Hence, some concepts of the theory that are implemented in this work are formalized first. The implementation in form of CHR rules sticks to those formalisms and is often very similar to them.
 
-Additionally, the implementation is described incrementally, i.e. first, a very minimal subset of ACT-R is presented that will be refined gradually with the progress of this chapter. In the end, an overview of the actual implementation as a result of this work is given.
-
-Some of the definitions in this chapter result directly from the theory, some of them needed a further analysis of the official ACT-R 6.0 Reference Manual \cite{actr_reference} or the tutorials \cite{actr_tutorial}. 
+Additionally, the implementation is described incrementally, i.e. first, a very minimal subset of ACT-R is presented that will be refined gradually with the progress of this chapter. In the end, an overview of the actual implementation as a result of this work is given. Some of the definitions in this chapter result directly from the theory, some of them needed a further analysis of the official ACT-R 6.0 Reference Manual \cite{actr_reference} or the tutorials \cite{actr_tutorial}. 
 
 \section{Declarative and Procedural Knowledge}
 
@@ -15,21 +13,15 @@ The basic idea of the implementation is to represent declarative knowledge, work
 
 In addition to the production rules there will be rules that implement parts of the framework of ACT-R, for example rules that implement basic chunk operations like modifying or deleting chunks from declarative memory or a buffer. Those parts of the system are described as well as the central data structures and the translation.
 
-First, a formalization of declarative knowledge in form of chunk networks and their implementation in CHR is given. Then, the working memory -- also referred to as the buffer system -- is explored and the implementation is discussed. After those definitions of the basic data structures of ACT-R, the procedural system is described including the translation of ACT-R production rules to CHR rules using the previously defined data structures.
-
-Furthermore, the reproduction of ACT-Rs modular architecture is shown and the implementation of the declarative module is presented.
-
-After this overview of the basic concepts of ACT-R, the description goes into more detail about timing issues and the subsymbolic layer.
+First, a formalization of declarative knowledge in form of chunk networks and their implementation in CHR is given. Then, the working memory -- also referred to as the buffer system -- is explored and the implementation is discussed. After those definitions of the basic data structures of ACT-R, the procedural system is described including the translation of ACT-R production rules to CHR rules using the previously defined data structures. Furthermore, the reproduction of ACT-R's modular architecture is shown and the implementation of the declarative module is presented. After this overview of the basic concepts of ACT-R, the description goes into more detail about timing issues and the subsymbolic layer.
 
 \section{Chunk Stores}
 
-Since chunks are the central data-structure of ACT-R used for representation of declarative knowledge and to exchange information between modules and to state requests, this section first deals with this central part of ACT-R.
+Since chunks are the central data-structure of ACT-R used for representation of declarative knowledge, to exchange information between modules and to state requests, this section first deals with this essential part of ACT-R.
 
 \subsection{Formal Representation of Chunks}
 
-In multiple parts of ACT-R it is necessary to store chunks and then operate on them. Hence, the abstract data structure of such a chunk store is defined.
-
-Since chunk stores have been referred to as networks in the previous chapters, the general idea of this definition of a chunk store bases upon a relation that represents such a network.
+In multiple parts of ACT-R it is necessary to store chunks and then operate on them. Hence, the abstract data structure of such a chunk store is defined. Since chunk stores have been referred to as networks in the previous chapters, the general idea of this definition of a chunk store is based upon a relation that represents such a network.
 
 \begin{definition}[chunk-store]
 A \emph{chunk-store} $\Sigma$ is a tuple $(C,E,\mathcal{T},HasSlot,Isa)$, where $C$ is a set of chunks and $E$ a set of primitive elements, with $C \cap E = \emptyset$. $V = C \cup E \cup \{ \mathtt{nil} \}$ are the \emph{values} of~$\Sigma$ and $\mathcal{T}$ a set of chunk-types. A chunk-type $T = (t,S) \in \mathcal{T}$ is a tuple with a \emph{unique}\footnote{$\forall (t,S), (t',S') \in \mathcal{T}: t = t' \Rightarrow S = S'$ } type name $t$ and a set of slots $S$. The set of all slot-names is $\mathcal{S}$. 
@@ -68,7 +60,7 @@ The following methods can be defined over a chunk store $\Sigma = (C, E, \mathca
  \item[\texttt{chunk-type(name slot\textsubscript{1} slot\textsubscript{2} ... slot\textsubscript{n})}] is a method for defining a new type $T = (\mathtt{name},\{\mathtt{slot_1}, \dots, \mathtt{slot_n}\})$ which is added to the store, i.e. $\mathcal{T'} = \mathcal{T} \cup \{T\}$. 
  \item[\texttt{add-chunk(name isa type slot\textsubscript{1} val\textsubscript{1} ... slot\textsubscript{n} val\textsubscript{n})}] adds a chunk specified by a name and a list of slot-value pairs to the store, i.e. $C' = C \cup \{ \mathtt{name} \}$, $Isa' = Isa \enspace \cup \enspace (\mathtt{name}, (\mathtt{type}, slots(\mathtt{type}))$ and $HasSlot' = \bigcup_{i = 1}^n{\mathtt{(name,slot_i,val_i)}} \enspace \cup \enspace HasSlot.$ Note that due to the expansion of $C$, the condition that $C$ and $E$ have to be disjoint may be violated. To fix this violation, the element can be removed from $E$: $E' = (E \cup C) - (E \cap C).$ 
  
- Additionally, a valid mechanism to restore type-consistency may be introduced: It might happen, that not all slots are specified in the call of the \lstinline|add-chunk| method. Since it is claimed by the definition of $HasSlot$ that for all slots $s$ of a chunk $c$ there must be a $(c,s,v) \in HasSlot$, in implementations the unspecified slots are initialized as empty slots, represented by the empty value \lstinline|nil|. Furthermore, slots specified in the call of the method that are not a member of the chunk's type should cause an error to preserve type-consistency.
+ Additionally, a valid mechanism to restore type-consistency may be introduced: It might happen that not all slots are specified in the call of the \lstinline|add-chunk| method. Since it is claimed by the definition of $HasSlot$ that for all slots $s$ of a chunk $c$ there must be a $(c,s,v) \in HasSlot$, in implementations the unspecified slots are initialized as empty slots, represented by the empty value \lstinline|nil|. Furthermore, slots specified in the call of the method that are not a member of the chunk's type should cause an error to preserve type-consistency.
   \item[\texttt{alter-slot(name slot\textsubscript{1} val\textsubscript{1} ... slot\textsubscript{n} val\textsubscript{n})}] changes the values of the specified slots of a chunk identified by its name to new values. Only existing slots can be altered, but the list of slot-value pairs may be a partial chunk-description. The values of the slots not in the list remain at their old values.
   \item[\texttt{remove-chunk(name)}] removes the chunk with the given name from $C$ and all of its occurrences in $Isa$ and $HasSlot$.
   \item[\texttt{return-chunk(name)}] gets a chunk name as input and returns a chunk specification, i.e. the name, type and all slot-value pairs of this chunk in the store.
@@ -119,13 +111,13 @@ For the chunks:
 % chunk_has_slot(ChunkName, SlotName, Value)
 \end{lstlisting}
 
-The \lstinline|chunk/2| constraint represents both the set $C$ of chunks and the $Isa$ relation, since the presence of a constraint \lstinline|chunk(c,t)| signifies, that chunk \lstinline|c| is of a type $T = (\mathtt{t},S)$.
+The \lstinline|chunk/2| constraint represents both the set $C$ of chunks and the $Isa$ relation, since the presence of a constraint \lstinline|chunk(c,t)| signifies that chunk \lstinline|c| is of a type $T = (\mathtt{t},S)$.
 
 The $HasSlot$ relation is represented by the \lstinline|chunk_has_slot(c,s,v)| constraint, which really is just a direct translation of an element $(c,s,v) \in HasSlot$.
 
 Note that all values in the just presented constraints have to be ground. This is a demand claimed by the original ACT-R implementation and makes sense, since each value in a slot of a chunk is a real, ground value and the concept of variables does not have an advantage in this context, because every element that can be stored in the brain is assumed to be known by the brain.
 
-Additionally, from the definition of a chunk store it is known, that the $Isa$ relation has to be left-total. Therefore, for every chunk \lstinline|c| in the store, exactly one \lstinline|isa(c,t)| constraint has to be in the store. Due to type-consistency, for each \lstinline|chunk_type_has_slot(t,s)| constraint a \lstinline|chunk_has_slot(c,s,v)| constraint has to be defined. If it should be expressed that a chunk has an empty slot, the special chunk name \lstinline|nil| can be used as slot value to indicate that. Note that \lstinline|nil| must not be the name of a regular chunk or chunk-type.
+Additionally, from the definition of a chunk store it is known that the $Isa$ relation has to be left-total. Therefore, for every chunk \lstinline|c| in the store, exactly one \lstinline|isa(c,t)| constraint has to be in the store. Due to type-consistency, for each \lstinline|chunk_type_has_slot(t,s)| constraint a \lstinline|chunk_has_slot(c,s,v)| constraint has to be defined. If it should be expressed that a chunk has an empty slot, the special chunk name \lstinline|nil| can be used as slot value to indicate that. Note that \lstinline|nil| must not be the name of a regular chunk or chunk-type.
 
 \begin{example}
 \label{ex:addition_fact_chr}
@@ -276,10 +268,8 @@ This method replaces the value of an existing slot for a given chunk, but only i
 
 \begin{lstlisting}
 <<alter_slot(Chunk,Slot,Value), chunk_has_slot(Chunk,Slot,_)>> <=>
-  chunk_has_slot(Chunk,Slot,Value).
-  
-<<alter_slot(Chunk,Slot,Value)>> <=>
-  false.
+  chunk_has_slot(Chunk,Slot,Value).  
+<<alter_slot(Chunk,Slot,Value)>> <=> false.
 \end{lstlisting}
 
 The first rule replaces the existing \lstinline|chunk_has_slot| constraint by a new one. This is called \emph{destructive assignment} as described in \cite[32]{fru_chr_book_2009}. The second rule only matches, if the first did not match (due to the refined operational semantics of CHR). This is only the case, if it is tried to alter a slot with a non-existing \lstinline|chunk_has_slot| constraint. However, since the chunk descriptions are complete, the slot cannot be valid for the type of the chunk and the altering has to fail.
@@ -1153,8 +1143,66 @@ It is important to mention, that the received chunk will be created explicitly i
 
 \subsection{Components of the Implementation}
 
-uml component diagram + discussion
+As mentioned before, the implementation
 
+\begin{figure}[hp]
+\centering
+ \begin{tikzpicture}
+\begin{umlcomponent}{model}
+  \umlbasiccomponent[y=1.5]{user-defined rules}
+  \begin{umlcomponent}[x=5]{core}
+    \begin{umlcomponent}[y=-3]{buffers}
+        \umlbasiccomponent{chunk-store}
+    \end{umlcomponent}
+    \umlbasiccomponent[x=1.5,y=1]{stdlisp}
+  \end{umlcomponent}
+\end{umlcomponent}
+
+\begin{umlcomponent}[y=-8, x=5]{declarative module}
+        \umlbasiccomponent{chunk-store}
+\end{umlcomponent}
+
+\umlbasiccomponent[x=-0.8,y=-8]{scheduler}
+\umlbasiccomponent[x=5, y=-12]{configuration}
+
+
+%\umlrequiredinterface[distance=2cm, interface=IScheduler]{model}
+%\umlprovidedinterface[interface=IScheduler]{scheduler}
+
+\umlVHVassemblyconnector[interface=IScheduler, distance=3cm, with port, anchor1=south west, anchor2=north]{model}{scheduler}
+\umlport{core}{west}
+\umlassemblyconnector[anchor1=south west, anchor2=west]{model}{core}
+
+\umlassemblyconnector[padding=2cm,with port, interface=IObserver, anchor1=south west,anchor2=-230]{declarative module}{configuration}
+\umlassemblyconnector[with port, interface=IConfiguration, anchor1=south east, anchor2=-310]{declarative module}{configuration}
+\umlVHassemblyconnector[with port, interface=IConfiguration, anchor1=240, anchor2=west]{model}{configuration}
+
+\umlVHVassemblyconnector[anchor1=south, anchor2=70,with port, interface=IAddDM]{model}{declarative module}
+\umlport{core}{295}
+\umlassemblyconnector{model-south-port}{core-295-port}
+\umlassemblyconnector{core-295-port}{buffers-south-port}
+\umlVHVassemblyconnector[arm1=3.3cm]{core-295-port}{stdlisp-south-port}
+
+\umlport{model}{250}
+
+\umlport{buffers}{west}
+\umlport{core}{217}
+\umlHVassemblyconnector{buffers-west-port}{model-250-port}
+\umlport{declarative module}{140}
+\umlVHassemblyconnector[interface=IModule]{model-250-port}{declarative module-140-port}
+
+\umlport{core}{155}
+\umlport{user-defined rules}{east}
+\umlHVHassemblyconnector[interface=ICore]{user-defined rules-east-port}{core-155-port}
+
+\umlassemblyconnector[interface=IBuffers]{core-155-port}{buffers-north-port}
+\umlport{stdlisp}{west}
+\umlassemblyconnector[interface=ILispFunctions]{core-155-port}{stdlisp-west-port}
+
+\end{tikzpicture} 
+\caption{UML-Component Diagram of the implementation}
+\label{fig:component_diagram}
+\end{figure}
 
 
 \section{Declarative Module}
@@ -1851,14 +1899,14 @@ As noted before in section~\ref{distinction_elements_chunks} on page~\pageref{di
 
 \paragraph{Associative Weights}
 
-The activation calculation also depends on a contextual component, the associatiove weights. For a value $S_{ji}$, which describes the associative strength from a chunk $j$ to a chunk $i$, the following rules apply:
+The activation calculation also depends on a contextual component, the associative weights. For a value $S_{ji}$, which describes the associative strength from a chunk $j$ to a chunk $i$, the following rules apply:
 
-\begin{lstlisting}
+\begin{lstlisting}[escapeinside={(*@}{@*)}]
 <<fan(J,F), chunk(I,_), chunk_has_slot(I,_,J) \ calc_sji(J,I,Sji)>> <=> 
   <<<I \== J>>> | 
   Sji is 2 - log(F).
 
-<<calc_sji(_,_,Sji)>> <=> Sji=0.
+<<calc_sji(_,_,Sji)>> <=> Sji=0. (*@\label{lst:sji:no_connection}@*)
 \end{lstlisting}
 
 The \lstinline|calc_sji(J,I,Sji)| gets a chunk \lstinline|J| and a chunk \lstinline|I|, calculates their associative weight from \lstinline|J| to \lstinline|I| and binds it to \lstinline|Sji|. The first rule can be applied, if \lstinline|J| appears in the slots of chunk \lstinline|I|. Then, the associative weight is calculated according to equation~\eqref{eq:assoc_strength}:
@@ -1869,7 +1917,7 @@ S_{ji} = S - \mathrm{ln}(\mathrm{fan}_j)
 
 The value of $S$ is assumed to be $2$ in this rule; a configurable constant for $S$ as described in section~\ref{configuration} can be introduced easily.
 
-If \lstinline|J| does not appear in the slots of chunk \lstinline|I|, then $S_{ji} := 0$ by definition.
+If \lstinline|J| does not appear in the slots of chunk \lstinline|I|, then $S_{\mathtt{JI}} := 0$ by definition (line~\ref{lst:sji:no_connection}).
 
 \paragraph{Calculate the Overall-Activations}
 

@@ -256,7 +256,7 @@ Requests to the \emph{visual-location buffer} specify a series of constraints in
 
 Requests to the \emph{visual-object system} specify a visual location and the visual module will move its attention to that location, create a new chunk representing the object at that location and put that chunk into the visual buffer \cite[unit 2, chapter 2.5.3]{actr_tutorial}. 
 
-These two kinds of requests to the visual module are summarized in table~\ref{tab:visual_module_requests}.
+These two kinds of requests to the visual module are summarized in table~\ref{tab:visual_module_requests}. The visual system and its capabilities are described in detail in \cite[unit 2]{actr_tutorial} where also the implementational details of the system are regarded.
 
 \begin{table}[hbt]
 \caption{Requests to the visual module}
@@ -273,18 +273,14 @@ Output & Visual location & Visual object\\
 \end{center}
 \end{table}
 
-The visual system and its capabilities are described in detail in \cite[unit 2]{actr_tutorial} where also the implementational details of the system are regarded.
-
 \subsubsection{The Imaginal Module}
 \label{actr:imaginal_module}
 
-The imaginal module is capable of creating new chunks. This is useful, if for instance the visual module produces a lot of new information in sequence (like reading a sequence of letters), but the visual-object buffer can hold only one chunk at once. To solve this problem, all the information could be stored in the slots of the goal chunk. However, since a goal chunk with a large amount of slots seems to be unplausible\footnote{As described in section \ref{millers_number}, one should stick to $7 \pm 2$ slots for each chunk.} and the number of read instances would have to be known in advance due to the static chunk-type definition, a better way to deal with this problem is to create new knowledge elements.
+The imaginal module, described in \cite[unit 2]{actr_tutorial}, is capable of creating new chunks. This is useful, if for instance the visual module produces a lot of new information in sequence (like reading a sequence of letters), but the visual-object buffer can hold only one chunk at once. To solve this problem, all the information could be stored in the slots of the goal chunk. However, since a goal chunk with a large amount of slots seems to be unplausible\footnote{As described in section \ref{millers_number}, one should stick to $7 \pm 2$ slots for each chunk.} and the number of read instances would have to be known in advance due to the static chunk-type definition, a better way to deal with this problem is to create new knowledge elements.
 
 This task can be achieved by using the imaginal module: On a request, it creates a new chunk of the type and with the slots stated in the request and puts it into its \emph{imaginal buffer}. Since the chunk in a buffer is stored in the declarative memory when the buffer is cleared\footnote{see section \ref{description_of_proc_actions}}, an unlimited amount of data can be produced and remembered by stating retrieval requests later on.
 
 It is important to mention that it takes the imaginal module $.2\,\mathrm{ms}$ to create a chunk. This amount of time is constant, but can be set by the modeler. Additionally, the imaginal module can only produce one chunk at a time\footnote{like every module can only handle one request at a time}.
-
-The imaginal module is described in \cite[unit 2]{actr_tutorial}.
 
 \subsection{Example: Counting}
 \label{example_counting}
