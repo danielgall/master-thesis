@@ -1,13 +1,11 @@
 \chapter{Implementation of ACT-R in CHR}
 \label{implementation}
 
-After the overview of the ACT-R theory in chapter \ref{actr_description}, this chapter goes more into detail and presents a possible implementation of the described concepts of the ACT-R theory in CHR, inspecting some implementational details of the theory and formalizing some basic concepts. Note that this work only regards the fundamental concepts of ACT-R and abstracts from some details. For example, the experiment environment as described in section~\ref{experiment_environment} is ignored.
+After the overview of the ACT-R theory in chapter \ref{actr_description}, this chapter gives a more detailed survey and presents a possible implementation of the described concepts of the ACT-R theory in CHR, inspecting some implementational details of the theory and formalizing some basic concepts. Note that this work only regards the fundamental concepts of ACT-R and abstracts from some details. For example, the experiment environment as described in section~\ref{experiment_environment} is ignored.
 
 For the implementation, some special cases and details that are not exactly defined in theory have to be considered. Hence, some concepts of the theory that are implemented in this work are formalized first. The implementation in form of CHR rules sticks to those formalisms and is often very similar to them.
 
-Additionally, the implementation is described incrementally, i.e. first, a very minimal subset of ACT-R is presented that will be refined gradually with the progress of this chapter. In the end, an overview of the actual implementation as a result of this work is given.
-
-Some of the definitions in this chapter result directly from the theory, some of them needed a further analysis of the official ACT-R 6.0 Reference Manual \cite{actr_reference} or the tutorials \cite{actr_tutorial}. 
+Additionally, the implementation is described incrementally, i.e. first, a very minimal subset of ACT-R is presented that will be refined gradually with the progress of this chapter. In the end, an overview of the actual implementation as a result of this work is given. Some of the definitions in this chapter result directly from the theory, some of them needed a further analysis of the official ACT-R 6.0 Reference Manual \cite{actr_reference} or the tutorials \cite{actr_tutorial}. 
 
 \section{Declarative and Procedural Knowledge}
 
@@ -15,21 +13,16 @@ The basic idea of the implementation is to represent declarative knowledge, work
 
 In addition to the production rules there will be rules that implement parts of the framework of ACT-R, for example rules that implement basic chunk operations like modifying or deleting chunks from declarative memory or a buffer. Those parts of the system are described as well as the central data structures and the translation.
 
-First, a formalization of declarative knowledge in form of chunk networks and their implementation in CHR is given. Then, the working memory -- also referred to as the buffer system -- is explored and the implementation is discussed. After those definitions of the basic data structures of ACT-R, the procedural system is described including the translation of ACT-R production rules to CHR rules using the previously defined data structures.
-
-Furthermore, the reproduction of ACT-Rs modular architecture is shown and the implementation of the declarative module is presented.
-
-After this overview of the basic concepts of ACT-R, the description goes into more detail about timing issues and the subsymbolic layer.
+First, a formalization of declarative knowledge in form of chunk networks and their implementation in CHR is given. Then, the working memory -- also referred to as the buffer system -- is explored and the implementation is discussed. After those definitions of the basic data structures of ACT-R, the procedural system is described including the translation of ACT-R production rules to CHR rules using the previously defined data structures. Furthermore, the reproduction of ACT-R's modular architecture is shown and the implementation of the declarative module is presented. After this overview of the basic concepts of ACT-R, the description goes into more detail about timing issues and the subsymbolic layer.
 
 \section{Chunk Stores}
+\label{implementation:chunk_stores}
 
-Since chunks are the central data-structure of ACT-R used for representation of declarative knowledge and to exchange information between modules and to state requests, this section first deals with this central part of ACT-R.
+Since chunks are the central data-structure of ACT-R used for representation of declarative knowledge, to exchange information between modules and to state requests, this section first deals with this essential part of ACT-R.
 
 \subsection{Formal Representation of Chunks}
 
-In multiple parts of ACT-R it is necessary to store chunks and then operate on them. Hence, the abstract data structure of such a chunk store is defined.
-
-Since chunk stores have been referred to as networks in the previous chapters, the general idea of this definition of a chunk store bases upon a relation that represents such a network.
+In multiple parts of ACT-R it is necessary to store chunks and then operate on them. Hence, the abstract data structure of such a chunk store is defined. Since chunk stores have been referred to as networks in the previous chapters, the general idea of this definition of a chunk store is based upon a relation that represents such a network.
 
 \begin{definition}[chunk-store]
 A \emph{chunk-store} $\Sigma$ is a tuple $(C,E,\mathcal{T},HasSlot,Isa)$, where $C$ is a set of chunks and $E$ a set of primitive elements, with $C \cap E = \emptyset$. $V = C \cup E \cup \{ \mathtt{nil} \}$ are the \emph{values} of~$\Sigma$ and $\mathcal{T}$ a set of chunk-types. A chunk-type $T = (t,S) \in \mathcal{T}$ is a tuple with a \emph{unique}\footnote{$\forall (t,S), (t',S') \in \mathcal{T}: t = t' \Rightarrow S = S'$ } type name $t$ and a set of slots $S$. The set of all slot-names is $\mathcal{S}$. 
@@ -68,7 +61,7 @@ The following methods can be defined over a chunk store $\Sigma = (C, E, \mathca
  \item[\texttt{chunk-type(name slot\textsubscript{1} slot\textsubscript{2} ... slot\textsubscript{n})}] is a method for defining a new type $T = (\mathtt{name},\{\mathtt{slot_1}, \dots, \mathtt{slot_n}\})$ which is added to the store, i.e. $\mathcal{T'} = \mathcal{T} \cup \{T\}$. 
  \item[\texttt{add-chunk(name isa type slot\textsubscript{1} val\textsubscript{1} ... slot\textsubscript{n} val\textsubscript{n})}] adds a chunk specified by a name and a list of slot-value pairs to the store, i.e. $C' = C \cup \{ \mathtt{name} \}$, $Isa' = Isa \enspace \cup \enspace (\mathtt{name}, (\mathtt{type}, slots(\mathtt{type}))$ and $HasSlot' = \bigcup_{i = 1}^n{\mathtt{(name,slot_i,val_i)}} \enspace \cup \enspace HasSlot.$ Note that due to the expansion of $C$, the condition that $C$ and $E$ have to be disjoint may be violated. To fix this violation, the element can be removed from $E$: $E' = (E \cup C) - (E \cap C).$ 
  
- Additionally, a valid mechanism to restore type-consistency may be introduced: It might happen, that not all slots are specified in the call of the \lstinline|add-chunk| method. Since it is claimed by the definition of $HasSlot$ that for all slots $s$ of a chunk $c$ there must be a $(c,s,v) \in HasSlot$, in implementations the unspecified slots are initialized as empty slots, represented by the empty value \lstinline|nil|. Furthermore, slots specified in the call of the method that are not a member of the chunk's type should cause an error to preserve type-consistency.
+ Additionally, a valid mechanism to restore type-consistency may be introduced: It might happen that not all slots are specified in the call of the \lstinline|add-chunk| method. Since it is claimed by the definition of $HasSlot$ that for all slots $s$ of a chunk $c$ there must be a $(c,s,v) \in HasSlot$, in implementations the unspecified slots are initialized as empty slots, represented by the empty value \lstinline|nil|. Furthermore, slots specified in the call of the method that are not a member of the chunk's type should cause an error to preserve type-consistency.
   \item[\texttt{alter-slot(name slot\textsubscript{1} val\textsubscript{1} ... slot\textsubscript{n} val\textsubscript{n})}] changes the values of the specified slots of a chunk identified by its name to new values. Only existing slots can be altered, but the list of slot-value pairs may be a partial chunk-description. The values of the slots not in the list remain at their old values.
   \item[\texttt{remove-chunk(name)}] removes the chunk with the given name from $C$ and all of its occurrences in $Isa$ and $HasSlot$.
   \item[\texttt{return-chunk(name)}] gets a chunk name as input and returns a chunk specification, i.e. the name, type and all slot-value pairs of this chunk in the store.
@@ -119,13 +112,13 @@ For the chunks:
 % chunk_has_slot(ChunkName, SlotName, Value)
 \end{lstlisting}
 
-The \lstinline|chunk/2| constraint represents both the set $C$ of chunks and the $Isa$ relation, since the presence of a constraint \lstinline|chunk(c,t)| signifies, that chunk \lstinline|c| is of a type $T = (\mathtt{t},S)$.
+The \lstinline|chunk/2| constraint represents both the set $C$ of chunks and the $Isa$ relation, since the presence of a constraint \lstinline|chunk(c,t)| signifies that chunk \lstinline|c| is of a type $T = (\mathtt{t},S)$.
 
 The $HasSlot$ relation is represented by the \lstinline|chunk_has_slot(c,s,v)| constraint, which really is just a direct translation of an element $(c,s,v) \in HasSlot$.
 
 Note that all values in the just presented constraints have to be ground. This is a demand claimed by the original ACT-R implementation and makes sense, since each value in a slot of a chunk is a real, ground value and the concept of variables does not have an advantage in this context, because every element that can be stored in the brain is assumed to be known by the brain.
 
-Additionally, from the definition of a chunk store it is known, that the $Isa$ relation has to be left-total. Therefore, for every chunk \lstinline|c| in the store, exactly one \lstinline|isa(c,t)| constraint has to be in the store. Due to type-consistency, for each \lstinline|chunk_type_has_slot(t,s)| constraint a \lstinline|chunk_has_slot(c,s,v)| constraint has to be defined. If it should be expressed that a chunk has an empty slot, the special chunk name \lstinline|nil| can be used as slot value to indicate that. Note that \lstinline|nil| must not be the name of a regular chunk or chunk-type.
+Additionally, from the definition of a chunk store it is known that the $Isa$ relation has to be left-total. Therefore, for every chunk \lstinline|c| in the store, exactly one \lstinline|isa(c,t)| constraint has to be in the store. Due to type-consistency, for each \lstinline|chunk_type_has_slot(t,s)| constraint a \lstinline|chunk_has_slot(c,s,v)| constraint has to be defined. If it should be expressed that a chunk has an empty slot, the special chunk name \lstinline|nil| can be used as slot value to indicate that. Note that \lstinline|nil| must not be the name of a regular chunk or chunk-type.
 
 \begin{example}
 \label{ex:addition_fact_chr}
@@ -276,10 +269,8 @@ This method replaces the value of an existing slot for a given chunk, but only i
 
 \begin{lstlisting}
 <<alter_slot(Chunk,Slot,Value), chunk_has_slot(Chunk,Slot,_)>> <=>
-  chunk_has_slot(Chunk,Slot,Value).
-  
-<<alter_slot(Chunk,Slot,Value)>> <=>
-  false.
+  chunk_has_slot(Chunk,Slot,Value).  
+<<alter_slot(Chunk,Slot,Value)>> <=> false.
 \end{lstlisting}
 
 The first rule replaces the existing \lstinline|chunk_has_slot| constraint by a new one. This is called \emph{destructive assignment} as described in \cite[32]{fru_chr_book_2009}. The second rule only matches, if the first did not match (due to the refined operational semantics of CHR). This is only the case, if it is tried to alter a slot with a non-existing \lstinline|chunk_has_slot| constraint. However, since the chunk descriptions are complete, the slot cannot be valid for the type of the chunk and the altering has to fail.
@@ -328,6 +319,7 @@ Rules for checking those constraints could be added easily to the implementation
 The part of the system, where the computations are performed, is the procedural module. It is the central component, that holds all the production rules, the working memory (in the buffer system) and organizes communication between modules (through buffers and requests). In the following, all of those subcomponents of the procedural module are described.
 
 \subsection{Buffer System}
+\label{implementation:buffer_system}
 
 The buffer system can be regarded as a chunk-store, that is enhanced by buffers. A buffer can hold only one chunk at a time. The procedural module has a set $B$ of buffers, a chunk-store $\Sigma$ and a relation between the buffers and the chunks in $\Sigma$.
 
@@ -355,7 +347,7 @@ This rule ensures that only one \lstinline|buffer| constraint exists for each bu
 
 At the beginning of the program, a \lstinline|buffer| constraint has to be added for all the available buffers of the modules. This problem is discussed in section~\ref{initialization}.
 
-In addition, if a new chunk is put into a buffer, it also has to be present in the chunk-store, since the production system relies on the knowledge about the chunks in its buffers and chunks are essentially defined by their slots (\emph{consistency property} in definition~\ref{def:buffer_system}). Hence, every time a chunk is stored in a buffer, the \lstinline|add_chunk| method described in definition~\ref{def:abstract_methods_chunk_store} has to be called. However, the chunks in the slots are not loaded, since they are not present for working memory. They only appear as primitive elements in the chunk-store. Figure~\ref{fig:buffer_system} \FIXME{something's missing -> abbildung in meinen aufschrieben?}
+In addition, if a new chunk is put into a buffer, it also has to be present in the chunk-store, since the production system relies on the knowledge about the chunks in its buffers and chunks are essentially defined by their slots (\emph{consistency property} in definition~\ref{def:buffer_system}). Hence, every time a chunk is stored in a buffer, the \lstinline|add_chunk| method described in definition~\ref{def:abstract_methods_chunk_store} has to be called. However, the chunks in the slots are not loaded, since they are not present for working memory. They only appear as primitive elements in the chunk-store. Figure~\ref{fig:buffer_system} shows a buffer system which has two buffers. One of the buffers holds a chunk. Note, that the values $v_1$ and $v_2$ might be chunks themselves. However, their slots are not loaded to the chunk store and hence they only appear as primitive elements.
 
 \begin{figure}[htb]
 \centering
@@ -365,7 +357,7 @@ In addition, if a new chunk is put into a buffer, it also has to be present in t
 \tikzstyle{line} = [draw, -latex]
 
 \begin{tikzpicture}[node distance=4cm,auto]
-\matrix[row sep = 2cm] {
+\matrix[row sep = 1cm] {
 \node  {$B = \{$}; & 
 \node[buffer] (b1) {$b_1$}; &
 & \node[buffer] (b2) {$b_2$}; 
@@ -387,7 +379,7 @@ In addition, if a new chunk is put into a buffer, it also has to be present in t
 };
 
 \path[line] (b1) -- node[left] {$Holds$} (c);
-\path[line] (b2) -- node[left] {$Holds$} (nil);
+\path[line] (b2) -- node[right] {$Holds$} (nil);
 \path[line] (c) -- node[left] {$Isa$} (t);
 \path[line] (c) -- node[left] {$HasSlot$} (v1);
 \path[line] (c) -- node {$s_1$} (v1);
@@ -414,12 +406,13 @@ In CHR, a buffer state can be represented by a \lstinline|buffer_state(b,s)| con
 At the beginning of the program, when a buffer is created (a \lstinline|buffer| constraint is placed into the store), a corresponding \lstinline|buffer_state| constraint has to be added. The initial state can be set to \lstinline|free|, since no request is being computed at the time of creation.
 
 \subsection{Production Rules}
+\label{implementation:production_rules}
 
 Production rules consist of a \emph{condition} part and an \emph{action} part. Syntactically, in ACT-R the condition is separated from the action by \lstinline|==>|. Additionally, each production rule has a name. Thus, a rule is defined by:
 
-\begin{verbatim}
+\begin{lstlisting}
 (p name condition* ==> action*)
-\end{verbatim}
+\end{lstlisting}
 
 The condition part is also called the \emph{left hand side} of a rule (LHS) and the action part is called \emph{right hand side} (RHS).
 
@@ -663,7 +656,7 @@ on the LHS of a production rule can be translated to the following CHR rule head
 \subsection{The Production Rule Grammar}
 \label{implementation:production_rule_grammar}
 
-The discussed concepts lead to the following grammar for production rules, which is a simplified version of the actual grammar used in the original ACT-R implementation \cite[p. 162]{actr_reference}. 
+The discussed concepts lead to the following grammar for production rules, which is a simplified version of the actual grammar used in the original ACT-R implementation \cite[p. 162]{actr_reference}. Some of the details in this grammar that have not been discussed yet are presented in the following sections.
 
 
 \begin{lstlisting}[caption={The ACT-R production rule grammar}, label=lst:production_rule_grammar]
@@ -696,8 +689,6 @@ bound-variable ::= a variable which is used in the buffer-test conditions of the
 variable which names the buffer that is tested in a buffer-test or dynamic-buffer-test) or is bound with
 an explicit binding in the production
 \end{lstlisting}
-
-Some of the details in this grammar that have not been discussed yet are presented in the following.
 
 \subsubsection{The Order of Rule Applications}
 \label{implementation:rule_application_order}
@@ -1018,8 +1009,6 @@ For negated slot tests, this is not the case:
 
 matches also a chunk with an empty \lstinline|spam| slot (\lstinline|nil| in its \lstinline|spam| slot).
 
-
-
 \subsubsection{Outputs}
 
 The production system of ACT-R also provides methods to produce side-effects. In this work, only a subset of those methods is concerned: the outputs. Outputs can appear on the right hand side of an ACT-R rule:
@@ -1100,7 +1089,7 @@ Exported constraints can only appear once in a program, since they can be called
 
 The architecture of ACT-R provides an infrastructure for the procedural module to state requests to all the other modules. To implement this concept as general as possible, an interface has to be defined, which allows the adding of new modules to the system by just implementing this interface.
 
-\begin{lstlisting}[caption={Simple Interface ``Module''},label=lst:interface_module]
+\begin{lstlisting}[caption={Simple Interface \emph{IModule}},label=lst:interface_module]
 module_request(+BufName,+Chunk,-ResChunk,-ResState)
 \end{lstlisting}
 
@@ -1154,9 +1143,71 @@ When getting a buffer request, the buffer state is set to \lstinline|busy| first
 It is important to mention, that the received chunk will be created explicitly in the chunk store of the buffer system and therefore is a copy of a possibly existing identical chunk in the module that has been requested.
 
 \subsection{Components of the Implementation}
+\label{implementation:components}
 
-uml component diagram + discussion
+As mentioned before, the implementation is divided into modules which provide and require interfaces. Figure~\ref{fig:component_diagram} gives an overview of the architecture of the implementation as a component diagram. The main component is the \emph{model} which consists of \emph{user-defined rules}, that is the translated production rules as described in section~\ref{implementation:production_rules} and the ACT-R core. The core consists of the \emph{buffer system} (see section~\ref{implementation:buffer_system}) which implements a \emph{chunk-store} (see section~\ref{implementation:chunk_stores}) and a module \emph{stdlisp} which is capable of handling default lisp functions as described in section~\ref{lisp_functions}. The interface \emph{ICore} consists of the buffer interface -- which basically offers the access to the buffers and its contents for the matching and the buffer actions -- and the Lisp function interface as described in the aforementioned sections. Additionally, the core provides the constraints \lstinline|fire/0| and \lstinline|apply_rule/1| for reasons described in section~\ref{implementation:icore_interface} on page~\pageref{implementation:icore_interface}. Furthermore, the core uses the \emph{scheduler} module which provides the \emph{IScheduler} interface described in section~\ref{implementation:scheduler}. The configuration and the \emph{IConfiguration} and \emph{IObserver} interfaces are described in section~\ref{configuration}.
 
+lst:interface_module
+lst:imodule_final
+
+\begin{figure}[hp]
+\centering
+ \begin{tikzpicture}
+\begin{umlcomponent}{model}
+  \umlbasiccomponent[y=1.5]{user-defined rules}
+  \begin{umlcomponent}[x=5]{core}
+    \begin{umlcomponent}[y=-3]{buffers}
+        \umlbasiccomponent{chunk-store}
+    \end{umlcomponent}
+    \umlbasiccomponent[x=1.5,y=1]{stdlisp}
+  \end{umlcomponent}
+\end{umlcomponent}
+
+\begin{umlcomponent}[y=-8, x=5]{declarative module}
+        \umlbasiccomponent{chunk-store}
+\end{umlcomponent}
+
+\umlbasiccomponent[x=-0.8,y=-8]{scheduler}
+\umlbasiccomponent[x=5, y=-12]{configuration}
+
+
+%\umlrequiredinterface[distance=2cm, interface=IScheduler]{model}
+%\umlprovidedinterface[interface=IScheduler]{scheduler}
+
+\umlVHVassemblyconnector[interface=IScheduler, distance=3cm, with port, anchor1=south west, anchor2=north]{model}{scheduler}
+\umlport{core}{west}
+\umlassemblyconnector[anchor1=south west, anchor2=west]{model}{core}
+
+\umlassemblyconnector[padding=2cm,with port, interface=IObserver, anchor1=south west,anchor2=-230]{declarative module}{configuration}
+\umlassemblyconnector[with port, interface=IConfiguration, anchor1=south east, anchor2=-310]{declarative module}{configuration}
+\umlVHassemblyconnector[with port, interface=IConfiguration, anchor1=240, anchor2=west]{model}{configuration}
+
+\umlVHVassemblyconnector[anchor1=south, anchor2=70,with port, interface=IAddDM]{model}{declarative module}
+\umlport{core}{295}
+\umlassemblyconnector{model-south-port}{core-295-port}
+\umlassemblyconnector{core-295-port}{buffers-south-port}
+\umlVHVassemblyconnector[arm1=3.3cm]{core-295-port}{stdlisp-south-port}
+
+\umlport{model}{250}
+
+\umlport{buffers}{west}
+\umlport{core}{217}
+\umlHVassemblyconnector{buffers-west-port}{model-250-port}
+\umlport{declarative module}{140}
+\umlVHassemblyconnector[interface=IModule]{model-250-port}{declarative module-140-port}
+
+\umlport{core}{155}
+\umlport{user-defined rules}{east}
+\umlHVHassemblyconnector[interface=ICore]{user-defined rules-east-port}{core-155-port}
+
+\umlassemblyconnector[interface=IBuffers]{core-155-port}{buffers-north-port}
+\umlport{stdlisp}{west}
+\umlassemblyconnector[interface=ILispFunctions]{core-155-port}{stdlisp-west-port}
+
+\end{tikzpicture} 
+\caption{UML-Component Diagram of the implementation}
+\label{fig:component_diagram}
+\end{figure}
 
 
 \section{Declarative Module}
@@ -1401,7 +1452,7 @@ init @
   fire.
 \end{lstlisting}
 
-This example assumes that there are implmentation of the called methods that perform the partial initialization work. A typical initialization routine could create all buffers at first, then add all needed chunk-types (note, that this might include the artificial chunk-type \lstinline|chunk| as defined in section~\ref{distinction_elements_chunks} (see page~\pageref{distinction_elements_chunks}). Then the initial declarative memory chunks are added. The \lstinline|goal-focus| method selects a created chunk and copies it to the declarative memory. The adding of the \lstinline|fire| constraint eventually starts the computation after the initialization is finished as described in section~\ref{implementation:rule_application_order} (see page~\pageref{implementation:rule_application_order}).
+This example assumes that there are implementation of the called methods that perform the partial initialization work. A typical initialization routine could create all buffers at first, then add all needed chunk-types (note, that this might include the artificial chunk-type \lstinline|chunk| as defined in section~\ref{distinction_elements_chunks} (see page~\pageref{distinction_elements_chunks}). Then the initial declarative memory chunks are added. The \lstinline|goal-focus| method selects a created chunk and copies it to the declarative memory. The adding of the \lstinline|fire| constraint eventually starts the computation after the initialization is finished as described in section~\ref{implementation:rule_application_order} (see page~\pageref{implementation:rule_application_order}).
 
 \section{Timing in ACT-R}
 
@@ -1553,6 +1604,7 @@ This is correct: The first event will be the first event again, because its old 
 By the \lstinline|de_q| and \lstinline|add_q| actions it is ensured, that no garbage of the old event remains in the queue and the events are added correctly through an official method of the queue.
 
 \subsection{Scheduler}
+\label{implementation:scheduler}
 
 The scheduler component is an own module that manages events by feeding a priority queue and controls the recognize-act cycle. It also holds the current time of the system. 
 
@@ -1562,6 +1614,19 @@ The current time can be saved in a \lstinline|now/1| constraint. It is important
 
 Other modules can access the time only by a \lstinline|get_now/1| that only returns the current time saved in the \lstinline|now/1| constraint. The current time cannot be set from outside, but is determined by the last event dequeued from the priority queue.
 
+\subsubsection{Interface to the Scheduler}
+
+\begin{definition}{IScheduler}
+The \emph{IScheduler} interface provides the following methods:
+
+\begin{description}
+ \item[Queue Management] The methods \lstinline|add_q/3|, \lstinline|de_q/1| and \lstinline|after_next_event/1| which are described above provide access to the queue of the scheduler.
+ \item[Timings] The setting and getting of the time by \lstinline|get_now/1| and \lstinline|now/1|. The latter one should only be used once in the initialization. The setting of the current time is managed by the scheduler automatically.
+ \item[Start next cycle] The constraint \lstinline|nextcyc/0| is only used to initialize the first cycle and should not be used at a later point, since the management of the recognize-act-cycle is managed by the scheduler. 
+ \item[No rule] If no rule was applicable, the procedural module can trigger the \lstinline|no_rule/0| constraint which has effects to the next conflict resolution event, as mentioned before.
+\end{description}
+\end{definition}
+
 \subsubsection{Recognize-Act Cycle}
 \label{implementation:scheduler:recognize-act}
 
@@ -1570,6 +1635,23 @@ As described before, the procedural module can only fire one rule at a time. Whe
 After all events of the RHS have been added to the scheduler, the procedural module is free again and therefore the next rule can fire. The event of firing will be added to the priority queue as well by the \lstinline|fire| constraint at the end of each production rule. The rule will be added at the current time point, but with low priority, since it has to be ensured, that every action of the previously executed rule has been performed yet (in the sense that a corresponding event has been added at the specified time point). In many cases, no other rule will be applicable at this time, because most of the meaningful production rules have to wait for the results of the production rule before. 
 
 Many of the buffer actions are performed immediately, so an event with the current time point is added for the buffer modifications or clearings. They are performed in a certain order defined by their priority as shown in table~\ref{tab:action_priorities}. The request actions are performed at last, but they perform a buffer clearing immediately and then start their calculation which can take some time. 
+
+\begin{table}[htb]
+\begin{center}
+\caption{Priorities of buffer actions}
+\label{tab:action_priorities}
+\begin{tabular}{|l|l|}
+\hline
+Priority & Action\\
+\hline
+100 & Buffer modification\\
+50 & Module requests\\
+10 & Buffer clearings\\
+\hline
+\end{tabular}
+\end{center}
+\end{table}
+
 
 If no rule is applicable, the next time that a rule could be applicable is after having performed the next event. So, the next \lstinline|fire| event is scheduled directly after the first event in the queue. This simulates the behaviour that the procedural module stays ready to fire the next rule, without polling at every time point if a rule is applicable, but only reacting on changes to the buffer system. 
 
@@ -1689,12 +1771,16 @@ Note that this function adds the chunk-types both to the declarative module and 
 \subsection{Configuration Variables}
 \label{configuration}
 
-In ACT-R, configuration variables which control the behaviour of the architecture are set with the Lisp function \lstinline|(sgp :Var Val)|, which sets the variable \lstinline|Var| to \lstinline|Val|. To handle such configuration variables, a configuration module can be added to the CHR implementation, that offers an interface to set variables and to ask for their values:
+In ACT-R, configuration variables which control the behaviour of the architecture are set with the Lisp function \lstinline|(sgp :Var Val)|, which sets the variable \lstinline|Var| to \lstinline|Val|. To handle such configuration variables, a configuration module can be added to the CHR implementation, that offers the \emph{IConfiguration} interface to set variables and to ask for their values:
 
+\begin{definition}[IConfiguration]
+\label{def:iconfiguration}
+The interface \emph{IConfiguration} provides the following methods:
 \begin{description}
  \item[Set configuration variables] By calling \lstinline|set_conf(+Var,+Val)| the configuration variable \lstinline|Var| is set to the value \lstinline|Val|.
  \item[Get the value of a configuration variable] The call of \lstinline|get_conf(+Var,-Val)| binds the value of the configuration variable \lstinline|Var| to the argument \lstinline|Val|.
 \end{description}
+\end{definition}
 
 The \lstinline|(sgp ...)| call can then be translated to:
 
@@ -1718,7 +1804,7 @@ notify_all(Var), notify(Module,Var) ==> Module:update. % perform all pending not
 notify_all(_) <=> true. % no notifications pending -> Clean up
 \end{lstlisting}
 
-The constraint \lstinline|observer(Module,Var)| states that the module \lstinline|Module| observes the variable \lstinline|Var|. The observer modules have to declare a \lstinline|update/0| contraint which may trigger some action related to the change of a configuration variable.
+The constraint \lstinline|observer(Module,Var)| states that the module \lstinline|Module| observes the variable \lstinline|Var|. The observer modules have to declare a \lstinline|update/0| constraint which may trigger some action related to the change of a configuration variable.
 
 \section{Subsymbolic Layer}
 
@@ -1836,14 +1922,14 @@ As noted before in section~\ref{distinction_elements_chunks} on page~\pageref{di
 
 \paragraph{Associative Weights}
 
-The activation calculation also depends on a contextual component, the associatiove weights. For a value $S_{ji}$, which describes the associative strength from a chunk $j$ to a chunk $i$, the following rules apply:
+The activation calculation also depends on a contextual component, the associative weights. For a value $S_{ji}$, which describes the associative strength from a chunk $j$ to a chunk $i$, the following rules apply:
 
-\begin{lstlisting}
+\begin{lstlisting}[escapeinside={(*@}{@*)}]
 <<fan(J,F), chunk(I,_), chunk_has_slot(I,_,J) \ calc_sji(J,I,Sji)>> <=> 
   <<<I \== J>>> | 
   Sji is 2 - log(F).
 
-<<calc_sji(_,_,Sji)>> <=> Sji=0.
+<<calc_sji(_,_,Sji)>> <=> Sji=0. (*@\label{lst:sji:no_connection}@*)
 \end{lstlisting}
 
 The \lstinline|calc_sji(J,I,Sji)| gets a chunk \lstinline|J| and a chunk \lstinline|I|, calculates their associative weight from \lstinline|J| to \lstinline|I| and binds it to \lstinline|Sji|. The first rule can be applied, if \lstinline|J| appears in the slots of chunk \lstinline|I|. Then, the associative weight is calculated according to equation~\eqref{eq:assoc_strength}:
@@ -1854,7 +1940,7 @@ S_{ji} = S - \mathrm{ln}(\mathrm{fan}_j)
 
 The value of $S$ is assumed to be $2$ in this rule; a configurable constant for $S$ as described in section~\ref{configuration} can be introduced easily.
 
-If \lstinline|J| does not appear in the slots of chunk \lstinline|I|, then $S_{ji} := 0$ by definition.
+If \lstinline|J| does not appear in the slots of chunk \lstinline|I|, then $S_{\mathtt{JI}} := 0$ by definition (line~\ref{lst:sji:no_connection}).
 
 \paragraph{Calculate the Overall-Activations}
 
@@ -1931,7 +2017,7 @@ Requests that regard the subsymbolic layer need some additional information and 
 
 The interface from section~\ref{interface_for_module_requests} changes to:
 
-\begin{lstlisting}
+\begin{lstlisting}[label=lst:imodule_final, caption={The final version of the interface \emph{IModule}}]
 module_request(+BufName, +ChunkDef, +Context, -ResChunk, -ResState, -ResTime) 
 \end{lstlisting}
 
@@ -2061,9 +2147,7 @@ If there are competing strategies that match a current state, the production sys
 \subsubsection{Conflict Resolution}
 \label{implementation:conflict_resolution}
 
-In \cite[151\psqq]{fru_chr_book_2009} a general implementation of conflict resolution in CHR is described. This approach can be easily adapted to the needs of ACT-R.
-
-Replace every production rule
+In \cite[151\psqq]{fru_chr_book_2009} a general implementation of conflict resolution in CHR is described. This approach can be easily adapted to the needs of ACT-R. Replace every production rule
 
 \begin{lstlisting}
 <<{buffer tests} \ fire>> <=> {guard} | {actions}, conflict_resolution.
@@ -2207,7 +2291,10 @@ There are some methods to influence the conflict resolution process using the AC
  \item[Learning rate] The learning rate $\alpha$ is set by the command \lstinline|(sgp :alpha A)| that sets the configuration variable \lstinline|alpha| to \lstinline|A|.
 \end{description}
 
-\subsection{Extended Component Diagram}
+\subsubsection{Public Methods of the Conflict Resolution}
+\label{implementation:icore_interface}
+
+Since the scheduler has to have access to the constraints \lstinline|fire/0| and \lstinline|apply_rule/1| to control the timing conflict resolution, those constraints are added to the \emph{ICore} interface as described in section~\ref{implementation:components}. Additionally, the constraint \lstinline|set_production_utility/2| is added to the \emph{ICore} interface, because the utilities may be set from outside the procedural module initially.
 
 \section{Compiler}
 

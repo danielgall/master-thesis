@@ -150,122 +150,124 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {4.4.4}Components of the Implementation}{66}{subsection.4.4.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.5}Declarative Module}{68}{section.4.5}
+\contentsline {section}{\numberline {4.5}Declarative Module}{69}{section.4.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.5.1}Global Method for Adding Chunks}{68}{subsection.4.5.1}
+\contentsline {subsection}{\numberline {4.5.1}Global Method for Adding Chunks}{69}{subsection.4.5.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.5.2}Retrieval Requests}{68}{subsection.4.5.2}
+\contentsline {subsection}{\numberline {4.5.2}Retrieval Requests}{69}{subsection.4.5.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Chunk Patterns}{68}{section*.42}
+\contentsline {subsubsection}{Chunk Patterns}{69}{section*.42}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Finding Chunks}{69}{section*.43}
+\contentsline {subsubsection}{Finding Chunks}{70}{section*.43}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.5.3}Chunk Merging}{72}{subsection.4.5.3}
+\contentsline {subsection}{\numberline {4.5.3}Chunk Merging}{73}{subsection.4.5.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.6}Initialization}{75}{section.4.6}
+\contentsline {section}{\numberline {4.6}Initialization}{76}{section.4.6}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.7}Timing in ACT-R}{76}{section.4.7}
+\contentsline {section}{\numberline {4.7}Timing in ACT-R}{77}{section.4.7}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.7.1}Priority Queue}{77}{subsection.4.7.1}
+\contentsline {subsection}{\numberline {4.7.1}Priority Queue}{78}{subsection.4.7.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Objects}{77}{section*.44}
+\contentsline {subsubsection}{Objects}{78}{section*.44}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Representation of the Queue}{77}{section*.45}
+\contentsline {subsubsection}{Representation of the Queue}{78}{section*.45}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Special Operation for ACT-R}{79}{section*.46}
+\contentsline {subsubsection}{Special Operation for ACT-R}{80}{section*.46}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.7.2}Scheduler}{80}{subsection.4.7.2}
+\contentsline {subsection}{\numberline {4.7.2}Scheduler}{81}{subsection.4.7.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Current Time}{81}{section*.47}
+\contentsline {subsubsection}{Current Time}{82}{section*.47}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Recognize-Act Cycle}{81}{section*.48}
+\contentsline {subsubsection}{Interface to the Scheduler}{82}{section*.48}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Start Next Cycle}{82}{section*.49}
+\contentsline {subsubsection}{Recognize-Act Cycle}{82}{section*.49}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Call an Event}{83}{section*.50}
+\contentsline {paragraph}{Start Next Cycle}{84}{section*.50}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Changing the Buffer System}{83}{section*.51}
+\contentsline {paragraph}{Call an Event}{84}{section*.51}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Production Rules}{83}{section*.52}
+\contentsline {paragraph}{Changing the Buffer System}{84}{section*.52}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.8}Lisp Functions}{84}{section.4.8}
+\contentsline {paragraph}{Production Rules}{85}{section*.53}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.8.1}General Translation}{84}{subsection.4.8.1}
+\contentsline {section}{\numberline {4.8}Lisp Functions}{86}{section.4.8}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.8.2}Configuration Variables}{85}{subsection.4.8.2}
+\contentsline {subsection}{\numberline {4.8.1}General Translation}{86}{subsection.4.8.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{The Observer Pattern}{85}{section*.53}
+\contentsline {subsection}{\numberline {4.8.2}Configuration Variables}{86}{subsection.4.8.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.9}Subsymbolic Layer}{86}{section.4.9}
+\contentsline {subsubsection}{The Observer Pattern}{87}{section*.54}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.9.1}Activation of Chunks}{86}{subsection.4.9.1}
+\contentsline {section}{\numberline {4.9}Subsymbolic Layer}{88}{section.4.9}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Base-Level Learning}{86}{section*.54}
+\contentsline {subsection}{\numberline {4.9.1}Activation of Chunks}{88}{subsection.4.9.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Presentations of a Chunk}{87}{section*.55}
+\contentsline {subsubsection}{Base-Level Learning}{88}{section*.55}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Calculating the Base-Level Value}{87}{section*.56}
+\contentsline {paragraph}{Presentations of a Chunk}{88}{section*.56}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Fan Values}{89}{section*.57}
+\contentsline {paragraph}{Calculating the Base-Level Value}{89}{section*.57}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Associative Weights}{90}{section*.58}
+\contentsline {paragraph}{Fan Values}{91}{section*.58}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Calculate the Overall-Activations}{90}{section*.59}
+\contentsline {paragraph}{Associative Weights}{91}{section*.59}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Threshold and Maximum}{92}{section*.60}
+\contentsline {paragraph}{Calculate the Overall-Activations}{92}{section*.60}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{New Module Request Interface}{93}{section*.61}
+\contentsline {paragraph}{Threshold and Maximum}{93}{section*.61}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Adapting the Retrieval Request}{95}{section*.62}
+\contentsline {paragraph}{New Module Request Interface}{94}{section*.62}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Configuration of the Retrieval}{96}{section*.63}
+\contentsline {paragraph}{Adapting the Retrieval Request}{96}{section*.63}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.9.2}Conflict Resolution and Production Utility}{97}{subsection.4.9.2}
+\contentsline {subsubsection}{Configuration of the Retrieval}{97}{section*.64}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Conflict Resolution}{97}{section*.64}
+\contentsline {subsection}{\numberline {4.9.2}Conflict Resolution and Production Utility}{98}{subsection.4.9.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Computing the Utility Values}{100}{section*.65}
+\contentsline {subsubsection}{Conflict Resolution}{98}{section*.65}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Configuration of the Conflict Resolution}{101}{section*.66}
+\contentsline {subsubsection}{Computing the Utility Values}{102}{section*.66}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.9.3}Extended Component Diagram}{102}{subsection.4.9.3}
+\contentsline {subsubsection}{Configuration of the Conflict Resolution}{103}{section*.67}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {4.10}Compiler}{102}{section.4.10}
+\contentsline {subsubsection}{Public Methods of the Conflict Resolution}{103}{section*.68}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.10.1}Basic Idea}{102}{subsection.4.10.1}
+\contentsline {section}{\numberline {4.10}Compiler}{104}{section.4.10}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.10.2}Compiling}{102}{subsection.4.10.2}
+\contentsline {subsection}{\numberline {4.10.1}Basic Idea}{104}{subsection.4.10.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Tokenizer}{103}{section*.67}
+\contentsline {subsection}{\numberline {4.10.2}Compiling}{104}{subsection.4.10.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Parser}{106}{section*.68}
+\contentsline {subsubsection}{Tokenizer}{104}{section*.69}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Translation Component}{107}{section*.69}
+\contentsline {subsubsection}{Parser}{108}{section*.70}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.10.3}Problems with the Current Implementation}{107}{subsection.4.10.3}
+\contentsline {subsubsection}{Translation Component}{109}{section*.71}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {5}Example Models}{109}{chapter.5}
+\contentsline {subsection}{\numberline {4.10.3}Problems with the Current Implementation}{109}{subsection.4.10.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.1}The Counting Model}{109}{section.5.1}
+\contentsline {chapter}{\numberline {5}Example Models}{111}{chapter.5}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {5.2}The Semantic Model}{124}{section.5.2}
+\contentsline {section}{\numberline {5.1}The Counting Model}{111}{section.5.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {6}Conclusion}{127}{chapter.6}
+\contentsline {section}{\numberline {5.2}The Semantic Model}{126}{section.5.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Inventory and Future Work}{127}{section*.70}
+\contentsline {chapter}{\numberline {6}Conclusion}{129}{chapter.6}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {A}CD Content}{129}{appendix.A}
+\contentsline {paragraph}{Inventory and Future Work}{129}{section*.72}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {B}Source Codes}{131}{appendix.B}
+\contentsline {chapter}{\numberline {A}CD Content}{131}{appendix.A}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {C}Grammar for Production Rules}{133}{appendix.C}
+\contentsline {chapter}{\numberline {B}Source Codes}{133}{appendix.B}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {D}Executable Examples}{135}{appendix.D}
+\contentsline {chapter}{\numberline {C}Grammar for Production Rules}{135}{appendix.C}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {D.1}Rule Order}{135}{section.D.1}
+\contentsline {chapter}{\numberline {D}Executable Examples}{137}{appendix.D}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {D.2}Subsymbolic Layer}{137}{section.D.2}
+\contentsline {section}{\numberline {D.1}Rule Order}{137}{section.D.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {D.3}Semantic Model}{137}{section.D.3}
+\contentsline {section}{\numberline {D.2}Subsymbolic Layer}{139}{section.D.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{Bibliography}{139}{appendix*.71}
+\contentsline {section}{\numberline {D.3}Semantic Model}{139}{section.D.3}
+\defcounter {refsection}{0}\relax 
+\contentsline {chapter}{Bibliography}{141}{appendix*.73}

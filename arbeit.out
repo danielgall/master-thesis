@@ -75,36 +75,37 @@
 \BOOKMARK [3][-]{section*.46}{Special Operation for ACT-R}{subsection.4.7.1}% 75
 \BOOKMARK [2][-]{subsection.4.7.2}{Scheduler}{section.4.7}% 76
 \BOOKMARK [3][-]{section*.47}{Current Time}{subsection.4.7.2}% 77
-\BOOKMARK [3][-]{section*.48}{Recognize-Act Cycle}{subsection.4.7.2}% 78
-\BOOKMARK [1][-]{section.4.8}{Lisp Functions}{chapter.4}% 79
-\BOOKMARK [2][-]{subsection.4.8.1}{General Translation}{section.4.8}% 80
-\BOOKMARK [2][-]{subsection.4.8.2}{Configuration Variables}{section.4.8}% 81
-\BOOKMARK [3][-]{section*.53}{The Observer Pattern}{subsection.4.8.2}% 82
-\BOOKMARK [1][-]{section.4.9}{Subsymbolic Layer}{chapter.4}% 83
-\BOOKMARK [2][-]{subsection.4.9.1}{Activation of Chunks}{section.4.9}% 84
-\BOOKMARK [3][-]{section*.54}{Base-Level Learning}{subsection.4.9.1}% 85
-\BOOKMARK [3][-]{section*.63}{Configuration of the Retrieval}{subsection.4.9.1}% 86
-\BOOKMARK [2][-]{subsection.4.9.2}{Conflict Resolution and Production Utility}{section.4.9}% 87
-\BOOKMARK [3][-]{section*.64}{Conflict Resolution}{subsection.4.9.2}% 88
-\BOOKMARK [3][-]{section*.65}{Computing the Utility Values}{subsection.4.9.2}% 89
-\BOOKMARK [3][-]{section*.66}{Configuration of the Conflict Resolution}{subsection.4.9.2}% 90
-\BOOKMARK [2][-]{subsection.4.9.3}{Extended Component Diagram}{section.4.9}% 91
-\BOOKMARK [1][-]{section.4.10}{Compiler}{chapter.4}% 92
-\BOOKMARK [2][-]{subsection.4.10.1}{Basic Idea}{section.4.10}% 93
-\BOOKMARK [2][-]{subsection.4.10.2}{Compiling}{section.4.10}% 94
-\BOOKMARK [3][-]{section*.67}{Tokenizer}{subsection.4.10.2}% 95
-\BOOKMARK [3][-]{section*.68}{Parser}{subsection.4.10.2}% 96
-\BOOKMARK [3][-]{section*.69}{Translation Component}{subsection.4.10.2}% 97
-\BOOKMARK [2][-]{subsection.4.10.3}{Problems with the Current Implementation}{section.4.10}% 98
-\BOOKMARK [0][-]{chapter.5}{Example Models}{}% 99
-\BOOKMARK [1][-]{section.5.1}{The Counting Model}{chapter.5}% 100
-\BOOKMARK [1][-]{section.5.2}{The Semantic Model}{chapter.5}% 101
-\BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 102
-\BOOKMARK [0][-]{appendix.A}{CD Content}{}% 103
-\BOOKMARK [0][-]{appendix.B}{Source Codes}{}% 104
-\BOOKMARK [0][-]{appendix.C}{Grammar for Production Rules}{}% 105
-\BOOKMARK [0][-]{appendix.D}{Executable Examples}{}% 106
-\BOOKMARK [1][-]{section.D.1}{Rule Order}{appendix.D}% 107
-\BOOKMARK [1][-]{section.D.2}{Subsymbolic Layer}{appendix.D}% 108
-\BOOKMARK [1][-]{section.D.3}{Semantic Model}{appendix.D}% 109
-\BOOKMARK [0][-]{appendix*.71}{Bibliography}{}% 110
+\BOOKMARK [3][-]{section*.48}{Interface to the Scheduler}{subsection.4.7.2}% 78
+\BOOKMARK [3][-]{section*.49}{Recognize-Act Cycle}{subsection.4.7.2}% 79
+\BOOKMARK [1][-]{section.4.8}{Lisp Functions}{chapter.4}% 80
+\BOOKMARK [2][-]{subsection.4.8.1}{General Translation}{section.4.8}% 81
+\BOOKMARK [2][-]{subsection.4.8.2}{Configuration Variables}{section.4.8}% 82
+\BOOKMARK [3][-]{section*.54}{The Observer Pattern}{subsection.4.8.2}% 83
+\BOOKMARK [1][-]{section.4.9}{Subsymbolic Layer}{chapter.4}% 84
+\BOOKMARK [2][-]{subsection.4.9.1}{Activation of Chunks}{section.4.9}% 85
+\BOOKMARK [3][-]{section*.55}{Base-Level Learning}{subsection.4.9.1}% 86
+\BOOKMARK [3][-]{section*.64}{Configuration of the Retrieval}{subsection.4.9.1}% 87
+\BOOKMARK [2][-]{subsection.4.9.2}{Conflict Resolution and Production Utility}{section.4.9}% 88
+\BOOKMARK [3][-]{section*.65}{Conflict Resolution}{subsection.4.9.2}% 89
+\BOOKMARK [3][-]{section*.66}{Computing the Utility Values}{subsection.4.9.2}% 90
+\BOOKMARK [3][-]{section*.67}{Configuration of the Conflict Resolution}{subsection.4.9.2}% 91
+\BOOKMARK [3][-]{section*.68}{Public Methods of the Conflict Resolution}{subsection.4.9.2}% 92
+\BOOKMARK [1][-]{section.4.10}{Compiler}{chapter.4}% 93
+\BOOKMARK [2][-]{subsection.4.10.1}{Basic Idea}{section.4.10}% 94
+\BOOKMARK [2][-]{subsection.4.10.2}{Compiling}{section.4.10}% 95
+\BOOKMARK [3][-]{section*.69}{Tokenizer}{subsection.4.10.2}% 96
+\BOOKMARK [3][-]{section*.70}{Parser}{subsection.4.10.2}% 97
+\BOOKMARK [3][-]{section*.71}{Translation Component}{subsection.4.10.2}% 98
+\BOOKMARK [2][-]{subsection.4.10.3}{Problems with the Current Implementation}{section.4.10}% 99
+\BOOKMARK [0][-]{chapter.5}{Example Models}{}% 100
+\BOOKMARK [1][-]{section.5.1}{The Counting Model}{chapter.5}% 101
+\BOOKMARK [1][-]{section.5.2}{The Semantic Model}{chapter.5}% 102
+\BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 103
+\BOOKMARK [0][-]{appendix.A}{CD Content}{}% 104
+\BOOKMARK [0][-]{appendix.B}{Source Codes}{}% 105
+\BOOKMARK [0][-]{appendix.C}{Grammar for Production Rules}{}% 106
+\BOOKMARK [0][-]{appendix.D}{Executable Examples}{}% 107
+\BOOKMARK [1][-]{section.D.1}{Rule Order}{appendix.D}% 108
+\BOOKMARK [1][-]{section.D.2}{Subsymbolic Layer}{appendix.D}% 109
+\BOOKMARK [1][-]{section.D.3}{Semantic Model}{appendix.D}% 110
+\BOOKMARK [0][-]{appendix*.73}{Bibliography}{}% 111

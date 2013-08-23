@@ -344,6 +344,7 @@
 \abx@aux@page{115}{33}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {4.1}Declarative and Procedural Knowledge}{33}{section.4.1}}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {4.2}Chunk Stores}{34}{section.4.2}}
+\newlabel{implementation:chunk_stores}{{4.2}{34}{Chunk Stores}{section.4.2}{}}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.2.1}Formal Representation of Chunks}{34}{subsection.4.2.1}}
 \newlabel{def:abstract_methods_chunk_store}{{4.2}{35}{abstract methods of a chunk store}{definition.4.2}{}}
 \newlabel{ex:addition_fact_formal}{{4.1}{35}{}{example.4.1}{}}
@@ -370,6 +371,7 @@
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {4.3}Procedural Module}{43}{section.4.3}}
 \newlabel{implementation:procedural_module}{{4.3}{43}{Procedural Module}{section.4.3}{}}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.1}Buffer System}{43}{subsection.4.3.1}}
+\newlabel{implementation:buffer_system}{{4.3.1}{43}{Buffer System}{subsection.4.3.1}{}}
 \newlabel{def:buffer_system}{{4.3}{43}{buffer system}{definition.4.3}{}}
 \citation{fru_chr_book_2009}
 \citation{actr_tutorial}
@@ -382,6 +384,7 @@
 \abx@aux@page{118}{45}
 \citation{actr_reference}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.3.2}Production Rules}{46}{subsection.4.3.2}}
+\newlabel{implementation:production_rules}{{4.3.2}{46}{Production Rules}{subsection.4.3.2}{}}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{The Left Hand Side of a Rule}{46}{section*.27}}
 \abx@aux@page{119}{46}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{The Right Hand Side of a Rule}{47}{section*.28}}
@@ -427,224 +430,234 @@
 \@writefile{lol}{\defcounter {refsection}{0}\relax }\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.8}Definition of Module 2}{64}{lstlisting.4.8}}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.2}Interface for Module Requests}{65}{subsection.4.4.2}}
 \newlabel{interface_for_module_requests}{{4.4.2}{65}{Interface for Module Requests}{subsection.4.4.2}{}}
-\newlabel{lst:interface_module}{{4.9}{65}{Simple Interface ``Module''}{lstlisting.4.9}{}}
-\@writefile{lol}{\defcounter {refsection}{0}\relax }\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.9}Simple Interface ``Module''}{65}{lstlisting.4.9}}
+\newlabel{lst:interface_module}{{4.9}{65}{Simple Interface \emph {IModule}}{lstlisting.4.9}{}}
+\@writefile{lol}{\defcounter {refsection}{0}\relax }\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.9}Simple Interface \emph  {IModule}}{65}{lstlisting.4.9}}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.3}How the Buffer System States a Request}{65}{subsection.4.4.3}}
 \newlabel{how_the_buffer_system_states_a_request}{{4.4.3}{65}{How the Buffer System States a Request}{subsection.4.4.3}{}}
 \newlabel{lst:retrieval_request_symbolic}{{4.10}{66}{Retrieval Request in CHR}{lstlisting.4.10}{}}
 \@writefile{lol}{\defcounter {refsection}{0}\relax }\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.10}Retrieval Request in CHR}{66}{lstlisting.4.10}}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.4.4}Components of the Implementation}{66}{subsection.4.4.4}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {4.5}Declarative Module}{68}{section.4.5}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.1}Global Method for Adding Chunks}{68}{subsection.4.5.1}}
-\newlabel{global_method_for_adding_chunks}{{4.5.1}{68}{Global Method for Adding Chunks}{subsection.4.5.1}{}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.2}Retrieval Requests}{68}{subsection.4.5.2}}
-\newlabel{retrieval_requests}{{4.5.2}{68}{Retrieval Requests}{subsection.4.5.2}{}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Chunk Patterns}{68}{section*.42}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Finding Chunks}{69}{section*.43}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.3}Chunk Merging}{72}{subsection.4.5.3}}
+\newlabel{implementation:components}{{4.4.4}{66}{Components of the Implementation}{subsection.4.4.4}{}}
+\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {\relax 4.2}{\ignorespaces UML-Component Diagram of the implementation}}{68}{figure.4.2}}
+\newlabel{fig:component_diagram}{{\relax 4.2}{68}{UML-Component Diagram of the implementation}{figure.4.2}{}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {4.5}Declarative Module}{69}{section.4.5}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.1}Global Method for Adding Chunks}{69}{subsection.4.5.1}}
+\newlabel{global_method_for_adding_chunks}{{4.5.1}{69}{Global Method for Adding Chunks}{subsection.4.5.1}{}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.2}Retrieval Requests}{69}{subsection.4.5.2}}
+\newlabel{retrieval_requests}{{4.5.2}{69}{Retrieval Requests}{subsection.4.5.2}{}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Chunk Patterns}{69}{section*.42}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Finding Chunks}{70}{section*.43}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.5.3}Chunk Merging}{73}{subsection.4.5.3}}
 \citation{actr_reference}
-\abx@aux@page{125}{75}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {4.6}Initialization}{75}{section.4.6}}
-\newlabel{initialization}{{4.6}{75}{Initialization}{section.4.6}{}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {4.7}Timing in ACT-R}{76}{section.4.7}}
-\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {\relax 4.2}{\ignorespaces The scheduler stores the events $e_i$ with their corresponding times $t_i$ in a queue which is sorted by the times. If an event should be executed, the first event $e_1$ of the queue is removed. The current time is set to the time $t_1$ and the event is executed.}}{76}{figure.4.2}}
-\newlabel{fig:scheduler}{{\relax 4.2}{76}{The scheduler stores the events $e_i$ with their corresponding times $t_i$ in a queue which is sorted by the times. If an event should be executed, the first event $e_1$ of the queue is removed. The current time is set to the time $t_1$ and the event is executed}{figure.4.2}{}}
+\abx@aux@page{125}{76}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {4.6}Initialization}{76}{section.4.6}}
+\newlabel{initialization}{{4.6}{76}{Initialization}{section.4.6}{}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {4.7}Timing in ACT-R}{77}{section.4.7}}
+\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {\relax 4.3}{\ignorespaces The scheduler stores the events $e_i$ with their corresponding times $t_i$ in a queue which is sorted by the times. If an event should be executed, the first event $e_1$ of the queue is removed. The current time is set to the time $t_1$ and the event is executed.}}{77}{figure.4.3}}
+\newlabel{fig:scheduler}{{\relax 4.3}{77}{The scheduler stores the events $e_i$ with their corresponding times $t_i$ in a queue which is sorted by the times. If an event should be executed, the first event $e_1$ of the queue is removed. The current time is set to the time $t_1$ and the event is executed}{figure.4.3}{}}
 \citation{fru_chr_book_2009}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.7.1}Priority Queue}{77}{subsection.4.7.1}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Objects}{77}{section*.44}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Representation of the Queue}{77}{section*.45}}
-\abx@aux@page{126}{77}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Special Operation for ACT-R}{79}{section*.46}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.7.2}Scheduler}{80}{subsection.4.7.2}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Current Time}{81}{section*.47}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Recognize-Act Cycle}{81}{section*.48}}
-\newlabel{implementation:scheduler:recognize-act}{{4.7.2}{81}{Recognize-Act Cycle}{section*.48}{}}
-\@writefile{lot}{\defcounter {refsection}{0}\relax }\@writefile{lot}{\contentsline {table}{\numberline {\relax 4.1}{\ignorespaces Priorities of buffer actions}}{82}{table.4.1}}
-\newlabel{tab:action_priorities}{{\relax 4.1}{82}{Priorities of buffer actions}{table.4.1}{}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Start Next Cycle}{82}{section*.49}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Call an Event}{83}{section*.50}}
-\newlabel{changing_the_buffer_system}{{4.7.2}{83}{Changing the Buffer System}{section*.51}{}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Changing the Buffer System}{83}{section*.51}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Production Rules}{83}{section*.52}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {4.8}Lisp Functions}{84}{section.4.8}}
-\newlabel{lisp_functions}{{4.8}{84}{Lisp Functions}{section.4.8}{}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.8.1}General Translation}{84}{subsection.4.8.1}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.8.2}Configuration Variables}{85}{subsection.4.8.2}}
-\newlabel{configuration}{{4.8.2}{85}{Configuration Variables}{subsection.4.8.2}{}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{The Observer Pattern}{85}{section*.53}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {4.9}Subsymbolic Layer}{86}{section.4.9}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.9.1}Activation of Chunks}{86}{subsection.4.9.1}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Base-Level Learning}{86}{section*.54}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Presentations of a Chunk}{87}{section*.55}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Calculating the Base-Level Value}{87}{section*.56}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Fan Values}{89}{section*.57}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Associative Weights}{90}{section*.58}}
-\newlabel{lst:sji:no_connection}{{5}{90}{Associative Weights}{lstnumber.-94.5}{}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Calculate the Overall-Activations}{90}{section*.59}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.7.1}Priority Queue}{78}{subsection.4.7.1}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Objects}{78}{section*.44}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Representation of the Queue}{78}{section*.45}}
+\abx@aux@page{126}{78}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Special Operation for ACT-R}{80}{section*.46}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.7.2}Scheduler}{81}{subsection.4.7.2}}
+\newlabel{implementation:scheduler}{{4.7.2}{81}{Scheduler}{subsection.4.7.2}{}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Current Time}{82}{section*.47}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Interface to the Scheduler}{82}{section*.48}}
+\newlabel{def:ischeduler}{{4.5}{82}{IScheduler}{definition.4.5}{}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Recognize-Act Cycle}{82}{section*.49}}
+\newlabel{implementation:scheduler:recognize-act}{{4.7.2}{82}{Recognize-Act Cycle}{section*.49}{}}
+\@writefile{lot}{\defcounter {refsection}{0}\relax }\@writefile{lot}{\contentsline {table}{\numberline {\relax 4.1}{\ignorespaces Priorities of buffer actions}}{83}{table.4.1}}
+\newlabel{tab:action_priorities}{{\relax 4.1}{83}{Priorities of buffer actions}{table.4.1}{}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Start Next Cycle}{84}{section*.50}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Call an Event}{84}{section*.51}}
+\newlabel{changing_the_buffer_system}{{4.7.2}{84}{Changing the Buffer System}{section*.52}{}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Changing the Buffer System}{84}{section*.52}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Production Rules}{85}{section*.53}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {4.8}Lisp Functions}{86}{section.4.8}}
+\newlabel{lisp_functions}{{4.8}{86}{Lisp Functions}{section.4.8}{}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.8.1}General Translation}{86}{subsection.4.8.1}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.8.2}Configuration Variables}{86}{subsection.4.8.2}}
+\newlabel{configuration}{{4.8.2}{86}{Configuration Variables}{subsection.4.8.2}{}}
+\newlabel{def:iconfiguration}{{4.6}{86}{IConfiguration}{definition.4.6}{}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{The Observer Pattern}{87}{section*.54}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {4.9}Subsymbolic Layer}{88}{section.4.9}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.9.1}Activation of Chunks}{88}{subsection.4.9.1}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Base-Level Learning}{88}{section*.55}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Presentations of a Chunk}{88}{section*.56}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Calculating the Base-Level Value}{89}{section*.57}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Fan Values}{91}{section*.58}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Associative Weights}{91}{section*.59}}
+\newlabel{lst:sji:no_connection}{{5}{91}{Associative Weights}{lstnumber.-94.5}{}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Calculate the Overall-Activations}{92}{section*.60}}
+\newlabel{lst:calc_activations:context}{{7}{92}{Calculate the Overall-Activations}{lstnumber.-95.7}{}}
+\newlabel{lst:calc_activations:attentional1}{{9}{92}{Calculate the Overall-Activations}{lstnumber.-95.9}{}}
+\newlabel{lst:calc_activations:attentional2}{{10}{92}{Calculate the Overall-Activations}{lstnumber.-95.10}{}}
+\newlabel{lst:calc_activations:final}{{11}{92}{Calculate the Overall-Activations}{lstnumber.-95.11}{}}
+\newlabel{lst:calc_activations:max}{{12}{92}{Calculate the Overall-Activations}{lstnumber.-95.12}{}}
 \citation{fru_chr_book_2009}
-\newlabel{lst:calc_activations:context}{{7}{91}{Calculate the Overall-Activations}{lstnumber.-95.7}{}}
-\newlabel{lst:calc_activations:attentional1}{{9}{91}{Calculate the Overall-Activations}{lstnumber.-95.9}{}}
-\newlabel{lst:calc_activations:attentional2}{{10}{91}{Calculate the Overall-Activations}{lstnumber.-95.10}{}}
-\newlabel{lst:calc_activations:final}{{11}{91}{Calculate the Overall-Activations}{lstnumber.-95.11}{}}
-\newlabel{lst:calc_activations:max}{{12}{91}{Calculate the Overall-Activations}{lstnumber.-95.12}{}}
-\newlabel{lst:max_activation}{{4.11}{91}{Calculate highest activation of all matching chunks}{lstlisting.4.11}{}}
-\@writefile{lol}{\defcounter {refsection}{0}\relax }\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.11}Calculate highest activation of all matching chunks}{91}{lstlisting.4.11}}
-\abx@aux@page{127}{91}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Threshold and Maximum}{92}{section*.60}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{New Module Request Interface}{93}{section*.61}}
-\@writefile{lol}{\defcounter {refsection}{0}\relax }\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.12}Schedule the start of a buffer request}{93}{lstlisting.4.12}}
-\newlabel{lst:schedule_buffer_request}{{4.13}{93}{Execute the buffer request and schedule time the result is applied}{lstlisting.4.13}{}}
-\@writefile{lol}{\defcounter {refsection}{0}\relax }\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.13}Execute the buffer request and schedule time the result is applied}{93}{lstlisting.4.13}}
-\newlabel{lst:schedule_buffer_request:context}{{7}{94}{Execute the buffer request and schedule time the result is applied}{lstnumber.4.13.7}{}}
-\@writefile{lol}{\defcounter {refsection}{0}\relax }\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.14}Apply the results of the buffer request}{94}{lstlisting.4.14}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Adapting the Retrieval Request}{95}{section*.62}}
-\newlabel{lst:retrieval_request_subsymbolic:find_chunk1}{{2}{95}{Adapting the Retrieval Request}{lstnumber.-98.2}{}}
-\newlabel{lst:retrieval_request_subsymbolic:find_chunk2}{{3}{95}{Adapting the Retrieval Request}{lstnumber.-98.3}{}}
-\newlabel{lst:retrieval_request_subsymbolic:calc_activations}{{4}{95}{Adapting the Retrieval Request}{lstnumber.-98.4}{}}
-\newlabel{lst:retrieval_request_subsymbolic:threshold1}{{6}{95}{Adapting the Retrieval Request}{lstnumber.-98.6}{}}
-\newlabel{lst:retrieval_request_subsymbolic:threshold2}{{7}{95}{Adapting the Retrieval Request}{lstnumber.-98.7}{}}
-\newlabel{lst:retrieval_request_subsymbolic:max}{{9}{95}{Adapting the Retrieval Request}{lstnumber.-98.9}{}}
-\newlabel{lst:retrieval_request_subsymbolic:return_chunk}{{11}{95}{Adapting the Retrieval Request}{lstnumber.-98.11}{}}
-\newlabel{lst:retrieval_request_subsymbolic:get_state}{{12}{95}{Adapting the Retrieval Request}{lstnumber.-98.12}{}}
-\newlabel{lst:retrieval_request_subsymbolic:calc_time}{{13}{95}{Adapting the Retrieval Request}{lstnumber.-98.13}{}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Configuration of the Retrieval}{96}{section*.63}}
+\newlabel{lst:max_activation}{{4.11}{93}{Calculate highest activation of all matching chunks}{lstlisting.4.11}{}}
+\@writefile{lol}{\defcounter {refsection}{0}\relax }\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.11}Calculate highest activation of all matching chunks}{93}{lstlisting.4.11}}
+\abx@aux@page{127}{93}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Threshold and Maximum}{93}{section*.61}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{New Module Request Interface}{94}{section*.62}}
+\newlabel{lst:imodule_final}{{4.12}{94}{The final version of the interface \emph {IModule}}{lstlisting.4.12}{}}
+\@writefile{lol}{\defcounter {refsection}{0}\relax }\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.12}The final version of the interface \emph  {IModule}}{94}{lstlisting.4.12}}
+\@writefile{lol}{\defcounter {refsection}{0}\relax }\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.13}Schedule the start of a buffer request}{95}{lstlisting.4.13}}
+\newlabel{lst:schedule_buffer_request}{{4.14}{95}{Execute the buffer request and schedule time the result is applied}{lstlisting.4.14}{}}
+\@writefile{lol}{\defcounter {refsection}{0}\relax }\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.14}Execute the buffer request and schedule time the result is applied}{95}{lstlisting.4.14}}
+\newlabel{lst:schedule_buffer_request:context}{{7}{95}{Execute the buffer request and schedule time the result is applied}{lstnumber.4.14.7}{}}
+\@writefile{lol}{\defcounter {refsection}{0}\relax }\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.15}Apply the results of the buffer request}{95}{lstlisting.4.15}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Adapting the Retrieval Request}{96}{section*.63}}
+\newlabel{lst:retrieval_request_subsymbolic:find_chunk1}{{2}{96}{Adapting the Retrieval Request}{lstnumber.-97.2}{}}
+\newlabel{lst:retrieval_request_subsymbolic:find_chunk2}{{3}{96}{Adapting the Retrieval Request}{lstnumber.-97.3}{}}
+\newlabel{lst:retrieval_request_subsymbolic:calc_activations}{{4}{96}{Adapting the Retrieval Request}{lstnumber.-97.4}{}}
+\newlabel{lst:retrieval_request_subsymbolic:threshold1}{{6}{96}{Adapting the Retrieval Request}{lstnumber.-97.6}{}}
+\newlabel{lst:retrieval_request_subsymbolic:threshold2}{{7}{96}{Adapting the Retrieval Request}{lstnumber.-97.7}{}}
+\newlabel{lst:retrieval_request_subsymbolic:max}{{9}{96}{Adapting the Retrieval Request}{lstnumber.-97.9}{}}
+\newlabel{lst:retrieval_request_subsymbolic:return_chunk}{{11}{96}{Adapting the Retrieval Request}{lstnumber.-97.11}{}}
+\newlabel{lst:retrieval_request_subsymbolic:get_state}{{12}{96}{Adapting the Retrieval Request}{lstnumber.-97.12}{}}
+\newlabel{lst:retrieval_request_subsymbolic:calc_time}{{13}{96}{Adapting the Retrieval Request}{lstnumber.-97.13}{}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Configuration of the Retrieval}{97}{section*.64}}
 \citation{fru_chr_book_2009}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.9.2}Conflict Resolution and Production Utility}{97}{subsection.4.9.2}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Conflict Resolution}{97}{section*.64}}
-\newlabel{implementation:conflict_resolution}{{4.9.2}{97}{Conflict Resolution}{section*.64}{}}
-\abx@aux@page{128}{97}
-\newlabel{lst:conflict_resolution_scheme}{{4.15}{97}{Translation scheme for production rules regarding conflict resolution}{lstlisting.4.15}{}}
-\@writefile{lol}{\defcounter {refsection}{0}\relax }\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.15}Translation scheme for production rules regarding conflict resolution}{97}{lstlisting.4.15}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.9.2}Conflict Resolution and Production Utility}{98}{subsection.4.9.2}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Conflict Resolution}{98}{section*.65}}
+\newlabel{implementation:conflict_resolution}{{4.9.2}{98}{Conflict Resolution}{section*.65}{}}
+\abx@aux@page{128}{98}
+\newlabel{lst:conflict_resolution_scheme}{{4.16}{99}{Translation scheme for production rules regarding conflict resolution}{lstlisting.4.16}{}}
+\@writefile{lol}{\defcounter {refsection}{0}\relax }\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.16}Translation scheme for production rules regarding conflict resolution}{99}{lstlisting.4.16}}
 \citation{actr_reference}
 \citation{fru_chr_book_2009}
 \citation{fru_chr_book_2009}
-\abx@aux@page{129}{99}
-\abx@aux@page{130}{99}
-\abx@aux@fnpage{131}{99}
 \citation{fru_chr_book_2009}
 \citation{abdennadher_sts_chr13}
-\abx@aux@page{132}{100}
-\abx@aux@page{133}{100}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Computing the Utility Values}{100}{section*.65}}
-\newlabel{lst:trigger_reward}{{4.9.2}{101}{}{lstlisting.4.-112}{}}
-\newlabel{lst:trigger_reward:learning}{{4}{101}{}{lstnumber.-112.4}{}}
-\newlabel{lst:trigger_reward:calc_reward}{{7}{101}{}{lstnumber.-112.7}{}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Configuration of the Conflict Resolution}{101}{section*.66}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.9.3}Extended Component Diagram}{102}{subsection.4.9.3}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {4.10}Compiler}{102}{section.4.10}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.10.1}Basic Idea}{102}{subsection.4.10.1}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.10.2}Compiling}{102}{subsection.4.10.2}}
+\abx@aux@page{129}{101}
+\abx@aux@page{130}{101}
+\abx@aux@page{132}{101}
+\abx@aux@page{133}{101}
+\abx@aux@fnpage{131}{101}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Computing the Utility Values}{102}{section*.66}}
+\newlabel{lst:trigger_reward}{{4.9.2}{102}{}{lstlisting.4.-111}{}}
+\newlabel{lst:trigger_reward:learning}{{4}{102}{}{lstnumber.-111.4}{}}
+\newlabel{lst:trigger_reward:calc_reward}{{7}{102}{}{lstnumber.-111.7}{}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Configuration of the Conflict Resolution}{103}{section*.67}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Public Methods of the Conflict Resolution}{103}{section*.68}}
+\newlabel{implementation:icore_interface}{{4.9.2}{103}{Public Methods of the Conflict Resolution}{section*.68}{}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {4.10}Compiler}{104}{section.4.10}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.10.1}Basic Idea}{104}{subsection.4.10.1}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.10.2}Compiling}{104}{subsection.4.10.2}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Tokenizer}{104}{section*.69}}
 \citation{prolog_tokenizer}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Tokenizer}{103}{section*.67}}
-\abx@aux@page{134}{104}
-\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {\relax 4.3}{\ignorespaces The finite automaton implemented by the tokenizer. The labels of the arrows are sets of symbols, e.g. \emph  {letter} denotes all characters that are letters. The class \emph  {break} is the union of the classes \emph  {white-space}, \emph  {keyword} and \emph  {special character}.}}{104}{figure.4.3}}
-\newlabel{fig:tokenizer_automaton}{{\relax 4.3}{104}{The finite automaton implemented by the tokenizer. The labels of the arrows are sets of symbols, e.g. \emph {letter} denotes all characters that are letters. The class \emph {break} is the union of the classes \emph {white-space}, \emph {keyword} and \emph {special character}}{figure.4.3}{}}
+\abx@aux@page{134}{105}
+\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {\relax 4.4}{\ignorespaces The finite automaton implemented by the tokenizer. The labels of the arrows are sets of symbols, e.g. \emph  {letter} denotes all characters that are letters. The class \emph  {break} is the union of the classes \emph  {white-space}, \emph  {keyword} and \emph  {special character}.}}{106}{figure.4.4}}
+\newlabel{fig:tokenizer_automaton}{{\relax 4.4}{106}{The finite automaton implemented by the tokenizer. The labels of the arrows are sets of symbols, e.g. \emph {letter} denotes all characters that are letters. The class \emph {break} is the union of the classes \emph {white-space}, \emph {keyword} and \emph {special character}}{figure.4.4}{}}
 \citation{ogb_dcg}
 \citation{chr_homepage}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Parser}{106}{section*.68}}
-\abx@aux@page{135}{106}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Translation Component}{107}{section*.69}}
-\abx@aux@page{136}{107}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.10.3}Problems with the Current Implementation}{107}{subsection.4.10.3}}
-\newlabel{implementation:compiler:problems}{{4.10.3}{107}{Problems with the Current Implementation}{subsection.4.10.3}{}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Parser}{108}{section*.70}}
+\abx@aux@page{135}{108}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Translation Component}{109}{section*.71}}
+\abx@aux@page{136}{109}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.10.3}Problems with the Current Implementation}{109}{subsection.4.10.3}}
+\newlabel{implementation:compiler:problems}{{4.10.3}{109}{Problems with the Current Implementation}{subsection.4.10.3}{}}
 \citation{actr_tutorial}
 \citation{actr_tutorial}
 \citation{actr_tutorial}
 \citation{actr_tutorial}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {chapter}{\numberline {5}Example Models}{109}{chapter.5}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {chapter}{\numberline {5}Example Models}{111}{chapter.5}}
 \@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\defcounter {refsection}{0}\relax }\@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{lol}{\defcounter {refsection}{0}\relax }\@writefile{lol}{\addvspace {10\p@ }}
-\newlabel{example_models}{{5}{109}{Example Models}{chapter.5}{}}
-\abx@aux@page{138}{109}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {5.1}The Counting Model}{109}{section.5.1}}
-\abx@aux@page{140}{109}
-\newlabel{exmod:lst:example_counting}{{5.1}{109}{ACT-R code of the counting example}{lstlisting.5.1}{}}
-\@writefile{lol}{\defcounter {refsection}{0}\relax }\@writefile{lol}{\contentsline {lstlisting}{\numberline {5.1}ACT-R code of the counting example}{109}{lstlisting.5.1}}
-\newlabel{exmod:lst:example_counting:define_model}{{1}{109}{ACT-R code of the counting example}{lstnumber.5.1.1}{}}
-\newlabel{exmod:lst:example_counting:chunk_type}{{3}{109}{ACT-R code of the counting example}{lstnumber.5.1.3}{}}
-\newlabel{exmod:lst:example_counting:add_dm}{{6}{109}{ACT-R code of the counting example}{lstnumber.5.1.6}{}}
-\newlabel{exmod:lst:example_counting:add_dm_end}{{13}{109}{ACT-R code of the counting example}{lstnumber.5.1.13}{}}
-\newlabel{exmod:lst:example_counting:start}{{15}{109}{ACT-R code of the counting example}{lstnumber.5.1.15}{}}
-\newlabel{exmod:lst:example_counting:increment}{{28}{110}{ACT-R code of the counting example}{lstnumber.5.1.28}{}}
-\newlabel{exmod:lst:example_counting:stop}{{46}{110}{ACT-R code of the counting example}{lstnumber.5.1.46}{}}
-\newlabel{exmod:lst:example_counting:goal_focus}{{57}{110}{ACT-R code of the counting example}{lstnumber.5.1.57}{}}
-\newlabel{exmod:lst:example_counting_chr}{{5.2}{112}{Auto-generated CHR code of the counting example}{lstlisting.5.2}{}}
-\@writefile{lol}{\defcounter {refsection}{0}\relax }\@writefile{lol}{\contentsline {lstlisting}{\numberline {5.2}Auto-generated CHR code of the counting example}{112}{lstlisting.5.2}}
-\newlabel{exmod:lst:example_counting_chr:init}{{83}{114}{Auto-generated CHR code of the counting example}{lstnumber.5.2.83}{}}
-\newlabel{exmod:lst:example_counting_chr:no_rule}{{102}{115}{Auto-generated CHR code of the counting example}{lstnumber.5.2.102}{}}
+\newlabel{example_models}{{5}{111}{Example Models}{chapter.5}{}}
+\abx@aux@page{138}{111}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {5.1}The Counting Model}{111}{section.5.1}}
+\abx@aux@page{140}{111}
+\newlabel{exmod:lst:example_counting}{{5.1}{111}{ACT-R code of the counting example}{lstlisting.5.1}{}}
+\@writefile{lol}{\defcounter {refsection}{0}\relax }\@writefile{lol}{\contentsline {lstlisting}{\numberline {5.1}ACT-R code of the counting example}{111}{lstlisting.5.1}}
+\newlabel{exmod:lst:example_counting:define_model}{{1}{111}{ACT-R code of the counting example}{lstnumber.5.1.1}{}}
+\newlabel{exmod:lst:example_counting:chunk_type}{{3}{111}{ACT-R code of the counting example}{lstnumber.5.1.3}{}}
+\newlabel{exmod:lst:example_counting:add_dm}{{6}{111}{ACT-R code of the counting example}{lstnumber.5.1.6}{}}
+\newlabel{exmod:lst:example_counting:add_dm_end}{{13}{111}{ACT-R code of the counting example}{lstnumber.5.1.13}{}}
+\newlabel{exmod:lst:example_counting:start}{{15}{111}{ACT-R code of the counting example}{lstnumber.5.1.15}{}}
+\newlabel{exmod:lst:example_counting:increment}{{28}{112}{ACT-R code of the counting example}{lstnumber.5.1.28}{}}
+\newlabel{exmod:lst:example_counting:stop}{{46}{112}{ACT-R code of the counting example}{lstnumber.5.1.46}{}}
+\newlabel{exmod:lst:example_counting:goal_focus}{{57}{112}{ACT-R code of the counting example}{lstnumber.5.1.57}{}}
+\newlabel{exmod:lst:example_counting_chr}{{5.2}{114}{Auto-generated CHR code of the counting example}{lstlisting.5.2}{}}
+\@writefile{lol}{\defcounter {refsection}{0}\relax }\@writefile{lol}{\contentsline {lstlisting}{\numberline {5.2}Auto-generated CHR code of the counting example}{114}{lstlisting.5.2}}
+\newlabel{exmod:lst:example_counting_chr:init}{{83}{116}{Auto-generated CHR code of the counting example}{lstnumber.5.2.83}{}}
+\newlabel{exmod:lst:example_counting_chr:no_rule}{{102}{117}{Auto-generated CHR code of the counting example}{lstnumber.5.2.102}{}}
 \citation{actr_tutorial}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {5.2}The Semantic Model}{124}{section.5.2}}
-\abx@aux@page{141}{124}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {5.2}The Semantic Model}{126}{section.5.2}}
+\abx@aux@page{141}{126}
 \citation{actr_tutorial}
-\abx@aux@page{142}{125}
+\abx@aux@page{142}{127}
 \citation{agi_reference}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {chapter}{\numberline {6}Conclusion}{127}{chapter.6}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {chapter}{\numberline {6}Conclusion}{129}{chapter.6}}
 \@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\defcounter {refsection}{0}\relax }\@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{lol}{\defcounter {refsection}{0}\relax }\@writefile{lol}{\addvspace {10\p@ }}
-\newlabel{conclusion}{{6}{127}{Conclusion}{chapter.6}{}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Inventory and Future Work}{127}{section*.70}}
-\abx@aux@page{143}{128}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {chapter}{\numberline {A}CD Content}{129}{appendix.A}}
+\newlabel{conclusion}{{6}{129}{Conclusion}{chapter.6}{}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Inventory and Future Work}{129}{section*.72}}
+\abx@aux@page{143}{130}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {chapter}{\numberline {A}CD Content}{131}{appendix.A}}
 \@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\defcounter {refsection}{0}\relax }\@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{lol}{\defcounter {refsection}{0}\relax }\@writefile{lol}{\addvspace {10\p@ }}
-\newlabel{appendix:cd_content}{{A}{129}{CD Content}{appendix.A}{}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {chapter}{\numberline {B}Source Codes}{131}{appendix.B}}
+\newlabel{appendix:cd_content}{{A}{131}{CD Content}{appendix.A}{}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {chapter}{\numberline {B}Source Codes}{133}{appendix.B}}
 \@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\defcounter {refsection}{0}\relax }\@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{lol}{\defcounter {refsection}{0}\relax }\@writefile{lol}{\addvspace {10\p@ }}
 \citation{actr_reference}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {chapter}{\numberline {C}Grammar for Production Rules}{133}{appendix.C}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {chapter}{\numberline {C}Grammar for Production Rules}{135}{appendix.C}}
 \@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\defcounter {refsection}{0}\relax }\@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{lol}{\defcounter {refsection}{0}\relax }\@writefile{lol}{\addvspace {10\p@ }}
-\abx@aux@page{144}{133}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {chapter}{\numberline {D}Executable Examples}{135}{appendix.D}}
+\abx@aux@page{144}{135}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {chapter}{\numberline {D}Executable Examples}{137}{appendix.D}}
 \@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\defcounter {refsection}{0}\relax }\@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{lol}{\defcounter {refsection}{0}\relax }\@writefile{lol}{\addvspace {10\p@ }}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {D.1}Rule Order}{135}{section.D.1}}
-\newlabel{app:ex:rule_order}{{D.1}{135}{Rule Order}{section.D.1}{}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {D.2}Subsymbolic Layer}{137}{section.D.2}}
-\newlabel{app:ex:subsymbolic_layer}{{D.2}{137}{Subsymbolic Layer}{section.D.2}{}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {D.3}Semantic Model}{137}{section.D.3}}
-\newlabel{app:ex:semantic_model}{{D.3}{137}{Semantic Model}{section.D.3}{}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {chapter}{Bibliography}{139}{appendix*.71}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {D.1}Rule Order}{137}{section.D.1}}
+\newlabel{app:ex:rule_order}{{D.1}{137}{Rule Order}{section.D.1}{}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {D.2}Subsymbolic Layer}{139}{section.D.2}}
+\newlabel{app:ex:subsymbolic_layer}{{D.2}{139}{Subsymbolic Layer}{section.D.2}{}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {D.3}Semantic Model}{139}{section.D.3}}
+\newlabel{app:ex:semantic_model}{{D.3}{139}{Semantic Model}{section.D.3}{}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {chapter}{Bibliography}{141}{appendix*.73}}
 \@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\addvspace {10\p@ }}
 \@writefile{lot}{\defcounter {refsection}{0}\relax }\@writefile{lot}{\addvspace {10\p@ }}
 \@writefile{lol}{\defcounter {refsection}{0}\relax }\@writefile{lol}{\addvspace {10\p@ }}
-\abx@aux@page{145}{139}
-\abx@aux@page{146}{139}
-\abx@aux@page{147}{139}
-\abx@aux@page{148}{139}
-\abx@aux@page{149}{139}
-\abx@aux@page{150}{139}
-\abx@aux@page{151}{139}
-\abx@aux@page{152}{139}
-\abx@aux@page{153}{140}
-\abx@aux@page{154}{140}
-\abx@aux@page{155}{140}
-\abx@aux@page{156}{140}
-\abx@aux@page{157}{140}
-\abx@aux@page{158}{140}
-\abx@aux@page{159}{140}
-\abx@aux@page{160}{140}
-\abx@aux@page{161}{140}
-\abx@aux@page{162}{140}
-\abx@aux@page{163}{140}
-\abx@aux@page{164}{140}
-\abx@aux@page{165}{140}
-\abx@aux@page{166}{141}
-\abx@aux@page{167}{141}
-\abx@aux@page{168}{141}
-\abx@aux@page{169}{141}
-\abx@aux@page{170}{141}
-\abx@aux@page{171}{141}
-\abx@aux@page{172}{141}
-\abx@aux@page{173}{141}
-\abx@aux@page{174}{141}
-\abx@aux@page{175}{142}
-\abx@aux@page{176}{142}
+\abx@aux@page{145}{141}
+\abx@aux@page{146}{141}
+\abx@aux@page{147}{141}
+\abx@aux@page{148}{141}
+\abx@aux@page{149}{141}
+\abx@aux@page{150}{141}
+\abx@aux@page{151}{141}
+\abx@aux@page{152}{141}
+\abx@aux@page{153}{142}
+\abx@aux@page{154}{142}
+\abx@aux@page{155}{142}
+\abx@aux@page{156}{142}
+\abx@aux@page{157}{142}
+\abx@aux@page{158}{142}
+\abx@aux@page{159}{142}
+\abx@aux@page{160}{142}
+\abx@aux@page{161}{142}
+\abx@aux@page{162}{142}
+\abx@aux@page{163}{142}
+\abx@aux@page{164}{142}
+\abx@aux@page{165}{142}
+\abx@aux@page{166}{143}
+\abx@aux@page{167}{143}
+\abx@aux@page{168}{143}
+\abx@aux@page{169}{143}
+\abx@aux@page{170}{143}
+\abx@aux@page{171}{143}
+\abx@aux@page{172}{143}
+\abx@aux@page{173}{143}
+\abx@aux@page{174}{143}
+\abx@aux@page{175}{144}
+\abx@aux@page{176}{144}
 \global\@altsecnumformattrue

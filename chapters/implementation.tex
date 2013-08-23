@@ -16,6 +16,7 @@ In addition to the production rules there will be rules that implement parts of 
 First, a formalization of declarative knowledge in form of chunk networks and their implementation in CHR is given. Then, the working memory -- also referred to as the buffer system -- is explored and the implementation is discussed. After those definitions of the basic data structures of ACT-R, the procedural system is described including the translation of ACT-R production rules to CHR rules using the previously defined data structures. Furthermore, the reproduction of ACT-R's modular architecture is shown and the implementation of the declarative module is presented. After this overview of the basic concepts of ACT-R, the description goes into more detail about timing issues and the subsymbolic layer.
 
 \section{Chunk Stores}
+\label{implementation:chunk_stores}
 
 Since chunks are the central data-structure of ACT-R used for representation of declarative knowledge, to exchange information between modules and to state requests, this section first deals with this essential part of ACT-R.
 
@@ -318,6 +319,7 @@ Rules for checking those constraints could be added easily to the implementation
 The part of the system, where the computations are performed, is the procedural module. It is the central component, that holds all the production rules, the working memory (in the buffer system) and organizes communication between modules (through buffers and requests). In the following, all of those subcomponents of the procedural module are described.
 
 \subsection{Buffer System}
+\label{implementation:buffer_system}
 
 The buffer system can be regarded as a chunk-store, that is enhanced by buffers. A buffer can hold only one chunk at a time. The procedural module has a set $B$ of buffers, a chunk-store $\Sigma$ and a relation between the buffers and the chunks in $\Sigma$.
 
@@ -404,6 +406,7 @@ In CHR, a buffer state can be represented by a \lstinline|buffer_state(b,s)| con
 At the beginning of the program, when a buffer is created (a \lstinline|buffer| constraint is placed into the store), a corresponding \lstinline|buffer_state| constraint has to be added. The initial state can be set to \lstinline|free|, since no request is being computed at the time of creation.
 
 \subsection{Production Rules}
+\label{implementation:production_rules}
 
 Production rules consist of a \emph{condition} part and an \emph{action} part. Syntactically, in ACT-R the condition is separated from the action by \lstinline|==>|. Additionally, each production rule has a name. Thus, a rule is defined by:
 
@@ -1006,8 +1009,6 @@ For negated slot tests, this is not the case:
 
 matches also a chunk with an empty \lstinline|spam| slot (\lstinline|nil| in its \lstinline|spam| slot).
 
-
-
 \subsubsection{Outputs}
 
 The production system of ACT-R also provides methods to produce side-effects. In this work, only a subset of those methods is concerned: the outputs. Outputs can appear on the right hand side of an ACT-R rule:
@@ -1088,7 +1089,7 @@ Exported constraints can only appear once in a program, since they can be called
 
 The architecture of ACT-R provides an infrastructure for the procedural module to state requests to all the other modules. To implement this concept as general as possible, an interface has to be defined, which allows the adding of new modules to the system by just implementing this interface.
 
-\begin{lstlisting}[caption={Simple Interface ``Module''},label=lst:interface_module]
+\begin{lstlisting}[caption={Simple Interface \emph{IModule}},label=lst:interface_module]
 module_request(+BufName,+Chunk,-ResChunk,-ResState)
 \end{lstlisting}
 
@@ -1142,10 +1143,13 @@ When getting a buffer request, the buffer state is set to \lstinline|busy| first
 It is important to mention, that the received chunk will be created explicitly in the chunk store of the buffer system and therefore is a copy of a possibly existing identical chunk in the module that has been requested.
 
 \subsection{Components of the Implementation}
+\label{implementation:components}
 
-As mentioned before, the implementation
+As mentioned before, the implementation is divided into modules which provide and require interfaces. Figure~\ref{fig:component_diagram} gives an overview of the architecture of the implementation as a component diagram. The main component is the \emph{model} which consists of \emph{user-defined rules}, that is the translated production rules as described in section~\ref{implementation:production_rules} and the ACT-R core. The core consists of the \emph{buffer system} (see section~\ref{implementation:buffer_system}) which implements a \emph{chunk-store} (see section~\ref{implementation:chunk_stores}) and a module \emph{stdlisp} which is capable of handling default lisp functions as described in section~\ref{lisp_functions}. The interface \emph{ICore} consists of the buffer interface -- which basically offers the access to the buffers and its contents for the matching and the buffer actions -- and the Lisp function interface as described in the aforementioned sections. Additionally, the core provides the constraints \lstinline|fire/0| and \lstinline|apply_rule/1| for reasons described in section~\ref{implementation:icore_interface} on page~\pageref{implementation:icore_interface}. Furthermore, the core uses the \emph{scheduler} module which provides the \emph{IScheduler} interface described in section~\ref{implementation:scheduler} and defined in definition~\ref{def:ischeduler}. The configuration and the \emph{IConfiguration} and \emph{IObserver} interfaces are described in section~\ref{configuration}. Finally, the interface \emph{IModule} which is implemented by every ACT-R module (and in this case especially by the \emph{declarative module}) is described in a simplified version in listing~\ref{lst:interface_module} and in its final version in listing~\ref{lst:imodule_final}.
 
-\begin{figure}[hp]
+It is important to mention, that in the figure, each component which is included in another component signifies that the corresponding Prolog file is textually included to the parent component. The interfaces in the figure indicate that the component is a Prolog module which is included by the use of \lstinline|use_module|. The constraints defined in such a standalone component are not accessible for the other components. An exception is the component of the \emph{user-defined rules} which -- in the current version -- textually includes the \emph{core}.
+
+\begin{figure}[htbp]
 \centering
  \begin{tikzpicture}
 \begin{umlcomponent}{model}
@@ -1447,7 +1451,7 @@ init @
   fire.
 \end{lstlisting}
 
-This example assumes that there are implmentation of the called methods that perform the partial initialization work. A typical initialization routine could create all buffers at first, then add all needed chunk-types (note, that this might include the artificial chunk-type \lstinline|chunk| as defined in section~\ref{distinction_elements_chunks} (see page~\pageref{distinction_elements_chunks}). Then the initial declarative memory chunks are added. The \lstinline|goal-focus| method selects a created chunk and copies it to the declarative memory. The adding of the \lstinline|fire| constraint eventually starts the computation after the initialization is finished as described in section~\ref{implementation:rule_application_order} (see page~\pageref{implementation:rule_application_order}).
+This example assumes that there are implementation of the called methods that perform the partial initialization work. A typical initialization routine could create all buffers at first, then add all needed chunk-types (note, that this might include the artificial chunk-type \lstinline|chunk| as defined in section~\ref{distinction_elements_chunks} (see page~\pageref{distinction_elements_chunks}). Then the initial declarative memory chunks are added. The \lstinline|goal-focus| method selects a created chunk and copies it to the declarative memory. The adding of the \lstinline|fire| constraint eventually starts the computation after the initialization is finished as described in section~\ref{implementation:rule_application_order} (see page~\pageref{implementation:rule_application_order}).
 
 \section{Timing in ACT-R}
 
@@ -1599,6 +1603,7 @@ This is correct: The first event will be the first event again, because its old 
 By the \lstinline|de_q| and \lstinline|add_q| actions it is ensured, that no garbage of the old event remains in the queue and the events are added correctly through an official method of the queue.
 
 \subsection{Scheduler}
+\label{implementation:scheduler}
 
 The scheduler component is an own module that manages events by feeding a priority queue and controls the recognize-act cycle. It also holds the current time of the system. 
 
@@ -1607,6 +1612,20 @@ The scheduler component is an own module that manages events by feeding a priori
 The current time can be saved in a \lstinline|now/1| constraint. It is important that there is only one such constraint and that time increases monotonically.
 
 Other modules can access the time only by a \lstinline|get_now/1| that only returns the current time saved in the \lstinline|now/1| constraint. The current time cannot be set from outside, but is determined by the last event dequeued from the priority queue.
+
+\subsubsection{Interface to the Scheduler}
+
+\begin{definition}[IScheduler]
+\label{def:ischeduler}
+The \emph{IScheduler} interface provides the following methods:
+
+\begin{description}
+ \item[Queue Management] The methods \lstinline|add_q/3|, \lstinline|de_q/1| and \lstinline|after_next_event/1| which are described above provide access to the queue of the scheduler.
+ \item[Timings] The setting and getting of the time by \lstinline|get_now/1| and \lstinline|now/1|. The latter one should only be used once in the initialization. The setting of the current time is managed by the scheduler automatically.
+ \item[Start next cycle] The constraint \lstinline|nextcyc/0| is only used to initialize the first cycle and should not be used at a later point, since the management of the recognize-act-cycle is managed by the scheduler. 
+ \item[No rule] If no rule was applicable, the procedural module can trigger the \lstinline|no_rule/0| constraint which has effects to the next conflict resolution event, as mentioned before.
+\end{description}
+\end{definition}
 
 \subsubsection{Recognize-Act Cycle}
 \label{implementation:scheduler:recognize-act}
@@ -1752,12 +1771,16 @@ Note that this function adds the chunk-types both to the declarative module and 
 \subsection{Configuration Variables}
 \label{configuration}
 
-In ACT-R, configuration variables which control the behaviour of the architecture are set with the Lisp function \lstinline|(sgp :Var Val)|, which sets the variable \lstinline|Var| to \lstinline|Val|. To handle such configuration variables, a configuration module can be added to the CHR implementation, that offers an interface to set variables and to ask for their values:
+In ACT-R, configuration variables which control the behaviour of the architecture are set with the Lisp function \lstinline|(sgp :Var Val)|, which sets the variable \lstinline|Var| to \lstinline|Val|. To handle such configuration variables, a configuration module can be added to the CHR implementation, that offers the \emph{IConfiguration} interface to set variables and to ask for their values:
 
+\begin{definition}[IConfiguration]
+\label{def:iconfiguration}
+The interface \emph{IConfiguration} provides the following methods:
 \begin{description}
  \item[Set configuration variables] By calling \lstinline|set_conf(+Var,+Val)| the configuration variable \lstinline|Var| is set to the value \lstinline|Val|.
  \item[Get the value of a configuration variable] The call of \lstinline|get_conf(+Var,-Val)| binds the value of the configuration variable \lstinline|Var| to the argument \lstinline|Val|.
 \end{description}
+\end{definition}
 
 The \lstinline|(sgp ...)| call can then be translated to:
 
@@ -1781,7 +1804,7 @@ notify_all(Var), notify(Module,Var) ==> Module:update. % perform all pending not
 notify_all(_) <=> true. % no notifications pending -> Clean up
 \end{lstlisting}
 
-The constraint \lstinline|observer(Module,Var)| states that the module \lstinline|Module| observes the variable \lstinline|Var|. The observer modules have to declare a \lstinline|update/0| contraint which may trigger some action related to the change of a configuration variable.
+The constraint \lstinline|observer(Module,Var)| states that the module \lstinline|Module| observes the variable \lstinline|Var|. The observer modules have to declare a \lstinline|update/0| constraint which may trigger some action related to the change of a configuration variable.
 
 \section{Subsymbolic Layer}
 
@@ -1994,7 +2017,7 @@ Requests that regard the subsymbolic layer need some additional information and 
 
 The interface from section~\ref{interface_for_module_requests} changes to:
 
-\begin{lstlisting}
+\begin{lstlisting}[label=lst:imodule_final, caption={The final version of the interface \emph{IModule}}]
 module_request(+BufName, +ChunkDef, +Context, -ResChunk, -ResState, -ResTime) 
 \end{lstlisting}
 
@@ -2124,9 +2147,7 @@ If there are competing strategies that match a current state, the production sys
 \subsubsection{Conflict Resolution}
 \label{implementation:conflict_resolution}
 
-In \cite[151\psqq]{fru_chr_book_2009} a general implementation of conflict resolution in CHR is described. This approach can be easily adapted to the needs of ACT-R.
-
-Replace every production rule
+In \cite[151\psqq]{fru_chr_book_2009} a general implementation of conflict resolution in CHR is described. This approach can be easily adapted to the needs of ACT-R. Replace every production rule
 
 \begin{lstlisting}
 <<{buffer tests} \ fire>> <=> {guard} | {actions}, conflict_resolution.
@@ -2270,7 +2291,10 @@ There are some methods to influence the conflict resolution process using the AC
  \item[Learning rate] The learning rate $\alpha$ is set by the command \lstinline|(sgp :alpha A)| that sets the configuration variable \lstinline|alpha| to \lstinline|A|.
 \end{description}
 
-\subsection{Extended Component Diagram}
+\subsubsection{Public Methods of the Conflict Resolution}
+\label{implementation:icore_interface}
+
+Since the scheduler has to have access to the constraints \lstinline|fire/0| and \lstinline|apply_rule/1| to control the timing conflict resolution, those constraints are added to the \emph{ICore} interface as described in section~\ref{implementation:components}. Additionally, the constraint \lstinline|set_production_utility/2| is added to the \emph{ICore} interface, because the utilities may be set from outside the procedural module initially.
 
 \section{Compiler}
 
