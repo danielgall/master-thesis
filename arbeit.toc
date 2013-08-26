@@ -170,11 +170,11 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Objects}{78}{section*.44}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Representation of the Queue}{78}{section*.45}
+\contentsline {subsubsection}{Representation of the Queue}{79}{section*.45}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Special Operation for ACT-R}{80}{section*.46}
+\contentsline {subsubsection}{Special Operation for ACT-R}{81}{section*.46}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.7.2}Scheduler}{81}{subsection.4.7.2}
+\contentsline {subsection}{\numberline {4.7.2}Scheduler}{82}{subsection.4.7.2}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Current Time}{82}{section*.47}
 \defcounter {refsection}{0}\relax 
@@ -186,7 +186,7 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {paragraph}{Call an Event}{84}{section*.51}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Changing the Buffer System}{84}{section*.52}
+\contentsline {paragraph}{Changing the Buffer System}{85}{section*.52}
 \defcounter {refsection}{0}\relax 
 \contentsline {paragraph}{Production Rules}{85}{section*.53}
 \defcounter {refsection}{0}\relax 

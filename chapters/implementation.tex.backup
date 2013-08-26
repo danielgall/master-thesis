@@ -1434,7 +1434,7 @@ In the declarative module, the chunk search must be extended to find merged chun
 
 so the chunk search of a chunk that is only a pointer to another chunk can be reduced to the search of this chunk. \FIXME{maybe this can cause problems if a production rule refers to a particular name and gets a chunk with the name of its brother..}
 
-The process of chunk merging is described in \cite[??]{actr_reference}. The treating of identical names is not described there, but has been tested in the original implementation: ACT-R handles those identical names similarly to this approach by adding a sequential number to the identical name. For example, the chunk with name \lstinline|a| would be called \lstinline|a-0| if there already was a chunk \lstinline|a| in the store.
+The process of chunk merging is described in \cite[217, 71]{actr_reference} and \cite[3]{actr_tutorial}. The treating of identical names is not described there, but has been tested in the original implementation: ACT-R handles those identical names similarly to this approach by adding a sequential number to the identical name. For example, the chunk with name \lstinline|a| would be called \lstinline|a-0| if there already was a chunk \lstinline|a| in the store.
 
 \section{Initialization}
 \label{initialization}
@@ -1464,23 +1464,37 @@ Those aspects cannot be implemented easily using the current approach with phase
 \begin{figure}[htb]
 \centering
 \tikzstyle{event} = [circle, draw]
-\tikzstyle{line} = [draw, ->]
+\tikzstyle{line} = [draw, -latex]
+\tikzstyle{vecArrow} = [draw,thick, decoration={markings,mark=at position
+   1 with {\arrow[semithick]{open triangle 60}}},
+   double distance=1.4pt, shorten >= 5.5pt,
+   preaction = {decorate},
+   postaction = {draw,line width=1.4pt, white,shorten >= 4.5pt}]
 
 \begin{tikzpicture}[node distance = 3cm, auto]
  \node[event] (e1) {\parbox{1cm}{\centering $e_1$\\ $t_1$}}; 
  \node[event, right of=e1] (e2) {\parbox{1cm}{\centering $e_2$\\ $t_2$}}; 
  \node[event, right of=e2] (e3) {\parbox{1cm}{\centering $e_3$\\ $t_3$}}; 
  \node[right of=e3] (dots) {\dots}; 
+ \node[draw, rectangle, below of=e1] (sched) {
+\begin{tikzpicture}
+\node (exec) {execution};
+ \node[event, below of=exec, node distance=1.2cm] (e) {\parbox{1cm}{\centering $e$}}; 
+\end{tikzpicture}
+};
 \draw let 
   \p1 = (e1.west),
  \p2 = (dots.east)
 in
-node[node distance=2cm, minimum width=\x2-\x1] at ({(\x2+\x1)/2},\y1-15mm) {$t_1 \le t_2 \le t_3 \le \dots$};
+node[node distance=2cm, minimum width=\x2-\x1] (times) at ({(\x2+\x1)/2},\y1-15mm) {$t_1 \le t_2 \le t_3 \le \dots$};
+\node[draw, rectangle, right of=sched, node distance=3.3cm] (current) {\parbox{3cm}{\centering current time\\$T = t$}};
 
     % Draw edges
  \path[line] (e1) -- (e2);
  \path[line] (e2) -- (e3);
  \path[line] (e3) -- (dots);
+\path[vecArrow] (e1) -- (sched);
+\path[vecArrow] (sched) -- (current);
 \end{tikzpicture}
 \caption{The scheduler stores the events $e_i$ with their corresponding times $t_i$ in a queue which is sorted by the times. If an event should be executed, the first event $e_1$ of the queue is removed. The current time is set to the time $t_1$ and the event is executed.}
 \label{fig:scheduler}
@@ -1503,7 +1517,7 @@ A \emph{priority queue} is an abstract data structure that serves objects by the
 
 \subsubsection{Objects}
 
-In the implementation of the scheduler, the priority queue contains objects of the form \lstinline|q(Time,Priority,Event)|. The priority of such a queue object is composed from the \lstinline|Time| and the \lstinline|Priority|. The order between the elements is defined as follows:
+In the implementation of the scheduler, the priority queue contains objects of the form \lstinline|q(Time,Priority,Event)|. The priority of such a queue object is composed from the \lstinline|Time| and the \lstinline|Priority|. An \lstinline|Event| is a Prolog goal, i.e. a built-in or a CHR constraint. The order between the elements is defined as follows:
 
 \begin{definition}[ordered time-priority condition]
 \lstinline|q(T1,P1,E1)| $\prec$ \lstinline|q(T2,P2,E2)|, i.e. the object \lstinline|q(T1,P1,E1)| is the predecessor of the object \lstinline|q(T2,P2,E2)|, if \lstinline|T1| $<$ \lstinline|T2|. In the case that \lstinline|T1 = T2|, then \lstinline|q(T1,P1,E1)| $\prec$ \lstinline|q(T2,P2,E2)| if \lstinline|P1| $>$ \lstinline|P2|. So, events with smaller times will be returned first. If two events appear at the same time, it is possible to define a priority and the event with the higher priority will be returned first. 

@@ -1461,28 +1461,76 @@ However, certain buffer actions like buffer requests may take some time until th
 
 Those aspects cannot be implemented easily using the current approach with phase constraints. Hence, the idea of introducing a central scheduling unit is a possible solution of those requirements: The unit has a serialized ordered list of events with particular timings. If a new event is scheduled, the time it is executed must be known. The scheduling unit inserts the event at the right position of the list preserving the ordered time condition. Figure~\ref{fig:scheduler} illustrates this approach.
 
-\begin{figure}[htb]
+\begin{figure}
+\centering
+\subfigure[]{
 \centering
 \tikzstyle{event} = [circle, draw]
-\tikzstyle{line} = [draw, ->]
+\tikzstyle{line} = [draw, -latex]
+\tikzstyle{vecArrow} = [draw,thick, decoration={markings,mark=at position
+   1 with {\arrow[semithick]{open triangle 60}}},
+   double distance=1.4pt, shorten >= 5.5pt,
+   preaction = {decorate},
+   postaction = {draw,line width=1.4pt, white,shorten >= 4.5pt}]
 
-\begin{tikzpicture}[node distance = 3cm, auto]
- \node[event] (e1) {\parbox{1cm}{\centering $e_1$\\ $t_1$}}; 
- \node[event, right of=e1] (e2) {\parbox{1cm}{\centering $e_2$\\ $t_2$}}; 
- \node[event, right of=e2] (e3) {\parbox{1cm}{\centering $e_3$\\ $t_3$}}; 
+\begin{tikzpicture}[node distance = 1.5cm, auto]
+ \node[event] (e1) {\parbox{5mm}{\centering $e_1$\\ $t_1$}}; 
+ \node[event, right of=e1] (e2) {\parbox{5mm}{\centering $e_2$\\ $t_2$}}; 
+ \node[event, right of=e2] (e3) {\parbox{5mm}{\centering $e_3$\\ $t_3$}}; 
  \node[right of=e3] (dots) {\dots}; 
+ \node[draw, rectangle, below of=e1, node distance=3cm] (sched) {
+\begin{tikzpicture}
+\node (exec) {execution};
+ \node[event, below of=exec, node distance=8mm] (e) {\parbox{5mm}{\centering $e$}}; 
+\end{tikzpicture}
+};
 \draw let 
   \p1 = (e1.west),
  \p2 = (dots.east)
 in
-node[node distance=2cm, minimum width=\x2-\x1] at ({(\x2+\x1)/2},\y1-15mm) {$t_1 \le t_2 \le t_3 \le \dots$};
+node[node distance=2cm, minimum width=\x2-\x1] (times) at ({(\x2+\x1)/2},\y1-15mm) {$t_1 \le t_2 \le t_3 \le \dots$};
+\node[draw, rectangle, right of=sched, node distance=2.5cm] (current) {\parbox{2cm}{\centering current time\\$T = t$}};
 
     % Draw edges
  \path[line] (e1) -- (e2);
  \path[line] (e2) -- (e3);
  \path[line] (e3) -- (dots);
+\path[vecArrow] (e1) -- (sched);
+\path[vecArrow] (sched) -- (current);
 \end{tikzpicture}
-\caption{The scheduler stores the events $e_i$ with their corresponding times $t_i$ in a queue which is sorted by the times. If an event should be executed, the first event $e_1$ of the queue is removed. The current time is set to the time $t_1$ and the event is executed.}
+\label{fig:scheduler:a}}
+\qquad
+\subfigure[]{
+\centering
+\tikzstyle{event} = [circle, draw]
+\tikzstyle{line} = [draw, -latex]
+\tikzstyle{vecArrow} = [draw,thick, decoration={markings,mark=at position
+   1 with {\arrow[semithick]{open triangle 60}}},
+   double distance=1.4pt, shorten >= 5.5pt,
+   preaction = {decorate},
+   postaction = {draw,line width=1.4pt, white,shorten >= 4.5pt}]
+
+\begin{tikzpicture}[node distance = 1.5cm, auto]
+ \node[event] (e2) {\parbox{5mm}{\centering $e_2$\\ $t_2$}}; 
+ \node[event, right of=e2] (e3) {\parbox{5mm}{\centering $e_3$\\ $t_3$}}; 
+ \node[right of=e3] (dots) {\dots}; 
+ \node[draw, rectangle, below of=e2, node distance=3cm] (sched) {
+\begin{tikzpicture}
+\node (exec) {execution};
+ \node[event, below of=exec, node distance=8mm] (e) {\parbox{5mm}{\centering $e_1$}}; 
+\end{tikzpicture}
+};
+
+\node[draw, rectangle, right of=sched, node distance=2.5cm] (current) {\parbox{2cm}{\centering current time\\$T = t_1$}};
+
+    % Draw edges
+ \path[line] (e2) -- (e3);
+ \path[line] (e3) -- (dots);
+\path[vecArrow] (e2) -- (sched);
+\path[vecArrow] (sched) -- (current);
+\end{tikzpicture}
+\label{fig:scheduler:b}}
+\caption{Scheduling with an event queue. \subref{fig:scheduler:a} The scheduler stores the events $e_i$ with their corresponding times $t_i$ in a queue which is sorted by the times. Currently, the event $e$ is executed and the time $T$ is $t$. \subref{fig:scheduler:b} If the event $e$ has been executed completely, the next event -- the first event $e_1$ of the queue -- is removed. The current time is set to the time $t_1$ and the event is executed.}
 \label{fig:scheduler}
 \end{figure}
 

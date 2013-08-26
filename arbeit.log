@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.8.10)  26 AUG 2013 13:41
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.8.10)  26 AUG 2013 16:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1006,28 +1006,46 @@ File: tikzlibraryautomata.code.tex 2008/07/14 v2.10 (rcs-revision 1.3)
 (/usr/share/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrary
 calc.code.tex
 File: tikzlibrarycalc.code.tex 2009/09/04 v2.10 (rcs-revision 1.6)
-) (/usr/share/texmf-dist/tex/latex/tikz-uml/tikz-uml.sty
+)
+(/usr/share/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrary
+decorations.markings.code.tex
+(/usr/share/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrary
+decorations.code.tex
+(/usr/share/texmf-dist/tex/generic/pgf/modules/pgfmoduledecorations.code.tex
+\pgfdecoratedcompleteddistance=\dimen151
+\pgfdecoratedremainingdistance=\dimen152
+\pgfdecoratedinputsegmentcompleteddistance=\dimen153
+\pgfdecoratedinputsegmentremainingdistance=\dimen154
+\pgf@decorate@distancetomove=\dimen155
+\pgf@decorate@repeatstate=\count278
+\pgfdecorationsegmentamplitude=\dimen156
+\pgfdecorationsegmentlength=\dimen157
+)
+\tikz@lib@dec@box=\box60
+)
+(/usr/share/texmf-dist/tex/generic/pgf/libraries/decorations/pgflibrarydecorati
+ons.markings.code.tex)) (/usr/share/texmf-dist/tex/latex/tikz-uml/tikz-uml.sty
 Package: tikz-uml 2011/01/26
 
 (/usr/share/texmf-dist/tex/generic/xstring/xstring.sty
 (/usr/share/texmf-dist/tex/generic/xstring/xstring.tex
 \@xs@message=\write6
-\integerpart=\count278
-\decimalpart=\count279
+\integerpart=\count279
+\decimalpart=\count280
 )
 Package: xstring 2013/2/28  v1.7a  String manipulations (C Tellechea)
 )
 (/usr/share/texmf-dist/tex/latex/tools/calc.sty
 Package: calc 2007/08/22 v4.3 Infix arithmetic (KKT,FJ)
-\calc@Acount=\count280
-\calc@Bcount=\count281
-\calc@Adimen=\dimen151
-\calc@Bdimen=\dimen152
+\calc@Acount=\count281
+\calc@Bcount=\count282
+\calc@Adimen=\dimen158
+\calc@Bdimen=\dimen159
 \calc@Askip=\skip57
 \calc@Bskip=\skip58
 LaTeX Info: Redefining \setlength on input line 76.
 LaTeX Info: Redefining \addtolength on input line 77.
-\calc@Ccount=\count282
+\calc@Ccount=\count283
 \calc@Cskip=\skip59
 )
 (/usr/share/texmf-dist/tex/latex/pgfopts/pgfopts.sty
@@ -1038,31 +1056,13 @@ Package: pgfopts 2011/06/02 v2.1 LaTeX package options with pgfkeys
 (/usr/share/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrary
 backgrounds.code.tex
 File: tikzlibrarybackgrounds.code.tex 2010/02/08 v2.10 (rcs-revision 1.2)
-\pgf@layerbox@background=\box60
-\pgf@layerboxsaved@background=\box61
+\pgf@layerbox@background=\box61
+\pgf@layerboxsaved@background=\box62
 )
 (/usr/share/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrary
 fit.code.tex
 File: tikzlibraryfit.code.tex 2008/06/21 v2.10 (rcs-revision 1.3)
 )
-(/usr/share/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrary
-decorations.markings.code.tex
-(/usr/share/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzlibrary
-decorations.code.tex
-(/usr/share/texmf-dist/tex/generic/pgf/modules/pgfmoduledecorations.code.tex
-\pgfdecoratedcompleteddistance=\dimen153
-\pgfdecoratedremainingdistance=\dimen154
-\pgfdecoratedinputsegmentcompleteddistance=\dimen155
-\pgfdecoratedinputsegmentremainingdistance=\dimen156
-\pgf@decorate@distancetomove=\dimen157
-\pgf@decorate@repeatstate=\count283
-\pgfdecorationsegmentamplitude=\dimen158
-\pgfdecorationsegmentlength=\dimen159
-)
-\tikz@lib@dec@box=\box62
-)
-(/usr/share/texmf-dist/tex/generic/pgf/libraries/decorations/pgflibrarydecorati
-ons.markings.code.tex))
 \pgf@layerbox@background=\box63
 \pgf@layerboxsaved@background=\box64
 \c@tikzumlPackageLayers=\count284
@@ -1166,8 +1166,7 @@ ons.markings.code.tex))
 \tikzuml@AC@xbrc=\skip80
 \tikzuml@AC@ybrc=\skip81
 \tikzuml@AC@middleArm=\skip82
-)
-(/usr/share/texmf-dist/tex/latex/koma-script/scrhack.sty
+) (/usr/share/texmf-dist/tex/latex/koma-script/scrhack.sty
 Package: scrhack 2012/07/29 v3.11b KOMA-Script package (hacking other packages)
 
 Package scrhack Info: loading float hack on input line 137.
@@ -1715,6 +1714,8 @@ LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <10> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 1.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <17.28> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 1.
+LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10> not available
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 3.
 ) [3
 
 
@@ -1735,8 +1736,6 @@ LaTeX Font Info:    External font `lmex10' loaded for size
 
  [8] (./chapters/introduction.tex
 Chapter 1.
-LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 3.
 [1
 
 
@@ -1828,37 +1827,29 @@ LaTeX Font Info:    Font shape `T1/pcr/bx/it' in size <7> not available
 LaTeX Font Info:    Font shape `T1/pcr/b/it' in size <7> not available
 (Font)              Font shape `T1/pcr/b/sl' tried instead on input line 61.
 
-Overfull \hbox (5.46861pt too wide) in paragraph at lines 62--63
-[]\T1/phv/m/sl/10 adds a chunk spec-
+Overfull \hbox (2.90112pt too wide) in paragraph at lines 62--63
+[]\T1/phv/m/sl/10 (-20) adds a chunk spec-
  []
 
 
-Overfull \hbox (7.87987pt too wide) in paragraph at lines 62--63
-\OML/lmm/m/it/10 Isa[] \OT1/lmr/m/n/10 = \OML/lmm/m/it/10 Isa \OMS/lmsy/m/n/10 
-[ \OT1/lmr/m/n/10 ([]\OML/lmm/m/it/10 ; \OT1/lmr/m/n/10 ([]\OML/lmm/m/it/10 ; s
-lots\OT1/lmr/m/n/10 ([]))$ \T1/phv/m/sl/10 and $\OML/lmm/m/it/10 HasSlot[] \OT1
-/lmr/m/n/10 = [][] [] \OMS/lmsy/m/n/10 [
- []
-
-
-Overfull \hbox (10.37784pt too wide) in paragraph at lines 65--66
-[]\T1/phv/m/sl/10 changes the val-ues of the spec-
+Overfull \hbox (6.8319pt too wide) in paragraph at lines 65--66
+[]\T1/phv/m/sl/10 (-20) changes the val-ues of the spec-
  []
 
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [35]
-Overfull \hbox (3.61684pt too wide) in paragraph at lines 88--89
+Overfull \hbox (3.28322pt too wide) in paragraph at lines 88--89
 []$\OML/lmm/m/it/10 slots\OT1/lmr/m/n/10 (\OML/lmm/m/it/10 a\OT1/lmr/m/n/10 ) =
  \OMS/lmsy/m/n/10 f\OT1/lmr/m/n/10 (\OML/lmm/m/it/10 arg\OT1/lmr/m/n/10 1\OML/l
 mm/m/it/10 ; \OT1/lmr/m/n/10 5)\OML/lmm/m/it/10 ; \OT1/lmr/m/n/10 (\OML/lmm/m/i
 t/10 arg\OT1/lmr/m/n/10 2\OML/lmm/m/it/10 ; \OT1/lmr/m/n/10 2)\OML/lmm/m/it/10 
 ; \OT1/lmr/m/n/10 (\OML/lmm/m/it/10 sum; \OT1/lmr/m/n/10 7)\OMS/lmsy/m/n/10 g$ 
-\T1/phv/m/sl/10 and $\OML/lmm/m/it/10 slots\OT1/lmr/m/n/10 ((\OML/lmm/m/it/10 a
-ddition \OMS/lmsy/m/n/10 ^^@ \OML/lmm/m/it/10 fact; \OMS/lmsy/m/n/10 f\OML/lmm/
-m/it/10 arg\OT1/lmr/m/n/10 1\OML/lmm/m/it/10 ; arg\OT1/lmr/m/n/10 2\OML/lmm/m/i
-t/10 ; sum\OMS/lmsy/m/n/10 g\OT1/lmr/m/n/10 ) =
+\T1/phv/m/sl/10 (-20) and $\OML/lmm/m/it/10 slots\OT1/lmr/m/n/10 ((\OML/lmm/m/i
+t/10 addition \OMS/lmsy/m/n/10 ^^@ \OML/lmm/m/it/10 fact; \OMS/lmsy/m/n/10 f\OM
+L/lmm/m/it/10 arg\OT1/lmr/m/n/10 1\OML/lmm/m/it/10 ; arg\OT1/lmr/m/n/10 2\OML/l
+mm/m/it/10 ; sum\OMS/lmsy/m/n/10 g\OT1/lmr/m/n/10 ) =
  []
 
 [36] [37] [38] [39] [40] [41] [42] [43] [44]
@@ -1943,58 +1934,50 @@ Overfull \hbox (369.91135pt too wide) in paragraph at lines 1435--1436
 \T1/phv/m/n/10 (-20) the search of this chunk. [][][][][][] 
  []
 
-[76] [77] [78] [79] [80] [81] [82]
-Underfull \vbox (badness 2903) has occurred while \output is active []
+[76] [77] [78] [79] [80]
+Underfull \vbox (badness 7238) has occurred while \output is active []
 
- [83]
-[84]
-Underfull \vbox (badness 1163) has occurred while \output is active []
-
- [85]
-Overfull \hbox (3.00621pt too wide) in paragraph at lines 1780--1781
-[]\T1/phv/m/sl/10 By call-ing [][][][][][][][] the con-fig-u-ra-tion vari-
- []
-
-[86]
+ [81]
+[82] [83] [84] [85] [86]
 Underfull \vbox (badness 2644) has occurred while \output is active []
 
  [87]
 [88]
-Overfull \hbox (96.54147pt too wide) in paragraph at lines 1854--1855
+Overfull \hbox (96.54147pt too wide) in paragraph at lines 1902--1903
 \T1/phv/m/n/10 (-20) tion of a set of chunks has to be cal-cu-lated. There-fore
 , a con-straint [][][][][][]
  []
 
 [89] [90] [91] [92] [93]
-Overfull \hbox (27.51543pt too wide) in paragraph at lines 2026--2027
+Overfull \hbox (27.51543pt too wide) in paragraph at lines 2074--2075
 \T1/phv/m/n/10 (-20) trig-ger con-straints -- [][][][], [][][][] and [][][][]
  []
 
 [94] [95] [96]
-Overfull \hbox (8.62102pt too wide) in paragraph at lines 2092--2093
+Overfull \hbox (8.62102pt too wide) in paragraph at lines 2140--2141
 []\T1/phv/m/n/10 (-20) The re-sult-ing state [][][] is [][][],
  []
 
 [97]
-Overfull \hbox (0.86296pt too wide) in paragraph at lines 2127--2128
+Overfull \hbox (0.86296pt too wide) in paragraph at lines 2175--2176
 []\T1/phv/m/n/10 (-20) For each rule only in-volved in the sub-sym-bolic layer,
  the con-straint [][][][]
  []
 
 [98]
-Overfull \hbox (14.09686pt too wide) in paragraph at lines 2186--2187
+Overfull \hbox (14.09686pt too wide) in paragraph at lines 2234--2235
 []\T1/phv/m/n/10 (-20) The first rule deletes the empty [][][] con-straint, if 
 there are other [][][]
  []
 
 [99]
-Overfull \hbox (16.32722pt too wide) in paragraph at lines 2203--2204
+Overfull \hbox (16.32722pt too wide) in paragraph at lines 2251--2252
 []\T1/phv/m/n/10 (-20) The first rule is only ap-pli-ca-ble, if there were no m
 atch-ing rules and the empty [][][]
  []
 
 
-Overfull \hbox (51.69098pt too wide) in paragraph at lines 2207--2208
+Overfull \hbox (51.69098pt too wide) in paragraph at lines 2255--2256
 []\T1/phv/m/n/10 (-20) When the cho-sen rule is ap-plied, its ac-tions are per-
 formed and even-tu-ally, a [][][]
  []
@@ -2098,10 +2081,10 @@ Overfull \hbox (6.01566pt too wide) in paragraph at lines 380--380
 
 
 ]
-Overfull \hbox (7.75334pt too wide) in paragraph at lines 380--380
-[][]\T1/phv/m/sl/10 The Home-page of jACT-R\T1/phv/m/n/10 (-20) .  \T1/phv/m/sc
-/10 (-20) url\T1/phv/m/n/10 (-20) : []$\T1/pcr/m/n/10 http : / / jactr . org/$[
-] \T1/phv/m/n/10 (-20) (vis-ited on 08/12/2013). 
+Overfull \hbox (5.60832pt too wide) in paragraph at lines 380--380
+[][]\T1/phv/m/sl/10 (-20) The Home-page of jACT-R\T1/phv/m/n/10 (-20) .  \T1/ph
+v/m/sc/10 (-20) url\T1/phv/m/n/10 (-20) : []$\T1/pcr/m/n/10 http : / / jactr . 
+org/$[] \T1/phv/m/n/10 (-20) (vis-ited on 08/12/2013). 
  []
 
 [142] [143] [144]
@@ -2125,11 +2108,11 @@ Package logreq Info: Writing requests to 'arbeit.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 36861 strings out of 493315
- 673171 string characters out of 6143704
- 1090234 words of memory out of 5000000
- 37577 multiletter control sequences out of 15000+600000
- 95269 words of font info for 220 fonts, out of 8000000 for 9000
+ 37029 strings out of 493315
+ 675604 string characters out of 6143704
+ 1090328 words of memory out of 5000000
+ 37625 multiletter control sequences out of 15000+600000
+ 103192 words of font info for 299 fonts, out of 8000000 for 9000
  958 hyphenation exceptions out of 8191
  65i,19n,76p,1885b,3167s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf-dist/fon
@@ -2155,10 +2138,10 @@ r8a.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/
 texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-dist/fonts/typ
 e1/urw/helvetic/uhvbo8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhv
 r8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on arbeit.pdf (153 pages, 925656 bytes).
+Output written on arbeit.pdf (153 pages, 929196 bytes).
 PDF statistics:
- 3761 PDF objects out of 4296 (max. 8388607)
- 3515 compressed objects within 36 object streams
- 1872 named destinations out of 2073 (max. 500000)
+ 3769 PDF objects out of 4296 (max. 8388607)
+ 3521 compressed objects within 36 object streams
+ 1874 named destinations out of 2073 (max. 500000)
  39407 words of extra memory for PDF output out of 42996 (max. 10000000)
 

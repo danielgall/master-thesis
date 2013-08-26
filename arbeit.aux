@@ -461,16 +461,22 @@
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {4.6}Initialization}{76}{section.4.6}}
 \newlabel{initialization}{{4.6}{76}{Initialization}{section.4.6}{}}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {4.7}Timing in ACT-R}{77}{section.4.7}}
-\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {\relax 4.3}{\ignorespaces The scheduler stores the events $e_i$ with their corresponding times $t_i$ in a queue which is sorted by the times. If an event should be executed, the first event $e_1$ of the queue is removed. The current time is set to the time $t_1$ and the event is executed.}}{77}{figure.4.3}}
-\newlabel{fig:scheduler}{{\relax 4.3}{77}{The scheduler stores the events $e_i$ with their corresponding times $t_i$ in a queue which is sorted by the times. If an event should be executed, the first event $e_1$ of the queue is removed. The current time is set to the time $t_1$ and the event is executed}{figure.4.3}{}}
 \citation{fru_chr_book_2009}
+\newlabel{fig:scheduler:a}{{\relax 4.3(a)}{78}{Subfigure 4 \relax 4.3(a)}{subfigure.\relax 4.3.1}{}}
+\newlabel{sub@fig:scheduler:a}{{(a)}{78}{Subfigure 4 \relax 4.3(a)\relax }{subfigure.\relax 4.3.1}{}}
+\newlabel{fig:scheduler:b}{{\relax 4.3(b)}{78}{Subfigure 4 \relax 4.3(b)}{subfigure.\relax 4.3.2}{}}
+\newlabel{sub@fig:scheduler:b}{{(b)}{78}{Subfigure 4 \relax 4.3(b)\relax }{subfigure.\relax 4.3.2}{}}
+\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {\relax 4.3}{\ignorespaces Scheduling with an event queue. \ref  {sub@fig:scheduler:a} The scheduler stores the events $e_i$ with their corresponding times $t_i$ in a queue which is sorted by the times. Currently, the event $e$ is executed and the time $T$ is $t$. \ref  {sub@fig:scheduler:b} If the event $e$ has been executed completely, the next event -- the first event $e_1$ of the queue -- is removed. The current time is set to the time $t_1$ and the event is executed.}}{78}{figure.4.3}}
+\newlabel{fig:scheduler}{{\relax 4.3}{78}{Scheduling with an event queue. \subref {fig:scheduler:a} The scheduler stores the events $e_i$ with their corresponding times $t_i$ in a queue which is sorted by the times. Currently, the event $e$ is executed and the time $T$ is $t$. \subref {fig:scheduler:b} If the event $e$ has been executed completely, the next event -- the first event $e_1$ of the queue -- is removed. The current time is set to the time $t_1$ and the event is executed}{figure.4.3}{}}
+\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {subfigure}{\numberline{(a)}{\ignorespaces {}}}{78}{figure.4.3}}
+\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {subfigure}{\numberline{(b)}{\ignorespaces {}}}{78}{figure.4.3}}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.7.1}Priority Queue}{78}{subsection.4.7.1}}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Objects}{78}{section*.44}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Representation of the Queue}{78}{section*.45}}
-\abx@aux@page{131}{78}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Special Operation for ACT-R}{80}{section*.46}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.7.2}Scheduler}{81}{subsection.4.7.2}}
-\newlabel{implementation:scheduler}{{4.7.2}{81}{Scheduler}{subsection.4.7.2}{}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Representation of the Queue}{79}{section*.45}}
+\abx@aux@page{131}{79}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Special Operation for ACT-R}{81}{section*.46}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsection}{\numberline {4.7.2}Scheduler}{82}{subsection.4.7.2}}
+\newlabel{implementation:scheduler}{{4.7.2}{82}{Scheduler}{subsection.4.7.2}{}}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Current Time}{82}{section*.47}}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Interface to the Scheduler}{82}{section*.48}}
 \newlabel{def:ischeduler}{{4.5}{82}{IScheduler}{definition.4.5}{}}
@@ -480,8 +486,8 @@
 \newlabel{tab:action_priorities}{{\relax 4.1}{83}{Priorities of buffer actions}{table.4.1}{}}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Start Next Cycle}{84}{section*.50}}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Call an Event}{84}{section*.51}}
-\newlabel{changing_the_buffer_system}{{4.7.2}{84}{Changing the Buffer System}{section*.52}{}}
-\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Changing the Buffer System}{84}{section*.52}}
+\newlabel{changing_the_buffer_system}{{4.7.2}{85}{Changing the Buffer System}{section*.52}{}}
+\@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Changing the Buffer System}{85}{section*.52}}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Production Rules}{85}{section*.53}}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {section}{\numberline {4.8}Lisp Functions}{86}{section.4.8}}
 \newlabel{lisp_functions}{{4.8}{86}{Lisp Functions}{section.4.8}{}}
