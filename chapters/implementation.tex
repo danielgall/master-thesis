@@ -1031,7 +1031,7 @@ output([X|Xs]) :-
   output(Xs).
 \end{lstlisting}
 
-The \lstinline|X| have to be Prolog terms.
+The \lstinline|Xs| have to be Prolog terms.
 
 In ACT-R, function calls like \lstinline|!eval!| or \lstinline|!bind!| are allowed, but they are ignored in this work.
 
@@ -1434,12 +1434,12 @@ In the declarative module, the chunk search must be extended to find merged chun
 
 so the chunk search of a chunk that is only a pointer to another chunk can be reduced to the search of this chunk. \FIXME{maybe this can cause problems if a production rule refers to a particular name and gets a chunk with the name of its brother..}
 
-The process of chunk merging is described in \cite[??]{actr_reference}. The treating of identical names is not described there, but has been tested in the original implementation: ACT-R handles those identical names similarly to this approach by adding a sequential number to the identical name. For example, the chunk with name \lstinline|a| would be called \lstinline|a-0| if there already was a chunk \lstinline|a| in the store.
+The process of chunk merging is described in \cite[217, 71]{actr_reference} and \cite[3]{actr_tutorial}. The treating of identical names is not described there, but has been tested in the original implementation: ACT-R handles those identical names similarly to this approach by adding a sequential number to the identical name. For example, the chunk with name \lstinline|a| would be called \lstinline|a-0| if there already was a chunk \lstinline|a| in the store.
 
 \section{Initialization}
 \label{initialization}
 
-In the examples the models had to be run by stating complex queries which create all necessary buffers and add all chunk types and chunks to the declarative memory manually. In the original ACT-R implementation, the command \lstinline|run| is used to run a model. This behaviour can be transferred to the CHR implementation easily by adding a \lstinline|run| constraint and a rule for this constraint, that performs all the initialization work.
+In the examples, the models had to be run by stating complex queries which create all necessary buffers and add all chunk types and chunks to the declarative memory manually. In the original ACT-R implementation, the command \lstinline|run| is used to run a model. This behaviour can be transferred to the CHR implementation easily by adding a \lstinline|run| constraint and a rule for this constraint, that performs all the initialization work.
 
 \begin{lstlisting}
 init @ 
@@ -1503,7 +1503,7 @@ A \emph{priority queue} is an abstract data structure that serves objects by the
 
 \subsubsection{Objects}
 
-In the implementation of the scheduler, the priority queue contains objects of the form \lstinline|q(Time,Priority,Event)|. The priority of such a queue object is composed from the \lstinline|Time| and the \lstinline|Priority|. The order between the elements is defined as follows:
+In the implementation of the scheduler, the priority queue contains objects of the form \lstinline|q(Time,Priority,Event)|. The priority of such a queue object is composed from the \lstinline|Time| and the \lstinline|Priority|. An \lstinline|Event| is a Prolog goal, i.e. a built-in or a CHR constraint. The order between the elements is defined as follows:
 
 \begin{definition}[ordered time-priority condition]
 \lstinline|q(T1,P1,E1)| $\prec$ \lstinline|q(T2,P2,E2)|, i.e. the object \lstinline|q(T1,P1,E1)| is the predecessor of the object \lstinline|q(T2,P2,E2)|, if \lstinline|T1| $<$ \lstinline|T2|. In the case that \lstinline|T1 = T2|, then \lstinline|q(T1,P1,E1)| $\prec$ \lstinline|q(T2,P2,E2)| if \lstinline|P1| $>$ \lstinline|P2|. So, events with smaller times will be returned first. If two events appear at the same time, it is possible to define a priority and the event with the higher priority will be returned first. 

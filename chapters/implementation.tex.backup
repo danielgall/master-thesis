@@ -1031,7 +1031,7 @@ output([X|Xs]) :-
   output(Xs).
 \end{lstlisting}
 
-The \lstinline|X| have to be Prolog terms.
+The \lstinline|Xs| have to be Prolog terms.
 
 In ACT-R, function calls like \lstinline|!eval!| or \lstinline|!bind!| are allowed, but they are ignored in this work.
 
@@ -1145,12 +1145,11 @@ It is important to mention, that the received chunk will be created explicitly i
 \subsection{Components of the Implementation}
 \label{implementation:components}
 
-As mentioned before, the implementation is divided into modules which provide and require interfaces. Figure~\ref{fig:component_diagram} gives an overview of the architecture of the implementation as a component diagram. The main component is the \emph{model} which consists of \emph{user-defined rules}, that is the translated production rules as described in section~\ref{implementation:production_rules} and the ACT-R core. The core consists of the \emph{buffer system} (see section~\ref{implementation:buffer_system}) which implements a \emph{chunk-store} (see section~\ref{implementation:chunk_stores}) and a module \emph{stdlisp} which is capable of handling default lisp functions as described in section~\ref{lisp_functions}. The interface \emph{ICore} consists of the buffer interface -- which basically offers the access to the buffers and its contents for the matching and the buffer actions -- and the Lisp function interface as described in the aforementioned sections. Additionally, the core provides the constraints \lstinline|fire/0| and \lstinline|apply_rule/1| for reasons described in section~\ref{implementation:icore_interface} on page~\pageref{implementation:icore_interface}. Furthermore, the core uses the \emph{scheduler} module which provides the \emph{IScheduler} interface described in section~\ref{implementation:scheduler}. The configuration and the \emph{IConfiguration} and \emph{IObserver} interfaces are described in section~\ref{configuration}.
+As mentioned before, the implementation is divided into modules which provide and require interfaces. Figure~\ref{fig:component_diagram} gives an overview of the architecture of the implementation as a component diagram. The main component is the \emph{model} which consists of \emph{user-defined rules}, that is the translated production rules as described in section~\ref{implementation:production_rules} and the ACT-R core. The core consists of the \emph{buffer system} (see section~\ref{implementation:buffer_system}) which implements a \emph{chunk-store} (see section~\ref{implementation:chunk_stores}) and a module \emph{stdlisp} which is capable of handling default lisp functions as described in section~\ref{lisp_functions}. The interface \emph{ICore} consists of the buffer interface -- which basically offers the access to the buffers and its contents for the matching and the buffer actions -- and the Lisp function interface as described in the aforementioned sections. Additionally, the core provides the constraints \lstinline|fire/0| and \lstinline|apply_rule/1| for reasons described in section~\ref{implementation:icore_interface} on page~\pageref{implementation:icore_interface}. Furthermore, the core uses the \emph{scheduler} module which provides the \emph{IScheduler} interface described in section~\ref{implementation:scheduler} and defined in definition~\ref{def:ischeduler}. The configuration and the \emph{IConfiguration} and \emph{IObserver} interfaces are described in section~\ref{configuration}. Finally, the interface \emph{IModule} which is implemented by every ACT-R module (and in this case especially by the \emph{declarative module}) is described in a simplified version in listing~\ref{lst:interface_module} and in its final version in listing~\ref{lst:imodule_final}.
 
-lst:interface_module
-lst:imodule_final
+It is important to mention, that in the figure, each component which is included in another component signifies that the corresponding Prolog file is textually included to the parent component. The interfaces in the figure indicate that the component is a Prolog module which is included by the use of \lstinline|use_module|. The constraints defined in such a standalone component are not accessible for the other components. An exception is the component of the \emph{user-defined rules} which -- in the current version -- textually includes the \emph{core}.
 
-\begin{figure}[hp]
+\begin{figure}[htbp]
 \centering
  \begin{tikzpicture}
 \begin{umlcomponent}{model}
@@ -1440,7 +1439,7 @@ The process of chunk merging is described in \cite[??]{actr_reference}. The trea
 \section{Initialization}
 \label{initialization}
 
-In the examples the models had to be run by stating complex queries which create all necessary buffers and add all chunk types and chunks to the declarative memory manually. In the original ACT-R implementation, the command \lstinline|run| is used to run a model. This behaviour can be transferred to the CHR implementation easily by adding a \lstinline|run| constraint and a rule for this constraint, that performs all the initialization work.
+In the examples, the models had to be run by stating complex queries which create all necessary buffers and add all chunk types and chunks to the declarative memory manually. In the original ACT-R implementation, the command \lstinline|run| is used to run a model. This behaviour can be transferred to the CHR implementation easily by adding a \lstinline|run| constraint and a rule for this constraint, that performs all the initialization work.
 
 \begin{lstlisting}
 init @ 
@@ -1616,7 +1615,8 @@ Other modules can access the time only by a \lstinline|get_now/1| that only retu
 
 \subsubsection{Interface to the Scheduler}
 
-\begin{definition}{IScheduler}
+\begin{definition}[IScheduler]
+\label{def:ischeduler}
 The \emph{IScheduler} interface provides the following methods:
 
 \begin{description}

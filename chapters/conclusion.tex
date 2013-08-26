@@ -5,7 +5,7 @@ The goal of this thesis was to investigate the cognitive architecture \emph{ACT-
 
 Compared to other rule-based systems, the production rules of ACT-R are very simple. For instance, the system does not allow to introduce new variables on the right hand side of a rule. Hence, all checks on the left hand side of an ACT-R production rule are simple matchings or comparisons of known values. This leads to very simple guard checks in the CHR translation; a lot of rules can even be reduced to a simple matching problem which is already supported automatically by CHR. The actions of a production rule are very limited, since they only affect the buffer system, i.e. an implementation only has to offer a limited amount of actions which can then be translated very easily.
 
-One of the most complicated aspects of ACT-R implementations is the timing and the scheduling of conflict-resolution and module request events. However, even these concepts can be implemented elegantly using trigger constraints. The conflict resolution of ACT-R can be implemented by automated rule compilation, which produces two CHR rules out of one production rule.
+One of the most complicated aspects of ACT-R implementations is the timing and the scheduling of conflict-resolution and module request events. However, even those concepts can be implemented elegantly using trigger constraints. The conflict resolution of ACT-R can be implemented by automated rule compilation, which produces two CHR rules out of one production rule.
 
 \paragraph{Inventory and Future Work}
 

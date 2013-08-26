@@ -3,9 +3,7 @@
 
 Adaptive Control of Thought-Rational  (ACT-R) is a cognitive architecture, that allows to implement cognitive models that are executable by a computer to produce experimental results that can be compared to experimental data from experiments that have been conducted with humans.
 
-Because of the underlying theory which is the basis for the ACT-R cognitive architecture, modeling is facilitated, since the underlying concepts have not to be modelled again and again. On the other hand, it constrains the modeling process to, ideally, only plausible models.
-
-When talking about ACT-R, one can refer to the theory or the implementation. The theory gives a view which abstracts from implementational details that may be concerned when talking about implementation \FIXME{source}. In this work, implementation always refers to the vanilla Lisp implementation that can be downloaded from \cite{actr_homepage}.
+Because of the underlying theory which is the basis for the ACT-R cognitive architecture, modeling is facilitated, since the underlying concepts have not to be modelled again and again. On the other hand, it constrains the modeling process to, ideally, only plausible models. When talking about ACT-R, one can refer to the theory or the implementation. The theory gives a view which abstracts from implementational details that may be concerned when talking about implementation which is a specific instantiation of the theory \cite[unit 1, p. 1]{actr_tutorial}. In this work, implementation always refers to the vanilla Lisp implementation that can be downloaded from \cite{actr_homepage}.
 
 In this chapter, a short overview over the theory of ACT-R is given. First, the description is informal to provide a general image of how ACT-R works. Then, some important parts of the system are defined more formally in chapter \ref{implementation}, as soon as it is needed in the implementation. All of the information in this chapter refers to the theory. Implementation is discussed in chapter \ref{implementation}. A lot of the information in this chapter is based on \cite{anderson_how_2007, anderson_integrated_2004, taatgen_modeling_2006}, where a much more comprehensive discussion of the ACT-R theory including complex examples, referrings to the neuro-biology and the reasons why this particular modeling of human cognition has been chosen. In this work, only the basic concepts of ACT-R are presented.
 
@@ -155,7 +153,7 @@ The declarative module organizes the factual knowledge as an associative memory.
 
 Chunks can have slots that are connected to other chunks or primitive elements. Such an element can be regarded as a chunk without any slots. For instance, the fact $5 + 2 = 7$ can be modeled as a chunk that is connected to the numbers 5, 2 and 7 (see figure \ref{fig:chunk_addition_fact}). Notice that in the figure each slot has an individual name. This is necessary to distinguish the connections of the chunks, otherwise the summands would be indistinguishable from the sum in the example.
 
-\begin{figure}[htb]
+\begin{figure}[hbt]
 \centering
 \tikzstyle{chunk} = [ellipse, draw]
 \tikzstyle{element} = [] 
@@ -185,7 +183,7 @@ Each chunk is associated with a chunk-type that determines the slots a chunk can
 
 As mentioned before, modules communicate through buffers by putting a limited amount of information into their associated buffers. More precisely, each buffer can hold only \emph{one chunk at a time}.
 
-For example, the declarative module has the retrieval buffer associated with it, which can hold one specific declarative chunk. The declarative module can put chunks into the buffer that can be processed by the procedural module, which is described in the next section. Note that the chunks in the buffers are copies of the original chunks in the module. Hence, changes applied to a chunk in the buffer do not affect the original chunks in the requested module. \FIXME{source}
+For example, the declarative module has the retrieval buffer associated with it, which can hold one specific declarative chunk. The declarative module can put chunks into the buffer that can be processed by the procedural module, which is described in the next section. Note that the chunks in the buffers are copies of the original chunks in the module. Hence, changes applied to a chunk in the buffer do not affect the original chunks in the requested module \cite[unit 1, pp. 18\psq]{actr_tutorial}.
 
 \subsection{Procedural Knowledge}
 \label{procedural_knowledge}
@@ -528,7 +526,7 @@ For every person the participants studied either one, two or three facts. Afterw
 \path[draw] (fan) -- (fanlabel);
 \path[draw] (bi) -- (d);
 \end{tikzpicture}
-\caption{The ellipses represent chunks which encode one fact like ``a hippie is in the park'' (marked chunk $i$). The words are primitive elements. The special arrows show the direction of activation spreading from an element to a chunk. The numbers in the chunks signify the fan of the associated element, e.g. the fan of the element \emph{hippie} is 3. The associative strength of the element hippie to the marked chunk $i$ is $S_{\mathrm{hippie},i} = S - \mathrm{ln}(\mathrm{fan_{hippie}}) = S - \mathrm{ln}(3)$. \cite[fig.~6]{anderson_integrated_2004}}
+\caption{The ellipses represent chunks which encode one fact like ``a hippie is in the park'' (highlighted chunk $i$). The words are primitive elements. The special arrows show the direction of activation spreading from an element to a chunk. The numbers in the chunks signify the fan of the associated element, e.g. the fan of the element \emph{hippie} is 3. The associative strength of the element hippie to the highlighted chunk $i$ is $S_{\mathrm{hippie},i} = S - \mathrm{ln}(\mathrm{fan_{hippie}}) = S - \mathrm{ln}(3)$. \cite[fig.~6]{anderson_integrated_2004}}
 \label{fig:fans}
 \end{figure}
 
@@ -574,7 +572,7 @@ In the ACT-R theory, this result has been integrated in the calculation of the s
 \path[line] (source2.east) --  node[below right, near start] {$S_{2,2}$} (c2.west);
 \path[line] (source2.south east) --  node[below right, near start] {$S_{2,3}$} (c3.west);
 \end{tikzpicture}
-\caption{The goal buffer holds a chunk with two slots wich therefore are sources of activation. The special arrows signify the spreading of activation from those sources to the chunks in the declarative memory. The attentional weighting values $W_1$ and $W_2$ determine how much of the overall amount of activation spreads from each single source. If there are only those two sources, the $W_i$ are set to $\frac{1}{2}$. From each source the activation may spread to the chunks in the declarative memory. The amount of spreading activation depends on the connection between the source chunk and the chunk in the memory. If the source chunk does not appear in the slots of a chunk, the value of the associative strength from the source $j$ to the chunk $i$ is $S_{ji} = 0$. Otherwise, if the source appears in the slots of a chunk, the associative strength depends on the fan value of the source chunk -- the higher the fan of the source, the lower the associative strength. I.e. if the source chunk appears in the slots of many chunks, the value of the associative strength will be lower than if the connection is exclusive.}
+\caption{The goal buffer holds a chunk with two slots wich therefore are sources of activation. The special arrows signify the spreading of activation from those sources to the chunks in the declarative memory. The attentional weighting values $W_1$ and $W_2$ determine how much of the overall amount of activation spreads from each single source. If there are only those two sources, the $W_i$ are set to $\frac{1}{2}$. From each source the activation may spread to the chunks in the declarative memory. The amount of spreading activation depends on the connection between the source chunk and the chunk in the memory. If the source chunk does not appear in the slots of a chunk, the value of the associative strength from the source $j$ to the chunk $i$ is $S_{ji} = 0$. Otherwise, if the source appears in the slots of a chunk, the associative strength depends on the fan value of the source chunk -- the higher the fan of the source, the lower the associative strength. I.e. if the source chunk appears in the slots of many chunks, the value of the associative strength will be lower than if the connection is exclusive. \cite[unit 5]{actr_tutorial}}
 \label{fig:activation_spreading}
 \end{figure}
 
@@ -656,4 +654,4 @@ The same is valid for production rules: Over time, the experience tells us, whic
 \section{Experiment Environment}
 \label{experiment_environment}
 
-In experiments conducted with humans, the test subjects are confronted with visual or aural stimuli very often, for instance in the fan effect experiment described in section~\ref{actr:fan_effect} on page~\pageref{actr:fan_effect} a permutation of sentences over some objects have been shown and people had to remember the combinations. ACT-R provides an environment, where visual stimuli, mouse gestures or clicks, window openings etc. can be produced or measured respectively, so experiments can be run with both humans and the implemented model using the same environment. The model is then able to perform clicks or write text on the same graphical user interface as the humans are confronted with. However, this part of ACT-R will not be subject of this particular work, which examines the fundamental concept of the ACT-R theory first.
+In experiments conducted with humans, the test subjects are very often confronted with visual or aural stimuli, for instance in the fan effect experiment described in section~\ref{actr:fan_effect} on page~\pageref{actr:fan_effect} a permutation of sentences over some objects has been shown and people had to remember the combinations. ACT-R provides an environment, where visual stimuli, mouse gestures or clicks, window openings etc. can be produced or measured respectively, so experiments can be run with both humans and the implemented model using the same environment. The model is then able to perform clicks or write text on the same graphical user interface as the humans are confronted with. However, this part of ACT-R will not be subject of this particular work, which examines the fundamental concept of the ACT-R theory first.
