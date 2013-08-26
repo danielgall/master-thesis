@@ -169,19 +169,18 @@ chunk(7,chunk)
 \subsubsection{Simple Implementation of the Default Methods}
 \label{chunk_specification}
 
-To implement the methods in definition~\ref{def:abstract_methods_chunk_store}, first a data type for chunk specifications has to be introduced. From this specification the correct constraints modeling the chunk-store are added or modified.
+To implement the methods in definition~\ref{def:abstract_methods_chunk_store}, first a data type for chunk specifications has to be introduced. From this specification the correct constraints modeling the chunk-store are added or modified. This data type is necessary to allow communication between implementationally independent modules which do not share a joint memory of constraints (or data in general) as the ACT-R theory suggests (see section~\ref{actr:modular_organization}). The modular organization and the communication between modules is described in section~\ref{implementation:modular_organization}. 
 
 The straight-forward definition of a data type for chunk specifications is just to use the specification like in definition~\ref{def:abstract_methods_chunk_store}: Since the term \lstinline[language=]|(name isa type slot_1 val_1 ... slot_n val_n)| is just a list in Lisp and specifies a chunk uniquely, a similar Prolog term can be used:
 
 \begin{lstlisting}
 :- chr_type chunk_def ---> nil; chunk(any, any, slot_list).
 :- chr_type list(T) ---> []; [T | list(T)].
-% a list of slot-value pairs
 :- chr_type slot_list == list(pair(any,any)).
 :- chr_type pair(T1,T2) ---> (T1,T2).
 \end{lstlisting}
 
-This definition states that a chunk is either \lstinline|nil|, i.e. an empty chunk, or a term \lstinline|chunk(Name,Type,SVP)|, where \lstinline|SVP| is a list of slot-value pairs. This is the direct translation of the chunk-specification used in the definition, amended by the \lstinline|nil| construct, that may be needed for later purposes.
+This definition states that a chunk is either \lstinline|nil|, i.e. an empty chunk, or a term \lstinline|chunk(Name,Type,SVP)|, where \lstinline|SVP| is a list of slot-value pairs, i.e. a Prolog list of terms \lstinline|(S,V)|, where \lstinline|S| is the name of a slot and \lstinline|V| is an identifier for the value for this slot. This is the direct translation of the chunk-specification used in the definition, amended by the \lstinline|nil| construct, that may be needed for later purposes.
 
 The default methods can be implemented as follows:
 
@@ -844,7 +843,7 @@ buffer(buffer,C),
   chunk_has_slot(C,bar,spam)
 \end{lstlisting}
 
-Because there are no two identical \lstinline|chunk_has_slot| constraints in the store, the rule could not fire. When translating such a rule, the second test has to be eliminated.
+Because there are no two identical \lstinline|chunk_has_slot| constraints in the store, the rule could not fire. I.e. the list of slot tests in ACT-R is interpreted as a set of conditions, whereas CHR rules operate on a multi-set of constraints. However, the semantics of CHR can be changed to a set-based semantics. The first approach to implement a set-based semantics is to simply eliminate the duplicate test:
 
 However, this does not do the trick for all possible cases. For example, suppose a test
 
@@ -883,6 +882,20 @@ chunk_has_slot(C,bar,spam)>>
 \end{lstlisting}
 
 since the built-in syntactic-equality test of Prolog would never return true for those two constants.
+
+This approach is essentially the same as \citeauthor{chr_lecture_chap6} suggests in chapter~6 of the accompanying slides to his book \cite{fru_chr_book_2009}: For each multi-headed rule, new rule variants are added. Those variants are produced by a pairwise unification of the constraints in the head which eliminates one of the unifiable head constraints \cite{chr_lecture_chap6}. For example, consider the rule:
+
+\begin{lstlisting}
+a(1,Y), a(X,2) ==> b(X,Y).
+\end{lstlisting}
+
+The constraints \lstinline|a(1,Y)| and \lstinline|a(X,2)| can be unified to \lstinline|a(1,2)|. Therefore the following rule is added:
+
+\begin{lstlisting}
+a(1,2) ==> b(1,2).
+\end{lstlisting}
+
+Since in ACT-R all variables in the head of a rule have to be bound, this scheme can be simplified to a simple guard-check and the elimination of duplicate slot tests. Hence, no rule variants have to be added, but the rules containing duplicate slot tests are modified.
 
 \subsubsection{Slot Modifiers}
 \label{slot_modifiers}
@@ -1036,6 +1049,7 @@ The \lstinline|Xs| have to be Prolog terms.
 In ACT-R, function calls like \lstinline|!eval!| or \lstinline|!bind!| are allowed, but they are ignored in this work.
 
 \section{Modular Organization}
+\label{implementation:modular_organization}
 
 By now, all components of the implementation have been assumed to be in one file: buffer system, production rules, declarative memory, \dots This leads to problems like name space pollution and duplicate code, since, e.g. both the buffer system and the declarative memory use different chunk stores, which have the same behaviour but different data. It would be nice to reuse this code in both modules, but keeping the stores separated. Additionally, the code is better readable and it is easier to add new modules if a program is distributed over multiple files. Finally, the ACT-R architecture already proposes a modular organization, so it seems likely to adopt this idea of a modular architecture.
 
@@ -1459,7 +1473,7 @@ So far, the execution order of the production rules has been controlled by the \
 
 However, certain buffer actions like buffer requests may take some time until they are finished. The procedural system is free to fire the next rule after all actions have been started\footnote{see chapters \ref{process_of_rule_selection_and_execution} and \ref{serial_parallel_aspects}} and the requests are performed in parallel to that. Additionally, for the simulation it may be interesting to explore how much time certain actions have taken, especially when it comes to the subsymbolic layer.
 
-Those aspects cannot be implemented easily using the current approach with phase constraints. Hence, the idea of introducing a central scheduling unit is a possible solution of those requirements: The unit has a serialized ordered list of events with particular timings. If a new event is scheduled, the time it is executed must be known. The scheduling unit inserts the event at the right position of the list preserving the ordered time condition. Figure~\ref{fig:scheduler} illustrates this approach.
+Those aspects cannot be implemented easily using the current approach with phase constraints. Hence, the idea of introducing a central scheduling unit is a possible solution of those requirements: The unit has a serialized ordered list of events with particular timings. If a new event is scheduled, the time it is executed must be known. The scheduling unit inserts the event at the right position of the list preserving the ordered time condition. Figure~\ref{fig:scheduler:a} illustrates this approach.
 
 \begin{figure}
 \centering
@@ -1534,7 +1548,7 @@ node[node distance=2cm, minimum width=\x2-\x1] (times) at ({(\x2+\x1)/2},\y1-15m
 \label{fig:scheduler}
 \end{figure}
 
-The system periodically removes the first event from the queue, sets the current time to the time of the event and executes it which leads to new events in the queue. The queue organizes the right order of the events automatically.
+The system periodically removes the first event from the queue, sets the current time to the time of the event and executes it which may lead to new events in the queue. The queue organizes the right order of the events automatically. Figure~\ref{fig:scheduler:b} shows the effect of the removal to the queue and the system time.
 
 With this approach, the simulation of a parallel execution of ACT-R can be achieved: Each buffer action on the RHS of a rule just schedules an event that actually performs the action at a specified time (the current time plus its duration). 
 

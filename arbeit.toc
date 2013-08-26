@@ -132,23 +132,23 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Duplicate Slot Tests}{57}{section*.37}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Slot Modifiers}{58}{section*.38}
+\contentsline {subsubsection}{Slot Modifiers}{59}{section*.38}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Relation to Negation-as-Absence}{61}{section*.39}
+\contentsline {paragraph}{Relation to Negation-as-Absence}{62}{section*.39}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Empty Slots}{62}{section*.40}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Outputs}{62}{section*.41}
+\contentsline {subsubsection}{Outputs}{63}{section*.41}
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {4.4}Modular Organization}{63}{section.4.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.4.1}Prolog Modules}{63}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.1}Prolog Modules}{64}{subsection.4.4.1}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {4.4.2}Interface for Module Requests}{65}{subsection.4.4.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.4.3}How the Buffer System States a Request}{65}{subsection.4.4.3}
+\contentsline {subsection}{\numberline {4.4.3}How the Buffer System States a Request}{66}{subsection.4.4.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.4.4}Components of the Implementation}{66}{subsection.4.4.4}
+\contentsline {subsection}{\numberline {4.4.4}Components of the Implementation}{67}{subsection.4.4.4}
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {4.5}Declarative Module}{69}{section.4.5}
 \defcounter {refsection}{0}\relax 
@@ -180,7 +180,7 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Interface to the Scheduler}{82}{section*.48}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Recognize-Act Cycle}{82}{section*.49}
+\contentsline {subsubsection}{Recognize-Act Cycle}{83}{section*.49}
 \defcounter {refsection}{0}\relax 
 \contentsline {paragraph}{Start Next Cycle}{84}{section*.50}
 \defcounter {refsection}{0}\relax 
@@ -194,7 +194,7 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {4.8.1}General Translation}{86}{subsection.4.8.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.8.2}Configuration Variables}{86}{subsection.4.8.2}
+\contentsline {subsection}{\numberline {4.8.2}Configuration Variables}{87}{subsection.4.8.2}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{The Observer Pattern}{87}{section*.54}
 \defcounter {refsection}{0}\relax 
@@ -210,7 +210,7 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {paragraph}{Fan Values}{91}{section*.58}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Associative Weights}{91}{section*.59}
+\contentsline {paragraph}{Associative Weights}{92}{section*.59}
 \defcounter {refsection}{0}\relax 
 \contentsline {paragraph}{Calculate the Overall-Activations}{92}{section*.60}
 \defcounter {refsection}{0}\relax 
@@ -220,25 +220,25 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {paragraph}{Adapting the Retrieval Request}{96}{section*.63}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Configuration of the Retrieval}{97}{section*.64}
+\contentsline {subsubsection}{Configuration of the Retrieval}{98}{section*.64}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.9.2}Conflict Resolution and Production Utility}{98}{subsection.4.9.2}
+\contentsline {subsection}{\numberline {4.9.2}Conflict Resolution and Production Utility}{99}{subsection.4.9.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Conflict Resolution}{98}{section*.65}
+\contentsline {subsubsection}{Conflict Resolution}{99}{section*.65}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Computing the Utility Values}{102}{section*.66}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Configuration of the Conflict Resolution}{103}{section*.67}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Public Methods of the Conflict Resolution}{103}{section*.68}
+\contentsline {subsubsection}{Public Methods of the Conflict Resolution}{104}{section*.68}
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {4.10}Compiler}{104}{section.4.10}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {4.10.1}Basic Idea}{104}{subsection.4.10.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.10.2}Compiling}{104}{subsection.4.10.2}
+\contentsline {subsection}{\numberline {4.10.2}Compiling}{105}{subsection.4.10.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Tokenizer}{104}{section*.69}
+\contentsline {subsubsection}{Tokenizer}{105}{section*.69}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Parser}{108}{section*.70}
 \defcounter {refsection}{0}\relax 
