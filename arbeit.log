@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.8.10)  26 AUG 2013 17:34
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.8.10)  27 AUG 2013 20:38
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1857,59 +1857,56 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [45]
 [46] [47] [48]
-Overfull \hbox (21.97882pt too wide) in paragraph at lines 557--558
+Overfull \hbox (21.97882pt too wide) in paragraph at lines 537--538
 \T1/phv/m/n/10 (-20) present, but the chunk store will not hold any of the re-q
 uired [][][] or [][][]
  []
 
 
-Underfull \vbox (badness 6157) has occurred while \output is active []
+Underfull \vbox (badness 2582) has occurred while \output is active []
 
  [49]
-[50] [51] [52] [53] [54] [55] [56] [57] [58] [59] [60]
-Underfull \vbox (badness 1062) has occurred while \output is active []
+[50] [51] [52] [53] [54] [55] [56] [57] [58] [59] [60] [61] [62] [63] [64]
+[65]
+Underfull \vbox (badness 3209) has occurred while \output is active []
 
- [61]
-Underfull \vbox (badness 1975) has occurred while \output is active []
-
- [62]
-[63] [64] [65] [66]
-Underfull \hbox (badness 1062) in paragraph at lines 1170--1170
+ [66]
+Underfull \hbox (badness 1062) in paragraph at lines 1144--1144
  [][][][] 
  []
 
 
-Underfull \hbox (badness 1584) in paragraph at lines 1170--1170
+Underfull \hbox (badness 1584) in paragraph at lines 1144--1144
  [][][][] 
  []
 
 
-Underfull \hbox (badness 1412) in paragraph at lines 1174--1174
+Underfull \hbox (badness 1412) in paragraph at lines 1148--1148
  [][][][] 
  []
 
 
-Underfull \hbox (badness 3965) in paragraph at lines 1176--1176
+Underfull \hbox (badness 3965) in paragraph at lines 1150--1150
  [][][][] 
  []
 
 
-Underfull \hbox (badness 4673) in paragraph at lines 1176--1176
+Underfull \hbox (badness 4673) in paragraph at lines 1150--1150
  [][][][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1177--1177
+Underfull \hbox (badness 10000) in paragraph at lines 1151--1151
  [][][][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1177--1177
+Underfull \hbox (badness 10000) in paragraph at lines 1151--1151
  [][][][] 
  []
 
 
-Underfull \hbox (badness 1412) in paragraph at lines 1181--1181
+Underfull \hbox (badness 1412) in paragraph at lines 1155--1155
  [][][][] 
  []
 
@@ -1917,13 +1914,13 @@ Underfull \hbox (badness 1412) in paragraph at lines 1181--1181
 Underfull \vbox (badness 7963) has occurred while \output is active []
 
  [71]
-Overfull \hbox (8.44083pt too wide) in paragraph at lines 1345--1346
+Overfull \hbox (8.44083pt too wide) in paragraph at lines 1319--1320
 []\T1/phv/m/n/10 (-20) In the sec-ond rule, if no two match sets are in the sto
 re, the re-sult of the [][][]
  []
 
 [72] [73]
-Overfull \hbox (8.9429pt too wide) in paragraph at lines 1407--1408
+Overfull \hbox (8.9429pt too wide) in paragraph at lines 1381--1382
 [][][][][][][][][][][][][][] 
  []
 
@@ -1936,7 +1933,7 @@ Underfull \vbox (badness 3849) has occurred while \output is active []
 
  [83]
 [84] [85] [86] [87] [88]
-Overfull \hbox (96.54147pt too wide) in paragraph at lines 1916--1917
+Overfull \hbox (96.54147pt too wide) in paragraph at lines 1890--1891
 \T1/phv/m/n/10 (-20) tion of a set of chunks has to be cal-cu-lated. There-fore
 , a con-straint [][][][][][]
  []
@@ -1946,12 +1943,12 @@ Underfull \vbox (badness 4792) has occurred while \output is active []
 
  [91]
 [92] [93] [94]
-Overfull \hbox (27.51543pt too wide) in paragraph at lines 2088--2089
+Overfull \hbox (27.51543pt too wide) in paragraph at lines 2062--2063
 \T1/phv/m/n/10 (-20) trig-ger con-straints -- [][][][], [][][][] and [][][][]
  []
 
 [95] [96]
-Overfull \hbox (8.62102pt too wide) in paragraph at lines 2154--2155
+Overfull \hbox (8.62102pt too wide) in paragraph at lines 2128--2129
 []\T1/phv/m/n/10 (-20) The re-sult-ing state [][][] is [][][],
  []
 
@@ -1959,7 +1956,7 @@ Overfull \hbox (8.62102pt too wide) in paragraph at lines 2154--2155
 Underfull \vbox (badness 5302) has occurred while \output is active []
 
  [97]
-Overfull \hbox (0.86296pt too wide) in paragraph at lines 2189--2190
+Overfull \hbox (0.86296pt too wide) in paragraph at lines 2163--2164
 []\T1/phv/m/n/10 (-20) For each rule only in-volved in the sub-sym-bolic layer,
  the con-straint [][][][]
  []
@@ -1969,13 +1966,13 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [98]
 [99]
-Overfull \hbox (14.09686pt too wide) in paragraph at lines 2248--2249
+Overfull \hbox (14.09686pt too wide) in paragraph at lines 2222--2223
 []\T1/phv/m/n/10 (-20) The first rule deletes the empty [][][] con-straint, if 
 there are other [][][]
  []
 
 
-Overfull \hbox (16.32722pt too wide) in paragraph at lines 2265--2266
+Overfull \hbox (16.32722pt too wide) in paragraph at lines 2239--2240
 []\T1/phv/m/n/10 (-20) The first rule is only ap-pli-ca-ble, if there were no m
 atch-ing rules and the empty [][][]
  []
@@ -1984,7 +1981,7 @@ atch-ing rules and the empty [][][]
 Underfull \vbox (badness 2443) has occurred while \output is active []
 
  [100]
-Overfull \hbox (51.69098pt too wide) in paragraph at lines 2269--2270
+Overfull \hbox (51.69098pt too wide) in paragraph at lines 2243--2244
 []\T1/phv/m/n/10 (-20) When the cho-sen rule is ap-plied, its ac-tions are per-
 formed and even-tu-ally, a [][][]
  []
@@ -2105,11 +2102,11 @@ Package logreq Info: Writing requests to 'arbeit.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 37043 strings out of 493315
- 675841 string characters out of 6143704
- 1090308 words of memory out of 5000000
+ 37041 strings out of 493315
+ 675826 string characters out of 6143704
+ 1088308 words of memory out of 5000000
  37635 multiletter control sequences out of 15000+600000
- 103192 words of font info for 299 fonts, out of 8000000 for 9000
+ 103130 words of font info for 298 fonts, out of 8000000 for 9000
  958 hyphenation exceptions out of 8191
  65i,19n,76p,1885b,3156s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf-dist/fon
@@ -2135,7 +2132,7 @@ r8a.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/
 texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-dist/fonts/typ
 e1/urw/helvetic/uhvbo8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhv
 r8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on arbeit.pdf (153 pages, 931642 bytes).
+Output written on arbeit.pdf (153 pages, 931828 bytes).
 PDF statistics:
  3780 PDF objects out of 4296 (max. 8388607)
  3532 compressed objects within 36 object streams

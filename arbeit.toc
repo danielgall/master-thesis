@@ -96,7 +96,7 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {paragraph}{return\_chunk}{42}{section*.23}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Checking Consistency and Type-Consistency}{43}{section*.24}
+\contentsline {subsubsection}{Checking Consistency and Type-Consistency}{42}{section*.24}
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {4.3}Procedural Module}{43}{section.4.3}
 \defcounter {refsection}{0}\relax 
@@ -118,11 +118,11 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {paragraph}{Buffer Modifications}{50}{section*.31}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Buffer Clearings}{51}{section*.32}
+\contentsline {paragraph}{Buffer Clearings}{50}{section*.32}
 \defcounter {refsection}{0}\relax 
 \contentsline {paragraph}{Buffer Requests}{51}{section*.33}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Translation of Buffer Queries}{52}{section*.34}
+\contentsline {subsubsection}{Translation of Buffer Queries}{51}{section*.34}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {4.3.3}The Production Rule Grammar}{52}{subsection.4.3.3}
 \defcounter {refsection}{0}\relax 
@@ -130,23 +130,23 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Bound and Unbound Variables}{56}{section*.36}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Duplicate Slot Tests}{57}{section*.37}
+\contentsline {subsubsection}{Duplicate Slot Tests}{56}{section*.37}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Slot Modifiers}{59}{section*.38}
 \defcounter {refsection}{0}\relax 
-\contentsline {paragraph}{Relation to Negation-as-Absence}{62}{section*.39}
+\contentsline {paragraph}{Relation to Negation-as-Absence}{61}{section*.39}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsubsection}{Empty Slots}{62}{section*.40}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsubsection}{Outputs}{63}{section*.41}
+\contentsline {subsubsection}{Outputs}{62}{section*.41}
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {4.4}Modular Organization}{63}{section.4.4}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.4.1}Prolog Modules}{64}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.1}Prolog Modules}{63}{subsection.4.4.1}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {4.4.2}Interface for Module Requests}{65}{subsection.4.4.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {subsection}{\numberline {4.4.3}How the Buffer System States a Request}{66}{subsection.4.4.3}
+\contentsline {subsection}{\numberline {4.4.3}How the Buffer System States a Request}{65}{subsection.4.4.3}
 \defcounter {refsection}{0}\relax 
 \contentsline {subsection}{\numberline {4.4.4}Components of the Implementation}{67}{subsection.4.4.4}
 \defcounter {refsection}{0}\relax 
