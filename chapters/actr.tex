@@ -53,7 +53,7 @@ This approach leads to a modular organization of ACT-R with modules for each pur
     \p2=(visualmod.south),
      \p3=(visualmod.west),
     \p4=(manualmod.east) in
- node[module,  fill=red!20,  minimum width=\x4-\x3] at (\x1,\y2-7mm) (environment) {environment}; 
+ node[module,  fill=red!20,  minimum width=\x4-\x3, text width=6em] at (\x1,\y2-7mm) (environment) {environment}; 
 
     % Draw edges
   \path [doubleline] (goalmod) -- (goalbuf);
@@ -333,25 +333,28 @@ The next step is to define the goal chunk stored in the goal buffer. In this chu
 
 In this example we assume that the model starts with this goal chunk in the goal buffer and the first count fact has been retrieved:
 
-\parbox{100mm}{\textbf{goal buffer:} goal-chunk of type count\\
-\noindent\hspace*{20mm} current-number $2$}
+\begin{center}
+\parbox{17em}{\textbf{goal buffer:} \emph{goal-chunk} of type \emph{count}\\
+\noindent\hspace*{15mm} current-number $2$}
 
-\parbox{100mm}{\textbf{retrieval buffer:} b of type count-fact\\
-\noindent\hspace*{20mm} first $2$\\
-\noindent\hspace*{20mm} second $3$}
+\parbox{17em}{\textbf{retrieval buffer:} \emph{b} of type \emph{count-fact}\\
+\noindent\hspace*{15mm} first $2$\\
+\noindent\hspace*{15mm} second $3$}
+\end{center}
 
-This notation indicates that the goal buffer holds a chunk with the name \emph{goal-chunk} of the type \emph{count}, which has the slot \emph{current-number} with the value $2$ (the same is valid analogously for the retrieval buffer).
+This notation indicates that the goal buffer holds a chunk with the name \emph{goal-chunk} of the type \emph{count}, which has the slot \emph{current-number} with the value $2$ (the same is valid analogously for the retrieval buffer). Now the rule to implement counting can be defined as:
 
-Now the rules to implement counting can be defined as:
+\tikzstyle{rule}=[rectangle, draw=Uulmin,  
+        rounded corners, anchor=west, text=white, text width=8cm]
 
 \begin{center}
 \begin{tikzpicture}[node distance=0.5cm]
-\node (count-rule) [rule, rectangle split, rectangle split parts=4, rectangle split part fill={Uulmin, Uulmin!45,Uulmin!45,Uulmin!80,Uulmin!80}] {
+\node (count-rule) [rule, rectangle split, rectangle split parts=5, rectangle split part fill={Uulmin, Uulmin!45,Uulmin!45,Uulmin!80,Uulmin!80}] {
         \textbf{count-rule}
-        \nodepart{second} IF the goal is to count, the current number is $n$
-        \nodepart{third}AND the retrieval buffer holds a chunk of type \emph{count-fact} with the \emph{first} value $n$ and the \emph{second} value $m$
-        \nodepart{fourth}THEN set the current number in the goal to $m$
-                    AND send a retrieval request for a chunk that has $m$ in its \emph{first} slot
+        \nodepart{two} IF the goal is to count, the current number is $n$
+        \nodepart{three}AND the retrieval buffer holds a chunk of type \emph{count-fact} with the \emph{first} value $n$ and the \emph{second} value $m$
+        \nodepart{four}THEN set the current number in the goal to $m$
+        \nodepart{five}AND send a retrieval request for a chunk that has $m$ in its \emph{first} slot
     };
 \end{tikzpicture}
 \end{center}
@@ -396,9 +399,7 @@ Therefore, ACT-R provides a subsymbolic layer that introduces ``neural-like acti
 
 The activation $A_i$ of a chunk $i$ is a numerical value that determines if and how fast a chunk can be retrieved by the declarative module. Suppose there are, for example, two chunks that encode addition facts for the same two arguments (let them be 5 and 2), but with different sums (6 and 7). This could be the case, if, e.g., a child learned the wrong fact about the sum of 5 and 2. When stating a module request for an addition fact that encodes the sum of 5 and 2, somehow one of the two chunks has to be chosen by a certain method, since they are both matching the request. This is determined by the activation of the chunks: The chunk with the higher activation will be chosen.
 
-Additionally, a very low chunk activation can prevent a chunk from being retrieved: If the activation $A_i$ is less than a certain \emph{threshold} $\tau$, the chunk $i$ cannot be found.
-
-At last, activation determines also how fast a chunk is being retrieved: The higher the activation, the shorter the retrieval time.
+Additionally, a very low chunk activation can prevent a chunk from being retrieved: If the activation $A_i$ is less than a certain \emph{threshold} $\tau$, the chunk $i$ cannot be found. At last, activation determines also how fast a chunk is being retrieved: The higher the activation, the shorter the retrieval time.
 
 \subsubsection{Base-Level Activation}
 \label{base_level_activation}
@@ -473,13 +474,12 @@ S_{ji} = S - \mathrm{ln}(\mathrm{fan}_j)
 
 where $\mathrm{fan}_j$ is the number of facts associated to term $j$ \cite[1042]{anderson_implications_2000}. In more detail: ``$\mathrm{fan}_j$ is the number of chunks in declarative memory in which $j$ is the value of a slot plus one for chunk $j$ being associated with itself'' \cite[unit 5, p. 2]{actr_tutorial}. Hence, equation \eqref{eq:assoc_strength} states that the associative strength from chunk $j$ to $i$ decreases the more facts are associated to $j$.
 
-This is due to the \emph{fan effect:} The more facts a person studies about a certain concept, the more time he or she needs to retrieve a particular fact of that concept \cite[186]{anderson_fan_1999}. This has been demonstrated in an experiment presented in \cite{anderson_fan_1999}, where every participant studied facts about persons and locations like:
+This is due to the \emph{fan effect:} The more facts a person studies about a certain concept, the more time he or she needs to retrieve a particular fact of that concept \cite[186]{anderson_fan_1999}. This has been demonstrated in an experiment presented in \cite{anderson_fan_1999}, where every participant studied facts about persons and locations like for example:
 
 \begin{itemize}
  \item A hippie is in the park.
  \item A hippie is in the church.
  \item A captain is in the bank.
- \item \dots
 \end{itemize}
 
 For every person the participants studied either one, two or three facts. Afterwards, they were asked to identify targets, that are sentences they studied, and foils, i.e. sentences constructed from the same persons and locations, but that were not in the original set of sentences. ``The term \emph{fan} refers to the number of facts associated with a particular concept'' \cite[186]{anderson_fan_1999}. Figure~\ref{fig:fans} represents an example chunk network of the studied sentences with their fan, $S_{ji}$ and $B_i$ values.
@@ -531,20 +531,18 @@ For every person the participants studied either one, two or three facts. Afterw
 \label{fig:fans}
 \end{figure}
 
-The result of the experiment was, that the more facts are associated with a certain concept, the higher the retrieval time for a particular fact about that concept was.
-
-In the ACT-R theory, this result has been integrated in the calculation of the strengths of association: In equation \eqref{eq:assoc_strength} the associative strength decreases with the number of associated elements. The value $S$ is a model-dependent constant, but in many models estimated about 2 \cite[1042]{anderson_integrated_2004}. Modelers should take notice of setting $S$ high enough that all associative strengths in the model are positive \cite[unit 5, p. 3]{actr_tutorial}. Figure \ref{fig:activation_spreading} illustrates the activation spreading process with respect to the associative strengths.
+The result of the experiment was, that the more facts are associated with a certain concept, the higher the retrieval time for a particular fact about that concept was. In the ACT-R theory, this result has been integrated in the calculation of the strengths of association: In equation \eqref{eq:assoc_strength} the associative strength decreases with the number of associated elements. The value $S$ is a model-dependent constant, but in many models estimated about 2 \cite[1042]{anderson_integrated_2004}. Modelers should take notice of setting $S$ high enough that all associative strengths in the model are positive \cite[unit 5, p. 3]{actr_tutorial}. Figure \ref{fig:activation_spreading} illustrates the activation spreading process with respect to the associative strengths.
 
 \begin{figure}[htb]
 \centering
 \tikzstyle{chunk} = [ellipse, fill=blue!20, draw, text centered, text width=3em, minimum height=1cm]
-\tikzstyle{source} = [rectangle, fill=blue!20, draw, text centered, text width=3em, minimum height=1cm]
+\tikzstyle{source} = [rectangle, fill=blue!20, draw, text centered, text width=4em, minimum height=1cm]
 \tikzstyle{buffer} = [rectangle, fill=yellow!20, draw, text centered, minimum height=1cm]
 \tikzstyle{empty} = [ellipse, text centered, text width=3em, minimum height=1cm]
 \tikzstyle{line} = [draw,diamond-latex]
 
 \begin{tikzpicture}[remember picture]
-\matrix[column sep=2cm,row sep=5mm] {
+\matrix[column sep=2cm,row sep=2mm] {
 &\node[source] (source1) {$\mathrm{source_1}$}; 
 & &
 \node[chunk] (c1) {$\mathrm{chunk_1}$};\\

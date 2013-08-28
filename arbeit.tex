@@ -56,7 +56,7 @@ hyperref=true
 \usepackage{float} % use \begin{figure}{H} to really force a figure being placed here
 \usepackage[section]{placeins} % floatbarrier at each new section, so every figure appears in its own section
 \usepackage{tikz}
-\usetikzlibrary{positioning,shapes,shadows,arrows,automata,calc,decorations.markings}
+\usetikzlibrary{positioning,shapes,shapes.multipart,shadows,arrows,automata,calc,decorations.markings}
 \usepackage{tikz-uml}
 
 \usepackage{scrhack}
@@ -145,9 +145,6 @@ hyperref=true
 \definecolor{Akzent}{rgb}{0.6627, 0.63529, 0.55294} %akzentfarbe
 
 \definecolor{Uulmin}{RGB}{163,38,56} % Uni Ulm, rot der Fakultät für Ingenieurwissenschaften und Informatik
-
-\tikzstyle{rule}=[rectangle, draw=Uulmin,  rounded corners, 
-        anchor=west, text=white, text width=6.5cm]
 
 
 %%
@@ -376,7 +373,9 @@ hyperref=true
 %% Literaturverzeichnis
 %%
 %\bibliography{bibliography}
-\printbibliography
+\begin{flushleft} % kein Blocksatz in Literaturverzeichnis
+\printbibliography 
+\end{flushleft}
 
 %%
 %% Versicherung
