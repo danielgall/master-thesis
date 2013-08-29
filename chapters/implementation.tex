@@ -83,7 +83,7 @@ add-chunk(a isa addition-fact arg1 5 arg2 2 sum 7)
  Type consistency is checked as follows:
  \begin{align*}
  slots(a) &= \{(arg_1, 5), (arg_2, 2), (sum, 7)\}\\
- slots((addition-fact,\{arg_1, arg_2, sum\}) &= \{arg_1, arg_2, sum\}
+ slots((addition\mbox{-}fact,\{arg_1, arg_2, sum\}) &= \{arg_1, arg_2, sum\}
  \end{align*}
  Since the chunk $a$ defines values for all of the possible slots of the type $addition\mbox{-}fact$ and only those slots, the store is type-consistent.
 \end{example}
@@ -1069,7 +1069,7 @@ Exported constraints can only appear once in a program, since they can be called
 \subsection{Interface for Module Requests}
 \label{interface_for_module_requests}
 
-The architecture of ACT-R provides an infrastructure for the procedural module to state requests to all the other modules. To implement this concept as general as possible, an interface has to be defined, which allows the adding of new modules to the system by just implementing this interface.
+The architecture of ACT-R provides an infrastructure for the procedural module to state requests to all the other modules. To implement this concept as general as possible, an interface has to be defined which allows the adding of new modules to the system by just implementing this interface.
 
 \begin{lstlisting}[caption={Simple Interface \emph{IModule}},label=lst:interface_module]
 module_request(+BufName,+Chunk,-ResChunk,-ResState)
@@ -1096,7 +1096,7 @@ This interface will be extended later on.
 
 Every module that can handle a request implements the interface in listing~\ref{lst:interface_module}. When the buffer system gets a call \lstinline|buffer_request(buffer,chunk-specification)|, it simply can call the \lstinline|module_request| method of the corresponding module. This can be achieved by \lstinline|ModName:module_request(...)|, where \lstinline|ModName| is the name of the corresponding module.
 
-Hence, the buffer system must now, which buffer belongs to which module. The \lstinline|buffer/2| constraint therefore has to be extended to a \lstinline|buffer/3| constraint, that also holds the module name of its module:
+Hence, the buffer system must know which buffer belongs to which module. The \lstinline|buffer/2| constraint therefore has to be extended to a \lstinline|buffer/3| constraint, that also holds the module name of its module:
 
 \begin{lstlisting}
 buffer(BufName,ModName,Chunk)
@@ -1198,7 +1198,7 @@ The Declarative Module is a \emph{chunk store}, that additionally implements the
 \subsection{Global Method for Adding Chunks}
 \label{global_method_for_adding_chunks}
 
-Since the declarative module is very important to the whole theory it kind of is a special module. Therefore, its Prolog module exports a predicate \lstinline|add_dm| that is just a wrapper for its chunk store. Hence, with the command \lstinline|add_dm| chunks can be added to the chunk store of the declarative module from every part of the program. This is e.g. used for the clearing of buffers in the buffer system, where the chunk of a buffer goes to the declarative memory when the buffer is cleared. This is the implementation of the command:
+Since the declarative module is very important to the whole theory it is kind of a special module. Therefore, its Prolog module exports a predicate \lstinline|add_dm| that is just a wrapper for its chunk store. Hence, with the command \lstinline|add_dm| chunks can be added to the chunk store of the declarative module from every part of the program. This is e.g. used for the clearing of buffers in the buffer system, where the chunk of a buffer is written to declarative memory when the buffer is cleared. This is the implementation of the command:
 
 \begin{lstlisting}
 <<add_dm(ChunkDef)>> <=> add_chunk(ChunkDef).
@@ -1207,7 +1207,7 @@ Since the declarative module is very important to the whole theory it kind of is
 \subsection{Retrieval Requests}
 \label{retrieval_requests}
 
-A retrieval request gets an incomplete chunk specification as input and returns a chunk, whose slots match the provided chunk pattern.
+A retrieval request gets an incomplete chunk specification as input and returns a chunk whose slots match the provided chunk pattern.
 
 \subsubsection{Chunk Patterns}
 
@@ -1244,7 +1244,7 @@ The most common case of requests is a specification of the type and a (possibly 
 
 \subsubsection{Finding Chunks}
 
-In this section, a CHR constraint \lstinline|find_chunk/3| will be defined, that produces a \lstinline|match_set/1| constraint for each chunk that matches a specified pattern. Eventually, the match set will be collected and returned.
+In this section, a CHR constraint \lstinline|find_chunk/3| will be defined which produces a \lstinline|match_set/1| constraint for each chunk that matches a specified pattern. Eventually, the match set will be collected and returned.
 
 \begin{lstlisting}
 <<find_chunk(N1,T1,Ss), chunk(N2,T2)>> ==> 
@@ -1262,11 +1262,11 @@ In this section, a CHR constraint \lstinline|find_chunk/3| will be defined, that
 <<find_chunk(_,_,_)>> <=> true.
 \end{lstlisting}
 
-First, for each chunk in the store, whose name and type is unifiable with the specified name and type, will be part of the initial match set. If in the chunk specification the name and type are variables, each chunk will match. For the unification test, the \lstinline|unifiable/3| predicate of Prolog is used, because the unification should not be performed but only tested. If name and type match the pattern, then the slots have to be tested by \lstinline|test_slots/2|.
+First, each chunk in the store whose name and type are unifiable with the specified name and type, will be part of the initial match set. If in the chunk specification the name and type are variables, each chunk will match. For the unification test, the \lstinline|unifiable/3| predicate of Prolog is used, because the unification should not be performed but only tested. If name and type match the pattern, then the slots have to be tested by \lstinline|test_slots/2|.
 
 The rule in line~7 is for chunk specifications that do not specify the slots. In this case, no slots have to be tested. If all chunks have been tested or no chunk matches at all, the process is finished (rule in line ~13).
 
-After adding each matching candidate to the match set, whose name and type have already been checked, the match set is pruned from chunks that have non-matching slot values:
+After adding each matching candidate to the match set whose name and type have already been checked, the match set is pruned from chunks that have non-matching slot values:
 
 \begin{lstlisting}
 <<test_slots(_,[])>> <=> true.
@@ -1284,15 +1284,17 @@ After adding each matching candidate to the match set, whose name and type have 
 <<test_slots(N,_) \ match_set([N])>> <=> true.
 \end{lstlisting}
 
+\FIXME{Zeilenreferenzen dynamisch, einzelnen Satz im ersten Absatz entfernen}
+
 The first rule is the base case, where no slots have to be tested any more and the test is finished and has been successful.
 
-In line~3, the rule applies, if there is at least one slot \lstinline|(S,V2)| that has to be tested and a $HasSlot$ relation of the kind \lstinline|N| $\xrightarrow[]{\mathtt{S}}$ \lstinline|V1| with the slot \lstinline|S| to be tested, that is still in the match set, so no conflicting slot has been found yet. If the values \lstinline|V1| and \lstinline|V2| are unifiable, i.e. the both are the same constant or at least one is a variable, then the test passes and the chunk \lstinline|N| remains in the match set and the rest of the slot tests are performed.
+In line~3, the rule is applicable if there is at least one slot \lstinline|(S,V2)| that has to be tested and a $HasSlot$ relation of the kind \lstinline|N| $\xrightarrow[]{\mathtt{S}}$ \lstinline|V1| with the slot \lstinline|S| to be tested, that is still in the match set, so no conflicting slot has been found yet. If the values \lstinline|V1| and \lstinline|V2| are unifiable, i.e. both are the same constant or at least one is a variable, the test passes and the chunk \lstinline|N| remains in the match set and the rest of the slot tests are performed.
 
-The second rule in line~8 applied if the guard of the first rule did not hold, so the values \lstinline|V1| and \lstinline|V2| are not unifiable, but there is a connection \lstinline|N| $\xrightarrow[]{\mathtt{S}}$ \lstinline|V1| and in the request it has been specified that the value of slot \lstinline|S| has to be \lstinline|V2|. In this case, \lstinline|V1| $\neq$ \lstinline|V2|, so the test fails and the chunk \lstinline|N| has to be removed from the match set, since one of its slots does not match.
+The third rule in line~8 is applied if the guard of the first rule did not hold, so the values \lstinline|V1| and \lstinline|V2| are not unifiable, but there is a connection \lstinline|N| $\xrightarrow[]{\mathtt{S}}$ \lstinline|V1| and in the request it has been specified that the value of slot \lstinline|S| has to be \lstinline|V2|. In this case, \lstinline|V1| $\neq$ \lstinline|V2|, so the test fails and the chunk \lstinline|N| has to be removed from the match set, since one of its slots does not match.
 
 If the last two rules cannot be applied, the chunk does not provide a slot that, however, has been specified in the request. Hence, the chunk does not match and the last rule therefore deletes it from the match set. \FIXME{make simpagation rule to simplification rule?}
 
-If those rules have been applied exhaustively, only the matching chunks will remain in the match set: If there would be an outstanding slot test, one of the rules would be applicable and the chunk would be removed from the match set, if the test fails (and the test would also be removed, because it has been performed). If the test is successful, the chunk will remain part of the match set, but the test will be removed. So the match set is correct and complete.
+If those rules have been applied exhaustively, only the matching chunks will remain in the match set: If there was an outstanding slot test, one of the rules would be applicable and the chunk would be removed from the match set, if the test fails (and the test would also be removed, because it has been performed). If the test is successful, the chunk will remain part of the match set, but the test will be removed. So the match set is correct and complete.
 
 However, since the match set is distributed over a set of \lstinline|match_set| constraints, it would be desirable to collect all those matches in one set. This can be triggered by the constraint \lstinline|collect_matches/1|, which returns the complete match set in its arguments as soon as there is only one \lstinline|match_set| left:
 
@@ -1306,7 +1308,7 @@ However, since the match set is distributed over a set of \lstinline|match_set| 
 <<collect_matches(Res)>> <=> Res=[].
 \end{lstlisting}
 
-The first rule merges two match sets to one singe merge set containing a list with all the chunks of the former sets, if the \lstinline|collect_matches| trigger is present. 
+The first rule merges two match sets to one single merge set containing a list with all the chunks of the former sets, if the \lstinline|collect_matches| trigger is present. 
 
 In the second rule, if no two match sets to merge are in the store any more, the result of the \lstinline|collect_matches| operation is the remaining match set. The same applies for the last rule, where no match set is in the store and therefore the result is empty. Note that this implies, that the rules have to be applied from top to bottom, left to right\footnote{This is called the refined operational semantics of CHR}.
 
