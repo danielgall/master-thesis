@@ -74,5 +74,522 @@ alter_slot(Chunk,Slot,Value) <=>
 \section{Subsymbolic Layer}
 \label{app:ex:subsymbolic_layer}
 
+\begin{lstlisting}
+:- include('actr_core.pl').
+:- chr_constraint run/0, fire/0.
+
+delay-train1 @ 
+  fire,
+  buffer(goal,_,A),
+    chunk(A,goal-chunk),
+      chunk_has_slot(A,goal,training1)
+==>
+  conflict_set(train1).
+
+train1 @
+  buffer(goal,_,A),
+    chunk(A,goal-chunk),
+      chunk_has_slot(A,goal,training1)
+  \ apply_rule(train1)
+<=>
+  true |
+  buffer_change(goal,chunk(_,_,
+    [ (goal,training2)])),
+  buffer_request(retrieval,
+    chunk(_,count-order,
+      [ (first,3), 
+        (second,4)])),
+  conflict_resolution.
+
+delay-train2 @
+  fire,
+  buffer(goal,_,A),
+    chunk(A,goal-chunk),
+      chunk_has_slot(A,goal,training2),
+  buffer(retrieval,_,B),
+    chunk(B,count-order),
+      chunk_has_slot(B,first,3),
+      chunk_has_slot(B,second,4)
+==>
+  true |
+  conflict_set(train2).
+  
+train2 @
+  buffer(goal,_,A),
+    chunk(A,goal-chunk),
+      chunk_has_slot(A,goal,training2),
+  buffer(retrieval,_,B),
+    chunk(B,count-order),
+      chunk_has_slot(B,first,3),
+      chunk_has_slot(B,second,4)
+  \ apply_rule(train2)
+<=>
+  true |
+  buffer_change(goal,chunk(_,goal-chunk,
+    [ (start,2), 
+      (end,4), 
+      (goal,count)])),
+  buffer_clear(retrieval),
+  conflict_resolution.
+  
+delay-start @
+  fire,
+  buffer(goal,_,A),
+    chunk(A,goal-chunk),
+      chunk_has_slot(A,goal,count),
+      chunk_has_slot(A,start,B),
+      chunk_has_slot(A,count,nil)
+==>
+  B\==nil |
+  conflict_set(start).
+  
+start @
+  buffer(goal,_,A),
+    chunk(A,goal-chunk),
+      chunk_has_slot(A,goal,count),
+      chunk_has_slot(A,start,B),
+      chunk_has_slot(A,count,nil)
+  \ apply_rule(start)
+<=>
+  B\==nil |
+  buffer_change(goal,
+    chunk(_,_,[ (count,B)])),
+  buffer_request(retrieval,
+    chunk(_,count-order,[ (first,B)])),
+  conflict_resolution.
+
+delay-increment @
+  fire,
+  buffer(goal,_,A),
+    chunk(A,goal-chunk),
+      chunk_has_slot(A,goal,count),
+      chunk_has_slot(A,count,C),
+      chunk_has_slot(A,end,D),
+  buffer(retrieval,_,B),
+    chunk(B,count-order),
+      chunk_has_slot(B,first,C),
+      chunk_has_slot(B,second,E)
+==>
+  C\==nil,
+  D\==C,
+  E\==nil |
+  conflict_set(increment).
+  
+increment @
+  buffer(goal,_,A),
+    chunk(A,goal-chunk),
+      chunk_has_slot(A,goal,count),
+      chunk_has_slot(A,count,C),
+      chunk_has_slot(A,end,D),
+  buffer(retrieval,_,B),
+    chunk(B,count-order),
+      chunk_has_slot(B,first,C),
+      chunk_has_slot(B,second,E)
+  \ apply_rule(increment)
+<=>
+  C\==nil,
+  D\==C,
+  E\==nil |
+  buffer_change(goal,
+    chunk(_,_,[ (count,E)])),
+  buffer_request(retrieval,
+    chunk(_,count-order,[ (first,E)])),
+    output(C),
+    conflict_resolution.
+    
+delay-incrementx @
+  fire,
+  buffer(goal,_,A),
+    chunk(A,goal-chunk),
+      chunk_has_slot(A,goal,count),
+      chunk_has_slot(A,count,C),
+      chunk_has_slot(A,end,D),
+  buffer(retrieval,_,B),
+    chunk(B,count-order),
+      chunk_has_slot(B,first,C),
+      chunk_has_slot(B,second,E)
+==>
+  C\==nil,
+  D\==C,
+  E\==nil |
+  conflict_set(incrementx).
+  
+incrementx @
+  buffer(goal,_,A),
+    chunk(A,goal-chunk),
+      chunk_has_slot(A,goal,count),
+      chunk_has_slot(A,count,C),
+      chunk_has_slot(A,end,D),
+  buffer(retrieval,_,B),
+    chunk(B,count-order),
+      chunk_has_slot(B,first,C),
+      chunk_has_slot(B,second,E)
+  \ apply_rule(incrementx)
+<=>
+  C\==nil,
+  D\==C,
+  E\==nil |
+  buffer_clear(goal),
+  output(wrong),
+  conflict_resolution.
+  
+delay-stop @
+  fire,
+  buffer(goal,_,A),
+  chunk(A,goal-chunk),
+    chunk_has_slot(A,goal,count),
+    chunk_has_slot(A,count,B),
+    chunk_has_slot(A,end,B)
+==>
+  B\==nil |
+  conflict_set(stop).
+  
+stop @
+  buffer(goal,_,A),
+    chunk(A,goal-chunk),
+      chunk_has_slot(A,goal,count),
+      chunk_has_slot(A,count,B),
+      chunk_has_slot(A,end,B)
+  \ apply_rule(stop)
+<=>
+  B\==nil |
+  buffer_clear(goal),
+  output(B),
+  conflict_resolution.
+  
+init @
+  run <=>
+    now(0),
+    set_default_utilities([stop,incrementx,increment,start,train2,train1]),
+    add_buffer(retrieval,declarative_module),
+    add_buffer(goal,declarative_module),
+    lisp_chunktype([chunk]),
+    lisp_sgp([:,esc,t]),
+    lisp_chunktype([count-order,first,second]),
+    lisp_chunktype([goal-chunk,goal,start,end,count]),
+    lisp_adddm([
+      [b,isa,count-order,first,1,second,2],
+      [c,isa,count-order,first,2,second,3],
+      [d,isa,count-order,first,3,second,4],
+      [d1,isa,count-order,first,3,second,5],
+      [e,isa,count-order,first,4,second,5],
+      [f,isa,count-order,first,5,second,6],
+      [first-goal,isa,goal-chunk,goal,training1]]),
+    lisp_goalfocus([first-goal]),
+    lisp_spp([increment,:,u,8,incrementx,:,u,0]),
+    lisp_spp([stop,:,reward,15]),
+    conflict_resolution,
+    nextcyc.
+    
+no-rule @
+  fire<=>
+    conflict_set([]),
+    choose.
+\end{lstlisting}
+
+
 \section{Semantic Model}
 \label{app:ex:semantic_model}
+
+\begin{lstlisting}[caption={ACT-R production rules for the semantic model}]
+(define-model semantic
+
+(chunk-type property object attribute value)
+(chunk-type is-member object category judgment)
+
+(add-dm
+ (shark isa chunk) (dangerous isa chunk)
+ (locomotion isa chunk) (swimming isa chunk) 
+ (fish isa chunk) (salmon isa chunk)
+ (edible isa chunk) (breathe isa chunk)
+ (gills isa chunk) (animal isa chunk)
+ (moves isa chunk) (skin isa chunk)
+ (canary isa chunk) (color isa chunk)
+ (sings isa chunk) (bird isa chunk) 
+ (ostrich isa chunk) (flies isa chunk) 
+ (height isa chunk) (tall isa chunk)
+ (wings isa chunk) (flying isa chunk) 
+ (true isa chunk) (false isa chunk) 
+ (p1 ISA property object shark attribute dangerous value true)
+ (p2 ISA property object shark attribute locomotion value swimming)
+ (p3 ISA property object shark attribute category value fish)
+ (p4 ISA property object salmon attribute edible value true)
+ (p5 ISA property object salmon attribute locomotion value swimming)
+ (p6 ISA property object salmon attribute category value fish)
+ (p7 ISA property object fish attribute breathe value gills)
+ (p8 ISA property object fish attribute locomotion value swimming)
+ (p9 ISA property object fish attribute category value animal)
+ (p10 ISA property object animal attribute moves value true)
+ (p11 ISA property object animal attribute skin value true)
+ (p12 ISA property object canary attribute color value yellow)
+ (p13 ISA property object canary attribute sings value true)
+ (p14 ISA property object canary attribute category value bird)
+ (p15 ISA property object ostrich attribute flies value false)
+ (p16 ISA property object ostrich attribute height value tall)
+ (p17 ISA property object ostrich attribute category value bird)
+ (p18 ISA property object bird attribute wings value true)
+ (p19 ISA property object bird attribute locomotion value flying)
+ (p20 ISA property object bird attribute category value animal)
+ (g1 ISA is-member object canary category bird judgment nil)
+ (g2 ISA is-member object canary category animal judgment nil)
+ (g3 ISA is-member object canary category fish judgment nil))
+
+(p initial-retrieve
+   =goal>
+      ISA         is-member
+      object      =obj
+      category    =cat
+      judgment    nil
+==>
+   =goal>
+      judgment    pending
+   +retrieval>  
+      ISA         property
+      object      =obj
+      attribute   category
+)
+
+
+(P direct-verify
+   =goal>
+      ISA         is-member
+      object      =obj
+      category    =cat
+      judgment    pending
+   =retrieval>
+      ISA         property
+      object      =obj
+      attribute   category
+      value       =cat
+==>
+   =goal>
+      judgment    yes
+)
+
+(P chain-category
+   =goal>
+      ISA         is-member
+      object      =obj1
+      category    =cat
+      judgment    pending
+   =retrieval>
+      ISA         property
+      object      =obj1
+      attribute   category
+      value       =obj2
+    - value       =cat
+==>
+   =goal>
+      object      =obj2
+   +retrieval>  
+      ISA         property
+      object      =obj2
+      attribute   category
+)
+
+ (P fail
+   =goal>
+      ISA         is-member
+      object      =obj1
+      category    =cat  
+      judgment    pending
+    
+    ?retrieval>
+      state       error
+==>
+   =goal>
+      judgment    no
+)
+
+
+(goal-focus g1)
+)
+\end{lstlisting}
+
+\begin{lstlisting}[caption={Translated production rules for the semantic model in CHR}]
+:- include('actr_core.pl').
+:- chr_constraint run/0, fire/0.
+
+
+delay-initial-retrieve @
+  fire,
+  buffer(goal,_,A),
+    chunk(A,is-member),
+      chunk_has_slot(A,object,B),
+      chunk_has_slot(A,category,C),
+      chunk_has_slot(A,judgment,nil)
+==>
+  B\==nil,
+  C\==nil |
+  conflict_set(initial-retrieve).
+  
+initial-retrieve @
+  buffer(goal,_,A),
+    chunk(A,is-member),
+      chunk_has_slot(A,object,B),
+      chunk_has_slot(A,category,C),
+      chunk_has_slot(A,judgment,nil)
+  \ apply_rule(initial-retrieve)
+<=>
+  B\==nil,
+  C\==nil |
+  buffer_change(goal,
+    chunk(_,_,[ (judgment,pending)])),
+  buffer_request(retrieval,
+    chunk(_,property,
+      [ (object,B), 
+        (attribute,category)])),
+  conflict_resolution.
+  
+delay-direct-verify @
+  fire,
+  buffer(goal,_,A),
+    chunk(A,is-member),
+      chunk_has_slot(A,object,C),
+      chunk_has_slot(A,category,D),
+      chunk_has_slot(A,judgment,pending),
+  buffer(retrieval,_,B),
+    chunk(B,property),
+      chunk_has_slot(B,object,C),
+      chunk_has_slot(B,attribute,category),
+      chunk_has_slot(B,value,D)
+==>
+  C\==nil,
+  D\==nil |
+  conflict_set(direct-verify).
+  
+direct-verify @ 
+  buffer(goal,_,A),
+    chunk(A,is-member),
+      chunk_has_slot(A,object,C),
+      chunk_has_slot(A,category,D),
+      chunk_has_slot(A,judgment,pending),
+  buffer(retrieval,_,B),
+    chunk(B,property),
+      chunk_has_slot(B,object,C),
+      chunk_has_slot(B,attribute,category),
+      chunk_has_slot(B,value,D)
+  \ apply_rule(direct-verify)
+<=>
+  C\==nil,
+  D\==nil |
+  buffer_change(goal,
+    chunk(_,_,[ (judgment,yes)])),
+  conflict_resolution.
+  
+delay-chain-category @ 
+  fire,
+  buffer(goal,_,A),
+    chunk(A,is-member),
+      chunk_has_slot(A,object,C),
+      chunk_has_slot(A,category,D),
+      chunk_has_slot(A,judgment,pending),
+  buffer(retrieval,_,B),
+    chunk(B,property),
+      chunk_has_slot(B,object,C),
+      chunk_has_slot(B,attribute,category),
+      chunk_has_slot(B,value,E)
+==>
+  C\==nil,
+  D\==nil,
+  E\==nil,
+  E\==D |
+  conflict_set(chain-category).
+chain-category@
+  buffer(goal,_,A),
+    chunk(A,is-member),
+      chunk_has_slot(A,object,C),
+      chunk_has_slot(A,category,D),
+      chunk_has_slot(A,judgment,pending),
+  buffer(retrieval,_,B),
+    chunk(B,property),
+      chunk_has_slot(B,object,C),
+      chunk_has_slot(B,attribute,category),
+      chunk_has_slot(B,value,E)
+  \ apply_rule(chain-category)
+<=>
+  C\==nil,
+  D\==nil,
+  E\==nil,
+  E\==D |
+  buffer_change(goal,
+    chunk(_,_,[ (object,E)])),
+  buffer_request(retrieval,
+    chunk(_,property,
+      [ (object,E), 
+        (attribute,category)])),
+  conflict_resolution.
+
+delay-fail @
+  fire,
+  buffer(goal,_,A),
+    chunk(A,is-member),
+      chunk_has_slot(A,object,B),
+      chunk_has_slot(A,category,C),
+      chunk_has_slot(A,judgment,pending),
+  buffer_state(retrieval,error)
+==>
+  B\==nil,
+  C\==nil |
+  conflict_set(fail).
+  
+fail @
+  buffer(goal,_,A),
+    chunk(A,is-member),
+      chunk_has_slot(A,object,B),
+      chunk_has_slot(A,category,C),
+      chunk_has_slot(A,judgment,pending),
+  buffer_state(retrieval,error)
+  \ apply_rule(fail)
+<=>
+  B\==nil,
+  C\==nil |
+  buffer_change(goal,
+    chunk(_,_,[ (judgment,no)])),
+  conflict_resolution.
+  
+init @
+  run <=>
+    set_default_utilities([fail,chain-category,direct-verify,initial-retrieve]),
+    add_buffer(retrieval,declarative_module),
+    add_buffer(goal,declarative_module),
+    lisp_chunktype([chunk]),
+    lisp_chunktype([property,object,attribute,value]),
+    lisp_chunktype([is-member,object,category,judgment]),
+    lisp_adddm([
+      [shark,isa,chunk],
+      [dangerous,isa,chunk],
+      { ... every primitive element is created as chunk of type chunk. Can be omitted, since it is done automatically }
+      [p1,isa,property,object,shark,attribute,dangerous,value,true],
+      [p2,isa,property,object,shark,attribute,locomotion,value,swimming],
+      [p3,isa,property,object,shark,attribute,category,value,fish],
+      [p4,isa,property,object,salmon,attribute,edible,value,true],
+      [p5,isa,property,object,salmon,attribute,locomotion,value,swimming],
+      [p6,isa,property,object,salmon,attribute,category,value,fish],
+      [p7,isa,property,object,fish,attribute,breathe,value,gills],
+      [p8,isa,property,object,fish,attribute,locomotion,value,swimming],
+      [p9,isa,property,object,fish,attribute,category,value,animal],
+      [p10,isa,property,object,animal,attribute,moves,value,true],
+      [p11,isa,property,object,animal,attribute,skin,value,true],
+      [p12,isa,property,object,canary,attribute,color,value,yellow],
+      [p13,isa,property,object,canary,attribute,sings,value,true],
+      [p14,isa,property,object,canary,attribute,category,value,bird],
+      [p15,isa,property,object,ostrich,attribute,flies,value,false],
+      [p16,isa,property,object,ostrich,attribute,height,value,tall],
+      [p17,isa,property,object,ostrich,attribute,category,value,bird],
+      [p18,isa,property,object,bird,attribute,wings,value,true],
+      [p19,isa,property,object,bird,attribute,locomotion,value,flying],
+      [p20,isa,property,object,bird,attribute,category,value,animal],
+      [g1,isa,is-member,object,canary,category,bird,judgment,nil],
+      [g2,isa,is-member,object,canary,category,animal,judgment,nil],
+      [g3,isa,is-member,object,canary,category,fish,judgment,nil]]),
+    lisp_goalfocus([g1]), % choose one of g1, g2, g3
+    now(0),
+    conflict_resolution,nextcyc.
+
+no-rule @
+  fire <=>
+    conflict_set([]),
+    choose.
+\end{lstlisting}
+

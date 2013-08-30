@@ -258,16 +258,12 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {chapter}{\numberline {A}CD Content}{131}{appendix.A}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {B}Source Codes}{133}{appendix.B}
+\contentsline {chapter}{\numberline {B}Executable Examples}{133}{appendix.B}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {C}Grammar for Production Rules}{135}{appendix.C}
+\contentsline {section}{\numberline {B.1}Rule Order}{133}{section.B.1}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{\numberline {D}Executable Examples}{137}{appendix.D}
+\contentsline {section}{\numberline {B.2}Subsymbolic Layer}{135}{section.B.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {D.1}Rule Order}{137}{section.D.1}
+\contentsline {section}{\numberline {B.3}Semantic Model}{135}{section.B.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {D.2}Subsymbolic Layer}{139}{section.D.2}
-\defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {D.3}Semantic Model}{139}{section.D.3}
-\defcounter {refsection}{0}\relax 
-\contentsline {chapter}{Bibliography}{143}{appendix*.73}
+\contentsline {chapter}{Bibliography}{141}{appendix*.73}
