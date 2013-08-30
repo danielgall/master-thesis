@@ -264,6 +264,6 @@
 \defcounter {refsection}{0}\relax 
 \contentsline {section}{\numberline {B.2}Subsymbolic Layer}{135}{section.B.2}
 \defcounter {refsection}{0}\relax 
-\contentsline {section}{\numberline {B.3}Semantic Model}{135}{section.B.3}
+\contentsline {section}{\numberline {B.3}Semantic Model}{140}{section.B.3}
 \defcounter {refsection}{0}\relax 
-\contentsline {chapter}{Bibliography}{141}{appendix*.73}
+\contentsline {chapter}{Bibliography}{153}{appendix*.73}

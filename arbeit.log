@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.8.10)  30 AUG 2013 14:22
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.8.10)  30 AUG 2013 16:02
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1920,16 +1920,45 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  [136]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [137])
-[138] [139
+ [137]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [138]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [139]
+[140]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [141]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [142]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [143]
+[144]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [145]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [146]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [147]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [148])
+[149] [150
 
 
-] [140
+] [151] [152
 
 
-] [141] [142] [143] [144]
+] [153] [154] [155] [156]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 395.
- [145
+ [157
 
 
 ]
@@ -1944,10 +1973,10 @@ Package logreq Info: Writing requests to 'arbeit.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 37334 strings out of 493315
- 681720 string characters out of 6143704
- 1079113 words of memory out of 5000000
- 37877 multiletter control sequences out of 15000+600000
+ 37807 strings out of 493315
+ 689166 string characters out of 6143704
+ 1099113 words of memory out of 5000000
+ 37946 multiletter control sequences out of 15000+600000
  102068 words of font info for 284 fonts, out of 8000000 for 9000
  958 hyphenation exceptions out of 8191
  65i,19n,76p,1885b,3156s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1974,10 +2003,10 @@ r8a.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/
 texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-dist/fonts/typ
 e1/urw/helvetic/uhvbo8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhv
 r8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on arbeit.pdf (153 pages, 937372 bytes).
+Output written on arbeit.pdf (165 pages, 963510 bytes).
 PDF statistics:
- 3865 PDF objects out of 4296 (max. 8388607)
- 3613 compressed objects within 37 object streams
- 1953 named destinations out of 2073 (max. 500000)
+ 4393 PDF objects out of 5155 (max. 8388607)
+ 4124 compressed objects within 42 object streams
+ 2357 named destinations out of 2487 (max. 500000)
  39391 words of extra memory for PDF output out of 42996 (max. 10000000)
 
