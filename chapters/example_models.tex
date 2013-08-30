@@ -7,6 +7,7 @@ In this chapter, two ACT-R models are translated into CHR and the results are di
 
 The first model is an extension of the example presented in section~\ref{example_counting}. The code has been published in unit 1 of \citetitle{actr_tutorial} \cite{actr_tutorial} as shipped with the source code of the vanilla ACT-R 6.0 implementation. Basically, the counting process is modeled by a set of static facts that a person has learned and retrieves for the counting process from declarative memory. The following model definition is discussed:
 
+\raggedbottom
 \begin{lstlisting}[escapeinside={(*@}{@*)}, caption={ACT-R code of the counting example}, label=exmod:lst:example_counting]
 (define-model count (*@\label{exmod:lst:example_counting:define_model}@*)
 
@@ -64,8 +65,9 @@ The first model is an extension of the example presented in section~\ref{example
 )
 
 (goal-focus first-goal) (*@\label{exmod:lst:example_counting:goal_focus}@*)
-)
+) (*@\enlargethispage{-\baselineskip}@*)
 \end{lstlisting}
+\flushbottom
 
 First of all, in line~\ref{exmod:lst:example_counting:define_model} the model definition is initiated and a model name is given. Line~\ref{exmod:lst:example_counting:chunk_type} sq. add the two necessary chunk-types: A chunk-type for the goal-chunks and a chunk-type for the actual declarative data. These chunk-type definitions are global to the system, i.e. they are added to all chunk stores. The goal-chunks have the slots \lstinline|start| and \lstinline|end| which encode from which number the counting process should start and where it should end. The value in the slot \lstinline|count| saves the current number of the count-process, analogously as in section~\ref{example_counting}. Then the chunks are added from line~\ref{exmod:lst:example_counting:add_dm} to~\ref{exmod:lst:example_counting:add_dm_end} and are representations of the order of the natural numbers from one to six. The last chunk is the goal-chunk. Note that only the start and end numbers are specified, the current number will be set to \lstinline|nil|.
 
@@ -79,6 +81,7 @@ The last function call in line~\ref{exmod:lst:example_counting:goal_focus} is an
 
 The output of the model is:
 
+\raggedbottom
 \begin{lstlisting}
      0.000   GOAL             SET-BUFFER-CHUNK GOAL FIRST-GOAL 
      0.000   PROCEDURAL       CONFLICT-RESOLUTION 
@@ -108,9 +111,11 @@ The output of the model is:
      0.200   PROCEDURAL       CONFLICT-RESOLUTION 
      0.200   ------           Stopped because no events left to process 
 \end{lstlisting}
+\flushbottom
 
 The source file in listing \ref{exmod:lst:example_counting} can be translated by the provided CHR compiler which yields the following result:
 
+\raggedbottom
 \begin{lstlisting}[escapeinside={(*@}{@*)}, caption={Auto-generated CHR code of the counting example}, label=exmod:lst:example_counting_chr]
 :- include('actr_core.pl').
 :- chr_constraint run/0, fire/0.
@@ -218,6 +223,7 @@ fire <=> true |
   conflict_set([]),
   choose.
 \end{lstlisting}
+\flushbottom
 
 First of all, it is interesting to note, that there are some more CHR rules than production rules in the original code in listing~\ref{exmod:lst:example_counting}. One very obvious extension is the rule \lstinline|init| in line~\ref{exmod:lst:example_counting_chr:init}. This rule initializes the model according to section~\ref{initialization}. First, it sets the default utilities for each of the production rules and creates the used buffers in the buffer system. Then, the Lisp functions from the original model definitions are called in their CHR versions, according to section~\ref{lisp_functions}. Those are the methods which create chunk-types and add the initial declarative knowledge to the declarative module. Note that also the artificial chunk-type \lstinline|chunk| with no slots is created. The last Lisp call moves the \lstinline|first-goal| chunk to the goal buffer. Finally, the current time is set to zero, a conflict resolution event is scheduled in the queue (according to section~\ref{implementation:conflict_resolution}) and the recognize-act cycle is started by \lstinline|nextcyc|, which will dequeue the first event from the scheduler as described in section~\ref{implementation:scheduler:recognize-act}.
 
@@ -227,6 +233,7 @@ The rule \lstinline|no-rule| in line~\ref{exmod:lst:example_counting_chr:no_rule
 
 The output of the model is the following (pretty printed by hand):
 
+\raggedbottom
 \begin{lstlisting}
 ?- run.
 0      ... calling event: do_conflict_resolution
@@ -282,11 +289,13 @@ output:4
            No rule matches -> Schedule next conflict resolution event
            No more events in queue. End of computation.
 \end{lstlisting}
+\flushbottom
 
 Note that the output is very similar to the original output, especially the order of rule applications and events. However, the timings are not accurate, yet, since some constants are different from the original implementation, which can be fixed and does not really harm the theory. 
 
 To demonstrate the subsymbolic layer, the original code is extended as follows:
 
+\raggedbottom
 \begin{lstlisting}[escapeinside={(*@}{@*)}]
 (define-model count
 
@@ -368,11 +377,13 @@ To demonstrate the subsymbolic layer, the original code is extended as follows:
 (spp stop :reward 15)
 )
 \end{lstlisting}
+\flushbottom
 
 The subsymbolic layer is turned on and chunk \lstinline|d1| which encodes a false count fact is added. Additionally, there are two training rules, which just retrieve the fact \lstinline|d| to increase its activity and then reset the state to the initial state of the model in listing~\ref{exmod:lst:example_counting}. The goal is set to a chunk, which leads the first training rule to match at first. Furthermore, a broken rule which matches the same context as the original \lstinline|increment| rule is added. The initial utility of the correct \lstinline|increment| rule is set to 8, whereas the corrupted rule gets an initial value of 0. Additionally, the reward the rule \lstinline|stop| can distribute, is set to 15, so the reaching of the final state is rewarded and all rules which lead to that state get a certain amount of this reward. The full code can be found in appendix~\ref{app:ex:subsymbolic_layer}. 
 
 When executing the resulting CHR model, this yields the following output (times have been cut after four digits):
 
+\raggedbottom
 \begin{lstlisting}
 ?- run.
 0      ... calling event: do_conflict_resolution
@@ -458,6 +469,7 @@ output:4
            No rule matches -> Schedule next conflict resolution event
            No more events in queue. End of computation.
 \end{lstlisting}
+\flushbottom
 
 Due to the training of chunk~\lstinline|d| which increased the activation of this chunk according to the base-level learning equation, the other matching chunk \lstinline|d1| is not being retrieved in the computational process.
 

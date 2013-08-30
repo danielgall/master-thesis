@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.8.10)  30 AUG 2013 16:02
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.8.10)  30 AUG 2013 16:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1862,38 +1862,8 @@ Chapter 5.
 [111
 
 
-]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [112]
-[113] [114]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [115]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [116]
-Underfull \vbox (badness 4378) has occurred while \output is active []
-
- [117]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [118]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [119]
-[120]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [121]
-[122]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [123]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [124]
-[125]
+] [112] [113] [114] [115] [116] [117] [118] [119] [120] [121] [122]
+[123] [124] [125]
 Missing character: There is no ; in font nullfont!
  [126] [127]) (./chapters/conclusion.tex [128]
 Chapter 6.
@@ -1910,47 +1880,8 @@ Appendix A.
 
 ]
 Appendix B.
-[133]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [134]
-[135]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [136]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [137]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [138]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [139]
-[140]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [141]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [142]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [143]
-[144]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [145]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [146]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [147]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
- [148])
-[149] [150
+[133] [134] [135] [136] [137] [138] [139] [140] [141] [142] [143] [144]
+[145] [146] [147] [148]) [149] [150
 
 
 ] [151] [152
@@ -1958,7 +1889,8 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 
 ] [153] [154] [155] [156]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 395.
- [157
+
+[157
 
 
 ]
@@ -2003,7 +1935,7 @@ r8a.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/
 texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-dist/fonts/typ
 e1/urw/helvetic/uhvbo8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhv
 r8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on arbeit.pdf (165 pages, 963510 bytes).
+Output written on arbeit.pdf (165 pages, 963464 bytes).
 PDF statistics:
  4393 PDF objects out of 5155 (max. 8388607)
  4124 compressed objects within 42 object streams

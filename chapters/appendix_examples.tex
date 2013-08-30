@@ -13,6 +13,7 @@ In this example, the need of a phase constraint (\lstinline|fire/0|) is illustra
 
 the example yields a wrong result. If uncommenting the rules with the fire constraint instead of the rules without, the result will be correct. See section~\ref{implementation:rule_application_order} on page~\pageref{implementation:rule_application_order}.
 
+\raggedbottom
 
 \begin{lstlisting}[caption={Rule order example}]
 :- use_module(library(chr)).
@@ -80,8 +81,12 @@ alter_slot(Chunk,Slot,Value) <=>
 % fire.
 \end{lstlisting}
 
+\flushbottom
+
 \section{Subsymbolic Layer}
 \label{app:ex:subsymbolic_layer}
+
+\raggedbottom
 
 \begin{lstlisting}[caption={Counting example with subsymbolic layer and training}]
 :- include('actr_core.pl').
@@ -296,10 +301,13 @@ no-rule @
     choose.
 \end{lstlisting}
 
+\flushbottom
+
 
 \section{Semantic Model}
 \label{app:ex:semantic_model}
 
+\raggedbottom
 \begin{lstlisting}[caption={ACT-R production rules for the semantic model}]
 (define-model semantic
 
@@ -414,7 +422,9 @@ no-rule @
 (goal-focus g1)
 )
 \end{lstlisting}
+\flushbottom
 
+\raggedbottom
 \begin{lstlisting}[caption={Translated production rules for the semantic model in CHR}]
 :- include('actr_core.pl').
 :- chr_constraint run/0, fire/0.
@@ -601,4 +611,4 @@ no-rule @
     conflict_set([]),
     choose.
 \end{lstlisting}
-
+\flushbottom
