@@ -112,9 +112,7 @@ For the chunks, the following constraints are defined:
 % chunk_has_slot(ChunkName, SlotName, Value)
 \end{lstlisting}
 
-The \lstinline|chunk/2| constraint represents both the set $C$ of chunks and the $Isa$ relation, since the presence of a constraint \lstinline|chunk(c,t)| signifies that chunk \lstinline|c| is of a type $T = (\mathtt{t},S)$.
-
-The $HasSlot$ relation is represented by the \lstinline|chunk_has_slot(c,s,v)| constraint, which really is just a direct translation of an element $(c,s,v) \in HasSlot$.
+The \lstinline|chunk/2| constraint represents both the set $C$ of chunks and the $Isa$ relation, since the presence of a constraint \lstinline|chunk(c,t)| signifies that chunk \lstinline|c| is of a type $T = (\mathtt{t},S)$. The $HasSlot$ relation is represented by the \lstinline|chunk_has_slot(c,s,v)| constraint, which really is just a direct translation of an element $(c,s,v) \in HasSlot$.
 
 Note that all values in the just presented constraints have to be ground. This is a demand claimed by the original ACT-R implementation and makes sense, since each value in a slot of a chunk is a real, ground value and the concept of variables does not have an advantage in this context, because every element that can be stored in the brain is assumed to be known by the brain.
 
@@ -123,8 +121,6 @@ Additionally, from the definition of a chunk store it is known that the $Isa$ re
 \begin{example}
 \label{ex:addition_fact_chr}
 The chunk and chunk-type in example~\ref{ex:addition_fact_formal} are represented as:
-
-\enlargethispage{\baselineskip}
 
 \begin{lstlisting}
 chunk_type(addition-fact)
@@ -1069,7 +1065,7 @@ Exported constraints can only appear once in a program, since they can be called
 \subsection{Interface for Module Requests}
 \label{interface_for_module_requests}
 
-The architecture of ACT-R provides an infrastructure for the procedural module to state requests to all the other modules. To implement this concept as general as possible, an interface has to be defined which allows the adding of new modules to the system by just implementing this interface.
+The architecture of ACT-R provides an infrastructure for the procedural module to state requests to all the other modules. To implement this concept as general as possible, an interface has to be defined which allows the adding of new modules to the system by just implementing this interface. Later on, the interface will be refined.
 
 \begin{lstlisting}[caption={Simple Interface \emph{IModule}},label=lst:interface_module]
 module_request(+BufName,+Chunk,-ResChunk,-ResState)
@@ -1089,8 +1085,6 @@ The request provides the following result:
  \item[ResState] The state of the buffer after the request. For example, if no matching chunk could be retrieved from declarative memory, the state would be \lstinline|error|.
 \end{description}
 
-This interface will be extended later on.
-
 \subsection{How the Buffer System States a Request}
 \label{how_the_buffer_system_states_a_request}
 
@@ -1107,12 +1101,18 @@ A buffer request can now be handled as follows:
 \begin{lstlisting}[caption={Retrieval Request in CHR}, label=lst:retrieval_request_symbolic]
 <<buffer(BufName, ModName, _) \ buffer_request(BufName, Chunk)>> <=>
   set_buffer_state(BufName,busy),
-  buffer_clear(BufName), % clear buffer immediately
+  % clear buffer immediately
+  buffer_clear(BufName), 
+  % send request
   ModName:module_request(BufName, Chunk, ResChunk,ResState),
-(ResState=error, 
+  
+  % Apply result of the request
+  % case 1: resulting state is error
+  (ResState=error, 
   buffer(BufName, ModName, nil),
   set_buffer_state(BufName,error) ;
   
+  % case 2: no errors occured
   ResState = free,
   ResChunk = chunk(ResChunkName,_,_),
   add_chunk(ResChunk), 
@@ -1211,10 +1211,12 @@ A retrieval request gets an incomplete chunk specification as input and returns 
 
 \subsubsection{Chunk Patterns}
 
+\enlargethispage{-\baselineskip}
+
 The chunk patterns are transmitted in form of chunk specifications as defined in section~\ref{chunk_specification}. Since those specifications may be incomplete, variables are considered as place-holders for values in the result. The result always is a complete and ground chunk specification, because every chunk in a chunk store has to be defined completely; empty slots are indicated by the value nil.
 
 \begin{example}
-In this example some possible requests are discussed.
+In this example, some possible requests are discussed.
 
 \begin{enumerate}
  \item Request:
@@ -1237,9 +1239,7 @@ chunk(_,t,[(foo,bar),(spam,eggs)])
 \end{lstlisting}
 
 The most common case of requests is a specification of the type and a (possibly incomplete) number of slot-value pairs for that type. If a type does not provide a specified slot, the request is invalid and no chunk will be returned.
-
 \end{enumerate}
-
 \end{example}
 
 \subsubsection{Finding Chunks}
@@ -1258,7 +1258,7 @@ In this section, a CHR constraint \lstinline|find_chunk/3| will be defined which
   var(Ss)>>> | 
   test_slots(N2,[]), 
   match_set([N2]).
-
+  
 <<find_chunk(_,_,_)>> <=> true.
 \end{lstlisting}
 
@@ -1266,21 +1266,19 @@ First, each chunk in the store whose name and type are unifiable with the specif
 
 The rule in line~7 is for chunk specifications that do not specify the slots. In this case, no slots have to be tested. If all chunks have been tested or no chunk matches at all, the process is finished (rule in line ~13).
 
-After adding each matching candidate to the match set whose name and type have already been checked, the match set is pruned from chunks that have non-matching slot values:
+\looseness=-1 After adding each matching candidate to the match set whose name and type have already been checked, the match set is pruned from chunks that have non-matching slot values:
 
 \begin{lstlisting}
 <<test_slots(_,[])>> <=> true.
 
-<<chunk_has_slot(N,S,V1), match_set([N]) 
-\ test_slots(N,[(S,V2)|Ss])>> <=> 
+<<chunk_has_slot(N,S,V1), match_set([N]) \ test_slots(N,[(S,V2)|Ss])>> <=> 
   <<<unifiable(V1,V2,_)>>> | 
   test_slots(N,Ss).
 
-<<chunk_has_slot(N,S,V1) 
-\ test_slots(N,[(S,V2)|_]), match_set([N])>> <=> 
+<<chunk_has_slot(N,S,V1) \ test_slots(N,[(S,V2)|_]), match_set([N])>> <=> 
     <<<\+unifiable(V1,V2,_)>>> | 
     true.
-
+    
 <<test_slots(N,_) \ match_set([N])>> <=> true.
 \end{lstlisting}
 
@@ -1290,7 +1288,7 @@ The first rule is the base case, where no slots have to be tested any more and t
 
 In line~3, the rule is applicable if there is at least one slot \lstinline|(S,V2)| that has to be tested and a $HasSlot$ relation of the kind \lstinline|N| $\xrightarrow[]{\mathtt{S}}$ \lstinline|V1| with the slot \lstinline|S| to be tested, that is still in the match set, so no conflicting slot has been found yet. If the values \lstinline|V1| and \lstinline|V2| are unifiable, i.e. both are the same constant or at least one is a variable, the test passes and the chunk \lstinline|N| remains in the match set and the rest of the slot tests are performed.
 
-The third rule in line~8 is applied if the guard of the first rule did not hold, so the values \lstinline|V1| and \lstinline|V2| are not unifiable, but there is a connection \lstinline|N| $\xrightarrow[]{\mathtt{S}}$ \lstinline|V1| and in the request it has been specified that the value of slot \lstinline|S| has to be \lstinline|V2|. In this case, \lstinline|V1| $\neq$ \lstinline|V2|, so the test fails and the chunk \lstinline|N| has to be removed from the match set, since one of its slots does not match.
+\looseness=-1 The third rule in line~8 is applied if the guard of the first rule did not hold, so the values \lstinline|V1| and \lstinline|V2| are not unifiable, but there is a connection \lstinline|N| $\xrightarrow[]{\mathtt{S}}$ \lstinline|V1| and in the request it has been specified that the value of slot \lstinline|S| has to be \lstinline|V2|. In this case, \lstinline|V1| $\neq$ \lstinline|V2|, so the test fails and the chunk \lstinline|N| has to be removed from the match set, since one of its slots does not match.
 
 If the last two rules cannot be applied, the chunk does not provide a slot that, however, has been specified in the request. Hence, the chunk does not match and the last rule therefore deletes it from the match set. \FIXME{make simpagation rule to simplification rule?}
 
@@ -1691,7 +1689,7 @@ The following enumeration summarizes the recognize-act cycle with a scheduler:
  \begin{enumerate}
  \item The dequeued event is a \lstinline|fire| constraint: The rule that matches all its conditions is fired and removes the \lstinline|fire| constraint.
  \item The actions of the rule are scheduled in the queue. Modifications and Clearings have the current time point, requests have a time point in the future depending on the module.
- \item The last action of the rule is to add a \lstinline|fire| constraint to the queue with the current time point and a low priority. This simulates that the procedural module is free again, after all in-place actions of a rule have been fired.
+ \item The last action of the rule is to add a \lstinline|fire| constraint to the queue with the current time point and a very low priority. This simulates that the procedural module is free again, after all in-place actions of a rule have been performed, so the next matching rule may fire.
  \item There are two possibilities:
  \begin{enumerate}
   \item \emph{The next rule matches:} It will be performed like the last rule.
@@ -1790,26 +1788,26 @@ In ACT-R, it is possible to call Lisp functions in the model definitions, for ex
 
 \subsection{General Translation}
 
-Lisp functions are lists (indicated by round braces \lstinline|(| and \lstinline|)|), which have the functor as their first element and the function arguments in the rest of the list. Hence, each Lisp function \lstinline|(f arg1 arg2 ...)| called in the model definition of an ACT-R model is translated into the adding of a CHR constraint \lstinline|lisp_f([arg1, arg2, ...])|. For all used functions, there has to be a default implementation in the module \lstinline|std_lisp|. In this implementation, the concept is reduced to simple procedural calls ignoring return values, which is adequate for most of the pure ACT-R models without the experiment environment. Here is an example implementation of the lisp function \lstinline|(chunk-type name slot1 slot2 ...)|:
+Lisp functions are lists (indicated by round braces \lstinline|(| and \lstinline|)|), which have the functor as their first element and the function arguments in the rest of the list. Hence, each Lisp function \lstinline|(f arg1 arg2 ...)| called in the model definition of an ACT-R model is translated into the adding of a CHR constraint \lstinline|lisp_f([arg1, arg2, ...])|. For all used functions, there has to be a default implementation in the module \lstinline|std_lisp|. In this implementation, the concept is reduced to simple procedural calls ignoring return values, which is adequate for most of the pure ACT-R models without the experiment environment. Here is an example implementation of the Lisp function \lstinline|(chunk-type name slot1 slot2 ...)| which adds a new chunk-type to the system:
 
 \begin{lstlisting}
 lisp_chunktype([Type|Slots]) <=>
+  % add type to buffer system (local module)
   add_chunk_type(Type,Slots),
+  % add type to declarative module
   declarative_module:add_chunk_type(Type,Slots).
 \end{lstlisting}
 
-Note that this function adds the chunk-types both to the declarative module and the buffer system, since types are global to the system.
+Note that this function adds the chunk-types both to the declarative module and the buffer system, since types are global to the system. Hence, every module with a chunk store should be added to the implementation of this Lisp function.
 
 \subsection{Configuration Variables}
 \label{configuration}
 
 In ACT-R, configuration variables which control the behaviour of the architecture are set with the Lisp function \lstinline|(sgp :Var Val)|, which sets the variable \lstinline|Var| to \lstinline|Val|. To handle such configuration variables, a configuration module can be added to the CHR implementation, that offers the \emph{IConfiguration} interface to set variables and to ask for their values:
 
-\enlargethispage{-2\baselineskip}
-
 \begin{definition}[IConfiguration]
 \label{def:iconfiguration}
-The interface \emph{IConfiguration} provides the following methods:
+The interface \emph{IConfiguration} provides the following methods to access the configuration store:
 \begin{description}
  \item[Set configuration variables] By calling \lstinline|set_conf(+Var,+Val)| the configuration variable \lstinline|Var| is set to the value \lstinline|Val|.
  \item[Get the value of a configuration variable] The call of \lstinline|get_conf(+Var,-Val)| binds the value of the configuration variable \lstinline|Var| to the argument \lstinline|Val|.
@@ -1839,7 +1837,7 @@ set_conf(Var,Val), configuration(Var,_) <=>
   notify_all(Var). % variable has been set -> perform pending notifications
 notify_all(Var), notify(Module,Var) ==> 
   Module:update. % perform all pending notifications
-notify_all(_) <=> true. % no notifications pending -> Clean up
+notify_all(_) <=> true. % no notifications pending, clean up
 \end{lstlisting}
 
 The constraint \lstinline|observer(Module,Var)| states that the module \lstinline|Module| observes the variable \lstinline|Var|. The observer modules have to declare a \lstinline|update/0| constraint which may trigger some action related to the change of a configuration variable.

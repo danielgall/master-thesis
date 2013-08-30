@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.8.10)  30 AUG 2013 16:35
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.8.10)  30 AUG 2013 17:51
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1807,56 +1807,49 @@ LaTeX Font Info:    Font shape `T1/pcr/b/it' in size <7> not available
 Underfull \vbox (badness 1082) has occurred while \output is active []
 
  [63]
-[64] [65]
-Underfull \vbox (badness 3209) has occurred while \output is active []
-
- [66]
-Underfull \hbox (badness 1062) in paragraph at lines 1138--1138
+[64] [65] [66]
+Underfull \hbox (badness 1062) in paragraph at lines 1140--1140
  [][][][] 
  []
 
 
-Underfull \hbox (badness 1584) in paragraph at lines 1138--1138
+Underfull \hbox (badness 1584) in paragraph at lines 1140--1140
  [][][][] 
  []
 
 
-Underfull \hbox (badness 1412) in paragraph at lines 1142--1142
+Underfull \hbox (badness 1412) in paragraph at lines 1144--1144
  [][][][] 
  []
 
 
-Underfull \hbox (badness 3965) in paragraph at lines 1144--1144
+Underfull \hbox (badness 3965) in paragraph at lines 1146--1146
  [][][][] 
  []
 
 
-Underfull \hbox (badness 4673) in paragraph at lines 1144--1144
+Underfull \hbox (badness 4673) in paragraph at lines 1146--1146
  [][][][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1145--1145
+Underfull \hbox (badness 10000) in paragraph at lines 1147--1147
  [][][][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1145--1145
+Underfull \hbox (badness 10000) in paragraph at lines 1147--1147
  [][][][] 
  []
 
 
-Underfull \hbox (badness 1412) in paragraph at lines 1149--1149
+Underfull \hbox (badness 1412) in paragraph at lines 1151--1151
  [][][][] 
  []
 
 [67] [68] [69] [70] [71] [72] [73] [74] [75] [76] [77] [78] [79] [80] [81]
-[82]
-Underfull \vbox (badness 2903) has occurred while \output is active []
-
- [83]
-[84] [85] [86] [87] [88] [89] [90] [91] [92] [93] [94] [95] [96] [97] [98]
-[99] [100] [101] [102] [103] [104] [105] [106] [107] [108] [109])
+[82] [83] [84] [85] [86] [87] [88] [89] [90] [91] [92] [93] [94] [95] [96]
+[97] [98] [99] [100] [101] [102] [103] [104] [105] [106] [107] [108] [109])
 (./chapters/example_models.tex [110]
 Chapter 5.
 [111
@@ -1905,8 +1898,8 @@ Package logreq Info: Writing requests to 'arbeit.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 37807 strings out of 493315
- 689166 string characters out of 6143704
+ 37813 strings out of 493315
+ 689266 string characters out of 6143704
  1099113 words of memory out of 5000000
  37946 multiletter control sequences out of 15000+600000
  102068 words of font info for 284 fonts, out of 8000000 for 9000
@@ -1935,10 +1928,10 @@ r8a.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/
 texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-dist/fonts/typ
 e1/urw/helvetic/uhvbo8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhv
 r8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on arbeit.pdf (165 pages, 963464 bytes).
+Output written on arbeit.pdf (165 pages, 964125 bytes).
 PDF statistics:
- 4393 PDF objects out of 5155 (max. 8388607)
- 4124 compressed objects within 42 object streams
- 2357 named destinations out of 2487 (max. 500000)
+ 4400 PDF objects out of 5155 (max. 8388607)
+ 4131 compressed objects within 42 object streams
+ 2363 named destinations out of 2487 (max. 500000)
  39391 words of extra memory for PDF output out of 42996 (max. 10000000)
 
