@@ -373,9 +373,8 @@ hyperref=true
 %% Literaturverzeichnis
 %%
 %\bibliography{bibliography}
-\begin{flushleft} % kein Blocksatz in Literaturverzeichnis
+\renewcommand*{\bibfont}{\raggedright} % kein Blocksatz in Literaturverzeichnis
 \printbibliography 
-\end{flushleft}
 
 %%
 %% Versicherung
