@@ -31,7 +31,6 @@ the example yields a wrong result. If uncommenting the rules with the fire const
 buffer(BufName, OldChunk) \ buffer_change(BufName, chunk(_,_,SVs)) <=>
   alter_slots(OldChunk,SVs).
 
-  
 alter_slots(_,[]) <=> true.
 alter_slots(Chunk,[(S,V)|SVs]) <=> 
   alter_slot(Chunk,S,V),
@@ -80,7 +79,6 @@ alter_slot(Chunk,Slot,Value) <=>
 % buffer_change(b1,chunk(_,_,[(s1,v3)])),
 % fire.
 \end{lstlisting}
-
 \flushbottom
 
 \section{Subsymbolic Layer}

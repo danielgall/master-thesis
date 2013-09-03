@@ -25,7 +25,7 @@ Since chunks are the central data-structure of ACT-R used for representation of 
 In multiple parts of ACT-R it is necessary to store chunks and then operate on them. Hence, the abstract data structure of such a chunk store is defined. Since chunk stores have been referred to as networks in the previous chapters, the general idea of this definition of a chunk store is based upon a relation that represents such a network.
 
 \begin{definition}[chunk-store]
-A \emph{chunk-store} $\Sigma$ is a tuple $(C,E,\mathcal{T},HasSlot,Isa)$, where $C$ is a set of chunks and $E$ a set of primitive elements, with $C \cap E = \emptyset$. The \emph{values} of $\Sigma$ are defined by the set $V = C \cup E \cup \{ \mathtt{nil} \}$. $\mathcal{T}$ is a set of chunk-types. A chunk-type $T = (t,S) \in \mathcal{T}$ is a tuple with a \emph{unique}\footnote{$\forall (t,S), (t',S') \in \mathcal{T}: t = t' \Rightarrow S = S'$ } type name $t$ and a set of slots $S$. The set of all slot-names is $\mathcal{S}$. 
+A \emph{chunk-store} $\Sigma$ is a tuple $(C,E,\mathcal{T},HasSlot,Isa)$, where $C$ is a set of chunks and $E$ a set of primitive elements, with $C \cap E = \emptyset$. The \emph{values} of $\Sigma$ are defined by the set $V = C \cup E \cup \{ \mathtt{nil} \}$. $\mathcal{T}$ is a set of chunk-types. A chunk-type $T = (t,S) \in \mathcal{T}$ is a tuple with a \emph{unique}\footnote{$\forall (t,S), (t',S') \in \mathcal{T}: t = t' \Rightarrow S = S'$} type name $t$ and a set of slots $S$. The set of all slot-names is $\mathcal{S}$. 
 
 $HasSlot \subseteq C \times \mathcal{S} \times V$ and $Isa \subseteq C \times \mathcal{T}$ are relations and are defined as follows:
 
@@ -112,9 +112,7 @@ For the chunks, the following constraints are defined:
 % chunk_has_slot(ChunkName, SlotName, Value)
 \end{lstlisting}
 
-The \lstinline|chunk/2| constraint represents both the set $C$ of chunks and the $Isa$ relation, since the presence of a constraint \lstinline|chunk(c,t)| signifies that chunk \lstinline|c| is of a type $T = (\mathtt{t},S)$.
-
-The $HasSlot$ relation is represented by the \lstinline|chunk_has_slot(c,s,v)| constraint, which really is just a direct translation of an element $(c,s,v) \in HasSlot$.
+The \lstinline|chunk/2| constraint represents both the set $C$ of chunks and the $Isa$ relation, since the presence of a constraint \lstinline|chunk(c,t)| signifies that chunk \lstinline|c| is of a type $T = (\mathtt{t},S)$. The $HasSlot$ relation is represented by the \lstinline|chunk_has_slot(c,s,v)| constraint, which really is just a direct translation of an element $(c,s,v) \in HasSlot$.
 
 Note that all values in the just presented constraints have to be ground. This is a demand claimed by the original ACT-R implementation and makes sense, since each value in a slot of a chunk is a real, ground value and the concept of variables does not have an advantage in this context, because every element that can be stored in the brain is assumed to be known by the brain.
 
@@ -123,8 +121,6 @@ Additionally, from the definition of a chunk store it is known that the $Isa$ re
 \begin{example}
 \label{ex:addition_fact_chr}
 The chunk and chunk-type in example~\ref{ex:addition_fact_formal} are represented as:
-
-\enlargethispage{\baselineskip}
 
 \begin{lstlisting}
 chunk_type(addition-fact)
@@ -300,7 +296,7 @@ The first rule creates the initial chunk specification with name and type set, b
 
 \subsubsection{Checking Consistency and Type-Consistency}
 
-At the moment, there are no rules that check the consistency of the chunk store. However, if the default methods for adding chunks are used, a type-consistent store is built automatically, since every chunk has exactly one chunk-type\footnote{left-totality and right-uniqueness of $Isa$}. Furthermore, all slots from its chunk-type are described and only those slots are described (satisfies type-consistency). Additionally, there are no two different slot descriptions for the same chunk and every chunk in the store is described\footnote{This is demanded by the type-consistency: Since $Isa$ is left-total, every chunk is in the $Isa$ relation. Type-consisteny demands, that every chunk in the $Isa$ relation has a value for all slots of its type.} (satisfies the definition of a chunk-store). Rules for checking those constraints could be added easily to the implementation.
+At the moment, there are no rules that check the consistency of the chunk store. However, if the default methods for adding chunks are used, a type-consistent store is built automatically, since every chunk has exactly one chunk-type.\footnote{left-totality and right-uniqueness of $Isa$} Furthermore, all slots from its chunk-type are described and only those slots are described (satisfies type-consistency). Additionally, there are no two different slot descriptions for the same chunk and every chunk in the store is described\footnote{This is demanded by the type-consistency: Since $Isa$ is left-total, every chunk is in the $Isa$ relation. Type-consisteny demands, that every chunk in the $Isa$ relation has a value for all slots of its type.} (satisfies the definition of a chunk-store). Rules for checking those constraints could be added easily to the implementation.
 
 \section{Procedural Module}
 \label{implementation:procedural_module}
@@ -638,35 +634,33 @@ on the LHS of a production rule can be translated to the following CHR rule head
 The discussed concepts lead to the following grammar for production rules, which is a simplified version of the actual grammar used in the original ACT-R implementation \cite[p. 162]{actr_reference}. Some of the details in this grammar that have not been discussed yet are presented in the following sections.
 
 
-\begin{lstlisting}[caption={The ACT-R production rule grammar}, label=lst:production_rule_grammar]
-production-definition ::= (p name condition* ==> action*)
+\begin{lstlisting}[caption={The ACT-R production rule grammar}, label=lst:production_rule_grammar, basicstyle={\sffamily}, morekeywords={::=}, columns=flexible, mathescape]
+$\textrm{production-definition}$ ::= (p name condition$^\textrm{*}$ ==> action$^\textrm{*}$)
 name ::= a symbol that serves as the name of the production for reference
-condition ::= [ buffer-test | query ]
-action ::= [buffer-modification | request | buffer-clearing | output ]
-buffer-test ::= =buffer-name> isa chunk-type slot-test*
-buffer-name ::= a symbol which is the name of a buffer
-chunk-type ::= a symbol which is the name of a chunk-type in the model
-slot-test ::= {slot-modifier} slot-name slot-value
-slot-modifier ::= [= | - | < | > | <= | >=]
-slot-name ::= a symbol which names a possible slot in the specified chunk-type
-slot-value ::= a variable or any Lisp value
-query ::= ?buffer-name> query-test*
-query-test ::= {-} queried-item query-value
-queried-item ::= a symbol which names a valid query for the specified buffer
-query-value ::= a bound-variable or any Lisp value
-buffer-modification ::= =buffer-name> slot-value-pair*
-slot-value-pair ::= slot-name bound-slot-value
-bound-slot-value ::= a bound variable or any Lisp value
-request ::= +buffer-name> isa chunk-type request-spec*
-request-spec ::= {slot-modifier} slot-value-pair
-request-parameter ::= a Lisp keyword naming a request parameter provided by the buffer specified
-buffer-clearing ::= -buffer-name>
+condition ::= [ $\textrm{buffer-test}$ | query ]
+action ::= [$\textrm{buffer-modification}$ | request | $\textrm{buffer-clearing}$ | output ]
+$\textrm{buffer-test}$ ::= =$\textrm{buffer-name}$> isa $\textrm{chunk-type}$ $\textrm{slot-test}$$^\textrm{*}$
+$\textrm{buffer-name}$ ::= a symbol which is the name of a buffer
+$\textrm{chunk-type}$ ::= a symbol which is the name of a $\textrm{chunk-type}$ in the model
+$\textrm{slot-test}$ ::= {$\textrm{slot-modifier}$} $\textrm{slot-name}$ $\textrm{slot-value}$
+$\textrm{slot-modifier}$ ::= [= | - | < | > | <= | >=]
+$\textrm{slot-name}$ ::= a symbol which names a possible slot in the specified $\textrm{chunk-type}$
+$\textrm{slot-value}$ ::= a variable or any Lisp value
+query ::= ?$\textrm{buffer-name}$> $\textrm{query-test}$$^\textrm{*}$
+$\textrm{query-test}$ ::= {-} $\textrm{queried-item}$ $\textrm{query-value}$
+$\textrm{queried-item}$ ::= a symbol which names a valid query for the specified buffer
+$\textrm{query-value}$ ::= a $\textrm{bound-variable}$ or any Lisp value
+$\textrm{buffer-modification}$ ::= =$\textrm{buffer-name}$> $\textrm{slot-value-pair}$$^\textrm{*}$
+$\textrm{slot-value-pair}$ ::= $\textrm{slot-name}$ $\textrm{bound-slot-value}$
+$\textrm{bound-slot-value}$ ::= a bound variable or any Lisp value
+request ::= +$\textrm{buffer-name}$> isa $\textrm{chunk-type}$ $\textrm{request-spec}$$^\textrm{*}$
+$\textrm{request-spec}$ ::= {$\textrm{slot-modifier}$} $\textrm{slot-value-pair}$
+$\textrm{request-parameter}$ ::= a Lisp keyword naming a request parameter provided by the buffer specified
+$\textrm{buffer-clearing}$ ::= -$\textrm{buffer-name}$>
 variable ::= a symbol which starts with the character =
-output ::= !output! [ output-value ]
-output-value ::= any Lisp value or a bound-variable
-bound-variable ::= a variable which is used in the buffer-test conditions of the production (including a
-variable which names the buffer that is tested in a buffer-test or dynamic-buffer-test) or is bound with
-an explicit binding in the production
+output ::= !output! [ $\textrm{output-value}$ ]
+$\textrm{output-value}$ ::= any Lisp value or a $\textrm{bound-variable}$
+$\textrm{bound-variable}$ ::= a variable which is used in the $\textrm{buffer-test}$ conditions of the production (including a variable which names the buffer that is tested in a $\textrm{buffer-test}$ or is bound with an explicit binding in the production
 \end{lstlisting}
 
 \subsubsection{The Order of Rule Applications}
@@ -1110,10 +1104,13 @@ A buffer request can now be handled as follows:
   % send request
   ModName:module_request(BufName, Chunk, ResChunk,ResState),
   
+  % Apply result of the request
+  % case 1: resulting state is error
   (ResState=error, 
   buffer(BufName, ModName, nil),
   set_buffer_state(BufName,error) ;
   
+  % case 2: no errors occured
   ResState = free,
   ResChunk = chunk(ResChunkName,_,_),
   add_chunk(ResChunk), 
@@ -1121,9 +1118,7 @@ A buffer request can now be handled as follows:
   set_buffer_state(BufName,free)).
 \end{lstlisting}
 
-When getting a buffer request, the buffer state is set to \lstinline|busy| first. Then the buffer is cleared immediately, which leads the chunk in the buffer being added to the declarative memory. Then the module request is stated according to the interface. If the resulting state is \lstinline|error|, then the buffer gets this state and the content of the buffer is \lstinline|nil|, otherwise, if the resulting state is \lstinline|free|, the result will be added to the buffer and the state will eventually be set to \lstinline|free|. 
-
-It is important to mention, that the received chunk will be created explicitly in the chunk store of the buffer system and therefore is a copy of a possibly existing identical chunk in the module that has been requested.
+When getting a buffer request, the buffer state is set to \lstinline|busy| first. Then the buffer is cleared immediately, which leads the chunk in the buffer being added to the declarative memory. Then the module request is stated according to the interface. If the resulting state is \lstinline|error|, then the buffer gets this state and the content of the buffer is \lstinline|nil|, otherwise, if the resulting state is \lstinline|free|, the result will be added to the buffer and the state will eventually be set to \lstinline|free|.  It is important to mention, that the received chunk will be created explicitly in the chunk store of the buffer system and therefore is a copy of a possibly existing identical chunk in the module that has been requested.
 
 \subsection{Components of the Implementation}
 \label{implementation:components}
@@ -1789,26 +1784,26 @@ In ACT-R, it is possible to call Lisp functions in the model definitions, for ex
 
 \subsection{General Translation}
 
-Lisp functions are lists (indicated by round braces \lstinline|(| and \lstinline|)|), which have the functor as their first element and the function arguments in the rest of the list. Hence, each Lisp function \lstinline|(f arg1 arg2 ...)| called in the model definition of an ACT-R model is translated into the adding of a CHR constraint \lstinline|lisp_f([arg1, arg2, ...])|. For all used functions, there has to be a default implementation in the module \lstinline|std_lisp|. In this implementation, the concept is reduced to simple procedural calls ignoring return values, which is adequate for most of the pure ACT-R models without the experiment environment. Here is an example implementation of the lisp function \lstinline|(chunk-type name slot1 slot2 ...)|:
+Lisp functions are lists (indicated by round braces \lstinline|(| and \lstinline|)|), which have the functor as their first element and the function arguments in the rest of the list. Hence, each Lisp function \lstinline|(f arg1 arg2 ...)| called in the model definition of an ACT-R model is translated into the adding of a CHR constraint \lstinline|lisp_f([arg1, arg2, ...])|. For all used functions, there has to be a default implementation in the module \lstinline|std_lisp|. In this implementation, the concept is reduced to simple procedural calls ignoring return values, which is adequate for most of the pure ACT-R models without the experiment environment. Here is an example implementation of the Lisp function \lstinline|(chunk-type name slot1 slot2 ...)| which adds a new chunk-type to the system:
 
 \begin{lstlisting}
 lisp_chunktype([Type|Slots]) <=>
+  % add type to buffer system (local module)
   add_chunk_type(Type,Slots),
+  % add type to declarative module
   declarative_module:add_chunk_type(Type,Slots).
 \end{lstlisting}
 
-Note that this function adds the chunk-types both to the declarative module and the buffer system, since types are global to the system.
+Note that this function adds the chunk-types both to the declarative module and the buffer system, since types are global to the system. Hence, every module with a chunk store should be added to the implementation of this Lisp function.
 
 \subsection{Configuration Variables}
 \label{configuration}
 
 In ACT-R, configuration variables which control the behaviour of the architecture are set with the Lisp function \lstinline|(sgp :Var Val)|, which sets the variable \lstinline|Var| to \lstinline|Val|. To handle such configuration variables, a configuration module can be added to the CHR implementation, that offers the \emph{IConfiguration} interface to set variables and to ask for their values:
 
-\enlargethispage{-2\baselineskip}
-
 \begin{definition}[IConfiguration]
 \label{def:iconfiguration}
-The interface \emph{IConfiguration} provides the following methods:
+The interface \emph{IConfiguration} provides the following methods to access the configuration store:
 \begin{description}
  \item[Set configuration variables] By calling \lstinline|set_conf(+Var,+Val)| the configuration variable \lstinline|Var| is set to the value \lstinline|Val|.
  \item[Get the value of a configuration variable] The call of \lstinline|get_conf(+Var,-Val)| binds the value of the configuration variable \lstinline|Var| to the argument \lstinline|Val|.
@@ -1838,7 +1833,7 @@ set_conf(Var,Val), configuration(Var,_) <=>
   notify_all(Var). % variable has been set -> perform pending notifications
 notify_all(Var), notify(Module,Var) ==> 
   Module:update. % perform all pending notifications
-notify_all(_) <=> true. % no notifications pending -> Clean up
+notify_all(_) <=> true. % no notifications pending, clean up
 \end{lstlisting}
 
 The constraint \lstinline|observer(Module,Var)| states that the module \lstinline|Module| observes the variable \lstinline|Var|. The observer modules have to declare a \lstinline|update/0| constraint which may trigger some action related to the change of a configuration variable.
@@ -2271,7 +2266,7 @@ selected during a conflict-resolution event then a new conflict-resolution event
 after the next change occurs.'' \cite[156]{actr_reference}
 \end{quote}
 
-In \cite{fru_chr_book_2009}, the \lstinline|conflict_set| and \lstinline|apply_rule| constraints also have the values of the variables that have been bound in the matching of the rule in the collecting phase\footnote{The example is slightly modified from the original in \cite{fru_chr_book_2009}: In the original, the name of the rule does not play a role and the priorities are known in advance}: 
+In \cite{fru_chr_book_2009}, the \lstinline|conflict_set| and \lstinline|apply_rule| constraints also have the values of the variables that have been bound in the matching of the rule in the collecting phase:\footnote{The example is slightly modified from the original in \cite{fru_chr_book_2009}: In the original, the name of the rule does not play a role and the priorities are known in advance} 
 
 \begin{lstlisting}
 <<<delay-name>>> @

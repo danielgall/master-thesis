@@ -17,19 +17,19 @@
 \BOOKMARK [3][-]{section*.8}{The Outside World}{subsection.2.1.5}% 17
 \BOOKMARK [3][-]{section*.10}{The Imaginal Module}{subsection.2.1.5}% 18
 \BOOKMARK [2][-]{subsection.2.1.6}{Example: Counting}{section.2.1}% 19
-\BOOKMARK [1][-]{section.2.2}{Serial and Parallel Aspects of ACT-R}{chapter.2}% 20
-\BOOKMARK [1][-]{section.2.3}{Subsymbolic layer}{chapter.2}% 21
-\BOOKMARK [2][-]{subsection.2.3.1}{Activation of Chunks}{section.2.3}% 22
-\BOOKMARK [3][-]{section*.11}{Base-Level Activation}{subsection.2.3.1}% 23
-\BOOKMARK [3][-]{section*.12}{Activation Spreading}{subsection.2.3.1}% 24
-\BOOKMARK [3][-]{section*.14}{Latency of Retrieval}{subsection.2.3.1}% 25
-\BOOKMARK [2][-]{subsection.2.3.2}{Production Utility}{section.2.3}% 26
-\BOOKMARK [1][-]{section.2.4}{Learning}{chapter.2}% 27
-\BOOKMARK [2][-]{subsection.2.4.1}{Symbolic Layer}{section.2.4}% 28
-\BOOKMARK [3][-]{section*.15}{Fact Learning}{subsection.2.4.1}% 29
-\BOOKMARK [3][-]{section*.16}{Skill acquisition}{subsection.2.4.1}% 30
-\BOOKMARK [2][-]{subsection.2.4.2}{Subsymbolic Layer}{section.2.4}% 31
-\BOOKMARK [1][-]{section.2.5}{Experiment Environment}{chapter.2}% 32
+\BOOKMARK [2][-]{subsection.2.1.7}{Serial and Parallel Aspects of ACT-R}{section.2.1}% 20
+\BOOKMARK [1][-]{section.2.2}{Subsymbolic layer}{chapter.2}% 21
+\BOOKMARK [2][-]{subsection.2.2.1}{Activation of Chunks}{section.2.2}% 22
+\BOOKMARK [3][-]{section*.11}{Base-Level Activation}{subsection.2.2.1}% 23
+\BOOKMARK [3][-]{section*.12}{Activation Spreading}{subsection.2.2.1}% 24
+\BOOKMARK [3][-]{section*.14}{Latency of Retrieval}{subsection.2.2.1}% 25
+\BOOKMARK [2][-]{subsection.2.2.2}{Production Utility}{section.2.2}% 26
+\BOOKMARK [1][-]{section.2.3}{Learning}{chapter.2}% 27
+\BOOKMARK [2][-]{subsection.2.3.1}{Symbolic Layer}{section.2.3}% 28
+\BOOKMARK [3][-]{section*.15}{Fact Learning}{subsection.2.3.1}% 29
+\BOOKMARK [3][-]{section*.16}{Skill acquisition}{subsection.2.3.1}% 30
+\BOOKMARK [2][-]{subsection.2.3.2}{Subsymbolic Layer}{section.2.3}% 31
+\BOOKMARK [1][-]{section.2.4}{Experiment Environment}{chapter.2}% 32
 \BOOKMARK [0][-]{chapter.3}{Constraint Handling Rules}{}% 33
 \BOOKMARK [0][-]{chapter.4}{Implementation of ACT-R in CHR}{}% 34
 \BOOKMARK [1][-]{section.4.1}{Declarative and Procedural Knowledge}{chapter.4}% 35
@@ -59,7 +59,7 @@
 \BOOKMARK [1][-]{section.4.4}{Modular Organization}{chapter.4}% 59
 \BOOKMARK [2][-]{subsection.4.4.1}{Prolog Modules}{section.4.4}% 60
 \BOOKMARK [2][-]{subsection.4.4.2}{Interface for Module Requests}{section.4.4}% 61
-\BOOKMARK [2][-]{subsection.4.4.3}{How the Buffer System States a Request}{section.4.4}% 62
+\BOOKMARK [2][-]{subsection.4.4.3}{Requests by the Buffer System}{section.4.4}% 62
 \BOOKMARK [2][-]{subsection.4.4.4}{Components of the Implementation}{section.4.4}% 63
 \BOOKMARK [1][-]{section.4.5}{Declarative Module}{chapter.4}% 64
 \BOOKMARK [2][-]{subsection.4.5.1}{Global Method for Adding Chunks}{section.4.5}% 65
@@ -72,7 +72,7 @@
 \BOOKMARK [2][-]{subsection.4.7.1}{Priority Queue}{section.4.7}% 72
 \BOOKMARK [3][-]{section*.44}{Objects}{subsection.4.7.1}% 73
 \BOOKMARK [3][-]{section*.45}{Representation of the Queue}{subsection.4.7.1}% 74
-\BOOKMARK [3][-]{section*.46}{Special Operation for ACT-R}{subsection.4.7.1}% 75
+\BOOKMARK [3][-]{section*.46}{Adding Events at Second Position}{subsection.4.7.1}% 75
 \BOOKMARK [2][-]{subsection.4.7.2}{Scheduler}{section.4.7}% 76
 \BOOKMARK [3][-]{section*.47}{Current Time}{subsection.4.7.2}% 77
 \BOOKMARK [3][-]{section*.48}{Interface to the Scheduler}{subsection.4.7.2}% 78

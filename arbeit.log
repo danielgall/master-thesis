@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.8.10)  1 SEP 2013 00:42
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.8.10)  3 SEP 2013 16:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1481,7 +1481,7 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \c@definition=\count361
 \c@example=\count362
-Package hyperref Info: Option `colorlinks' set `false' on input line 123.
+Package hyperref Info: Option `colorlinks' set `false' on input line 124.
 
 (/usr/share/texmf-dist/tex/latex/listings/lstlang1.sty
 File: lstlang1.sty 2004/09/05 1.3 listings language file
@@ -1489,7 +1489,7 @@ File: lstlang1.sty 2004/09/05 1.3 listings language file
 (/usr/share/texmf-dist/tex/latex/listings/lstlang2.sty
 File: lstlang2.sty 2004/09/05 1.3 listings language file
 )
-LaTeX Font Info:    Try loading font information for T1+phv on input line 203.
+LaTeX Font Info:    Try loading font information for T1+phv on input line 205.
 
 (/usr/share/texmf-dist/tex/latex/psnfss/t1phv.fd
 File: t1phv.fd 2001/06/04 scalable font definitions for T1/phv.
@@ -1510,7 +1510,7 @@ Package typearea Info: These are the values describing the layout:
 (typearea)              \topskip        = 10.0pt
 (typearea)              \footskip       = 42.0pt
 (typearea)              \baselineskip   = 12.0pt
-(typearea)              on input line 203.
+(typearea)              on input line 205.
 Package csquotes Info: Checking for multilingual support...
 Package csquotes Info: ... found 'babel' package.
 Package biblatex Info: Trying to load language 'english'...
@@ -1521,20 +1521,20 @@ File: english.lbx 2013/05/01 v2.6 biblatex localization (PK/JW/AB)
 ) (./arbeit.aux)
 \openout1 = `arbeit.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 229.
-LaTeX Font Info:    ... okay on input line 229.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 229.
-LaTeX Font Info:    ... okay on input line 229.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 229.
-LaTeX Font Info:    ... okay on input line 229.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 229.
-LaTeX Font Info:    ... okay on input line 229.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 229.
-LaTeX Font Info:    ... okay on input line 229.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 229.
-LaTeX Font Info:    ... okay on input line 229.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 229.
-LaTeX Font Info:    ... okay on input line 229.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 231.
+LaTeX Font Info:    ... okay on input line 231.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 231.
+LaTeX Font Info:    ... okay on input line 231.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 231.
+LaTeX Font Info:    ... okay on input line 231.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 231.
+LaTeX Font Info:    ... okay on input line 231.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 231.
+LaTeX Font Info:    ... okay on input line 231.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 231.
+LaTeX Font Info:    ... okay on input line 231.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 231.
+LaTeX Font Info:    ... okay on input line 231.
 Package biblatex Info: Input encoding 'utf8' detected.
 Package biblatex Info: Automatic encoding selection.
 (biblatex)             Assuming data encoding 'utf8'.
@@ -1548,8 +1548,8 @@ Package biblatex Warning: Data encoding is 'utf8'.
 Package biblatex Info: Trying to load bibliographic data...
 Package biblatex Info: ... file 'arbeit.bbl' found.
 (./arbeit.bbl)
-Package biblatex Info: Reference section=0 on input line 229.
-Package biblatex Info: Reference segment=0 on input line 229.
+Package biblatex Info: Reference section=0 on input line 231.
+Package biblatex Info: Reference segment=0 on input line 231.
  ABD: EveryShipout initializing macros
 (/usr/share/texmf-dist/tex/context/base/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -1580,8 +1580,8 @@ File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
 \c@lstlisting=\count369
-Package scrhack Info: undefining \float@addtolists on input line 229.
-LaTeX Info: Redefining \microtypecontext on input line 229.
+Package scrhack Info: undefining \float@addtolists on input line 231.
+LaTeX Info: Redefining \microtypecontext on input line 231.
 Package microtype Info: Generating PDF output.
 Package microtype Info: Character protrusion enabled (level 2).
 Package microtype Info: Using default protrusion set `alltext'.
@@ -1596,7 +1596,7 @@ Package microtype Info: Loading generic settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 \AtBeginShipoutBox=\box108
-Package hyperref Info: Link coloring OFF on input line 229.
+Package hyperref Info: Link coloring OFF on input line 231.
 
 (/usr/share/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2012/10/27 v2.43 Cross-referencing by name of section
@@ -1606,9 +1606,9 @@ Package: gettitlestring 2010/12/03 v1.4 Cleanup title references (HO)
 )
 \c@section@level=\count370
 )
-LaTeX Info: Redefining \ref on input line 229.
-LaTeX Info: Redefining \pageref on input line 229.
-LaTeX Info: Redefining \nameref on input line 229.
+LaTeX Info: Redefining \ref on input line 231.
+LaTeX Info: Redefining \pageref on input line 231.
+LaTeX Info: Redefining \nameref on input line 231.
  (./arbeit.out) (./arbeit.out)
 \@outlinefile=\write7
 \openout7 = `arbeit.out'.
@@ -1617,20 +1617,20 @@ LaTeX Info: Redefining \nameref on input line 229.
 File: images/unilogo_bild.pdf Graphic file (type pdf)
 
 <use images/unilogo_bild.pdf>
-Package pdftex.def Info: images/unilogo_bild.pdf used on input line 244.
+Package pdftex.def Info: images/unilogo_bild.pdf used on input line 246.
 (pdftex.def)             Requested size: 51.21349pt x 51.21504pt.
 
 <images/unilogo_wort.pdf, id=462, 761.34438pt x 183.18437pt>
 File: images/unilogo_wort.pdf Graphic file (type pdf)
 
 <use images/unilogo_wort.pdf>
-Package pdftex.def Info: images/unilogo_wort.pdf used on input line 246.
+Package pdftex.def Info: images/unilogo_wort.pdf used on input line 248.
 (pdftex.def)             Requested size: 212.84969pt x 51.21504pt.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <8> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 251.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 253.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <20.74> not available
-(Font)              Font shape `T1/phv/b/n' tried instead on input line 257.
-LaTeX Font Info:    Try loading font information for OT1+lmr on input line 257.
+(Font)              Font shape `T1/phv/b/n' tried instead on input line 259.
+LaTeX Font Info:    Try loading font information for OT1+lmr on input line 259.
 
  (/usr/share/texmf-dist/tex/latex/lm/ot1lmr.fd
 File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
@@ -1639,31 +1639,31 @@ File: ot1lmr.fd 2009/10/30 v1.6 Font defs for Latin Modern
 File: mt-cmr.cfg 2013/05/19 v2.2 microtype config. file: Computer Modern Roman 
 (RS)
 )
-LaTeX Font Info:    Try loading font information for OML+lmm on input line 257.
+LaTeX Font Info:    Try loading font information for OML+lmm on input line 259.
 
 
 (/usr/share/texmf-dist/tex/latex/lm/omllmm.fd
 File: omllmm.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 257
+LaTeX Font Info:    Try loading font information for OMS+lmsy on input line 259
 .
 
 (/usr/share/texmf-dist/tex/latex/lm/omslmsy.fd
 File: omslmsy.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
-LaTeX Font Info:    Try loading font information for OMX+lmex on input line 257
+LaTeX Font Info:    Try loading font information for OMX+lmex on input line 259
 .
 
 (/usr/share/texmf-dist/tex/latex/lm/omxlmex.fd
 File: omxlmex.fd 2009/10/30 v1.6 Font defs for Latin Modern
 )
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <8> on input line 257.
+(Font)              <8> on input line 259.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <6> on input line 257.
+(Font)              <6> on input line 259.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <5> on input line 257.
-LaTeX Font Info:    Try loading font information for U+msa on input line 257.
+(Font)              <5> on input line 259.
+LaTeX Font Info:    Try loading font information for U+msa on input line 259.
 
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
@@ -1671,7 +1671,7 @@ File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 (/usr/share/texmf-dist/tex/latex/microtype/mt-msa.cfg
 File: mt-msa.cfg 2006/02/04 v1.1 microtype config. file: AMS symbols (a) (RS)
 )
-LaTeX Font Info:    Try loading font information for U+msb on input line 257.
+LaTeX Font Info:    Try loading font information for U+msb on input line 259.
 
 (/usr/share/texmf-dist/tex/latex/amsfonts/umsb.fd
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
@@ -1684,14 +1684,14 @@ File: mt-msb.cfg 2005/06/01 v1.0 microtype config. file: AMS symbols (b) (RS)
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map} <./images/unilogo_bild.pdf>
  <./images/unilogo_wort.pdf>]
-LaTeX Font Info:    Try loading font information for OMS+phv on input line 308.
+LaTeX Font Info:    Try loading font information for OMS+phv on input line 311.
 
  (/usr/share/texmf-dist/tex/latex/psnfss/omsphv.fd
 File: omsphv.fd 
 )
 LaTeX Font Info:    Font shape `OMS/phv/m/n' in size <9> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 308.
-LaTeX Font Info:    Try loading font information for T1+pcr on input line 314.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 311.
+LaTeX Font Info:    Try loading font information for T1+pcr on input line 317.
 
 (/usr/share/texmf-dist/tex/latex/psnfss/t1pcr.fd
 File: t1pcr.fd 2001/06/04 font definitions for T1/pcr.
@@ -1701,11 +1701,11 @@ Package microtype Info: Loading generic settings for font family
 (microtype)             For optimal results, create family-specific settings.
 (microtype)             See the microtype manual for details.
 LaTeX Font Info:    External font `lmex10' loaded for size
-(Font)              <9> on input line 314.
+(Font)              <9> on input line 317.
 LaTeX Font Info:    Font shape `U/ccicons/m/n' will be
-(Font)              scaled to size 9.0pt on input line 315.
+(Font)              scaled to size 9.0pt on input line 318.
 LaTeX Font Info:    Font shape `T1/phv/m/it' in size <9> not available
-(Font)              Font shape `T1/phv/m/sl' tried instead on input line 318.
+(Font)              Font shape `T1/phv/m/sl' tried instead on input line 321.
  (./chapters/abstract.tex
 [2
 
@@ -1723,8 +1723,8 @@ LaTeX Font Info:    Font shape `T1/phv/m/it' in size <10> not available
 
 
 ]
-Package tocbasic Info: character protrusion at toc deactivated on input line 33
-8.
+Package tocbasic Info: character protrusion at toc deactivated on input line 34
+1.
  (./arbeit.toc
 LaTeX Font Info:    External font `lmex10' loaded for size
 (Font)              <10> on input line 7.
@@ -1744,14 +1744,14 @@ Chapter 1.
 ] [2]
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <14.4> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 77.
- [3] [4]) (./chapters/actr.tex [5] [6
-
-
-]
+ [3] [4] [5]) (./chapters/actr.tex [6]
 Chapter 2.
 LaTeX Font Info:    Font shape `T1/phv/bx/n' in size <12> not available
 (Font)              Font shape `T1/phv/b/n' tried instead on input line 14.
-[7] [8] [9]
+[7
+
+
+] [8] [9]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [10]
@@ -1804,59 +1804,77 @@ LaTeX Font Info:    Font shape `T1/pcr/b/it' in size <7> not available
 (Font)              Font shape `T1/pcr/b/sl' tried instead on input line 57.
  [35] [36] [37] [38] [39] [40] [41] [42] [43] [44] [45] [46] [47]
 [48] [49] [50] [51] [52] [53] [54] [55] [56] [57] [58] [59] [60] [61] [62]
-Underfull \vbox (badness 1082) has occurred while \output is active []
+[63]
+Underfull \vbox (badness 1122) has occurred while \output is active []
 
- [63]
-[64] [65] [66]
-Underfull \hbox (badness 1062) in paragraph at lines 1138--1138
+ [64]
+[65] [66]
+Underfull \hbox (badness 1062) in paragraph at lines 1134--1134
  [][][][] 
  []
 
 
-Underfull \hbox (badness 1584) in paragraph at lines 1138--1138
+Underfull \hbox (badness 1584) in paragraph at lines 1134--1134
  [][][][] 
  []
 
 
-Underfull \hbox (badness 1412) in paragraph at lines 1142--1142
+Underfull \hbox (badness 1412) in paragraph at lines 1138--1138
  [][][][] 
  []
 
 
-Underfull \hbox (badness 3965) in paragraph at lines 1144--1144
+Underfull \hbox (badness 3965) in paragraph at lines 1140--1140
  [][][][] 
  []
 
 
-Underfull \hbox (badness 4673) in paragraph at lines 1144--1144
+Underfull \hbox (badness 4673) in paragraph at lines 1140--1140
  [][][][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1145--1145
+Underfull \hbox (badness 10000) in paragraph at lines 1141--1141
  [][][][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1145--1145
+Underfull \hbox (badness 10000) in paragraph at lines 1141--1141
  [][][][] 
  []
 
 
-Underfull \hbox (badness 1412) in paragraph at lines 1149--1149
+Underfull \hbox (badness 1412) in paragraph at lines 1145--1145
  [][][][] 
  []
 
-[67] [68] [69] [70] [71] [72] [73] [74] [75] [76] [77] [78] [79] [80] [81]
+[67] [68] [69] [70] [71] [72] [73] [74] [75] [76] [77] [78] [79] [80]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [81]
 [82] [83] [84] [85] [86] [87] [88] [89] [90] [91] [92] [93] [94] [95] [96]
-[97] [98] [99] [100] [101] [102] [103] [104] [105] [106] [107] [108] [109])
-(./chapters/example_models.tex [110]
+[97] [98] [99] [100]
+Underfull \vbox (badness 1852) has occurred while \output is active []
+
+ [101]
+[102] [103] [104] [105] [106]
+Underfull \vbox (badness 6978) has occurred while \output is active []
+
+ [107]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [108]
+[109]) (./chapters/example_models.tex [110]
 Chapter 5.
 [111
 
 
-] [112] [113] [114] [115] [116] [117] [118] [119] [120] [121] [122]
-[123] [124] [125]
+]
+Underfull \vbox (badness 3271) has occurred while \output is active []
+
+ [112]
+[113] [114] [115] [116] [117] [118] [119] [120] [121] [122] [123] [124]
+[125]
 Missing character: There is no ; in font nullfont!
  [126] [127]) (./chapters/conclusion.tex [128]
 Chapter 6.
@@ -1881,29 +1899,29 @@ Appendix B.
 
 
 ] [152] [153] [154]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 394.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 397.
  [155
 
 
 ]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 394.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 397.
 
 (./arbeit.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 394.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 394.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 397.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 397.
 Package rerunfilecheck Info: File `arbeit.out' has not changed.
-(rerunfilecheck)             Checksum: D6037A643D0F5B0D64DF784274A26EF4;7836.
+(rerunfilecheck)             Checksum: 907C199AFF87EA00C3B2E6C9016FD93B;7839.
 Package logreq Info: Writing requests to 'arbeit.run.xml'.
 \openout1 = `arbeit.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 37812 strings out of 493315
- 689267 string characters out of 6143704
- 1099111 words of memory out of 5000000
- 37946 multiletter control sequences out of 15000+600000
+ 37788 strings out of 493315
+ 688816 string characters out of 6143704
+ 1097118 words of memory out of 5000000
+ 37927 multiletter control sequences out of 15000+600000
  102068 words of font info for 284 fonts, out of 8000000 for 9000
- 958 hyphenation exceptions out of 8191
+ 957 hyphenation exceptions out of 8191
  65i,19n,76p,1885b,3156s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf-dist/fon
 ts/enc/dvips/lm/lm-rm.enc}{/usr/share/texmf-dist/fonts/enc/dvips/lm/lm-mathsy.e
@@ -1928,10 +1946,10 @@ r8a.pfb></usr/share/texmf-dist/fonts/type1/urw/courier/ucrro8a.pfb></usr/share/
 texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></usr/share/texmf-dist/fonts/typ
 e1/urw/helvetic/uhvbo8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhv
 r8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb>
-Output written on arbeit.pdf (163 pages, 963564 bytes).
+Output written on arbeit.pdf (163 pages, 966213 bytes).
 PDF statistics:
- 4393 PDF objects out of 5155 (max. 8388607)
- 4126 compressed objects within 42 object streams
- 2362 named destinations out of 2487 (max. 500000)
+ 4394 PDF objects out of 5155 (max. 8388607)
+ 4127 compressed objects within 42 object streams
+ 2358 named destinations out of 2487 (max. 500000)
  39391 words of extra memory for PDF output out of 42996 (max. 10000000)
 

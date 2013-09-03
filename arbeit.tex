@@ -88,12 +88,13 @@ hyperref=true
 \newcommand{\gutachterA}{Prof.\ Dr.\ Dr.\ Thom Frühwirth}
 \newcommand{\gutachterB}{Prof.\ Dr.\ Slim Abdennadher}
 \newcommand{\betreuer}{Prof.\ Dr.\ Dr.\ Thom Frühwirth}
-\newcommand{\fakultaet}{Ingenieurwissenschaften\\und Informatik}
+\newcommand{\fakultaet}{Engineering\\and Computer Science}
+%\newcommand{\fakultaet}{Ingenieurwissenschaften\\und Informatik}
 %\newcommand{\fakultaet}{Mathematik und\\Wirtschaftswissenschaften}
 %\newcommand{\fakultaet}{Naturwissenschaften}
 %\newcommand{\fakultaet}{Medizin}
-\newcommand{\institut}{Institut für Programmiermethodik und Compilerbau}
-\newcommand{\arbeit}{Masterarbeit}
+\newcommand{\institut}{Institute of Software Engineering and Compiler Construction}
+\newcommand{\arbeit}{Master Thesis}
 %\newcommand{\arbeit}{Bachelorarbeit}
 
 
@@ -110,14 +111,14 @@ hyperref=true
 \pdfinfo{
     /Author (\fullname)
     /Title (\titel)
-    /Producer (pdfeTex 3.14159-1.30.6-2.2)
+    /Producer (pdfTeX, Version 3.1415926-2.5-1.40.14)
     /Keywords ()
 }
 \hypersetup{
     pdftitle=\titel,
     pdfauthor=\fullname,
     pdfsubject={\arbeit},
-    pdfproducer={pdfeTex 3.14159-1.30.6-2.2},
+    pdfproducer={pdfTeX, Version 3.1415926-2.5-1.40.14},
     colorlinks=false,
     pdfborder=0 0 0
 }
@@ -162,9 +163,10 @@ hyperref=true
     aboveskip=\parskip,
     basicstyle=\ttfamily,
     numberstyle=\tiny,
-    deletekeywords={ time },
+    deletekeywords={ time, is, name, write, true, false },
+    keywordstyle=\bfseries,
     alsoletter= {<,=,>,:,-,@, |, \\, ? },
-    morekeywords={ <=>, ==> , :-, @, |, \\, false, ?- },
+    morekeywords={ <=>, ==> , :-, @, |, \\, ?- },
     morecomment=[s]{\{}{\}},
     moredelim=[is][\textbf]{<<}{>>},
     moredelim=[is][\textit]{<<<}{>>>}
@@ -212,7 +214,7 @@ hyperref=true
 %%
 %% Trennungsregeln
 %%
-\hyphenation{Sil-ben-trenn-ung}
+%\hyphenation{re-geln}
 
 
 %%
@@ -250,20 +252,21 @@ hyperref=true
     \footnotesize
     \textbf{Universität Ulm} \textbar ~89069 Ulm \textbar ~Germany
     \hfill
-    \parbox[t]{42mm}{\bfseries Fakultät für\\\fakultaet\\\mdseries\institut}
+    \parbox[t]{42mm}{\bfseries Faculty of \fakultaet\\\mdseries\institut}
     \vspace*{2cm}
 
     % Titel
     \parbox{140mm}{\bfseries \raggedright \huge \titel}
 
     % Untertitel
-    {\arbeit{} an der Universität Ulm}
+    {\arbeit{}\\University of Ulm}
     \vspace*{4em}
 
     % Prüfer etc.
-    \textbf{Vorgelegt von:}\\\fullname\\\email\\[2em]
-    \textbf{Gutachter:}\\\gutachterA\\\gutachterB\\[2em]
-    \textbf{Betreuer:}\\\betreuer\\[1.5em]
+    %\textbf{Vorgelegt von:}\\
+    \fullname\\\email\\[2em]
+    \textbf{Reviewers:}\\\gutachterA\\\gutachterB\\[2em]
+    \textbf{Consultant:}\\\betreuer\\[1.5em]
     \jahr
 \end{addmargin*}
 
@@ -276,7 +279,7 @@ hyperref=true
 {
     % vollständiger Titel
     \small \flushleft \enquote{\titel}\\
-    Version of \today
+    \today
     \vfill
 
     % Danksagung

@@ -277,9 +277,9 @@ Output & Visual location & Visual object\\
 
 The imaginal module, described in \cite[unit 2]{actr_tutorial}, is capable of creating new chunks. This is useful, if for instance the visual module produces a lot of new information in sequence (like reading a sequence of letters), but the visual-object buffer can hold only one chunk at once. To solve this problem, all the information could be stored in the slots of the goal chunk. However, since a goal chunk with a large amount of slots seems to be unplausible\footnote{As described in section \ref{millers_number}, one should stick to $7 \pm 2$ slots for each chunk.} and the number of read instances would have to be known in advance due to the static chunk-type definition, a better way to deal with this problem is to create new knowledge elements.
 
-This task can be achieved by using the imaginal module: On a request, it creates a new chunk of the type and with the slots stated in the request and puts it into its \emph{imaginal buffer}. Since the chunk in a buffer is stored in the declarative memory when the buffer is cleared\footnote{see section \ref{description_of_proc_actions}}, an unlimited amount of data can be produced and remembered by stating retrieval requests later on.
+This task can be achieved by using the imaginal module: On a request, it creates a new chunk of the type and with the slots stated in the request and puts it into its \emph{imaginal buffer}. Since the chunk in a buffer is stored in the declarative memory when the buffer is cleared,\footnote{see section \ref{description_of_proc_actions}} an unlimited amount of data can be produced and remembered by stating retrieval requests later on.
 
-It is important to mention that it takes the imaginal module $.2\,\mathrm{ms}$ to create a chunk. This amount of time is constant, but can be set by the modeler. Additionally, the imaginal module can only produce one chunk at a time\footnote{like every module can only handle one request at a time}.
+It is important to mention that it takes the imaginal module $.2\,\mathrm{ms}$ to create a chunk. This amount of time is constant, but can be set by the modeler. Additionally, the imaginal module can only produce one chunk at a time.\footnote{like every module can only handle one request at a time}
 
 \subsection{Example: Counting}
 \label{example_counting}
@@ -367,7 +367,7 @@ In this example, the rules have been defined in a very informal way. In the foll
 
 The example also uses the concept of \emph{variables}, which will be introduced more formally in chapter \ref{implementation} when talking about implementation. Variables allow rule conditions to act like patterns that can match various system states instead of defining a rule for each state, since computation is the same regardless of the actual values in the buffers.
 
-\section{Serial and Parallel Aspects of ACT-R}
+\subsection{Serial and Parallel Aspects of ACT-R}
 \label{serial_parallel_aspects}
 
 In the previous sections there were some remarks on the serial and parallel aspects of ACT-R. According to \cite[p. 68]{anderson_how_2007}, four types of parallelism and seriality can be distinguished:
@@ -646,7 +646,7 @@ In \cite{taatgen_production_2003}, \citeauthor{taatgen_production_2003} present 
 
 \subsection{Subsymbolic Layer}
 
-The concepts introduced in section~\ref{subsymbolic_layer} are a kind of learning: The practice of particular facts strengthens the chunks encoding this fact and chunks that are not practiced are forgotten over time\footnote{This is the concept of base-level learning as described in section~\ref{base_level_activation}}. Additionally, associative weights are learned from the current context. These processes adapt to the problems a particular human mind is confronted with and thereby work autonomously.
+The concepts introduced in section~\ref{subsymbolic_layer} are a kind of learning: The practice of particular facts strengthens the chunks encoding this fact and chunks that are not practiced are forgotten over time.\footnote{This is the concept of base-level learning as described in section~\ref{base_level_activation}} Additionally, associative weights are learned from the current context. These processes adapt to the problems a particular human mind is confronted with and thereby work autonomously.
 
 The same is valid for production rules: Over time, the experience tells us, which strategies might be successful in certain situations and which are not. This process is also called \emph{conditioning} and described in equation~\eqref{eq:utility_learning}.
 

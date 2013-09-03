@@ -11,61 +11,61 @@ The first model is an extension of the example presented in section~\ref{example
 \begin{lstlisting}[escapeinside={(*@}{@*)}, caption={ACT-R code of the counting example}, label=exmod:lst:example_counting]
 (define-model count (*@\label{exmod:lst:example_counting:define_model}@*)
 
-(chunk-type count-order first second) (*@\label{exmod:lst:example_counting:chunk_type}@*)
-(chunk-type count-from start end count)
+  (chunk-type count-order first second) (*@\label{exmod:lst:example_counting:chunk_type}@*)
+  (chunk-type count-from start end count)
 
-(add-dm (*@\label{exmod:lst:example_counting:add_dm}@*)
- (b ISA count-order first 1 second 2)
- (c ISA count-order first 2 second 3)
- (d ISA count-order first 3 second 4)
- (e ISA count-order first 4 second 5)
- (f ISA count-order first 5 second 6)
- (first-goal ISA count-from start 2 end 4)
- ) (*@\label{exmod:lst:example_counting:add_dm_end}@*)
+  (add-dm (*@\label{exmod:lst:example_counting:add_dm}@*)
+   (b ISA count-order first 1 second 2)
+   (c ISA count-order first 2 second 3)
+   (d ISA count-order first 3 second 4)
+   (e ISA count-order first 4 second 5)
+   (f ISA count-order first 5 second 6)
+   (first-goal ISA count-from start 2 end 4)
+   ) (*@\label{exmod:lst:example_counting:add_dm_end}@*)
 
-(p start (*@\label{exmod:lst:example_counting:start}@*)
-   =goal>
-      ISA         count-from
-      start       =num1
-      count       nil
- ==>
-   =goal>
-      count       =num1
-   +retrieval>
-      ISA         count-order
-      first       =num1
-)
+  (P start (*@\label{exmod:lst:example_counting:start}@*)
+     =goal>
+        ISA         count-from
+        start       =num1
+        count       nil
+   ==>
+     =goal>
+        count       =num1
+     +retrieval>
+        ISA         count-order
+        first       =num1
+  )
 
-(P increment (*@\label{exmod:lst:example_counting:increment}@*)
-   =goal>
-      ISA         count-from
-      count       =num1
-    - end         =num1
-   =retrieval>
-      ISA         count-order
-      first       =num1
-      second      =num2
- ==>
-   =goal>
-      count       =num2
-   +retrieval>
-      ISA         count-order
-      first       =num2
-   !output!       (=num1)
-)
+  (P increment (*@\label{exmod:lst:example_counting:increment}@*)
+     =goal>
+        ISA         count-from
+        count       =num1
+      - end         =num1
+     =retrieval>
+        ISA         count-order
+        first       =num1
+        second      =num2
+   ==>
+     =goal>
+        count       =num2
+     +retrieval>
+        ISA         count-order
+        first       =num2
+     !output!       (=num1)
+  )
 
-(P stop (*@\label{exmod:lst:example_counting:stop}@*)
-   =goal>
-      ISA         count-from
-      count       =num
-      end         =num
- ==>
-   -goal>
-   !output!       (=num)
-)
-
-(goal-focus first-goal) (*@\label{exmod:lst:example_counting:goal_focus}@*)
-) (*@\enlargethispage{-\baselineskip}@*)
+  (P stop (*@\label{exmod:lst:example_counting:stop}@*)
+     =goal>
+        ISA         count-from
+        count       =num
+        end         =num
+   ==>
+     -goal>
+     !output!       (=num)
+  )
+  
+  (goal-focus first-goal) (*@\label{exmod:lst:example_counting:goal_focus} \enlargethispage{\baselineskip}@*)
+) 
 \end{lstlisting}
 \flushbottom
 
@@ -77,11 +77,9 @@ In line~\ref{exmod:lst:example_counting:increment} sqq. the main rule \lstinline
 
 The last production rule \lstinline|stop| in line~\ref{exmod:lst:example_counting:stop} is applicable, as soon the \lstinline|increment| rule cannot be applied anymore due to the fact that the specified end of the counting process has been reached. Then, the last number will be printed and the goal buffer will be cleared.
 
-The last function call in line~\ref{exmod:lst:example_counting:goal_focus} is an initialization method, which simply puts the previously defined chunk \lstinline|first-goal| into the goal buffer. This leads to an initial state where the rule \lstinline|start| is applicable.
+The last function call in line~\ref{exmod:lst:example_counting:goal_focus} is an initialization method, which simply puts the previously defined chunk \lstinline|first-goal| into the goal buffer. This leads to an initial state where the rule \lstinline|start| is applicable. The output of the model is:
 
-The output of the model is:
-
-\raggedbottom
+%\raggedbottom
 \begin{lstlisting}
      0.000   GOAL             SET-BUFFER-CHUNK GOAL FIRST-GOAL 
      0.000   PROCEDURAL       CONFLICT-RESOLUTION 
@@ -111,7 +109,7 @@ The output of the model is:
      0.200   PROCEDURAL       CONFLICT-RESOLUTION 
      0.200   ------           Stopped because no events left to process 
 \end{lstlisting}
-\flushbottom
+%\flushbottom
 
 The source file in listing \ref{exmod:lst:example_counting} can be translated by the provided CHR compiler which yields the following result:
 
@@ -219,7 +217,8 @@ run <=> true |
   nextcyc.
   
 no-rule @ (*@\label{exmod:lst:example_counting_chr:no_rule}@*)
-fire <=> true |
+fire <=> 
+  true |
   conflict_set([]),
   choose.
 \end{lstlisting}
@@ -298,83 +297,80 @@ To demonstrate the subsymbolic layer, the original code is extended as follows:
 \raggedbottom
 \begin{lstlisting}[escapeinside={(*@}{@*)}]
 (define-model count
+  (sgp :esc t)
 
-(sgp :esc t)
+  (chunk-type count-order first second)
+  (chunk-type goal-chunk goal start end count)
 
+  (add-dm
+  ...
+  (d ISA count-order first 3 second 4)
+  (d1 ISA count-order first 3 second 5)
+  ...
+  (second-goal ISA goal-chunk goal training1)
+  )
+  
+  (P train1
+    =goal>
+      ISA           goal-chunk
+      goal          training1
+  ==>
+    =goal>
+      goal          training2
+    +retrieval>
+      ISA           count-order
+      first         3
+      second        4
+  )
 
-(chunk-type count-order first second)
-(chunk-type goal-chunk goal start end count)
+  (P train2
+    =goal>
+      ISA           goal-chunk
+      goal          training2
+    =retrieval>
+      ISA           count-order
+      first         3
+      second        4
+  ==>
+    =goal>
+      ISA           goal-chunk
+      start         2
+      end           4
+      goal          count
+    -retrieval> 
+  )
+  
+  (P start
+      { defined as in listing (*@\ref{exmod:lst:example_counting}@*) }
+  )
 
-(add-dm
- ...
- (d ISA count-order first 3 second 4)
- (d1 ISA count-order first 3 second 5)
- ...
- (second-goal ISA goal-chunk goal training1)
- )
- 
-(p train1
-  =goal>
-    ISA           goal-chunk
-    goal          training1
- ==>
-  =goal>
-    goal          training2
-  +retrieval>
-    ISA           count-order
-    first         3
-    second        4
-)
-
-(p train2
-  =goal>
-    ISA           goal-chunk
-    goal          training2
-  =retrieval>
-    ISA           count-order
-    first         3
-    second        4
- ==>
-  =goal>
-    ISA           goal-chunk
-    start         2
-    end           4
-    goal          count
-  -retrieval> 
-)
- 
-(p start
+  (P increment
     { defined as in listing (*@\ref{exmod:lst:example_counting}@*) }
-)
+  )
 
-(P increment
-  { defined as in listing (*@\ref{exmod:lst:example_counting}@*) }
-)
+  (P incrementx
+    =goal>
+        ISA         goal-chunk
+        goal        count
+        count       =num1
+      - end         =num1
+    =retrieval>
+        ISA         count-order
+        first       =num1
+        second      =num2
+  ==>
+    -goal>
+    !output!       (wrong)
+  )
 
-(P incrementx
-   =goal>
-      ISA         goal-chunk
-      goal        count
-      count       =num1
-    - end         =num1
-   =retrieval>
-      ISA         count-order
-      first       =num1
-      second      =num2
- ==>
-   -goal>
-   !output!       (wrong)
-)
+  (P stop
+    { defined as in listing (*@\ref{exmod:lst:example_counting}@*) }
+  )
 
-(P stop
-   { defined as in listing (*@\ref{exmod:lst:example_counting}@*) }
+  (goal-focus second-goal)
 
-)
-
-(goal-focus second-goal)
-
-(spp increment :u 8 incrementx :u 0)
-(spp stop :reward 15)
+  (spp increment :u 8 incrementx :u 0)
+  (spp stop :reward 15)
 )
 \end{lstlisting}
 \flushbottom
