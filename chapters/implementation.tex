@@ -1304,9 +1304,9 @@ However, since the match set is distributed over a set of \lstinline|match_set| 
 
 The first rule merges two match sets to one single merge set containing a list with all the chunks of the former sets, if the \lstinline|collect_matches| trigger is present. 
 
-In the second rule, if no two match sets to merge are in the store any more, the result of the \lstinline|collect_matches| operation is the remaining match set. The same applies for the last rule, where no match set is in the store and therefore the result is empty. Note that this implies, that the rules have to be applied from top to bottom, left to right.\footnote{This is called the refined operational semantics of CHR}
+In the second rule, if there are no two match sets to merge in the store any more, the result of the \lstinline|collect_matches| operation is the remaining match set. The same applies for the last rule, where no match set is in the store and therefore the result is empty. Note that this implies that the rules have to be applied from top to bottom, left to right.\footnote{This is called the refined operational semantics of CHR}
 
-The symbolic layer does not implement any rule for which chunk will be returned, if there are more than one in the match set. In this implementation, the first chunk in the list is chosen. The module request is now implemented as follows:
+The symbolic layer does not implement any rule stating which chunk will be returned if there is more than one chunk in the match set. In this implementation, the first chunk in the list is chosen. The module request is now implemented as follows:
 
 \begin{lstlisting}
 <<module_request(retrieval,chunk(Name,Type,Slots),ResChunk, ResState)>> <=> 
@@ -1317,19 +1317,17 @@ The symbolic layer does not implement any rule for which chunk will be returned,
   get_state(ResChunk,ResState).
 \end{lstlisting}
 
-where \lstinline|first(L,E)| gets a list \lstinline|L| and returns its first element \lstinline|E| or \lstinline|nil|, if the list was empty.
+where \lstinline|first(L,E)| gets a list \lstinline|L| and returns its first element \lstinline|E| or \lstinline|nil| if the list is empty. 
 
-With \lstinline|return_chunk/2| and \lstinline|get_state/2|, the actual results of the request are computed:
+With \lstinline|return_chunk/2| and \lstinline|get_state/2|, the actual results of the request are computed: By now, the variable \lstinline|Chunk| holds the name of the chunk to return, but in the specification of the module request, a complete chunk specification is demanded. \lstinline|return_chunk/2| is defined as a default method of a chunk store that gets a chunk name as its first argument and returns a chunk specification created from the values in the chunk store as its second argument.
 
-By now, the variable \lstinline|Chunk| holds the name of the chunk to return, but in the specification of the module request, a complete chunk specification is demanded. \lstinline|return_chunk/2| is defined as a default method of a chunk store that gets a chunk name as its first argument and returns a chunk specification created from the values in the chunk store as its second argument.
-
-The resulting state of the request is computed as follows: If the result chunk is \lstinline|nil|, then no chunk was in the match set, so the state of the declarative module will be \lstinline|error|. In any other case, the state is \lstinline|free| after the request has been performed.
+The resulting state of the request is computed as follows: If the result chunk is \lstinline|nil|, no chunk was in the match set, so the state of the declarative module will be \lstinline|error|. In any other case, the state is \lstinline|free| after the request has been performed.
 
 \subsection{Chunk Merging}
 
-An important technique used in ACT-R's declarative memory module, is the chunk merging: If a chunk enters the chunk store and all of its slots and values are the same as of a chunk already in the store, then those two chunks get merged. The merged chunk can be called with both names.
+An important technique used in ACT-R's declarative memory module is chunk merging: If a chunk enters the chunk store and all of its slots and values are the same as of a chunk already in the store, then those two chunks get merged. Both names refer to the merged chunk.
 
-If a chunk entering the declarative memory has the same name as a chunk in that already is in the store, the new chunk gets a new name and if its slots are the same as the slots of the old chunk, they will be merged and the new name will be deleted.
+If a chunk entering the declarative memory has the same name as a chunk that already is in the store, the new chunk first gets a new name. Then, if its slots are the same as the slots of the old chunk, they are merged and the new name is deleted.
 
 \begin{lstlisting}
 <<chunk(Name,Type) \ add_chunk(chunk(Name,Type,Slots))>> <=>
@@ -1342,7 +1340,7 @@ If a chunk entering the declarative memory has the same name as a chunk in that 
   check_identical_chunks(chunk(C,T,S)).
 \end{lstlisting}
 
-The rules are added before the empty slot initialization in listing~\ref{lst:add_chunk_rules}. The first rule handles the case where a chunk with an already allocated name is added to the store. Then it gets a new name (which basically is just the old name extended by \lstinline|:new|, and tries to add this new chunk to the memory. 
+The rules are added before the empty slot initialization in listing~\ref{lst:add_chunk_rules}. The first rule handles the case where a chunk with an already allocated name is added to the store. Then it gets a new name (which basically is just the old name extended by \lstinline|:new|) and tries to add this new chunk to the memory. 
 
 The second rule adds an identity check for each chunk to be added except for primitive elements, since their slots are identical for every name, because every primitive element has no slots. Nevertheless they have to be distinguishable by their names and therefore cannot be merged.
 
@@ -1379,7 +1377,7 @@ The next rule applies for an identity check for a slot-value pair that is succes
 
 In the fourth rule redundant information is removed and the lust rule aborts the identity check as soon as one matching chunk has been found.
 
-Note that this implementation assumes that the chunk specification of the chunk entering the declarative memory is complete. If it is not complete, the correct semantics of the adding is that all unspecified slots are empty so their values equal \lstinline|nil|. Nevertheless, this implementation would merge the chunk with a chunk that has values in those unspecified slots. This could be improved by completing the chunk specifications before checking for identical chunks in the store.
+Note that this implementation assumes that the chunk specification of the chunk entering the declarative memory is complete. If it is incomplete, the correct semantics of the adding is that all unspecified slots are empty so their values equal \lstinline|nil|. Nevertheless, this implementation would merge the chunk with a chunk that has values in those unspecified slots. This could be improved by completing the chunk specifications before checking for identical chunks in the store.
 
 For the easier use of the identical constraint at other points, transitive identities can be reduced to the only real chunk in the store (the one with the \lstinline|chunk| constraint):
 
@@ -1409,12 +1407,12 @@ In the declarative module, the chunk search must be extended to find merged chun
 
 so the chunk search of a chunk that is only a pointer to another chunk can be reduced to the search of this chunk. \FIXME{maybe this can cause problems if a production rule refers to a particular name and gets a chunk with the name of its brother..}
 
-The process of chunk merging is described in \cite[217, 71]{actr_reference} and \cite[3]{actr_tutorial}. The treating of identical names is not described there, but has been tested in the original implementation: ACT-R handles those identical names similarly to this approach by adding a sequential number to the identical name. For example, the chunk with name \lstinline|a| would be called \lstinline|a-0| if there already was a chunk \lstinline|a| in the store.
+The process of chunk merging is described in \cite[217, 71]{actr_reference} and \cite[3]{actr_tutorial}. The treatment of identical names is not described there, but has been tested in the original implementation: ACT-R handles those identical names similarly to this approach by adding a sequential number to the identical name. For example, the chunk with name \lstinline|a| would be called \lstinline|a-0| if there already was a chunk \lstinline|a| in the store.
 
 \section{Initialization}
 \label{initialization}
 
-In the examples, the models had to be run by stating complex queries which create all necessary buffers and add all chunk types and chunks to the declarative memory manually. In the original ACT-R implementation, the command \lstinline|run| is used to run a model. This behaviour can be transferred to the CHR implementation easily by adding a \lstinline|run| constraint and a rule for this constraint, that performs all the initialization work.
+In the examples, the models had to be run by stating complex queries which create all necessary buffers and add all chunk types and chunks to the declarative memory manually. In the original ACT-R implementation, the command \lstinline|run| is used to run a model. This behaviour can be transferred easily to the CHR implementation by adding a \lstinline|run| constraint and a rule for this constraint, that performs all the initialization work.
 
 \begin{lstlisting}
 init @ 
@@ -1430,11 +1428,11 @@ This example assumes that there are implementation of the called methods that pe
 
 \section{Timing in ACT-R}
 
-So far, the execution order of the production rules has been controlled by the \lstinline|fire| constraint -- a phase constraint that simulated the occupation of the production system while a rule is executed.
+So far, the execution order of the production rules has been controlled by the \lstinline|fire| constraint -- a phase constraint which so far has simulated the occupation of the production system while executing a rule.
 
-However, certain buffer actions like buffer requests may take some time until they are finished. The procedural system is free to fire the next rule after all actions have been started\footnote{see chapters \ref{process_of_rule_selection_and_execution} and \ref{serial_parallel_aspects}} and the requests are performed in parallel to that. Additionally, for the simulation it may be interesting to explore how much time certain actions have taken, especially when it comes to the subsymbolic layer.
+However, certain buffer actions like buffer requests may take some time to finish. The procedural system is free to fire the next rule after all actions have been started\footnote{see chapters \ref{process_of_rule_selection_and_execution} and \ref{serial_parallel_aspects}} and the requests are performed in parallel to that. Additionally, for the simulation it may be interesting to explore how much time certain actions have taken, especially when it comes to the subsymbolic layer.
 
-Those aspects cannot be implemented easily using the current approach with phase constraints. Hence, the idea of introducing a central scheduling unit is a possible solution of those requirements: The unit has a serialized ordered list of events with particular timings. If a new event is scheduled, the time it is executed must be known. The scheduling unit inserts the event at the right position of the list preserving the ordered time condition. Figure~\ref{fig:scheduler:a} illustrates this approach.
+Those aspects cannot be implemented easily using the current approach with phase constraints. Hence, the idea of introducing a central scheduling unit is a possible solution of those requirements: The unit has a serialized ordered list of events with particular timings. If a new event is scheduled, the time when it is executed must be known. The scheduling unit inserts the event at the right position of the list preserving the ordered time condition. Figure~\ref{fig:scheduler:a} illustrates this approach.
 
 \begin{figure}[hbt]
 \centering
@@ -1529,6 +1527,7 @@ A \emph{priority queue} is an abstract data structure that serves objects by the
 In the implementation of the scheduler, the priority queue contains objects of the form \lstinline|q(Time,Priority,Event)|. The priority of such a queue object is composed from the \lstinline|Time| and the \lstinline|Priority|. An \lstinline|Event| is a Prolog goal, i.e. a built-in or a CHR constraint. The order between the elements is defined as follows:
 
 \begin{definition}[ordered time-priority condition]
+\label{def:time-priority-condition}
 \lstinline|q(T1,P1,E1)| $\prec$ \lstinline|q(T2,P2,E2)|, i.e. the object \lstinline|q(T1,P1,E1)| is the predecessor of the object \lstinline|q(T2,P2,E2)|, if \lstinline|T1| $<$ \lstinline|T2|. In the case that \lstinline|T1 = T2|, then \lstinline|q(T1,P1,E1)| $\prec$ \lstinline|q(T2,P2,E2)| if \lstinline|P1| $>$ \lstinline|P2|. So, events with smaller times will be returned first. If two events appear at the same time, it is possible to define a priority and the event with the higher priority will be returned first. 
 \end{definition}
 
@@ -1544,7 +1543,7 @@ q(3,7,e2) --> q(3,2,e3)
 
 This queue achieves the ordered time-priority condition, since the queue objects are in the correct order according to their times and priorities. It is also consistent in a sense that it has no gaps and no object has more than one successor.
 
-In general, there can be defined some rules to make such a queue consistent, i.e. every object only has one successor and the queue achieves the time-priority condition:
+In general, some rules to make such a queue consistent can be defined, i.e. every object only has one successor and the queue achieves the time-priority condition:
 
 \begin{lstlisting}
 <<A --> A>> <=> true.
@@ -1572,14 +1571,14 @@ leq(q(Time,Priority1,_), q(Time,Priority2,_)) :-
   Priority1 >= Priority2.
 \end{lstlisting}
 
-The first predicate states that the start symbol is is less than every other object. The other two rules implement the time-priority condition directly.
+The first predicate states that the start symbol is less than every other object. The other two rules directly implement the time-priority condition as defined in definition~\ref{def:time-priority-condition}.
 
 Note that two objects are considered the same, iff. their time, priority and event are syntactically the same. If an object is altered in one of the \lstinline|-->| constraints, it has to be edited in every other occurrence in the   list to avoid gaps.
 
 Another important property is, that the list does not have any gaps, so it must be possible to track the queue from every element backwards to the start symbol. This condition is not achieved by the rules above, but since a priority queue only offers two mechanisms to modify it, a lot of those problems can be avoided:
 
 \begin{description}
- \item[add\_q(Time,Priority,Event)] Enqueues an object with the specified properties. Ie., a new \lstinline|q(Time,Priority,Event)| object will be created and the following constraint will be added: \lstinline|s --> q(Time,Priority,Event)|. The rules presented above will lead to a linear, serialized list achieving the time-priority condition without gaps.
+ \item[add\_q(Time,Priority,Event)] Enqueues an object with the specified properties. I.e., a new \lstinline|q(Time,Priority,Event)| object will be created and the following constraint will be added: \lstinline|s --> q(Time,Priority,Event)|. The rules presented above will lead to a linear, serialized list achieving the time-priority condition without gaps.
 \begin{lstlisting}
 <<add_q(Time,Priority,Evt)>> <=>
   s --> q(Time,Priority,Evt).
@@ -1596,8 +1595,7 @@ Another important property is, that the list does not have any gaps, so it must 
 <<de_q(X)>> <=> X = nil.
 \end{lstlisting}
 
-The first object just is the successor of \lstinline|s|, since the list has been constructed preserving the correct order and the property, that everything starts at \lstinline|s|. If the first object has a successor, this object is the new first object. If there are no order constraints left, the queue is empty and \lstinline|de_q| returns \lstinline|nil|.
-
+The first object is just the successor of \lstinline|s|, since the list has been constructed preserving the correct order and the property, that everything starts at \lstinline|s|. If the first object has a successor, this object is the new first object. If there are no order constraints left, the queue is empty and \lstinline|de_q| returns \lstinline|nil|.
 \end{description}
 
 \subsubsection{Adding Events at Second Position}
@@ -1605,10 +1603,10 @@ The first object just is the successor of \lstinline|s|, since the list has been
 In this implementation, another default method is added for the priority queue to insert an event which is the direct successor of the first event and hence avoids the default enqueuing methods. It sets the time and priority automatically according to the desired position of the new event:
 
 \begin{description}
- \item[after\_next\_event(E)] Adds the event \lstinline|E| to the queue, after the first event without destroying the consistency and the time-priority condition of the queue.
+ \item[after\_next\_event(E)] Adds the event \lstinline|E| to the queue after the first event without destroying the consistency and the time-priority condition of the queue.
 \end{description}
 
-To implement this method, the time and priorities have to be set such that the time-priority condition does hold:
+To implement this method, the time and priorities have to be set in a way that the time-priority condition does hold:
 
 \begin{lstlisting}
 <<s --> q(Time,P1,E1) \ after_next_event(Evt)>> <=> 
@@ -1621,9 +1619,9 @@ To implement this method, the time and priorities have to be set such that the t
 
 If the first event is \lstinline|q(Time,P1,E1)| and a new event \lstinline|Evt| has to be added after this event, the times of the two events are the same, the priority of the first event is \lstinline|P1 + 2| and the priority of the new event is \lstinline|P1 + 1|. The first event is removed from the queue and would be added with its new priority to the queue again, as it is with the new event. 
 
-This is correct: The first event will be the first event again, because its old priority was higher than any other priority at that time point and since the new priority is even higher than that, no other event from the queue will have a higher priority. The new event also has a higher priority than every other event in the queue, but a lower priority than the first event, so it will be added after the first event.
+This is correct: The first event will be the first event again, because its old priority was higher than any other priority at that point of time. Since the new priority is even higher than that, no other event from the queue will have a higher priority. The new event also has a higher priority than every other event in the queue, but a lower priority than the first event, so it will be added after the first event.
 
-By the \lstinline|de_q| and \lstinline|add_q| actions it is ensured, that no garbage of the old event remains in the queue and the events are added correctly through an official method of the queue.
+By the \lstinline|de_q| and \lstinline|add_q| actions it is ensured that no garbage of the old event remains in the queue and the events are added correctly through an official method of the queue.
 
 \subsection{Scheduler}
 \label{implementation:scheduler}
@@ -1632,9 +1630,7 @@ The scheduler component is an own module that manages events by feeding a priori
 
 \subsubsection{Current Time}
 
-The current time can be saved in a \lstinline|now/1| constraint. It is important that there is only one such constraint and that time increases monotonically.
-
-Other modules can access the time only by a \lstinline|get_now/1| that only returns the current time saved in the \lstinline|now/1| constraint. The current time cannot be set from outside, but is determined by the last event dequeued from the priority queue.
+The current time can be saved in a \lstinline|now/1| constraint. It is important that there is only one such constraint and that time increases monotonically. Other modules can access the time only by a \lstinline|get_now/1| constraint that just returns the current time saved in the \lstinline|now/1| constraint. The current time cannot be set from outside, but is determined by the last event dequeued from the priority queue.
 
 \subsubsection{Interface to the Scheduler}
 
@@ -1655,9 +1651,9 @@ The \emph{IScheduler} interface provides the following methods:
 
 As described before, the procedural module can only fire one rule at a time. When executing the RHS of a rule, all its actions are added to the scheduler with the time point when their execution is finished. For example: If on the RHS of the firing rule a retrieval request has to be performed, an event will be added to the priority queue with the time $Now + Duration$, so the chunk retrieved from the declarative memory will be written to the retrieval buffer at this time point.
 
-After all events of the RHS have been added to the scheduler, the procedural module is free again and therefore the next rule can fire. The event of firing will be added to the priority queue as well by the \lstinline|fire| constraint at the end of each production rule. The rule will be added at the current time point, but with low priority, since it has to be ensured, that every action of the previously executed rule has been performed yet (in the sense that a corresponding event has been added at the specified time point). In many cases, no other rule will be applicable at this time, because most of the meaningful production rules have to wait for the results of the production rule before. 
+After all events of the RHS have been added to the scheduler, the procedural module is free again and therefore the next rule can fire. The event of firing will be added to the priority queue as well by the \lstinline|fire| constraint at the end of each production rule. The rule will be added at the current time point, but with low priority, since it has to be ensured that every action of the previously executed rule has been performed yet (in the sense that a corresponding event has been added at the specified time point). In many cases, no other rule will be applicable at this time, because most of the meaningful production rules have to wait for the results of the preceding production rule. 
 
-Many of the buffer actions are performed immediately, so an event with the current time point is added for the buffer modifications or clearings. They are performed in a certain order defined by their priority as shown in table~\ref{tab:action_priorities}. The request actions are performed at last, but they perform a buffer clearing immediately and then start their calculation which can take some time. 
+Many of the buffer actions are performed immediately, so for buffer modifications or clearings, an event with the current point of time is added to the queue. They are performed in a certain order defined by their priority as shown in table~\ref{tab:action_priorities}. The request actions are performed at last, but they perform a buffer clearing immediately and then start their calculation which can take some time. 
 
 \begin{table}[htb]
 \begin{center}
@@ -1676,7 +1672,7 @@ Priority & Action\\
 \end{table}
 
 
-If no rule is applicable, the next time that a rule could be applicable is after having performed the next event. So, the next \lstinline|fire| event is scheduled directly after the first event in the queue. This simulates the behaviour that the procedural module stays ready to fire the next rule, without polling at every time point if a rule is applicable, but only reacting on changes to the buffer system. 
+If no rule is applicable, the next time for a possible application is after having performed the next event. So, the next \lstinline|fire| event is scheduled directly after the first event in the queue. This simulates the behaviour that the procedural module stays ready to fire the next rule, without polling at every time point if a rule is applicable, but only reacting on changes to the buffer system. 
 
 The following enumeration summarizes the recognize-act cycle with a scheduler:
 
@@ -1689,7 +1685,7 @@ The following enumeration summarizes the recognize-act cycle with a scheduler:
  \item There are two possibilities:
  \begin{enumerate}
   \item \emph{The next rule matches:} It will be performed like the last rule.
-  \item \emph{No rule matches:} The next time, it could be possible that a rule can fire, is when something in the buffers changed. This only can happen, after the next event has been performed. So the next \lstinline|fire| event will be added to the queue by \lstinline|after_next_event| which has been described above.
+  \item \emph{No rule matches:} The next possible time for a rule to fire is when something in the buffers has changed. This cannot happen until the next event has been performed. So the next \lstinline|fire| event will be added to the queue by \lstinline|after_next_event| which has been described above.
  \end{enumerate}
   \end{enumerate}
  \item Go to point 1. This is performed until there are no events in the queue.
@@ -1700,7 +1696,7 @@ The following parts are necessary to implement this cycle:
 
 \paragraph{Start Next Cycle} 
 
-The constraint \lstinline|nextcyc| leads the system to remove the next event from queue and perform it. Performing is done by a \lstinline|call_event| constraint:
+The constraint \lstinline|nextcyc| leads the system to remove the next event from the queue and perform it. Performing is done by a \lstinline|call_event| constraint:
 
 \begin{lstlisting}
 % After an event has been performed, nextcyc is triggered. 
@@ -1712,7 +1708,7 @@ The constraint \lstinline|nextcyc| leads the system to remove the next event fro
 
 Event calling just takes a queue element and sets the current time to the time of the event and performs a Prolog \lstinline|call|. Additionally, a message is printed to the screen. After the event has been executed, the next cycle is initiated.
 
-If the queue element is \lstinline|nil| (so no event has been in the queue), the computation is finished and the current time is removed.
+If the queue element is \lstinline|nil| (i.e. no event has been in the queue), the computation is finished and the current time is removed.
 
 \begin{lstlisting}
 % no event in queue -> do nothing and remove current time
@@ -1769,7 +1765,7 @@ As the last production rule, there has to be:
     no_rule.
 \end{lstlisting}
 
-which removes the fire constraint if still present and states that no rule has been fired (since the fire constraint is still present). In this case, a new \lstinline|fire| event is scheduled after the next event:
+which removes the \lstinline|fire| constraint if still present and states that no rule has been fired, because otherwise the firing of a rule would have removed the \lstinline|fire| constraint. If no rule was applicable, a new \lstinline|fire| event is scheduled after the next event:
 
 \begin{lstlisting}
 <<no_rule>> <=> 
@@ -1799,7 +1795,7 @@ Note that this function adds the chunk-types both to the declarative module and 
 \subsection{Configuration Variables}
 \label{configuration}
 
-In ACT-R, configuration variables which control the behaviour of the architecture are set with the Lisp function \lstinline|(sgp :Var Val)|, which sets the variable \lstinline|Var| to \lstinline|Val|. To handle such configuration variables, a configuration module can be added to the CHR implementation, that offers the \emph{IConfiguration} interface to set variables and to ask for their values:
+In ACT-R, configuration variables which control the behaviour of the architecture are set with the Lisp function \lstinline|(sgp :Var Val)|, which sets the variable \lstinline|Var| to \lstinline|Val|. To handle such configuration variables, a configuration module can be added to the CHR implementation that offers the \emph{IConfiguration} interface to set variables and to ask for their values:
 
 \begin{definition}[IConfiguration]
 \label{def:iconfiguration}
@@ -1840,7 +1836,7 @@ The constraint \lstinline|observer(Module,Var)| states that the module \lstinlin
 
 \section{Subsymbolic Layer}
 
-By now, a translation scheme and a framework implementing the symbolic concepts of ACT-R. This section extends this implementation by the subsymbolic layer as described in section~\ref{subsymbolic_layer}.
+So far, a translation scheme and a framework implementing the symbolic concepts of ACT-R has been presented. This section extends this implementation by the subsymbolic layer as described in section~\ref{subsymbolic_layer}.
 
 \subsection{Activation of Chunks}
 
@@ -1907,9 +1903,7 @@ Each of those \lstinline|base_level_part| constraints are part of the result whi
   B is Time ** (-D).
 \end{lstlisting}
 
-The result is bound to the variable \lstinline|B|. The rule only can be applied, if the intermediate result \lstinline|B| and the result \lstinline|A| are not bound to any value.
-
-As soon as the intermediate result has been calculated, two \lstinline|base_level_part| constraints can be merged, by adding their \lstinline|B| values up according to the base-level learning equation~\eqref{eq:base_level_learning}:
+The result is bound to the variable \lstinline|B|. The rule can only be applied if the intermediate result \lstinline|B| and the result \lstinline|A| are not bound to any value. As soon as the intermediate result has been calculated, two \lstinline|base_level_part| constraints can be merged by adding their \lstinline|B| values up according to the base-level learning equation~\eqref{eq:base_level_learning}:
 
 \begin{lstlisting}
 % collect base level parts and add them together. Only if Bs are set
@@ -1920,7 +1914,7 @@ As soon as the intermediate result has been calculated, two \lstinline|base_leve
   base_level_part(C,_,B,A).
 \end{lstlisting}
 
-If this rule is applied to exhaustion, only one \lstinline|base_level_part| constraint will be remaining. Hence, below this rule, a rule for this single constraint can be introduced:
+If this rule is applied to exhaustion, only one \lstinline|base_level_part| constraint will remain. Hence, below this rule, a rule for this single constraint can be introduced:
 
 \begin{lstlisting}
 % if B is set, A is not set and there are no more base_level_parts of this chunk: calculate actual base level activation and store it in A. Only possible if B is =\= 0.
@@ -1930,13 +1924,13 @@ If this rule is applied to exhaustion, only one \lstinline|base_level_part| cons
   A is log(B).
 \end{lstlisting}
 
-Note that the rule has to be executed after the last rule cannot be applied anymore, because otherwise it would take an intermediate result as the actual result.
+Note that the rule has to be executed after the last rule cannot be applied anymore, otherwise it would take an intermediate result as the actual result.
 
-With this set of rules, the base-level activation can be calculated according to its definition. There are some special cases, that can be handled implementation specifically (all cases, where the guards prevent the rules from firing are such cases that may need some kind of special treatment).
+With this set of rules, the base-level activation can be calculated according to its definition. There are some special cases that can be handled implementation specifically (all cases where the guards prevent the rules from firing are such cases that may need some kind of special treatment).
 
 \paragraph{Fan Values}
 
-In the calculation process, the fan value $\mathrm{fan}_j$ of a chunk $j$ may be needed. This value is the number of chunks where $j$ appears in the slots plus the chunk itself. So, a chunk that does not appear in any slots has the fan value $1$, a chunk that appears in the slots of another chunk has the value $2$, etc. This can be achieved in CHR as follows:
+In the calculation process, the fan value $\mathrm{fan}_j$ of a chunk $j$ may be needed. This value is the number of chunks where $j$ appears in the slots plus one for the chunk itself. So, a chunk that does not appear in any slots has the fan value $1$, a chunk that appears in the slots of another chunk has the value $2$, etc. This can be achieved in CHR as follows:
 
 \begin{lstlisting}
 <<chunk(C,_)>> ==> fan(C,1).
@@ -1950,7 +1944,7 @@ In the calculation process, the fan value $\mathrm{fan}_j$ of a chunk $j$ may be
 
 The first rule adds a fan of $1$ for each chunk. The next rule adds a fan of $1$ for a chunk \lstinline|C| for each slot where \lstinline|C| is the value. In the last rule, two fan values for one particular chunk are summed up to a single fan value. Note that this has to be considered when deleting a chunk: For every chunk in the slots of the deleted chunk, the fan value must be decreased by one.
 
-As noted before in section~\ref{distinction_elements_chunks} on page~\pageref{distinction_elements_chunks}, primitive elements are stored as chunks of the type \lstinline|chunk| that has no slots. This is very important of the fan calculation as it is presented here, since the fan value depends on the presence of a \lstinline|chunk| constraint to calculate the proper fan value. Otherwise, the fan value of primitive elements would always be off by one.
+As noted before in section~\ref{distinction_elements_chunks} on page~\pageref{distinction_elements_chunks}, primitive elements are stored as chunks of the type \lstinline|chunk| that has no slots. This is important for the fan calculation as it is presented here, since the fan value depends on the presence of a \lstinline|chunk| constraint to calculate the proper fan value. Otherwise, the fan value of primitive elements would always be off by one.
 
 \paragraph{Associative Weights}
 
@@ -1964,7 +1958,7 @@ The activation calculation also depends on a contextual component, the associati
 <<calc_sji(_,_,Sji)>> <=> Sji=0. (*@\label{lst:sji:no_connection}@*)
 \end{lstlisting}
 
-The \lstinline|calc_sji(J,I,Sji)| gets a chunk \lstinline|J| and a chunk \lstinline|I|, calculates their associative weight from \lstinline|J| to \lstinline|I| and binds it to \lstinline|Sji|. The first rule can be applied, if \lstinline|J| appears in the slots of chunk \lstinline|I|. Then, the associative weight is calculated according to equation~\eqref{eq:assoc_strength}:
+The \lstinline|calc_sji(J,I,Sji)| gets a chunk \lstinline|J| and a chunk \lstinline|I|, calculates their associative weight from \lstinline|J| to \lstinline|I| and binds it to \lstinline|Sji|. The first rule can be applied if \lstinline|J| appears in the slots of chunk \lstinline|I|. Then, the associative weight is calculated according to equation~\eqref{eq:assoc_strength}:
 
 \begin{equation*}
 S_{ji} = S - \mathrm{ln}(\mathrm{fan}_j) 
@@ -1974,9 +1968,9 @@ The value of $S$ is assumed to be $2$ in this rule; a configurable constant for 
 
 If \lstinline|J| does not appear in the slots of chunk \lstinline|I|, then $S_{\mathtt{JI}} := 0$ by definition (line~\ref{lst:sji:no_connection}).
 
-\paragraph{Calculate the Overall-Activations}
+\paragraph{Calculating the Overall-Activations}
 
-The new constraint \lstinline|calc_activations/2| gets a list of chunks and a context and initiates the computation of the overall activation values of the chunks in the list regarding the context. Remember, that for the associative weights, the current context plays a role, since all associative weights from the chunks (the $j$s) in the context to the chunk whose activation is calculated are summed up (see section~\ref{activation} for details).
+The new constraint \lstinline|calc_activations/2| gets a list of chunks and a context and initiates the computation of the overall activation values of the chunks in the list regarding the context. Remember that for the associative weights, the current context plays a role, since all associative weights from the chunks (the $j$s) in the context to the chunk whose activation is calculated are summed up (see section~\ref{activation} for details).
 
 \begin{lstlisting}[escapeinside={(*@}{@*)}]
 <<calc_activations([],_)>> <=>
@@ -1995,13 +1989,9 @@ The new constraint \lstinline|calc_activations/2| gets a list of chunks and a co
 
 The first rule is the base-case that simply finishes the calculation. The second rule takes the first chunk in the list and calculates its base-level activation \lstinline|B| by \lstinline|calc_activation|. The next line triggers the computation for the rest of the chunks in the list (using the same context).
 
-For the chunk \lstinline|C| the context component, i.e. the associative weight, is calculated by the call of \lstinline|context(C,Context,Assoc)| in line~\ref{lst:calc_activations:context}, which binds the associative weight to \lstinline|Assoc|, i.e. the result of $\sum_{j \in C}{S_{ji}}$ ($C$ is the context as represented by \lstinline|Context|) is bound to the variable \lstinline|Assoc|.
+For the chunk \lstinline|C| the context component, i.e. the associative weight, is calculated by the call of \lstinline|context(C,Context,Assoc)| in line~\ref{lst:calc_activations:context}, which binds the associative weight to \lstinline|Assoc|. I.e. the result of $\sum_{j \in C}{S_{ji}}$ ($C$ is the context as represented by \lstinline|Context|) is bound to the variable \lstinline|Assoc|.
 
-Afterwards, the attentional weighting $W_j$ is considered in lines~\ref{lst:calc_activations:attentional1} and \ref{lst:calc_activations:attentional2}. The variable \lstinline|Assoc1| now holds the value of $W_j \cdot \sum_{j \in C}{S_{ji}}$.
-
-The overall activation of chunk \lstinline|C| is -- as defined in equation~\eqref{eq:activation_equation} -- calculated in line~\ref{lst:calc_activations:final} by adding the base-level activation to the sum of the associative weightings of the chunk.
-
-Eventually, in line~\ref{lst:calc_activations:max}, the activation of this chunk is added to the set of potential maximum candidates of all activation values. The maximum then is calculated as follows:
+Afterwards, the attentional weighting $W_j$ is considered in lines~\ref{lst:calc_activations:attentional1} and \ref{lst:calc_activations:attentional2}. The variable \lstinline|Assoc1| now holds the value of $W_j \cdot \sum_{j \in C}{S_{ji}}$. The overall activation of chunk \lstinline|C| is -- as defined in equation~\eqref{eq:activation_equation} -- calculated in line~\ref{lst:calc_activations:final} by adding the base-level activation to the sum of the associative weightings of the chunk. Eventually, in line~\ref{lst:calc_activations:max}, the activation of this chunk is added to the set of potential maximum candidates of all activation values. The maximum then is calculated as follows:
 
 \begin{lstlisting}[caption={Calculate highest activation of all matching chunks}, label=lst:max_activation]
 max(_,A1) \ max(_,A2) <=> 
@@ -2009,13 +1999,13 @@ max(_,A1) \ max(_,A2) <=>
   true.
 \end{lstlisting}
 
-This deletes all potential candidates for the maximal activation value that have a smaller value than another candidate. In \cite[19\psqq]{fru_chr_book_2009} this algorithm is presented in more detail.
+This deletes all potential candidates for the maximal activation value that have a smaller value than one of the other candidates. In \cite[19\psqq]{fru_chr_book_2009} this algorithm is presented in more detail.
 
 \paragraph{Threshold and Maximum}
 
 The request is only successful, if there is a matching chunk that has an activation higher than a specified threshold. In the following, it is assumed that the threshold is saved in a \lstinline|threshold/1| constraint.
 
-In the last section, the chunk with the highest activation among all matching chunks is calculated and stored in a \lstinline|max/2| constraint (there is only one \lstinline|max| constraint, after the rule in listing~\ref{lst:max_activation} has been applied to exhaustion). The constraint \lstinline|get_max/2| triggers the final maximum computation and binds the chunk and its activation to its parameters:
+In the last section, the chunk with the highest activation among all matching chunks is calculated and stored in a \lstinline|max/2| constraint (there is only one \lstinline|max| constraint after the rule in listing~\ref{lst:max_activation} has been applied to exhaustion). The constraint \lstinline|get_max/2| triggers the final maximum computation and binds the chunk and its activation to its parameters:
 
 \begin{lstlisting}
 get_max(MN,MA), max(N,A), threshold(RT) <=> 
@@ -2037,11 +2027,11 @@ get_max(MN,MA), threshold(RT) <=>
   write('No chunk matches.'),nl.
 \end{lstlisting}
 
-The first rule is applied in the case, that the activation of the maximal chunk is higher than the threshold. In this case, the chunk and its activation are simply returned.
+The first rule is applied in case of the activation of the maximal chunk being higher than the threshold. Then, the chunk and its activation are simply returned.
 
-In the second rule, the matching chunk with the highest activation does not pass the threshold. Then no chunk can be returned, so the result of the \lstinline|get_max| request is \lstinline|nil|. The activation of this empty chunk is set to the threshold, because the retrieval latency, i.e. the time the retrieval request takes, is dependent on the threshold in case that no chunk could be found. So this value is used later.
+In the second rule, the matching chunk with the highest activation does not pass the threshold. Then no chunk can be returned, so the result of the \lstinline|get_max| request is \lstinline|nil|. The activation of this empty chunk is set to the threshold, because the retrieval latency, i.e. the time the retrieval request takes depends on the threshold in case that no chunk could be found. So this value is used later.
 
-The last rule will only be applied, if both of the other rules did not match. This is the case, if there has no \lstinline|max| constraint been put to the store, which does only occur, if no chunk matched the request. This also leads to an empty chunk as a result.
+The last rule will only be applied if both of the other rules did not match. This is the case, if there has no \lstinline|max| constraint been put to the store, which only occur, if no chunk matched the request. This also leads to an empty chunk as a result.
 
 \paragraph{New Module Request Interface}
 
@@ -2055,7 +2045,7 @@ module_request(+BufName, +ChunkDef, +Context, -ResChunk, -ResState, -ResTime)
 
 where \lstinline|Context| is a list of the chunk names that are in the current context (as defined in section~\ref{current_context} on page~\pageref{current_context}) and \lstinline|ResTime| is bound to the time the request will take. As described in section~\ref{changing_the_buffer_system} on page \pageref{changing_the_buffer_system}, the buffer actions are divided in two phases: The first only schedules the second phase at the time when the action is finished, whereas the second phase actually performs the action, i.e. the changes to the buffers.
 
-A similar method as for the buffer modifications or clearings is applied for buffer requests: They are divided into three rules with three trigger constraints -- \lstinline|buffer_request/2|, \lstinline|start_request/2| and \lstinline|do_buffer_request/2| -- similar to the division into two rules as already described in section~\ref{changing_the_buffer_system} on page~\pageref{changing_the_buffer_system} for the other actions. The difference is, that -- since a request may take a certain time -- the first rule schedules the start of the request with the priority \lstinline|0|, so all other types of buffer actions have been performed. The request is actually performed immediately when calling \lstinline|start_request|, but the effects to the buffers this request has are applied not until \lstinline|do_buffer_request| is called, which is scheduled at the result time (\lstinline|ResTime|) of the request. This is due to the dependence of the latency of a request on the activation values of the matching chunks, so the request has to be performed in advance to calculate the correct time it will take, so the result has to be known before the request ends in simulation time. This yields the following code in the buffer system:
+A similar method as for the buffer modifications or clearings is applied for buffer requests: They are divided into three rules with three trigger constraints -- \lstinline|buffer_request/2|, \lstinline|start_request/2| and \lstinline|do_buffer_request/2| -- similar to the division into two rules as already described in section~\ref{changing_the_buffer_system} on page~\pageref{changing_the_buffer_system} for the other actions. The difference is that, since a request may take a certain time, the first rule schedules the start of the request with the priority \lstinline|0|, so all other types of buffer actions have been performed. The request is actually performed immediately when calling \lstinline|start_request|, but the effects to the requested buffer are applied not until \lstinline|do_buffer_request| is called, which is scheduled at the result time (\lstinline|ResTime|) of the request. This is due to the dependence of the latency of a request on the activation values of the matching chunks, so the request has to be performed in advance to calculate the correct time it will take, so the result has to be known before the request ends in simulation time. This yields the following code in the buffer system:
 
 \begin{lstlisting}[caption=Schedule the start of a buffer request, escapeinside={(*@}{@*)}]
 buffer_request(BufName, Chunk) <=>
@@ -2093,7 +2083,7 @@ do_buffer_request(BufName, _), buffer(BufName, ModName, _), buffer_state(BufName
   buffer_state(BufName,free)).  
 \end{lstlisting}
 
-Note that a buffer request has the lowest priority of all buffer actions, as shown in table~\ref{tab:action_priorities}. If the request would be performed before the buffer modifications and clearings have taken effect, the wrong context would be used for the activation calculations.
+Note that a buffer request has the lowest priority of all buffer actions, as shown in table~\ref{tab:action_priorities}. If the request was performed before the buffer modifications and clearings have taken effect, the wrong context would be used for the activation calculations.
 
 \paragraph{Adapting the Retrieval Request}
 
@@ -2210,7 +2200,7 @@ At the end, add a rule
   <<fire>> <=> conflict_set([]), choose.
 \end{lstlisting}
 
-As soon as the \lstinline|fire| constraint is present (so the recognize cycle/conflict resolution process begins), each matching rule adds a \lstinline|conflict_set/1| constraint with its name. The last rule finishes the recognize cycle by deleting the fire constraint \emph{after} all rules that match had their chance to add a \lstinline|conflict_set| constraint and adds an empty \lstinline|conflict_set| constraint, indicated by \lstinline|[]|. The constraints store contains at the end of this phase a bunch of \lstinline|conflict_set| constraints that represent the matching rules plus an empty \lstinline|conflict_set| constraint. If no rule matches, there is only an empty \lstinline|conflict_set| constraint in the store.
+As soon as the \lstinline|fire| constraint is present (so the recognize cycle/conflict resolution process begins), each matching rule adds a \lstinline|conflict_set/1| constraint with its name. The last rule finishes the recognize cycle by deleting the fire constraint \emph{after} all rules that match had their chance to add a \lstinline|conflict_set| constraint. Then an empty \lstinline|conflict_set| constraint, indicated by \lstinline|[]|, is added. At the end of this phase, the constraint store contains a bunch of \lstinline|conflict_set| constraints that represent the matching rules plus an empty \lstinline|conflict_set| constraint. If no rule matches, there is only an empty \lstinline|conflict_set| constraint in the store.
 
 The last rule also triggers the choosing process by adding the constraint \lstinline|choose|. The following rules handle the choosing process:
 
@@ -2222,9 +2212,9 @@ The last rule also triggers the choosing process by adding the constraint \lstin
   true.
 \end{lstlisting}
 
-The first rule deletes the empty \lstinline|conflict_set| constraint, if there has been an applicable production rule, which is recognized by other \lstinline|conflict_set| constraints present. 
+The first rule deletes the empty \lstinline|conflict_set| constraint, if there has been an applicable production rule which is recognized by other \lstinline|conflict_set| constraints present. 
 
-The second rule assumes, that for each production rule \lstinline|p| in the procedural memory there is a \lstinline|production_utility(p,u)| constraint that holds the utility value \lstinline|u| of the production \lstinline|p|. If there are two \lstinline|conflict_set| constraints in the store, the one with the higher utility value will be kept and the other removed from the store.
+The second rule assumes, that for each production rule \lstinline|p| in the procedural memory there is a \lstinline|production_utility(p,u)| constraint that holds the utility value \lstinline|u| of the production \lstinline|p|. If there are two \lstinline|conflict_set| constraints in the store, the one with the higher utility value will be kept and the other will be removed from the store.
 
 If the rules have been applied to exhaustion, there is only one \lstinline|conflict_set| constraint in the store -- either an empty one ore one with the name of a rule. The following rules handle the choosing process:
 
@@ -2249,9 +2239,7 @@ When the chosen production rule is applied, its actions are performed and eventu
 <<now(Time) \ conflict_resolution>> <=> add_q(Time,-10,fire).
 \end{lstlisting}
 
-The event is scheduled at the current time with very low priority, i.e. a priority lower than all requests, so all the actions of the rule have had the chance to be executed.
-
-If there was no matching rule, the \lstinline|no_rule| constraint is in the store. This leads the next conflict resolution event to be scheduled after the next event (which may lead to a change of the system state):
+The event is scheduled at the current time with very low priority, i.e. a priority lower than all requests, so all the actions of the rule have had the chance to be executed. If there was no matching rule, the \lstinline|no_rule| constraint is in the store. This leads the next conflict resolution event to be scheduled after the next event (which may lead to a change of the system state):
 
 \begin{lstlisting}
 <<no_rule>> <=> after_next_event(fire).
@@ -2275,21 +2263,17 @@ In \cite{fru_chr_book_2009}, the \lstinline|conflict_set| and \lstinline|apply_r
   <<{buffer tests}, apply_rule(rule(name, {Variables in the head of the rule}))>> <=> {guard} | {actions}, conflict_resolution.
 \end{lstlisting}
 
-This is due to the fact, that during the conflict resolution process other rules may have changed the constraint store and the rule might not be applicable anymore. However, in ACT-R the procedural module is a serial bottleneck, so no rules that change the state of the buffer system can be applied during the conflict resolution. Additionally, in \cite{fru_chr_book_2009} the rules that were in the conflict set but did not match, remain in the conflict set for the next cycle and are applied, if they have at some point the highest priority in the set and are still applicable (ensured by the bound variables in \lstinline|apply_rule|). In ACT-R, this does not play a role, since the recognize-act cycle is defined serially and only one rule is applied in each cycle. In the next cycle, all rules are checked again for matching heads and the computations are performed on the new values. Note that the problem of trivial non-termination of propagation rules described in \cite[5]{abdennadher_sts_chr13}, which has to be considered when changing the operational order of rule applications in CHR, does not play a role for ACT-R, since it does not implement propagation rules.
+This is due to the fact that during the conflict resolution process other rules may have changed the constraint store and the rule might not be applicable anymore. However, in ACT-R the procedural module is a serial bottleneck, so no rules that change the state of the buffer system can be applied during the conflict resolution. Additionally, in \cite{fru_chr_book_2009} the rules that were in the conflict set but have not been applied, remain in the conflict set for the next cycle and are applied, if they have at some point the highest priority in the set and are still applicable (ensured by the bound variables in \lstinline|apply_rule|). In ACT-R, this does not play a role, since the recognize-act cycle is defined serially and only one rule is applied in each cycle. In the next cycle, all rules are checked again for matching heads and the computations are performed on the new values. Note that the problem of trivial non-termination of propagation rules described in \cite[5]{abdennadher_sts_chr13}, which has to be considered when changing the operational order of rule applications in CHR, does not play a role for ACT-R, since it does not implement propagation rules.
 
 \subsubsection{Computing the Utility Values}
 
-As described in section~\ref{production_utility}, rules can have a certain amount of reward that can be distributed among all rules that have been applied since the last reward has been distributed.
-
-The reward a rule can distribute, can be saved in a \lstinline|reward/2| constraint. If a rule is applied, the time of application can be saved in a \lstinline|to_reward/2| constraint, that states that the rule in the constraint has been applied and therefore receives a part of the next reward as soon as it occurs: 
+As described in section~\ref{production_utility}, rules can have a certain amount of reward that can be distributed among all rules that have been applied since the last reward has been distributed. The reward a rule can distribute, can be saved in a \lstinline|reward/2| constraint. If a rule is applied, the time of application can be saved in a \lstinline|to_reward/2| constraint which states that the rule in the constraint has been applied and therefore receives a part of the next reward as soon as it occurs: 
 
 \begin{lstlisting}
 <<apply_rule(P)>> ==> <<<P \== []>>> | get_now(Now), to_reward(P,Now).
 \end{lstlisting}
 
-Note that the \lstinline|apply_rule/1| constraint from the last section is used to determine, when a rule is fired.
-
-When a rule that can distribute a reward is applied, the reward is triggered:
+Note that the \lstinline|apply_rule/1| constraint from the last section is used to determine when a rule is fired. When a rule that can distribute a reward is applied, the reward is triggered:
 
 \begin{lstlisting}
 <<apply_rule(P), reward(P,R)>> ==>
@@ -2297,7 +2281,7 @@ When a rule that can distribute a reward is applied, the reward is triggered:
   trigger_reward(R).
 \end{lstlisting}
 
-This will reward all rules that have a \lstinline|to_reward/2| constraint in the store, which leads to a new production utility value:
+This will reward all rules that have a \lstinline|to_reward/2| constraint in the store which leads to a new production utility value:
 
 \begin{lstlisting}[escapeinside={(*@}{@*)}, label=lst:trigger_reward]
 <<trigger_reward(R) \ production_utility(P,U), to_reward(P,FireTime)>> <=>
@@ -2311,7 +2295,7 @@ calc_reward(R,FireTime,Reward) :- (*@\label{lst:trigger_reward:calc_reward}@*)
   Reward is R - (Now-FireTime).
 \end{lstlisting}
 
-Note that in line~\ref{lst:trigger_reward:learning} the utility is adapted by the utility learning rule as shown in equation~\eqref{eq:utility_learning}. The reward the rule receives is calculated by the Prolog predicate in lines~\ref{lst:trigger_reward:calc_reward} sqq.: The more time passed since the rule application, the less the reward of the rule.
+Note that in line~\ref{lst:trigger_reward:learning} the utility is adapted by the utility learning rule as shown in equation~\eqref{eq:utility_learning}. The reward the rule receives is calculated by the Prolog predicate in lines~\ref{lst:trigger_reward:calc_reward} sqq.: The more time passed since the rule application, the less is the reward of the rule.
 
 In the end, there has to be a rule that cleans up the reward trigger, after all the rules have been rewarded. This ensures, that the next \lstinline|to_reward| constraints are not immediately consumed by the last reward trigger:
 
@@ -2321,10 +2305,10 @@ In the end, there has to be a rule that cleans up the reward trigger, after all 
 
 \subsubsection{Configuration of the Conflict Resolution}
 
-There are some methods to influence the conflict resolution process using the ACT-R command \lstinline|(spp ...)| that can set values for individual production rules. This command is translated into CHR as described in section~\ref{lisp_functions}. Additionally, there are some configuration variables that can be set -- as described in section~\ref{configuration} -- by the command \lstinline|(sgp ...)|:
+There are some methods to influence the conflict resolution process using the ACT-R command \lstinline|(spp ...)| that sets values for individual production rules. This command is translated into CHR as described in section~\ref{lisp_functions}. Additionally, there are some configuration variables that can be set -- as described in section~\ref{configuration} -- by the command \lstinline|(sgp ...)|:
 
 \begin{description}
- \item[Setting the utility of a rule] Utilities can be set statically by the user by the ACT-R command \lstinline|(spp P :u U)|, which sets the utility of the rule \lstinline|P| to \lstinline|U|.
+ \item[Setting the utility of a rule] Utilities can be set statically by the user by the ACT-R command \lstinline|(spp P :u U)| which sets the utility of the rule \lstinline|P| to \lstinline|U|.
  \item[Setting the reward of a rule] The amount of reward a rule can distribute is set by the user. By default, no rules have a reward to trigger. With the ACT-R command \lstinline|(spp P :reward R)|, the reward of the rule \lstinline|P| is set to \lstinline|R|. This command is also implemented among the standard lisp methods.  
  \item[Default values and turning the utility mechanisms off] At the moment, there is no command in the CHR implementation that allows to turn off the conflict resolution mechanisms: The system sets a default utility value for each production rule and no rewards in the initialization process (the rule \lstinline|init @ run <=> ...| as described in section~\ref{initialization}). The user is able to set other initial utility values and rewards for particular rules. If no rewards are set, the utility values will remain at their initial values. Hence, if the user does not set any utilities or rewards, each rule will have the same utility value that does not change. If there are competing rules, the conflict resolution process will pick one. This can be regarded as turned off utility mechanisms.
  \item[Learning rate] The learning rate $\alpha$ is set by the command \lstinline|(sgp :alpha A)| that sets the configuration variable \lstinline|alpha| to \lstinline|A|.
@@ -2352,12 +2336,12 @@ The compiler consists of three parts: A tokenizer, a parser and an actual transl
 The tokenizer gets the file with the model definition as input and does some preprocessing on it: From the input -- a sequence of characters -- it builds a list of tokens. Tokens are separated by white-space (or by special characters) and can be one of the following character sequences in the input:
 
 \begin{description}
- \item[Special Characters] are individual tokens and are defined as all allowed characters that are not letters, numbers or white-space. In ACT-R: \lstinline|!, (, ), +, -, =, >, ?|. Some special characters of ACT-R are missing in this list, but are not implemented in the compiler, yet.
- \item[Keywords] are treated like a special character, but contains more than one symbol. In ACT-R, one of the keywords is \lstinline|==>|, separating the LHS from the RHS of a production rule.
- \item[Identifiers] Everything that starts with a letter and contains only letters or numbers. An identifier ends, if a special character or a white-space is read from the input. The \lstinline|-| character is an exception, because it can be used within identifiers, although it is a special character.
+ \item[Special Characters] are individual tokens and are defined as all allowed characters that are not letters, numbers or white-space. In ACT-R, the symbols \lstinline|!, (, ), +, -, =, >, ?| are considered special characters. Some special characters of ACT-R are missing in this list, but are not implemented in the compiler, yet.
+ \item[Keywords] are treated like a special character, but contain more than one symbol. In ACT-R, one of the keywords is \lstinline|==>|, separating the LHS from the RHS of a production rule.
+ \item[Identifiers] Every character sequence which starts with a letter and contains only letters or numbers. An identifier ends, if a special character or a white-space is read from the input. The \lstinline|-| character is an exception, because it can be used within identifiers, although it is a special character.
  
  \emph{Example:} \lstinline|count, addition-fact, chunk1|
- \item[Numbers] Every word, that only contains digits \lstinline|0-9|. As for every token, a number ends, if a white-space, a special character or a keyword occurs.
+ \item[Numbers] Every word that only contains digits \lstinline|0-9|. As for every token, a number ends, if a white-space, a special character or a keyword occurs.
 \end{description}
 
 \begin{example}[Tokenizing some input]
@@ -2381,7 +2365,7 @@ produces the output list
 \end{lstlisting}
 \end{example}
 
-The basic idea for the implementation of such a tokenizer comes from~\cite[19\psqq]{prolog_tokenizer}. It basically follows a deterministic finite automaton with the state transitions as illustrated in figure~\ref{fig:tokenizer_automaton}.
+The basic idea for the implementation of such a tokenizer is described in~\cite[19\psqq]{prolog_tokenizer}. It basically follows a deterministic finite automaton with the state transitions as illustrated in figure~\ref{fig:tokenizer_automaton}.
 
 \begin{figure}[htb]
 \centering
@@ -2434,7 +2418,7 @@ getTokens(In, [T|Ts]) :-
   getTokens(Rest, Ts).
 \end{lstlisting}
 
-The first predicate is the base case. The second rule just drops the white-space and calls the tokenizing predicate again with the rest of the list. The last predicate only applies if the other predicates failed. It starts the inspection of the symbols by calling the predicate \lstinline|getToken(Q,In,Rest,T)|, which gets the \lstinline|start| state as argument \lstinline|Q| and the current input list \lstinline|In|, and returns the rest of the list and the result token \lstinline|T|, after some input has been processed. The \lstinline|getToken| predicate starts in the start state and then decides deterministically which of the state transitions is chosen by inspecting the first character from the input list. It the remains in the state according to the state transition diagram in figure~\ref{fig:tokenizer_automaton} until it reads a character that forces it to leave the state. Then it binds the remaining input to the list \lstinline|Rest| and all the characters that have been consumed in this state to the result token \lstinline|T|. For the identifiers, the following implementation is used:
+The first predicate is the base case. The second rule just drops the white-space and calls the tokenizing predicate again with the rest of the list. The last predicate only applies if the other predicates failed. It starts the inspection of the symbols by calling the predicate \lstinline|getToken(Q,In,Rest,T)| which gets the \lstinline|start| state as argument \lstinline|Q| and the current input list \lstinline|In| and returns the rest of the list and the result token \lstinline|T|, after some input has been processed. The \lstinline|getToken| predicate starts in the start state and then decides deterministically which of the state transitions is chosen by inspecting the first character from the input list. It then remains in the state according to the state transition diagram in figure~\ref{fig:tokenizer_automaton} until it reads a character that forces it to leave the state. Then it binds the remaining input to the list \lstinline|Rest| and all the characters that have been consumed in this state to the result token \lstinline|T|. For the identifiers, the following implementation is used:
 
 \begin{lstlisting}
 getToken(start, [X|Xs],Rest,LT) :-
@@ -2453,7 +2437,7 @@ getToken(identifier,Rest,Rest,S,W) :-
 
 The first predicate checks, if the list starts with a letter. It then changes the state to \lstinline|identifier|, because only identifiers start with a letter. The predicate \lstinline|getToken/5| has an accumulator list as an additional argument to the original \lstinline|getToken/4| predicate. It remains in the state identifier, if it reads a letter, a digit or the symbol~\lstinline|-| and accumulates the read symbol in a list (second predicate). If the second predicate cannot be applied any more, because the input list starts with a symbol that is not allowed for an identifier, the third predicate binds this remaining input to the list \lstinline|Rest| and returns the reversed accumulated characters as token. The first predicate then changes the case of the token to lowercase and returns it to \lstinline|getTokens|, which changes the state to \lstinline|start| and begins the next cycle, until the complete input has been consumed. The implementation for digits is analogous.
 
-The arrow keyword is handled separately by a predicate, which consumes the three characters \lstinline|==>| at once, as shown in the following predicate. This predicate has to be the first to be checked.
+The arrow keyword is handled separately by a predicate which, as shown in the following listing, consumes the three characters \lstinline|==>| at once. This predicate has to be the first to be checked.
 
 \begin{lstlisting}
 getToken(start, [61,61,62|Rest], Rest, '==>').
@@ -2484,21 +2468,21 @@ I.e., the path taken by the program is accumulated in an argument as a term. A r
 
 \subsubsection{Translation Component}
 
-In the translation component, CHR rules are generated from the parse-tree according to the methods discussed in this chapter. For the output, a writer that has been presented in the exercises of the \emph{Rule-Based Programming} lecture at Ulm University by Amira Zaki \cite{chr_homepage} has been used.
+In the translation component, CHR rules are generated from the parse-tree according to the methods discussed in this chapter. For the output, a writer that has been presented in the exercises of the \emph{Rule-Based Programming} lecture at the University of Ulm by Amira Zaki \cite{chr_homepage} has been used.
 
 The translation component also organizes the complete parsing process: It loads the input file, calls the tokenizer and the parser and then recursively analyzes the resulting parsing tree. Whenever an ACT-R production rule has been processed completely, it produces a CHR rule using the writer.
 
 For the variables in the rules, it uses a symbol table for each rule to ensure that the same variable is always translated to the same Prolog variable in the result.
 
-\subsection{Problems with the Current Implementation}
+\subsection{Limitations of the Current Implementation}
 \label{implementation:compiler:problems}
 
-The current implementation of the compiler can be improved at some points. First of all, it only can process a subset of the grammar, that actually is a subset of the simplified grammar shown in section~\ref{implementation:production_rule_grammar}. For example, it is only able to parse the negation slot-modifier, the others are not implemented yet, but can be added easily.
+The current implementation of the compiler can be improved at some points. First of all, it can only process a subset of the grammar that actually is a subset of the simplified grammar shown in section~\ref{implementation:production_rule_grammar}. For example, it is only able to parse the negation slot-modifier, the others are not implemented yet, but can be added easily in the future.
 
-The formulation of the grammar also differs from the original definition, so it would be nice to assimilate the two grammars. Additionally, lists have been implemented very complicated in the DCG rule grammar and could be simplified by using actual Prolog lists instead of constructs like \lstinline|tests --> test, tests; test|, which make the parse tree very complicated. Instead, the tree could be simplified to \lstinline[mathescape]|tests([t$_\mathtt{1}$, ... , t$_\mathtt{n}$])|.
+The formulation of the grammar also differs from the original definition, so for future work, it would be advantageous to assimilate the two grammars. Additionally, lists have been implemented very complicated in the DCG rule grammar and could be simplified by using actual Prolog lists instead of constructs like \lstinline|tests --> test, tests; test|, which make the parse tree very complicated. Instead, the tree could be simplified to \lstinline[mathescape]|tests([t$_\mathtt{1}$, ... , t$_\mathtt{n}$])|.
 
-Another problem is that duplicate slot tests as shown in section~\ref{implementation:duplicate_slot_tests} on page~\pageref{implementation:duplicate_slot_tests} cannot be handled by the compiler, yet.
+Another problem is that duplicate slot tests as shown in section~\ref{implementation:duplicate_slot_tests} on page~\pageref{implementation:duplicate_slot_tests} cannot be handled by the compiler yet.
 
-The recursive approach of the translation component can get very confusing the more rules are added, because a lot of help data has to be accumulated and passed between the diffeent recursion levels (sometimes upwards, sometimes downwards). Another approach could be, to store the data that is parsed at a certain level in the constraint store, where some CHR rules put the parts together in the end.
+The recursive approach of the translation component can get very confusing the more rules are added, because a lot of help data has to be accumulated and passed between the different recursion levels (sometimes upwards, sometimes downwards). Another approach could be to store the data that is parsed at a certain level in the constraint store. Eventually, some CHR rules put the parts together in the end.
 
-Finally, the compiler does not produce any error messages, but only fails silently, if there are syntactical problems in the input.
+Finally, the compiler does not produce any error messages, but only fails silently if there are syntactical problems in the input. For usability, it would be helpful to add meaningful error messages.
