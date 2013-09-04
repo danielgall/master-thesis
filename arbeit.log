@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.8.10)  4 SEP 2013 20:18
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.8.10)  4 SEP 2013 20:23
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1879,14 +1879,10 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
  [125]
 [126] [127]) (./chapters/conclusion.tex [128]
 Chapter 6.
-
-Underfull \vbox (badness 2253) has occurred while \output is active []
-
- [129
+[129
 
 
-])
-[130] [131
+]) [130] [131
 
 
 ] [132] [133] (./chapters/appendix_cdcontent.tex [134]
@@ -1952,7 +1948,7 @@ courier/ucrro8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb>
 </usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb></usr/share/texmf-d
 ist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/
 helvetic/uhvro8a.pfb>
-Output written on arbeit.pdf (163 pages, 1006978 bytes).
+Output written on arbeit.pdf (163 pages, 1007105 bytes).
 PDF statistics:
  4422 PDF objects out of 5155 (max. 8388607)
  4153 compressed objects within 42 object streams
