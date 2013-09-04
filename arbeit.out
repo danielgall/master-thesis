@@ -96,14 +96,14 @@
 \BOOKMARK [3][-]{section*.69}{Tokenizer}{subsection.4.10.2}% 96
 \BOOKMARK [3][-]{section*.70}{Parser}{subsection.4.10.2}% 97
 \BOOKMARK [3][-]{section*.71}{Translation Component}{subsection.4.10.2}% 98
-\BOOKMARK [2][-]{subsection.4.10.3}{Problems with the Current Implementation}{section.4.10}% 99
+\BOOKMARK [2][-]{subsection.4.10.3}{Limitations of the Current Implementation}{section.4.10}% 99
 \BOOKMARK [0][-]{chapter.5}{Example Models}{}% 100
 \BOOKMARK [1][-]{section.5.1}{The Counting Model}{chapter.5}% 101
-\BOOKMARK [1][-]{section.5.2}{The Semantic Model}{chapter.5}% 102
+\BOOKMARK [1][-]{section.5.2}{Modeling a Taxonomy of Animals and Their Properties}{chapter.5}% 102
 \BOOKMARK [0][-]{chapter.6}{Conclusion}{}% 103
-\BOOKMARK [0][-]{appendix.A}{CD Content}{}% 104
-\BOOKMARK [0][-]{appendix.B}{Executable Examples}{}% 105
-\BOOKMARK [1][-]{section.B.1}{Rule Order}{appendix.B}% 106
-\BOOKMARK [1][-]{section.B.2}{Subsymbolic Layer}{appendix.B}% 107
-\BOOKMARK [1][-]{section.B.3}{Semantic Model}{appendix.B}% 108
-\BOOKMARK [0][-]{appendix*.73}{Bibliography}{}% 109
+\BOOKMARK [0][-]{chapter*.73}{Bibliography}{}% 104
+\BOOKMARK [0][-]{appendix.A}{CD Content}{}% 105
+\BOOKMARK [0][-]{appendix.B}{Executable Examples}{}% 106
+\BOOKMARK [1][-]{section.B.1}{Rule Order}{appendix.B}% 107
+\BOOKMARK [1][-]{section.B.2}{Subsymbolic Layer}{appendix.B}% 108
+\BOOKMARK [1][-]{section.B.3}{Semantic Model}{appendix.B}% 109

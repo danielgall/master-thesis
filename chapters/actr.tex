@@ -27,7 +27,7 @@ This approach leads to a modular organization of ACT-R with modules for each pur
 \tikzstyle{doubleline} = [draw, latex-latex']
     
 \begin{tikzpicture}[node distance = 2cm, auto]
- \matrix[row sep=2mm] (modules) {
+ \matrix[row sep=4mm] (modules) {
  \node[module] (goalmod) {goal module}; 
  \node[buffer, below right of=goalmod] (goalbuf) {goal buffer}; 
 &  \node[module] (imaginalmod) {imaginal module}; 
@@ -78,8 +78,6 @@ This approach leads to a modular organization of ACT-R with modules for each pur
 Each module is independent from the other modules and computations in the modules can be performed parallel to other modules, for instance: The declarative module can search a specific fact while the visual module processes the visual field. Additionally, within one module computations are executed massively parallel, e.g., the visual module can process the entire visual field at once to determine the location of a certain object, which implies the processing of a huge amount of data at a time.
 
 However, each module can perform its computation only locally and has no access to computations of other modules. To communicate, modules have associated \emph{buffers}, where they can put a limited amount of information -- one primitive knowledge element -- and the procedural module can access each of these buffers. The information in a buffer could be one single fact retrieved from declarative memory or one visual object from the visual field perceived by the visual module. Information between modules is exchanged by the procedural module taking information from one buffer and putting it into another (with an optional computation on the way). This leads to a serial bottleneck in the computation, since every communication between modules has to go its way through the procedural module.
-
-In figure \ref{fig:recognize_act} the general functionality of ACT-R is illustrated: The computational process is controled by the \emph{recognize-act-cycle}: The procedural information is stored as rules that have a \emph{condition} and an \emph{action}. The condition refers to the so-called \emph{working memory}, which basically is the content of all the buffers. In the recognize-phase of the cycle, a suitable rule that matches the current state of the working memory is searched. If the condition of a rule holds, it \emph{fires} and performs its actions -- this is the act-phase of the cycle. Those actions can cause changes on the buffers, so the next rule may match the current state in the next recognize-part of the cycle. In the following sections, some of the modules and their precise interaction will be described in more detail.
 
 \begin{figure}[hbt]
 \centering
@@ -148,9 +146,11 @@ procedural module
 \label{fig:recognize_act}
 \end{figure}
 
+In figure \ref{fig:recognize_act} the general functionality of ACT-R is illustrated: The computational process is controled by the \emph{recognize-act-cycle}: The procedural information is stored as rules that have a \emph{condition} and an \emph{action}. The condition refers to the so-called \emph{working memory}, which basically is the content of all the buffers. In the recognize-phase of the cycle, a suitable rule that matches the current state of the working memory is searched. If the condition of a rule holds, it \emph{fires} and performs its actions -- this is the act-phase of the cycle. Those actions can cause changes on the buffers, so the next rule may match the current state in the next recognize-part of the cycle. In the following sections, some of the modules and their precise interaction will be described in more detail.
+
 \subsection{Declarative Knowledge}
 
-The declarative module organizes the factual knowledge as an associative memory. I.e., it consists of a set of concepts that are connected to each other in a certain way. Such elementary concepts are represented in form of chunks that can be seen as basic knowledge elements. They can have names, but those names are not critical for the description of the facts and just for readability in the theory. So, the definition of a chunk is based only on its connections. 
+The declarative module organizes the factual knowledge as an associative memory. I.e., it consists of a set of concepts that are connected to each other in a certain way. Such elementary concepts are represented in form of chunks that can be seen as basic knowledge elements. They can have names, but those names are not critical for the description of the facts and just for readability in the theory. So, the definition of a chunk is based only on its connections. However, in implementations, chunk names are used as unique identifiers for chunks.
 
 Chunks can have slots that are connected to other chunks or primitive elements. Such an element can be regarded as a chunk without any slots. For instance, the fact $5 + 2 = 7$ can be modeled as a chunk that is connected to the numbers 5, 2 and 7 (see figure \ref{fig:chunk_addition_fact}). Notice that in the figure each slot has an individual name. This is necessary to distinguish the connections of the chunks, otherwise the summands would be indistinguishable from the sum in the example.
 
@@ -164,7 +164,7 @@ Chunks can have slots that are connected to other chunks or primitive elements. 
  \node[chunk] (addition-fact) {addition-fact}; 
  \node[element, left of=addition-fact] (arg1) {5}; 
  \node[element, right of=addition-fact] (arg2) {2}; 
- \node[element, below of=addition-fact, node distance=1.5cm] (sum) {7}; 
+ \node[element, below of=addition-fact, node distance=2cm] (sum) {7}; 
 
     % Draw edges
   \path[slot] (addition-fact) -- node[above] {arg1} (arg1);
@@ -178,7 +178,7 @@ Chunks can have slots that are connected to other chunks or primitive elements. 
 
 Thus, chunks are defined by their name and the values of their slots. When talking about chunk descriptions, often the term \emph{slot-value pairs} is used especially for partial chunk descriptions, i.e. descriptions which do not have a value for all possible slots. This simply refers to an arbitrary chunk that has the specified values in its slots (and the others are ignored).
 
-Each chunk is associated with a chunk-type that determines the slots a chunk can have. For example, the fact in figure \ref{fig:chunk_addition_fact} has the type \verb|addition-fact|. All chunks of this type must provide the slots \verb|arg1|, \verb|arg2| and \verb|sum|. For the chunk-types there is no upper limit of slots they can define. However, it is suggested to limit the number of slots to Miller's Number \label{millers_number} of $7 \pm 2$, for the reason of plausibility \cite[230]{stewart_deconstructing_2007}. 
+Each chunk is associated with a chunk-type that determines the slots a chunk can have. A chunk-type consists of a name which serves as unique identifier chunk-types and a list of slots the chunks of this type offer. For example, the fact in figure \ref{fig:chunk_addition_fact} has the type \verb|addition-fact|. All chunks of this type must provide the slots \verb|arg1|, \verb|arg2| and \verb|sum|. For the chunk-types there is no upper limit of slots they can define. However, it is suggested to limit the number of slots to Miller's Number \label{millers_number} of $7 \pm 2$, for the reason of plausibility \cite[230]{stewart_deconstructing_2007}. 
 
 \subsubsection{Buffers}
 

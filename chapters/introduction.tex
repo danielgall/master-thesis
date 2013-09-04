@@ -8,18 +8,18 @@
 \tikzstyle{decision} = [diamond, draw, fill=blue!20, 
     text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
 \tikzstyle{block} = [rectangle, draw, fill=blue!20, 
-    text width=5em, text centered, rounded corners, minimum height=4em]
+    text width=5em, text centered, rounded corners, minimum height=2.5em]
 \tikzstyle{line} = [draw, -latex']
 \tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm,
-    minimum height=2em]
+    minimum height=1.5em]
     
 \begin{tikzpicture}[node distance = 2cm, auto]
     % Place nodes
     \node [block] (experiment) {experiment};
-    \node [cloud, below left of=experiment] (humansub) {\parbox{2cm}{\centering human subjects}};
-    \node [cloud, below right of=experiment] (cogmod) {\parbox{2cm}{\centering cognitive model}};
+    \node [cloud, below left of=experiment] (humansub) {\parbox{1.5cm}{\centering human subjects}};
+    \node [cloud, below right of=experiment] (cogmod) {\parbox{1.5cm}{\centering cognitive model}};
     \node [decision, below of=experiment, node distance=4cm] (match) {match?};
-    \node [block, below of=match, node distance=3cm] (update) {update model};
+    \node [block, below of=match, node distance=2cm] (update) {update model};
     % Draw edges
     \path [line] (experiment) -- (humansub);
     \path [line] (experiment) -- (cogmod);
@@ -29,7 +29,7 @@
     \path [line] (update) -| (cogmod);
     \path [line,dashed] (cogmod) |- node[pos=0.4,above right] {predictions}  (experiment);
 \end{tikzpicture}
-\caption{A typical workflow in computational cognitive modeling. After a model has been created, an experiment is built which is performed by humans and the cognitive model. Afterwards the results are checked and the model can be adapted. \cite{about_actr_homepage}}
+\caption{A typical workflow in computational cognitive modeling. After a model has been created, an experiment is designed to test the predictions of the model. The experiment is performed by humans and the cognitive model. Afterwards the results are checked and the model can be adapted. \cite{about_actr_homepage}}
 \label{fig:cognitive_modeling_exp}
 \end{figure}
 
@@ -46,12 +46,12 @@ However, psychology is experiencing a movement towards specialization \cite{ande
 \centering
 % Define block styles
 \tikzstyle{block} = [rectangle, draw, fill=blue!20, 
-    text width=5em, text centered, rounded corners, minimum height=4em]
+    text width=5em, text centered, rounded corners, minimum height=2.5em]
 \tikzstyle{line} = [draw, -latex']
 \tikzstyle{cloud} = [draw, ellipse,fill=red!20]
     
 \begin{tikzpicture}[node distance = 2cm, auto]
- \matrix[row sep=5mm] {
+ \matrix[row sep=7mm] {
  \node[cloud] (experiment) {\parbox{3cm}{\centering subset of psychology experiments}}; \\
     % Place nodes
     \node[cloud] (genassumpt) {\parbox{3cm}{\centering general assumptions about human cognition}}; &
@@ -76,7 +76,7 @@ Adaptive Control of Thought-Rational  (ACT-R) is a cognitive architecture, that 
 
 \section{Motivation and Goal}
 
-This work is the first step towards a full-featured implementation of ACT-R using Constraint Handling Rules and hence towards a computational cognitive modeling platform based entirely on logical rules. Constraint Handling Rules (CHR) is a high-level rule-based programming language with several very well-defined operational and declarative semantics \cite[49\psqq]{fru_chr_book_2009}, so the meaning of a CHR program is logically defined. Additionally, there are a lot of methods to analyze CHR programs \cite[96\psqq]{fru_chr_book_2009} and there are a lot of very nice properties of CHR programs, like the anytime and online property \cite[83\psqq]{fru_chr_book_2009}. The declarativity of CHR programs does not affect the efficiency, so every algorithm which can be implemented efficiently in an imperative language can also be implemented efficiently in CHR and the constant slow-down of CHR compared to a C program is very low using high-optimizing compilers \cite[94]{fru_chr_book_2009}.
+This work is the first step towards a full-featured implementation of ACT-R using Constraint Handling Rules and hence towards a computational cognitive modeling platform based entirely on logical rules. Constraint Handling Rules (CHR) is a high-level rule-based programming language with several very well-defined operational and declarative semantics \cite[49\psqq]{fru_chr_book_2009}, so the meaning of a CHR program is logically defined. Additionally, there are a lot of methods to analyze CHR programs \cite[96\psqq]{fru_chr_book_2009} and there are a lot of helpful properties of CHR programs, like the anytime and online property \cite[83\psqq]{fru_chr_book_2009}. The declarativity of CHR programs does not affect the efficiency, so every algorithm which can be implemented efficiently in an imperative language can also be implemented efficiently in CHR and the constant slow-down of CHR compared to a C program is very low using high-optimizing compilers \cite[94]{fru_chr_book_2009}.
 
 Since models are expressed by production rules in ACT-R, the idea to implement such models in CHR seems likely, because, at a first glance, the semantics of a CHR rule does not seem to be very different from an ACT-R production rule, so a lot of work like the \emph{efficient} implementation of the matching process can be saved. Due to the clear semantics and the several analysis methods, the analysis and the inspection of the logical implications of a cognitive model is enhanced by this work. The testing of confluence and operational equality is decidable for CHR programs, so these properties can now be determined automatically for ACT-R models \cite[4]{chr_lecture_chap6}. The declarative semantics facilitates the investigation of the correctness and the implications and predictions of a cognitive model. Furthermore, by translating the concepts of ACT-R to CHR, it is possible to compare those concepts with many other rule-based formalisms like term rewriting systems, functional programming or other production rule systems like OPS5 and to transfer ideas from one system to another\cite[141\psqq]{fru_chr_book_2009}. 
 
@@ -99,4 +99,4 @@ There are approaches to implement psychological models using declarative and log
 
 This work is divided in several parts. First of all, an important task was the identification of the fundamental parts of the ACT-R theory. Hence, a description of the theory is given in chapter~\ref{actr_description}. Chapter~\ref{chr_introduction} gives a very brief introduction to Constraint Handling Rules. The result of the implementation of ACT-R in CHR is described in chapter~\ref{implementation}, which first formalizes some of the parts of the ACT-R theory before it suggests how to implement the afore described concepts in Constraint Handling Rules. Afterwards, the work of chapter~\ref{implementation} is demonstrated in some example models in section~\ref{example_models}. Chapter~\ref{conclusion} summarizes the work and gives an outlook to future work.
 
-The work is accompanied by a CD with the source code and a digital version of the text (see appendix~\ref{appendix:cd_content}). The current version of the source code can also be downloaded at GitHub.\footnote{\url{https://github.com/danielgall/chr-actr}}
+The work is accompanied by a CD with the source code and a digital version of the text (see appendix~\ref{appendix:cd_content}). The current version of both the source code\footnote{\url{https://github.com/danielgall/chr-actr/}} and the text\footnote{\url{https://github.com/danielgall/master-thesis/}} can also be downloaded at GitHub. The versions of the submission date of the thesis are both tagged with \lstinline|thesis|.

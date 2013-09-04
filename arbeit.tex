@@ -163,7 +163,7 @@ hyperref=true
     aboveskip=\parskip,
     basicstyle=\ttfamily,
     numberstyle=\tiny,
-    deletekeywords={ time, is, name, write, true, false },
+    deletekeywords={ time, is, name, write, true, false, fail },
     keywordstyle=\bfseries,
     alsoletter= {<,=,>,:,-,@, |, \\, ? },
     morekeywords={ <=>, ==> , :-, @, |, \\, ?- },
@@ -188,6 +188,13 @@ hyperref=true
 %%
 %\newcommand{\FIXME}[1]{\colorbox{yellow}{\bf FIXME: #1}} % debug mode
 \newcommand{\FIXME}[1]{} % deploy mode
+
+% multi-letter variables in math mode
+\newcommand*{\var}[1]{\mathord{\mathit{#1}}}
+% relations in math mode
+\newcommand*{\rel}[1]{\mathord{\mathrm{#1}}}
+% functions in math mode
+\newcommand*{\fun}[1]{\mathord{\mathit{#1}}}
 
 
 %%
@@ -319,6 +326,7 @@ hyperref=true
     \vspace{0.5cm}
     Typesetting: PDF-\LaTeXe{}\\
     Graphics created with: Ti\textit{k}Z\\
+    \LaTeX{} Template: Guido de Melo\\
     Printed by: Kommunikations- und Informationszentrum (kiz), University of Ulm
 }
 
@@ -357,6 +365,13 @@ hyperref=true
 
 
 %%
+%% Literaturverzeichnis
+%%
+%\bibliography{bibliography}
+\renewcommand*{\bibfont}{\raggedright} % kein Blocksatz in Literaturverzeichnis
+\printbibliography 
+
+%%
 %% Anhänge
 %%
 \appendix
@@ -365,19 +380,10 @@ hyperref=true
 %\input{chapters/production_grammar}
 \input{chapters/appendix_examples}
 
-
 %%
 %% Nachspann
 %%
 \backmatter
-
-
-%%
-%% Literaturverzeichnis
-%%
-%\bibliography{bibliography}
-\renewcommand*{\bibfont}{\raggedright} % kein Blocksatz in Literaturverzeichnis
-\printbibliography 
 
 %%
 %% Versicherung

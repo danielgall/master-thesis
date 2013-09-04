@@ -25,24 +25,24 @@ Since chunks are the central data-structure of ACT-R used for representation of 
 In multiple parts of ACT-R it is necessary to store chunks and then operate on them. Hence, the abstract data structure of such a chunk store is defined. Since chunk stores have been referred to as networks in the previous chapters, the general idea of this definition of a chunk store is based upon a relation that represents such a network.
 
 \begin{definition}[chunk-store]
-A \emph{chunk-store} $\Sigma$ is a tuple $(C,E,\mathcal{T},HasSlot,Isa)$, where $C$ is a set of chunks and $E$ a set of primitive elements, with $C \cap E = \emptyset$. The \emph{values} of $\Sigma$ are defined by the set $V = C \cup E \cup \{ \mathtt{nil} \}$. $\mathcal{T}$ is a set of chunk-types. A chunk-type $T = (t,S) \in \mathcal{T}$ is a tuple with a \emph{unique}\footnote{$\forall (t,S), (t',S') \in \mathcal{T}: t = t' \Rightarrow S = S'$} type name $t$ and a set of slots $S$. The set of all slot-names is $\mathcal{S}$. 
+A \emph{chunk-store} $\Sigma$ is a tuple $(C,E,\mathcal{T},\rel{HasSlot},\rel{Isa})$, where $C$ is a set of chunks and $E$ a set of primitive elements both identified by unique names, with $C \cap E = \emptyset$. The \emph{values} of $\Sigma$ are defined by the set $V = C \cup E \cup \{ \mathtt{nil} \}$. $\mathcal{T}$ is a set of chunk-types. A chunk-type $T = (t,S) \in \mathcal{T}$ is a tuple with a \emph{unique}\footnote{$\forall (t,S), (t',S') \in \mathcal{T}: t = t' \Rightarrow S = S'$} type name $t$ and a set of slots $S$. The set of all slot-names is $\mathcal{S}$. 
 
-$HasSlot \subseteq C \times \mathcal{S} \times V$ and $Isa \subseteq C \times \mathcal{T}$ are relations and are defined as follows:
+$\rel{HasSlot} \subseteq C \times \mathcal{S} \times V$ and $\rel{Isa} \subseteq C \times \mathcal{T}$ are relations and are defined as follows:
 
 \begin{itemize}
- \item $c \enspace Isa \enspace T \Leftrightarrow$ chunk $c$ is of type $T$.
- \item $(c,s,v) \in HasSlot \Leftrightarrow v$ is the value of slot $s$ of $c$. This can also be written as $c \overset{s}{\longrightarrow} v$ and is spoken ``$c$ is connected to $v$'' or ``$v$ is in the slot $s$ of $c$''.
+ \item $c \enspace \rel{Isa} \enspace T \Leftrightarrow$ chunk $c$ is of type $T$.
+ \item $(c,s,v) \in \rel{HasSlot} \Leftrightarrow v$ is the value of slot $s$ of $c$. This can also be written as $c \overset{s}{\longrightarrow} v$ and is spoken ``$c$ is connected to $v$'' or ``$v$ is in the slot $s$ of $c$''.
 \end{itemize}
 
-The $Isa$ relation has to be right-unique and left-total, so each chunk has to have exactly one type. The following functions are defined:
+The $\rel{Isa}$ relation has to be right-unique and left-total, so each chunk has to have exactly one type. The following functions are defined:
 \begin{align*}
-slots: C \rightarrow \mathcal{S} \times V &\\
-slots(c) = \{ \enspace (s,v) \enspace | \enspace (c,s,v) \in HasSlot \enspace \}&\\
+\fun{slots}: C \rightarrow \mathcal{S} \times V &\\
+\fun{slots}(c) = \{ \enspace (s,v) \enspace | \enspace (c,s,v) \in HasSlot \enspace \}&\\
 \\
-slots: \mathcal{T} \rightarrow \mathcal{S} &\\
-      slots((t,S)) = S&
+\fun{slots}: \mathcal{T} \rightarrow \mathcal{S} &\\
+      \fun{slots}((t,S)) = S&
 \end{align*}
-A chunk-store is \emph{type-consistent}, iff $\forall (c,(t,S)) \in Isa: \forall s \in S \enspace \exists ! (c,s,v) \in HasSlot$. So every chunk must have exactly one value for each slot of its type and only describe slots of its type. Empty slots are represented by the value \lstinline|nil|. Since every chunk has exactly one type, this is valid for all chunks in the store.
+A chunk-store is \emph{type-consistent}, iff $\forall (c,(t,S)) \in \rel{Isa}: \forall s \in S \enspace \exists ! (c,s,v) \in \rel{HasSlot}$. So every chunk must have exactly one value for each slot of its type and only describe slots of its type. Empty slots are represented by the value \lstinline|nil|. Since every chunk has exactly one type, this is valid for all chunks in the store.
 
 %iff $\forall(c,s,v) \in HasSlot: c \enspace Isa \enspace (T,S) \Rightarrow \exists s' \in S: s=s'$ and $\forall c \in C: \enspace c \enspace Isa \enspace (T,S) \Rightarrow \forall s \in S: \exists (c',s',v) \in HasSlot: c=c', s=s'$. 
 
@@ -51,15 +51,15 @@ A chunk-store is \emph{type-consistent}, iff $\forall (c,(t,S)) \in Isa: \forall
 
 \begin{definition}[abstract methods of a chunk store]
 \label{def:abstract_methods_chunk_store}
-The following methods can be defined over a chunk store $\Sigma = (C, E, \mathcal{T}, HasSlot, Isa)$:
+The following methods can be defined over a chunk store $\Sigma = (C, E, \mathcal{T}, \rel{HasSlot}, \rel{Isa})$:
 
 \begin{description}
  \item[\texttt{chunk-type(name slot\textsubscript{1} \dots slot\textsubscript{n})}] is a method for defining a new type $T = (\mathtt{name},\{\mathtt{slot_1}, \dots, \mathtt{slot_n}\})$ which is added to the store, i.e. $\mathcal{T'} = \mathcal{T} \cup \{T\}$. 
- \item[\texttt{add-chunk(name isa type slot\textsubscript{1} val\textsubscript{1} \dots slot\textsubscript{n} val\textsubscript{n})}] adds a chunk specified by a name and a list of slot-value pairs to the store, i.e. $C' = C \cup \{ \mathtt{name} \}$, $Isa' = Isa \enspace \cup \enspace (\mathtt{name}, (\mathtt{type}, slots(\mathtt{type}))$ and $HasSlot' = \bigcup_{i = 1}^n{\mathtt{(name,slot_i,val_i)}} \enspace \cup \enspace HasSlot.$ Note that due to the expansion of $C$, the condition that $C$ and $E$ have to be disjoint may be violated. To fix this violation, the element can be removed from $E$: $E' = (E \cup C) - (E \cap C).$ 
+ \item[\texttt{add-chunk(name isa type slot\textsubscript{1} val\textsubscript{1} \dots slot\textsubscript{n} val\textsubscript{n})}] adds a chunk specified by a name and a list of slot-value pairs to the store, i.e. $C' = C \cup \{ \mathtt{name} \}$, $\rel{Isa'} = \rel{Isa} \enspace \cup \enspace (\mathtt{name}, (\mathtt{type}, slots(\mathtt{type}))$ and $\rel{HasSlot'} = \bigcup_{i = 1}^n{\mathtt{(name,slot_i,val_i)}} \enspace \cup \enspace \rel{HasSlot}.$ Note that due to the expansion of $C$, the condition that $C$ and $E$ have to be disjoint may be violated. To fix this violation, the element can be removed from $E$: $E' = (E \cup C) - (E \cap C).$ 
  
- Additionally, a valid mechanism to restore type-consistency may be introduced: It might happen that not all slots are specified in the call of the \lstinline|add-chunk| method. Since it is claimed by the definition of $HasSlot$ that for all slots $s$ of a chunk $c$ there must be a $(c,s,v) \in HasSlot$, in implementations the unspecified slots are initialized as empty slots, represented by the empty value \lstinline|nil|. Furthermore, slots specified in the call of the method that are not a member of the chunk's type should cause an error to preserve type-consistency.
+ Additionally, a valid mechanism to restore type-consistency may be introduced: It might happen that not all slots are specified in the call of the \lstinline|add-chunk| method. Since it is claimed by the definition of $\rel{HasSlot}$ that for all slots $s$ of a chunk $c$ there must be a $(c,s,v) \in \rel{HasSlot}$, in implementations the unspecified slots are initialized as empty slots, represented by the empty value \lstinline|nil|. Furthermore, slots specified in the call of the method that are not a member of the chunk's type should cause an error to preserve type-consistency.
   \item[\texttt{alter-slot(name slot\textsubscript{1} val\textsubscript{1} \dots slot\textsubscript{n} val\textsubscript{n})}] changes the values of the specified slots of a chunk identified by its name to new values. Only existing slots can be altered, but the list of slot-value pairs may be a partial chunk-description. The values of the slots not in the list remain at their old values.
-  \item[\texttt{remove-chunk(name)}] removes the chunk with the given name from $C$ and all of its occurrences in $Isa$ and $HasSlot$.
+  \item[\texttt{remove-chunk(name)}] removes the chunk with the given name from $C$ and all of its occurrences in $\rel{Isa}$ and $\rel{HasSlot}$.
   \item[\texttt{return-chunk(name)}] gets a chunk name as input and returns a chunk specification, i.e. the name, type and all slot-value pairs of this chunk in the store.
 \end{description} 
 \end{definition}
@@ -76,21 +76,21 @@ add-chunk(a isa addition-fact arg1 5 arg2 2 sum 7)
  This leads to the following chunk-store: 
  \begin{align*}
  (\{a\}, \{2, 5, 7\},\\ 
- \{(addition\mbox{-}fact, \{arg_1, arg_2, sum\})\},\\
- \{(a, arg_1, 5), (a, arg_2, 2), (a, sum, 7)\},\\
- \{(a, addition\mbox{-}fact)\}).
+ \{(\var{addition\mbox{-}fact}, \{\var{arg_1}, \var{arg_2}, \var{sum}\})\},\\
+ \{(a, \var{arg_1}, 5), (a, \var{arg_2}, 2), (a, \var{sum}, 7)\},\\
+ \{(a, \var{addition\mbox{-}fact)}\}).
  \end{align*}
  Type consistency is checked as follows:
  \begin{align*}
- slots(a) &= \{(arg_1, 5), (arg_2, 2), (sum, 7)\}\\
- slots((addition\mbox{-}fact,\{arg_1, arg_2, sum\}) &= \{arg_1, arg_2, sum\}
+ \fun{slots}(a) &= \{(\var{arg_1}, 5), (\var{arg_2}, 2), (\var{sum}, 7)\}\\
+ \fun{slots}((\var{addition\mbox{-}fact},\{\var{arg_1}, \var{arg_2}, \var{sum}\}) &= \{\var{arg_1}, \var{arg_2}, \var{sum}\}
  \end{align*}
- Since the chunk $a$ defines values for all of the possible slots of the type $addition\mbox{-}fact$ and only those slots, the store is type-consistent.
+ Since the chunk $a$ defines values for all of the possible slots of the type $\var{addition\mbox{-}fact}$ and only those slots, the store is type-consistent.
 \end{example}
 
 \subsection{Representation of Chunks in CHR}
 
-Declarative knowledge is represented as a network of chunks, defined by the two relations $Isa$, specifying the belonging of a chunk to a type, and $HasSlot$, specifying the slot-value pairs of a chunk. Those relations can be translated directly into CHR by defining the following constraints representing the relations and sets:
+Declarative knowledge is represented as a network of chunks, defined by the two relations $\rel{Isa}$, specifying the belonging of a chunk to a type, and $\rel{HasSlot}$, specifying the slot-value pairs of a chunk. Those relations can be translated directly into CHR by defining the following constraints representing the relations and sets:
 
 \begin{lstlisting}
 :- chr_constraint chunk_type(+).
@@ -178,9 +178,9 @@ The straight-forward definition of a data type for chunk specifications is just 
 :- chr_type pair(T1,T2) ---> (T1,T2).
 \end{lstlisting}
 
-This definition states that a chunk is either \lstinline|nil|, i.e. an empty chunk, or a term \lstinline|chunk(Name,Type,SVP)|, where \lstinline|SVP| is a list of slot-value pairs, i.e. a Prolog list of terms \lstinline|(S,V)|, where \lstinline|S| is the name of a slot and \lstinline|V| is an identifier for the value for this slot. This is the direct translation of the chunk-specification used in the definition, amended by the \lstinline|nil| construct, that may be needed for later purposes.
+By the \lstinline|:- chr_type| directive, new types can be defined. For example, the definition of \lstinline|list| states that a list of type \lstinline|T| is either empty (\lstinline|[]|) or a term \lstinline+[X|Xs]+ where \lstinline|X| is a value of type \lstinline|T| and \lstinline|Xs| is a list of type \lstinline|T| itself. The first definition states that the type \lstinline|chunk_def| can be either the atom \lstinline|nil| or a term of the form \lstinline|chunk(Name,Type,SVP)| where \lstinline|Name| and \lstinline|Type| can be of any type and \lstinline|SVP| is a \lstinline|slot_list| which is an alias for a list of pairs and describes a list of slot-value pairs, i.e. a Prolog list of terms \lstinline|(S,V)|, where \lstinline|S| is the name of a slot and \lstinline|V| is an identifier for the value for this slot. This is the direct translation of the chunk-specification used in the definition, amended by the \lstinline|nil| construct, that may be needed for later purposes. 
 
-The default methods can be implemented as follows:
+The defined types can be used in the definitions of CHR constraints. The arguments of these constraints are then checked at runtime for the correct types. For example, the directive \lstinline|:- chr_constraint a(pair,any)| states that the constraint \lstinline|a| is expected to have a pair as its first argument and any type as second argument. The default methods can be implemented as follows:
 
 \paragraph{add\_chunk} 
 
@@ -506,7 +506,7 @@ An ACT-R production rule of the form
 ... )
 \end{lstlisting}
 
-states formally, that: If $buffer_1 \enspace Holds \enspace c_1 \enspace \wedge \enspace c \enspace Isa \enspace type_1 \enspace \wedge \enspace c_1 \xrightarrow{slot_{1,1}} val_{1,1} \enspace \wedge \enspace \dots \enspace \wedge \enspace buffer_k \enspace Holds \enspace c_k \enspace \wedge \enspace c_k \enspace Isa \enspace type_k \enspace \wedge \enspace \dots$ is true, then the rule matches and the RHS should be performed. This can be directly translated into a CHR rule:
+states formally, that: If $\var{buffer_1} \enspace \rel{Holds} \enspace c_1 \enspace \wedge \enspace c \enspace \rel{Isa} \enspace \var{type_1} \enspace \wedge \enspace c_1 \xrightarrow{\var{slot}_{1,1}} \var{val}_{1,1} \enspace \wedge \enspace \dots \enspace \wedge \enspace \var{buffer_k} \enspace \rel{Holds} \enspace c_k \enspace \wedge \enspace c_k \enspace \rel{Isa} \enspace \var{type_k} \enspace \wedge \enspace \dots$ is true, then the rule matches and the RHS should be performed. This can be directly translated into a CHR rule:
 
 \begin{lstlisting}[mathescape]
 <<<name>>> @
@@ -1375,7 +1375,7 @@ The first rule is the base case, where no slots have to be tested any more. Then
 
 The next rule applies for an identity check for a slot-value pair that is successful, whereas the third rule handles the opposite case and aborts the check for this pair of chunks without adding an \lstinline|identical| constraint.
 
-In the fourth rule redundant information is removed and the lust rule aborts the identity check as soon as one matching chunk has been found.
+In the fourth rule redundant information is removed and the last rule aborts the identity check as soon as one matching chunk has been found.
 
 Note that this implementation assumes that the chunk specification of the chunk entering the declarative memory is complete. If it is incomplete, the correct semantics of the adding is that all unspecified slots are empty so their values equal \lstinline|nil|. Nevertheless, this implementation would merge the chunk with a chunk that has values in those unspecified slots. This could be improved by completing the chunk specifications before checking for identical chunks in the store.
 
@@ -1573,7 +1573,7 @@ leq(q(Time,Priority1,_), q(Time,Priority2,_)) :-
 
 The first predicate states that the start symbol is less than every other object. The other two rules directly implement the time-priority condition as defined in definition~\ref{def:time-priority-condition}.
 
-Note that two objects are considered the same, iff. their time, priority and event are syntactically the same. If an object is altered in one of the \lstinline|-->| constraints, it has to be edited in every other occurrence in the   list to avoid gaps.
+Note that two objects are considered the same, iff their time, priority and event are syntactically the same. If an object is altered in one of the \lstinline|-->| constraints, it has to be edited in every other occurrence in the   list to avoid gaps.
 
 Another important property is, that the list does not have any gaps, so it must be possible to track the queue from every element backwards to the start symbol. This condition is not achieved by the rules above, but since a priority queue only offers two mechanisms to modify it, a lot of those problems can be avoided:
 
@@ -2109,19 +2109,19 @@ With the now defined methods, the overall activation of a chunk can be calculate
 \end{lstlisting}
 
 \begin{description}
- \item[Find matching chunks (lines~\ref{lst:retrieval_request_subsymbolic:find_chunk1}~and~\ref{lst:retrieval_request_subsymbolic:find_chunk2})] First of all, all matching chunks are searched and saved in a list called \lstinline|Res|, similarly to the symbolic approach in listing~\ref{lst:retrieval_request_symbolic}.
- \item[Calculate Activations of the matching chunks (line~\ref{lst:retrieval_request_subsymbolic:calc_activations})] The activations of the matching chunks in the list \lstinline|Res| are computed regarding the context that has been handed over by the request.
- \item[Get the threshold (lines~\ref{lst:retrieval_request_subsymbolic:threshold1}~and~\ref{lst:retrieval_request_subsymbolic:threshold2})] The current threshold is retrieved from the configuration and a \lstinline|threshold| constraint is placed in the store. The next steps will need a threshold constraint present.
- \item[Find chunk with highest activation (line~\ref{lst:retrieval_request_subsymbolic:max})] The chunk with the highest activation is saved in \lstinline|MaxChunk|, its activation value in \lstinline|MaxAct|.
- \item[Return a chunk specification (line~\ref{lst:retrieval_request_subsymbolic:return_chunk})] The request is supposed to return a complete chunk specification in the variable \lstinline|ResChunk|. This is achieved by \lstinline|return_chunk|.
- \item[Return the resulting state of the buffer (line~\ref{lst:retrieval_request_subsymbolic:get_state})] The resulting state \lstinline|ResState| of the requested retrieval buffer is \lstinline|free|, if a matching chunk has been found and \lstinline|error| if no chunk matches the request:
+ \item[Find matching chunks] (lines~\ref{lst:retrieval_request_subsymbolic:find_chunk1}~and~\ref{lst:retrieval_request_subsymbolic:find_chunk2}) First of all, all matching chunks are searched and saved in a list called \lstinline|Res|, similarly to the symbolic approach in listing~\ref{lst:retrieval_request_symbolic}.
+ \item[Calculate Activations of the matching chunks] (line~\ref{lst:retrieval_request_subsymbolic:calc_activations}) The activations of the matching chunks in the list \lstinline|Res| are computed regarding the context that has been handed over by the request.
+ \item[Get the threshold] (lines~\ref{lst:retrieval_request_subsymbolic:threshold1}~and~\ref{lst:retrieval_request_subsymbolic:threshold2}) The current threshold is retrieved from the configuration and a \lstinline|threshold| constraint is placed in the store. The next steps will need a threshold constraint present.
+ \item[Find chunk with highest activation] (line~\ref{lst:retrieval_request_subsymbolic:max}) The chunk with the highest activation is saved in \lstinline|MaxChunk|, its activation value in \lstinline|MaxAct|.
+ \item[Return a chunk specification] (line~\ref{lst:retrieval_request_subsymbolic:return_chunk}) The request is supposed to return a complete chunk specification in the variable \lstinline|ResChunk|. This is achieved by \lstinline|return_chunk|.
+ \item[Return the resulting state of the buffer] (line~\ref{lst:retrieval_request_subsymbolic:get_state}) The resulting state \lstinline|ResState| of the requested retrieval buffer is \lstinline|free|, if a matching chunk has been found and \lstinline|error| if no chunk matches the request:
  
 \begin{lstlisting}
 get_state(nil,error).
 get_state(_,free).
 \end{lstlisting}
 
- \item[Return the time the request takes (line~\ref{lst:retrieval_request_subsymbolic:calc_time})] The time depends on the activation of the chunk. If no matching chunk has been found, the activation is assumed to be the threshold value. This is already achieved by the maximum calculation as described above. According to equation~\eqref{eq:retrieval_latency}, the resulting time is computed as follows:
+ \item[Return the time the request takes] (line~\ref{lst:retrieval_request_subsymbolic:calc_time}) The time depends on the activation of the chunk. If no matching chunk has been found, the activation is assumed to be the threshold value. This is already achieved by the maximum calculation as described above. According to equation~\eqref{eq:retrieval_latency}, the resulting time is computed as follows:
  
 \begin{lstlisting}
 calc_time(Act,ResTime) :-
