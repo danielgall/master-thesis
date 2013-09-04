@@ -393,8 +393,8 @@
 \newlabel{destructive_assignment}{{4.3.1}{44}{Destructive Assignment and Consistency}{section*.25}{}}
 \abx@aux@page{125}{44}
 \citation{actr_tutorial}
-\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {\relax 4.1}{\ignorespaces A buffer system $(B,\Sigma ,Holds)$ with two buffers $b_1, b_2 \in B$ and a chunk store $\Sigma = (C, E, \mathcal  {T}, HasSlot, Isa)$. The relations $Holds$, $Isa$ and $HasSlot$ are illustrated by arrows. The buffer $b_1$ holds a chunk $c$ of type $T = (t,\{s_1, s_2\})$ and with values $v_1$ and $v_2$. Buffer $b_2$ is empty. The buffer system is clean, since only the chunks which are held by a buffer are in the set of chunks $C$ of the chunk store.}}{45}{figure.4.1}}
-\newlabel{fig:buffer_system}{{\relax 4.1}{45}{A buffer system $(B,\Sigma ,Holds)$ with two buffers $b_1, b_2 \in B$ and a chunk store $\Sigma = (C, E, \mathcal {T}, HasSlot, Isa)$. The relations $Holds$, $Isa$ and $HasSlot$ are illustrated by arrows. The buffer $b_1$ holds a chunk $c$ of type $T = (t,\{s_1, s_2\})$ and with values $v_1$ and $v_2$. Buffer $b_2$ is empty. The buffer system is clean, since only the chunks which are held by a buffer are in the set of chunks $C$ of the chunk store}{figure.4.1}{}}
+\@writefile{lof}{\defcounter {refsection}{0}\relax }\@writefile{lof}{\contentsline {figure}{\numberline {\relax 4.1}{\ignorespaces A buffer system $(B,\Sigma ,\mathord {\mathrm  {Holds}})$ with two buffers $b_1, b_2 \in B$ and a chunk store $\Sigma = (C, E, \mathcal  {T}, \mathord {\mathrm  {HasSlot}}, \mathord {\mathrm  {Isa}})$. The relations $\mathord {\mathrm  {Holds}}$, $\mathord {\mathrm  {Isa}}$ and $\mathord {\mathrm  {HasSlot}}$ are illustrated by arrows. The buffer $b_1$ holds a chunk $c$ of type $T = (t,\{s_1, s_2\})$ and with values $v_1$ and $v_2$. Buffer $b_2$ is empty. The buffer system is clean, since only the chunks which are held by a buffer are in the set of chunks $C$ of the chunk store.}}{45}{figure.4.1}}
+\newlabel{fig:buffer_system}{{\relax 4.1}{45}{A buffer system $(B,\Sigma ,\rel {Holds})$ with two buffers $b_1, b_2 \in B$ and a chunk store $\Sigma = (C, E, \mathcal {T}, \rel {HasSlot}, \rel {Isa})$. The relations $\rel {Holds}$, $\rel {Isa}$ and $\rel {HasSlot}$ are illustrated by arrows. The buffer $b_1$ holds a chunk $c$ of type $T = (t,\{s_1, s_2\})$ and with values $v_1$ and $v_2$. Buffer $b_2$ is empty. The buffer system is clean, since only the chunks which are held by a buffer are in the set of chunks $C$ of the chunk store}{figure.4.1}{}}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Buffer States}{45}{section*.26}}
 \citation{actr_reference}
 \abx@aux@page{126}{46}
@@ -519,14 +519,14 @@
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Calculating the Base-Level Value}{90}{section*.57}}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Fan Values}{92}{section*.58}}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Associative Weights}{93}{section*.59}}
-\newlabel{lst:sji:no_connection}{{5}{93}{Associative Weights}{lstnumber.-96.5}{}}
+\newlabel{lst:sji:no_connection}{{5}{93}{Associative Weights}{lstnumber.-97.5}{}}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {paragraph}{Calculating the Overall-Activations}{93}{section*.60}}
-\newlabel{lst:calc_activations:context}{{7}{93}{Calculating the Overall-Activations}{lstnumber.-97.7}{}}
-\newlabel{lst:calc_activations:attentional1}{{9}{93}{Calculating the Overall-Activations}{lstnumber.-97.9}{}}
+\newlabel{lst:calc_activations:context}{{7}{93}{Calculating the Overall-Activations}{lstnumber.-98.7}{}}
+\newlabel{lst:calc_activations:attentional1}{{9}{93}{Calculating the Overall-Activations}{lstnumber.-98.9}{}}
 \citation{fru_chr_book_2009}
-\newlabel{lst:calc_activations:attentional2}{{10}{94}{Calculating the Overall-Activations}{lstnumber.-97.10}{}}
-\newlabel{lst:calc_activations:final}{{11}{94}{Calculating the Overall-Activations}{lstnumber.-97.11}{}}
-\newlabel{lst:calc_activations:max}{{12}{94}{Calculating the Overall-Activations}{lstnumber.-97.12}{}}
+\newlabel{lst:calc_activations:attentional2}{{10}{94}{Calculating the Overall-Activations}{lstnumber.-98.10}{}}
+\newlabel{lst:calc_activations:final}{{11}{94}{Calculating the Overall-Activations}{lstnumber.-98.11}{}}
+\newlabel{lst:calc_activations:max}{{12}{94}{Calculating the Overall-Activations}{lstnumber.-98.12}{}}
 \newlabel{lst:max_activation}{{4.11}{94}{Calculate highest activation of all matching chunks}{lstlisting.4.11}{}}
 \@writefile{lol}{\defcounter {refsection}{0}\relax }\@writefile{lol}{\contentsline {lstlisting}{\numberline {4.11}Calculate highest activation of all matching chunks}{94}{lstlisting.4.11}}
 \abx@aux@page{139}{94}
@@ -569,9 +569,9 @@
 \abx@aux@page{144}{103}
 \abx@aux@page{145}{103}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Computing the Utility Values}{103}{section*.66}}
-\newlabel{lst:trigger_reward}{{4.9.2}{104}{}{lstlisting.4.-112}{}}
-\newlabel{lst:trigger_reward:learning}{{4}{104}{}{lstnumber.-112.4}{}}
-\newlabel{lst:trigger_reward:calc_reward}{{7}{104}{}{lstnumber.-112.7}{}}
+\newlabel{lst:trigger_reward}{{4.9.2}{104}{}{lstlisting.4.-113}{}}
+\newlabel{lst:trigger_reward:learning}{{4}{104}{}{lstnumber.-113.4}{}}
+\newlabel{lst:trigger_reward:calc_reward}{{7}{104}{}{lstnumber.-113.7}{}}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Configuration of the Conflict Resolution}{104}{section*.67}}
 \@writefile{toc}{\defcounter {refsection}{0}\relax }\@writefile{toc}{\contentsline {subsubsection}{Public Methods of the Conflict Resolution}{105}{section*.68}}
 \newlabel{implementation:icore_interface}{{4.9.2}{105}{Public Methods of the Conflict Resolution}{section*.68}{}}

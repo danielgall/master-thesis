@@ -76,21 +76,21 @@ add-chunk(a isa addition-fact arg1 5 arg2 2 sum 7)
  This leads to the following chunk-store: 
  \begin{align*}
  (\{a\}, \{2, 5, 7\},\\ 
- \{(\var{addition\mbox{-}fact}, \{arg_1, arg_2, sum\})\},\\
- \{(a, arg_1, 5), (a, arg_2, 2), (a, sum, 7)\},\\
- \{(a, addition\mbox{-}fact)\}).
+ \{(\var{addition\mbox{-}fact}, \{\var{arg_1}, \var{arg_2}, \var{sum}\})\},\\
+ \{(a, \var{arg_1}, 5), (a, \var{arg_2}, 2), (a, \var{sum}, 7)\},\\
+ \{(a, \var{addition\mbox{-}fact)}\}).
  \end{align*}
  Type consistency is checked as follows:
  \begin{align*}
- slots(a) &= \{(arg_1, 5), (arg_2, 2), (sum, 7)\}\\
- slots((addition\mbox{-}fact,\{arg_1, arg_2, sum\}) &= \{arg_1, arg_2, sum\}
+ \fun{slots}(a) &= \{(\var{arg_1}, 5), (\var{arg_2}, 2), (\var{sum}, 7)\}\\
+ \fun{slots}((\var{addition\mbox{-}fact},\{\var{arg_1}, \var{arg_2}, \var{sum}\}) &= \{\var{arg_1}, \var{arg_2}, \var{sum}\}
  \end{align*}
- Since the chunk $a$ defines values for all of the possible slots of the type $addition\mbox{-}fact$ and only those slots, the store is type-consistent.
+ Since the chunk $a$ defines values for all of the possible slots of the type $\var{addition\mbox{-}fact}$ and only those slots, the store is type-consistent.
 \end{example}
 
 \subsection{Representation of Chunks in CHR}
 
-Declarative knowledge is represented as a network of chunks, defined by the two relations $Isa$, specifying the belonging of a chunk to a type, and $HasSlot$, specifying the slot-value pairs of a chunk. Those relations can be translated directly into CHR by defining the following constraints representing the relations and sets:
+Declarative knowledge is represented as a network of chunks, defined by the two relations $\rel{Isa}$, specifying the belonging of a chunk to a type, and $\rel{HasSlot}$, specifying the slot-value pairs of a chunk. Those relations can be translated directly into CHR by defining the following constraints representing the relations and sets:
 
 \begin{lstlisting}
 :- chr_constraint chunk_type(+).
@@ -139,7 +139,7 @@ chunk_has_slot(a,sum,7)
 \subsubsection{Distinction of Elements and Chunks}
 \label{distinction_elements_chunks}
 
-A chunk store distinguishes between a set of chunks $C$ and a set of elements $E$. For implementational reasons it can be helpful if there are only chunks in the system, because elements just behave like chunks with no slots. Hence, a chunk-type \lstinline|chunk| with no slots will be added automatically to the store. Each element $e \in E$ is added as a chunk of type \lstinline|chunk| to the set of chunks $C$. After this operation $E = \emptyset$, and for every former element $e$ of $E$: $e \in C$, $(e,(chunk,\emptyset)) \in Isa$. So $E$ is now represented by $\{ c \in C \enspace | \enspace c \enspace Isa \enspace (chunk,\emptyset) \}$ in the implementation.
+A chunk store distinguishes between a set of chunks $C$ and a set of elements $E$. For implementational reasons it can be helpful if there are only chunks in the system, because elements just behave like chunks with no slots. Hence, a chunk-type \lstinline|chunk| with no slots will be added automatically to the store. Each element $e \in E$ is added as a chunk of type \lstinline|chunk| to the set of chunks $C$. After this operation $E = \emptyset$, and for every former element $e$ of $E$: $e \in C$, $(e,(\var{chunk},\emptyset)) \in \rel{Isa}$. So $E$ is now represented by $\{ c \in C \enspace | \enspace c \enspace \rel{Isa} \enspace (\val{chunk},\emptyset) \}$ in the implementation.
 
 \begin{example}
 The chunk representation from example~\ref{ex:addition_fact_chr} is changed to:
@@ -296,7 +296,7 @@ The first rule creates the initial chunk specification with name and type set, b
 
 \subsubsection{Checking Consistency and Type-Consistency}
 
-At the moment, there are no rules that check the consistency of the chunk store. However, if the default methods for adding chunks are used, a type-consistent store is built automatically, since every chunk has exactly one chunk-type.\footnote{left-totality and right-uniqueness of $Isa$} Furthermore, all slots from its chunk-type are described and only those slots are described (satisfies type-consistency). Additionally, there are no two different slot descriptions for the same chunk and every chunk in the store is described\footnote{This is demanded by the type-consistency: Since $Isa$ is left-total, every chunk is in the $Isa$ relation. Type-consisteny demands, that every chunk in the $Isa$ relation has a value for all slots of its type.} (satisfies the definition of a chunk-store). Rules for checking those constraints could be added easily to the implementation.
+At the moment, there are no rules that check the consistency of the chunk store. However, if the default methods for adding chunks are used, a type-consistent store is built automatically, since every chunk has exactly one chunk-type.\footnote{left-totality and right-uniqueness of $\rel{Isa}$} Furthermore, all slots from its chunk-type are described and only those slots are described (satisfies type-consistency). Additionally, there are no two different slot descriptions for the same chunk and every chunk in the store is described\footnote{This is demanded by the type-consistency: Since $\rel{Isa}$ is left-total, every chunk is in the $\rel{Isa}$ relation. Type-consistency demands, that every chunk in the $\rel{Isa}$ relation has a value for all slots of its type.} (satisfies the definition of a chunk-store). Rules for checking those constraints could be added easily to the implementation.
 
 \section{Procedural Module}
 \label{implementation:procedural_module}

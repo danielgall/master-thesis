@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.8.10)  4 SEP 2013 11:33
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.8.10)  4 SEP 2013 13:34
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1827,18 +1827,23 @@ LaTeX Font Info:    Font shape `T1/phv/m/it' in size <7> not available
 (Font)              Font shape `T1/phv/m/sl' tried instead on input line 28.
  [34]
 LaTeX Font Info:    Font shape `T1/phv/bx/it' in size <10> not available
-(Font)              Font shape `T1/phv/b/it' tried instead on input line 57.
+(Font)              Font shape `T1/phv/b/it' tried instead on input line 63.
 LaTeX Font Info:    Font shape `T1/phv/b/it' in size <10> not available
-(Font)              Font shape `T1/phv/b/sl' tried instead on input line 57.
+(Font)              Font shape `T1/phv/b/sl' tried instead on input line 63.
 LaTeX Font Info:    Font shape `T1/pcr/bx/it' in size <7> not available
-(Font)              Font shape `T1/pcr/b/it' tried instead on input line 57.
+(Font)              Font shape `T1/pcr/b/it' tried instead on input line 63.
 LaTeX Font Info:    Font shape `T1/pcr/b/it' in size <7> not available
-(Font)              Font shape `T1/pcr/b/sl' tried instead on input line 57.
- [35] [36] [37] [38] [39] [40] [41] [42]
-Underfull \vbox (badness 2181) has occurred while \output is active []
+(Font)              Font shape `T1/pcr/b/sl' tried instead on input line 63.
 
- [43]
-[44] [45] [46] [47]
+Underfull \vbox (badness 4543) has occurred while \output is active []
+
+ [35]
+[36]
+Overfull \hbox (1.55022pt too wide) in paragraph at lines 125--126
+[][][][][][] \T1/phv/m/n/10 (-20) con-straint a [][][][][][] con-straint has
+ []
+
+[37] [38] [39] [40] [41] [42] [43] [44] [45] [46] [47]
 Underfull \vbox (badness 4096) has occurred while \output is active []
 
  [48]
@@ -1861,42 +1866,42 @@ Underfull \vbox (badness 4467) has occurred while \output is active []
 
  [63]
 [64] [65] [66] [67]
-Underfull \hbox (badness 1062) in paragraph at lines 1134--1134
+Underfull \hbox (badness 1062) in paragraph at lines 1142--1142
  [][][][] 
  []
 
 
-Underfull \hbox (badness 1584) in paragraph at lines 1134--1134
+Underfull \hbox (badness 1584) in paragraph at lines 1142--1142
  [][][][] 
  []
 
 
-Underfull \hbox (badness 1412) in paragraph at lines 1138--1138
+Underfull \hbox (badness 1412) in paragraph at lines 1146--1146
  [][][][] 
  []
 
 
-Underfull \hbox (badness 3965) in paragraph at lines 1140--1140
+Underfull \hbox (badness 3965) in paragraph at lines 1148--1148
  [][][][] 
  []
 
 
-Underfull \hbox (badness 4673) in paragraph at lines 1140--1140
+Underfull \hbox (badness 4673) in paragraph at lines 1148--1148
  [][][][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1141--1141
+Underfull \hbox (badness 10000) in paragraph at lines 1149--1149
  [][][][] 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 1141--1141
+Underfull \hbox (badness 10000) in paragraph at lines 1149--1149
  [][][][] 
  []
 
 
-Underfull \hbox (badness 1412) in paragraph at lines 1145--1145
+Underfull \hbox (badness 1412) in paragraph at lines 1153--1153
  [][][][] 
  []
 
@@ -1912,7 +1917,7 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 Underfull \vbox (badness 2096) has occurred while \output is active []
 
  [92]
-Overfull \hbox (1.0597pt too wide) in paragraph at lines 1973--1974
+Overfull \hbox (1.0597pt too wide) in paragraph at lines 1981--1982
 [] []\T1/phv/b/n/10 Calculating the Overall-Activations[][] \T1/phv/m/n/10 (-20
 ) The new con-straint [][][][] gets
  []
@@ -1970,10 +1975,10 @@ Package logreq Info: Writing requests to 'arbeit.run.xml'.
  ) 
 Here is how much of TeX's memory you used:
  37813 strings out of 493315
- 689144 string characters out of 6143704
- 1107143 words of memory out of 5000000
+ 689169 string characters out of 6143704
+ 1108140 words of memory out of 5000000
  37943 multiletter control sequences out of 15000+600000
- 123423 words of font info for 291 fonts, out of 8000000 for 9000
+ 123298 words of font info for 289 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  65i,19n,76p,1885b,3171s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/usr/share/texmf-dist/fonts/enc/dvips/base/8r.enc}{/usr/share/texmf-dist/fon
@@ -2001,10 +2006,10 @@ courier/ucrro8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb>
 </usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb></usr/share/texmf-d
 ist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/
 helvetic/uhvro8a.pfb>
-Output written on arbeit.pdf (165 pages, 992832 bytes).
+Output written on arbeit.pdf (165 pages, 997805 bytes).
 PDF statistics:
- 4415 PDF objects out of 5155 (max. 8388607)
- 4144 compressed objects within 42 object streams
- 2361 named destinations out of 2487 (max. 500000)
+ 4417 PDF objects out of 5155 (max. 8388607)
+ 4146 compressed objects within 42 object streams
+ 2364 named destinations out of 2487 (max. 500000)
  41951 words of extra memory for PDF output out of 42996 (max. 10000000)
 
