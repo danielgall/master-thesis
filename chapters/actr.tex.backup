@@ -3,9 +3,7 @@
 
 Adaptive Control of Thought-Rational  (ACT-R) is a cognitive architecture, that allows to implement cognitive models that are executable by a computer to produce experimental results that can be compared to experimental data from experiments that have been conducted with humans.
 
-Because of the underlying theory which is the basis for the ACT-R cognitive architecture, modeling is facilitated, since the underlying concepts have not to be modelled again and again. On the other hand, it constrains the modeling process to, ideally, only plausible models.
-
-When talking about ACT-R, one can refer to the theory or the implementation. The theory gives a view which abstracts from implementational details that may be concerned when talking about implementation \FIXME{source}. In this work, implementation always refers to the vanilla Lisp implementation that can be downloaded from \cite{actr_homepage}.
+Because of the underlying theory which is the basis for the ACT-R cognitive architecture, modeling is facilitated, since the underlying concepts have not to be modelled again and again. On the other hand, it constrains the modeling process to, ideally, only plausible models. When talking about ACT-R, one can refer to the theory or the implementation. The theory gives a view which abstracts from implementational details that may be concerned when talking about implementation which is a specific instantiation of the theory \cite[unit 1, p. 1]{actr_tutorial}. In this work, implementation always refers to the vanilla Lisp implementation that can be downloaded from \cite{actr_homepage}.
 
 In this chapter, a short overview over the theory of ACT-R is given. First, the description is informal to provide a general image of how ACT-R works. Then, some important parts of the system are defined more formally in chapter \ref{implementation}, as soon as it is needed in the implementation. All of the information in this chapter refers to the theory. Implementation is discussed in chapter \ref{implementation}. A lot of the information in this chapter is based on \cite{anderson_how_2007, anderson_integrated_2004, taatgen_modeling_2006}, where a much more comprehensive discussion of the ACT-R theory including complex examples, referrings to the neuro-biology and the reasons why this particular modeling of human cognition has been chosen. In this work, only the basic concepts of ACT-R are presented.
 
@@ -14,6 +12,7 @@ In this chapter, a short overview over the theory of ACT-R is given. First, the 
 A central idea of ACT-R is the distinction between \emph{declarative} and \emph{procedural knowledge.} The declarative knowledge consists of simple facts, whereas the procedural knowledge contains information on what to do with those facts.
 
 \subsection{Modular organization}
+\label{actr:modular_organization}
 
 This approach leads to a modular organization of ACT-R with modules for each purpose needed to simulate human cognition. Figure \ref{fig:modular_organization} provides an overview of some of the default modules of ACT-R. For example, the declarative module stores the factual information (the declarative knowledge), the visual module perceives and processes the visual field, the procedural module holds the procedural information and controls the computational process. 
 
@@ -24,11 +23,11 @@ This approach leads to a modular organization of ACT-R with modules for each pur
     text width=5em, text centered, rounded corners, minimum height=3em]
 \tikzstyle{buffer} = [rectangle, draw, fill=yellow!20, 
     text width=5em, text centered, rounded corners, minimum height=3em]
-\tikzstyle{line} = [draw, -latex']
-\tikzstyle{doubleline} = [draw, latex-latex']
+\tikzstyle{line} = [draw, -latex]
+\tikzstyle{doubleline} = [draw, latex-latex]
     
-\begin{tikzpicture}[node distance = 2cm, auto]
- \matrix[row sep=2mm] (modules) {
+\begin{tikzpicture}[node distance = 2.2cm, auto]
+ \matrix[row sep=6mm] (modules) {
  \node[module] (goalmod) {goal module}; 
  \node[buffer, below right of=goalmod] (goalbuf) {goal buffer}; 
 &  \node[module] (imaginalmod) {imaginal module}; 
@@ -54,7 +53,7 @@ This approach leads to a modular organization of ACT-R with modules for each pur
     \p2=(visualmod.south),
      \p3=(visualmod.west),
     \p4=(manualmod.east) in
- node[module,  fill=red!20,  minimum width=\x4-\x3] at (\x1,\y2-7mm) (environment) {environment}; 
+ node[module,  fill=red!20,  minimum width=\x4-\x3, text width=6em] at (\x1,\y2-7mm) (environment) {environment}; 
 
     % Draw edges
   \path [doubleline] (goalmod) -- (goalbuf);
@@ -80,15 +79,82 @@ Each module is independent from the other modules and computations in the module
 
 However, each module can perform its computation only locally and has no access to computations of other modules. To communicate, modules have associated \emph{buffers}, where they can put a limited amount of information -- one primitive knowledge element -- and the procedural module can access each of these buffers. The information in a buffer could be one single fact retrieved from declarative memory or one visual object from the visual field perceived by the visual module. Information between modules is exchanged by the procedural module taking information from one buffer and putting it into another (with an optional computation on the way). This leads to a serial bottleneck in the computation, since every communication between modules has to go its way through the procedural module.
 
-In figure \ref{fig:recognize_act} the general computational process is illustrated by showing the \emph{recognize-act-cycle}: The procedural information is stored as rules that have a \emph{condition} and an \emph{action}. The condition refers to the so-called \emph{working memory}, which basically is the content of all the buffers. In the recognize-phase of the cycle, a suitable rule that matches the current state of the working memory is searched. If the condition of a rule holds, it \emph{fires} and performs its actions -- this is the act-phase of the cycle. Those actions can cause changes on the buffers, so the next rule may match the current state in the next recognize-part of the cycle. In the following sections, some of the modules and their precise interaction will be described in more detail.
+\begin{figure}[hbt]
+\centering
+% Define block styles
+\tikzstyle{module} = [rectangle, draw, fill=blue!20, 
+    text width=6em, text centered, rounded corners, minimum height=3em]
+\tikzstyle{procmodule} = [rectangle, draw, fill=blue!20,  text centered, rounded corners, minimum height=3em]
+\tikzstyle{buffer} = [rectangle, draw, fill=yellow!20, 
+    text width=6em, text centered, rounded corners, minimum height=3em]
+\tikzstyle{line} = [draw, -latex]
+\tikzstyle{doubleline} = [draw, latex-latex]
+
+\begin{tikzpicture}[remember picture, auto]
+\matrix[row sep=5mm, column sep=5mm] {
+& \coordinate (helper0) {};   \coordinate[right of=helper0] (helper1) {}; \\ 
+\coordinate (helper2) {}; &
+\node[procmodule, rectangle split, rectangle split parts=2, inner sep=2mm] (procmod) {
+procedural module
+\nodepart{second}
+\begin{tikzpicture}[node distance=3.5cm]
+\node[module] (procmem) {procedural memory};
+\node[module, right of=procmem] (patmatch) {pattern matching};
+\node[module, below of=patmatch, node distance=2cm] (prodexec) {production execution};
+\end{tikzpicture}
+};
+&
+\node[module] (declarative) {declarative module};
+\\
+&
+\node[buffer] (buffers) {buffers};
+\\
+\node[module] (visual) {visual module};
+&
+\node[module,  fill=red!20] (environment) {environment}; 
+&
+\node[module] (manual) {manual module};
+\\
+};
+
+\path (buffers.west) ++(0,-0.3) coordinate (bufsouthwest);
+\path[line] (visual) |- (bufsouthwest);
+\path (buffers.east) ++(0,-0.3) coordinate (bufsoutheast);
+\path[line] (manual) |- (bufsoutheast);
+\path[line] (environment) -- (visual);
+\path[line,latex-latex] (environment) -- (manual);
+
+%\path (patmatch.north) ++(0,0) coordinate (helper3);
+\path[line] (buffers) -| (helper2) |- (helper1) -| (patmatch.north);
+\path[line] (procmem) -- (patmatch);
+\path[line] (patmatch) -- (prodexec);
+
+\path[line] (declarative) |- (buffers.east);
+
+\path (buffers.east) ++(0,+0.3) coordinate (bufnortheast);
+\path[line] (prodexec) |- (bufnortheast);
+
+%\path  (prodexec.south)+(0,-1) node (belowprodex) {};
+%\path[draw] (prodexec.south)--(belowprodex.north);
+%\path 
+%\path[draw]  (belowprodex.north) -| (belowdecl);
+%(intersection of prodexec.east--prodexec.west and declarative.south east--declarative.north east)+(1,0) ;
+
+%\path[draw] (prodexec.south) -- + (0,-1) -|  (intersection of prodexec.east--prodexec.west and declarative.south east--declarative.north east) |- (buffers) ;
+\end{tikzpicture}
+\caption{Modules and communication in ACT-R. The procedural module is the heart of the computational system and consists of a procedural memory containing all the production rules, a pattern matching unit and an execution unit. The pattern matching unit checks if the current content of the buffers match the condition of a rule in the procedural memory. If a rule matches, it is executed by the execution unit. The execution may lead to buffer changes or requests. Additionally, the other modules may change the content of their buffers by a request which may lead to new rules matching the current content of the buffer. The procedural module can only apply one rule at a time. \cite{about_actr_homepage}}
+\label{fig:recognize_act}
+\end{figure}
+
+In figure \ref{fig:recognize_act} the general functionality of ACT-R is illustrated: The computational process is controled by the \emph{recognize-act-cycle}: The procedural information is stored as rules that have a \emph{condition} and an \emph{action}. The condition refers to the so-called \emph{working memory}, which basically is the content of all the buffers. In the recognize-phase of the cycle, a suitable rule that matches the current state of the working memory is searched. If the condition of a rule holds, it \emph{fires} and performs its actions -- this is the act-phase of the cycle. Those actions can cause changes on the buffers, so the next rule may match the current state in the next recognize-part of the cycle. In the following sections, some of the modules and their precise interaction will be described in more detail.
 
 \subsection{Declarative Knowledge}
 
-The declarative module organizes the factual knowledge as an associative memory. I.e., it consists of a set of concepts that are connected to each other in a certain way. Such elementary concepts are represented in form of chunks that can be seen as basic knowledge elements. They can have names, but those names are not critical for the description of the facts and just for readability in the theory. So, the definition of a chunk is based only on its connections. 
+The declarative module organizes the factual knowledge as an associative memory. I.e., it consists of a set of concepts that are connected to each other in a certain way. Such elementary concepts are represented in form of chunks that can be seen as basic knowledge elements. They can have names, but those names are not critical for the description of the facts and just for readability in the theory. So, the definition of a chunk is based only on its connections. However, in implementations, chunk names are used as unique identifiers for chunks.
 
 Chunks can have slots that are connected to other chunks or primitive elements. Such an element can be regarded as a chunk without any slots. For instance, the fact $5 + 2 = 7$ can be modeled as a chunk that is connected to the numbers 5, 2 and 7 (see figure \ref{fig:chunk_addition_fact}). Notice that in the figure each slot has an individual name. This is necessary to distinguish the connections of the chunks, otherwise the summands would be indistinguishable from the sum in the example.
 
-\begin{figure}[htb]
+\begin{figure}[hbt]
 \centering
 \tikzstyle{chunk} = [ellipse, draw]
 \tikzstyle{element} = [] 
@@ -98,27 +164,27 @@ Chunks can have slots that are connected to other chunks or primitive elements. 
  \node[chunk] (addition-fact) {addition-fact}; 
  \node[element, left of=addition-fact] (arg1) {5}; 
  \node[element, right of=addition-fact] (arg2) {2}; 
- \node[element, below of=addition-fact, node distance=1.5cm] (sum) {7}; 
+ \node[element, below of=addition-fact, node distance=2cm] (sum) {7}; 
 
     % Draw edges
-  \path[slot] (addition-fact) -- node[above] {arg1} (arg1);
+  \path[slot] (addition-fact) -- node[above] {arg\textsubscript{1}} (arg1);
   \path[slot] (addition-fact) -- node[above] {arg2} (arg2);
   \path[slot] (addition-fact) -- node {sum} (sum);
 \end{tikzpicture}
-\caption{A chunk of type \emph{addition-fact} and slots \emph{arg1}, \emph{arg2} and \emph{sum} which models the fact 5 + 2 = 7. The slots are connected to the primitive elements 5, 2 and 7.}
+\caption[A chunk of type \emph{addition-fact} and slots \emph{arg1}, \emph{arg2} and \emph{sum} which models the fact 5 + 2 = 7. The slots are connected to the primitive elements 5, 2 and 7.]{A chunk of type \emph{addition-fact} and slots \emph{arg1}, \emph{arg2} and \emph{sum} which models the fact 5 + 2 = 7. The slots are connected to the primitive elements 5, 2 and 7. Chunks are illustrated as ellipses, whereas primitive elements are simple text. A simple arrow (\tikz[baseline=-0.5ex]{\draw [slot] (0,0) -- (0.5,0);}) signifies that the chunk at the start of the arrow has the value at the end of the arrow in the slot with the name of the label of the arrow.}
 \label{fig:chunk_addition_fact}
 \end{figure}
 
 
 Thus, chunks are defined by their name and the values of their slots. When talking about chunk descriptions, often the term \emph{slot-value pairs} is used especially for partial chunk descriptions, i.e. descriptions which do not have a value for all possible slots. This simply refers to an arbitrary chunk that has the specified values in its slots (and the others are ignored).
 
-Each chunk is associated with a chunk-type that determines the slots a chunk can have. For example, the fact in figure \ref{fig:chunk_addition_fact} has the type \verb|addition-fact|. All chunks of this type must provide the slots \verb|arg1|, \verb|arg2| and \verb|sum|. For the chunk-types there is no upper limit of slots they can define. However, it is suggested to limit the number of slots to Miller's Number \label{millers_number} of $7 \pm 2$, for the reason of plausibility \cite[230]{stewart_deconstructing_2007}. 
+Each chunk is associated with a chunk-type that determines the slots a chunk can have. A chunk-type consists of a name which serves as unique identifier chunk-types and a list of slots the chunks of this type offer. For example, the fact in figure \ref{fig:chunk_addition_fact} has the type \emph{addition-fact}. All chunks of this type must provide the slots \emph{arg1}, \verb|arg2| and \verb|sum|. For the chunk-types there is no upper limit of slots they can define. However, it is suggested to limit the number of slots to Miller's Number \label{millers_number} of $7 \pm 2$, for the reason of plausibility \cite[230]{stewart_deconstructing_2007}. 
 
 \subsubsection{Buffers}
 
 As mentioned before, modules communicate through buffers by putting a limited amount of information into their associated buffers. More precisely, each buffer can hold only \emph{one chunk at a time}.
 
-For example, the declarative module has the retrieval buffer associated with it, which can hold one specific declarative chunk. The declarative module can put chunks into the buffer that can be processed by the procedural module, which is described in the next section. Note that the chunks in the buffers are copies of the original chunks in the module. Hence, changes applied to a chunk in the buffer do not affect the original chunks in the requested module. \FIXME{source}
+For example, the declarative module has the retrieval buffer associated with it, which can hold one specific declarative chunk. The declarative module can put chunks into the buffer that can be processed by the procedural module, which is described in the next section. Note that the chunks in the buffers are copies of the original chunks in the module. Hence, changes applied to a chunk in the buffer do not affect the original chunks in the requested module \cite[unit 1, pp. 18\psq]{actr_tutorial}.
 
 \subsection{Procedural Knowledge}
 \label{procedural_knowledge}
@@ -189,7 +255,7 @@ Requests to the \emph{visual-location buffer} specify a series of constraints in
 
 Requests to the \emph{visual-object system} specify a visual location and the visual module will move its attention to that location, create a new chunk representing the object at that location and put that chunk into the visual buffer \cite[unit 2, chapter 2.5.3]{actr_tutorial}. 
 
-These two kinds of requests to the visual module are summarized in table~\ref{tab:visual_module_requests}.
+These two kinds of requests to the visual module are summarized in table~\ref{tab:visual_module_requests}. The visual system and its capabilities are described in detail in \cite[unit 2]{actr_tutorial} where also the implementational details of the system are regarded.
 
 \begin{table}[hbt]
 \caption{Requests to the visual module}
@@ -206,18 +272,14 @@ Output & Visual location & Visual object\\
 \end{center}
 \end{table}
 
-The visual system and its capabilities are described in detail in \cite[unit 2]{actr_tutorial} where also the implementational details of the system are regarded.
-
 \subsubsection{The Imaginal Module}
 \label{actr:imaginal_module}
 
-The imaginal module is capable of creating new chunks. This is useful, if for instance the visual module produces a lot of new information in sequence (like reading a sequence of letters), but the visual-object buffer can hold only one chunk at once. To solve this problem, all the information could be stored in the slots of the goal chunk. However, since a goal chunk with a large amount of slots seems to be unplausible\footnote{As described in section \ref{millers_number}, one should stick to $7 \pm 2$ slots for each chunk.} and the number of read instances would have to be known in advance due to the static chunk-type definition, a better way to deal with this problem is to create new knowledge elements.
+The imaginal module, described in \cite[unit 2]{actr_tutorial}, is capable of creating new chunks. This is useful, if for instance the visual module produces a lot of new information in sequence (like reading a sequence of letters), but the visual-object buffer can hold only one chunk at once. To solve this problem, all the information could be stored in the slots of the goal chunk. However, since a goal chunk with a large amount of slots seems to be unplausible\footnote{As described in section \ref{millers_number}, one should stick to $7 \pm 2$ slots for each chunk.} and the number of read instances would have to be known in advance due to the static chunk-type definition, a better way to deal with this problem is to create new knowledge elements.
 
-This task can be achieved by using the imaginal module: On a request, it creates a new chunk of the type and with the slots stated in the request and puts it into its \emph{imaginal buffer}. Since the chunk in a buffer is stored in the declarative memory when the buffer is cleared\footnote{see section \ref{description_of_proc_actions}}, an unlimited amount of data can be produced and remembered by stating retrieval requests later on.
+This task can be achieved by using the imaginal module: On a request, it creates a new chunk of the type and with the slots stated in the request and puts it into its \emph{imaginal buffer}. Since the chunk in a buffer is stored in the declarative memory when the buffer is cleared,\footnote{see section \ref{description_of_proc_actions}} an unlimited amount of data can be produced and remembered by stating retrieval requests later on.
 
-It is important to mention that it takes the imaginal module $.2\,\mathrm{ms}$ to create a chunk. This amount of time is constant, but can be set by the modeler. Additionally, the imaginal module can only produce one chunk at a time\footnote{like every module can only handle one request at a time}.
-
-The imaginal module is described in \cite[unit 2]{actr_tutorial}.
+It is important to mention that it takes the imaginal module $.2\,\mathrm{ms}$ to create a chunk. This amount of time is constant, but can be set by the modeler. Additionally, the imaginal module can only produce one chunk at a time.\footnote{like every module can only handle one request at a time}
 
 \subsection{Example: Counting}
 \label{example_counting}
@@ -257,12 +319,12 @@ The next step is to define the goal chunk stored in the goal buffer. In this chu
 \tikzstyle{element} = [] 
 \tikzstyle{slot} = [draw, -latex]   
 
-\begin{tikzpicture}[node distance = 4cm, auto]
+\begin{tikzpicture}[node distance = 5.5cm, auto]
  \node[chunk] (goal-chunk) {goal-chunk: count}; 
- \node[element, above of=goal-chunk, node distance=1.5cm] (current-number) {2}; 
+ \node[element, left of=goal-chunk] (current-number) {2}; 
 
     % Draw edges
- \path[slot] (goal-chunk) -- node {current-number} (current-number);
+ \path[slot] (goal-chunk) -- node[above] {current-number} (current-number);
 \end{tikzpicture}
 \caption{The goal-chunk of type \emph{count} with the current number 2.}
 \label{fig:example_counting_goal_chunk}
@@ -271,25 +333,28 @@ The next step is to define the goal chunk stored in the goal buffer. In this chu
 
 In this example we assume that the model starts with this goal chunk in the goal buffer and the first count fact has been retrieved:
 
-\parbox{100mm}{\textbf{goal buffer:} goal-chunk of type count\\
-\noindent\hspace*{20mm} current-number $2$}
+\begin{center}
+\parbox{17em}{\textbf{goal buffer:} \emph{goal-chunk} of type \emph{count}\\
+\noindent\hspace*{15mm} current-number $2$}
 
-\parbox{100mm}{\textbf{retrieval buffer:} b of type count-fact\\
-\noindent\hspace*{20mm} first $2$\\
-\noindent\hspace*{20mm} second $3$}
+\parbox{17em}{\textbf{retrieval buffer:} \emph{b} of type \emph{count-fact}\\
+\noindent\hspace*{15mm} first $2$\\
+\noindent\hspace*{15mm} second $3$}
+\end{center}
 
-This notation indicates that the goal buffer holds a chunk with the name \emph{goal-chunk} of the type \emph{count}, which has the slot \emph{current-number} with the value $2$ (the same is valid analogously for the retrieval buffer).
+This notation indicates that the goal buffer holds a chunk with the name \emph{goal-chunk} of the type \emph{count}, which has the slot \emph{current-number} with the value $2$ (the same is valid analogously for the retrieval buffer). Now the rule to implement counting can be defined as:
 
-Now the rules to implement counting can be defined as:
+\tikzstyle{rule}=[rectangle, draw=Uulmin,  
+        rounded corners, anchor=west, text=white, text width=9cm]
 
 \begin{center}
 \begin{tikzpicture}[node distance=0.5cm]
-\node (count-rule) [rule, rectangle split, rectangle split parts=4, rectangle split part fill={Uulmin, Uulmin!45,Uulmin!45,Uulmin!80,Uulmin!80}] {
+\node (count-rule) [rule, rectangle split, rectangle split parts=5, rectangle split part fill={Uulmin, Uulmin!45,Uulmin!45,Uulmin!80,Uulmin!80}] {
         \textbf{count-rule}
-        \nodepart{second} IF the goal is to count, the current number is $n$
-        \nodepart{third}AND the retrieval buffer holds a chunk of type \emph{count-fact} with the \emph{first} value $n$ and the \emph{second} value $m$
-        \nodepart{fourth}THEN set the current number in the goal to $m$
-                    AND send a retrieval request for a chunk that has $m$ in its \emph{first} slot
+        \nodepart{two} IF the goal is to count, the current number is $n$
+        \nodepart{three}AND the retrieval buffer holds a chunk of type \emph{count-fact} with the \emph{first} value $n$ and the \emph{second} value $m$
+        \nodepart{four}THEN set the current number in the goal to $m$
+        \nodepart{five}AND send a retrieval request for a chunk that has $m$ in its \emph{first} slot
     };
 \end{tikzpicture}
 \end{center}
@@ -302,10 +367,12 @@ In this example, the rules have been defined in a very informal way. In the foll
 
 The example also uses the concept of \emph{variables}, which will be introduced more formally in chapter \ref{implementation} when talking about implementation. Variables allow rule conditions to act like patterns that can match various system states instead of defining a rule for each state, since computation is the same regardless of the actual values in the buffers.
 
-\section{Serial and Parallel Aspects of ACT-R}
+\subsection{Serial and Parallel Aspects of ACT-R}
 \label{serial_parallel_aspects}
 
 In the previous sections there were some remarks on the serial and parallel aspects of ACT-R. According to \cite[p. 68]{anderson_how_2007}, four types of parallelism and seriality can be distinguished:
+
+\enlargethispage{\baselineskip}
 
 \begin{description}
  \item[Within-Module Parallelism:] As mentioned above, one module is able to explore a big amount of data in parallel. For example, the visual module can inspect the whole visual field or the declarative module performs a massively parallel search over all chunks.
@@ -315,6 +382,8 @@ In the previous sections there were some remarks on the serial and parallel aspe
 \end{description}
 
 The procedural module is the central serial bottleneck in the system, since the whole communication between modules is going through the production system and the whole computation process is controlled there. The fact that only one rule can fire at a time leads to a serial overall computation. Another serial aspect is that some computations need to wait for the results of a module request. If no other rule matches in the time while the request is performed, the whole system has to wait for this calculation to finish. After the request, the module puts the result in its buffer and the rule waiting for this result can fire and computation is continued.
+
+\enlargethispage{\baselineskip}
 
 \section{Subsymbolic layer}
 \label{subsymbolic_layer}
@@ -334,42 +403,34 @@ Therefore, ACT-R provides a subsymbolic layer that introduces ``neural-like acti
 
 The activation $A_i$ of a chunk $i$ is a numerical value that determines if and how fast a chunk can be retrieved by the declarative module. Suppose there are, for example, two chunks that encode addition facts for the same two arguments (let them be 5 and 2), but with different sums (6 and 7). This could be the case, if, e.g., a child learned the wrong fact about the sum of 5 and 2. When stating a module request for an addition fact that encodes the sum of 5 and 2, somehow one of the two chunks has to be chosen by a certain method, since they are both matching the request. This is determined by the activation of the chunks: The chunk with the higher activation will be chosen.
 
-Additionally, a very low chunk activation can prevent a chunk from being retrieved: If the activation $A_i$ is less than a certain \emph{threshold} $\tau$, the chunk $i$ cannot be found.
-
-At last, activation determines also how fast a chunk is being retrieved: The higher the activation, the shorter the retrieval time.
+Additionally, a very low chunk activation can prevent a chunk from being retrieved: If the activation $A_i$ is less than a certain \emph{threshold} $\tau$, the chunk $i$ cannot be found. At last, activation determines also how fast a chunk is being retrieved: The higher the activation, the shorter the retrieval time.
 
 \subsubsection{Base-Level Activation}
 \label{base_level_activation}
 
 The activation $A_i$ of a chunk $i$ is defined as:
-
 \begin{equation}
  \label{eq:activation_equation_simpl}
  A_i = B_i + \Gamma
 \end{equation}
-
-where $B_i$ is the \emph{base-level activation} of the chunk $i$. $\Gamma$ is a context component that will be described later on. Equation \eqref{eq:activation_equation_simpl} is a simplified variant of the \emph{Activation Equation} which is completed in equation~\eqref{eq:activation_equation}.
+where $B_i$ is the \emph{base-level activation} of the chunk $i$. $\Gamma$ is a context component that will be described later on. Equation \eqref{eq:activation_equation_simpl} is a simplified variant of the \emph{Activation Equation} which is completed in equation~\eqref{eq:activation_equation}. 
 
 The base-level activation is a value associated with each chunk. It depends on how often a chunk has been practiced and when this practice has been performed. A chunk is \emph{practiced} when it is retrieved. Hence, $B_i$ of chunk $i$ is defined as:
-
 \begin{equation}
 \label{eq:base_level_learning}
 B_i = \mathrm{ln}\left(\sum_{j=1}^n{t_j^{-d}}\right)
 \end{equation}
-
-where $t_j$ is the time since the $j$th practice, $n$ the number of overall practices of the chunk and $d$ is the decay rate that describes how fast the base-level activation decreases if a chunk has not been practiced (how fast a chunk will be forgotten). Usually, $d$ is set to $0.5$ \cite[p. 1042]{anderson_integrated_2004}. Equation \eqref{eq:base_level_learning} is called \emph{Base-Level Learning Equation}, as it defines the adaptive learning process of the base-level value.
+where $t_j$ is the time since the $j$th practice, $n$ the number of overall practices of the chunk and $d$ is the decay rate that describes how fast the base-level activation decreases if a chunk has not been practiced (how fast a chunk will be forgotten). Usually, $d$ is set to $0.5$ \cite[p. 1042]{anderson_integrated_2004}. Equation \eqref{eq:base_level_learning} is called \emph{Base-Level Learning Equation} as it defines the adaptive learning process of the base-level value.
 
 This equation is the result of a rational analysis by Anderson and Schooler. It reflects the log odds that a chunk will reappear depending on when it has appeared in the past \cite[33]{taatgen_modeling_2006}. This analysis led to the \emph{power law of practice} \cite[1042]{anderson_integrated_2004}. In \cite[8--11]{anderson_implications_2000} equation \eqref{eq:base_level_learning} is motivated in more detail by describing the power law of learning/practice, the power law of forgetting and the multiplicative effect of practice and retention with some data. Shortly, it states that if a particular fact is practiced, there is an improvement of performance which corresponds to a power law. At the same time, performance degrades with time corresponding to a power law. Additionally, they state that if a fact has been practiced a lot, it will not be forgotten for a longer time.
 
 \subsubsection{Activation Spreading}
 
 In ACT-R, the basic idea of activation is that it consists of two parts: The base-level component described above, and a context component. Every chunk in the current context has a certain amount of activation that can spread over the declarative memory and enhance activation of other chunks that are somehow connected to those chunks in the context. The activation equation \eqref{eq:activation_equation_simpl} is extended as follows:
-
 \begin{equation}
 \label{eq:activation_equation}
  A_i = B_i + \sum_{j \in C}{W_j S_{ji}} + \varepsilon
 \end{equation}
-
 where $W_j$ the \emph{attentional weighting} of chunk $j$, $S_{ji}$ the \emph{associative strength} from chunk $j$ to chunk $i$ and $C$ is the \emph{current context}\label{current_context}, usually defined as the set of all chunks that are in a buffer \cites[1042]{anderson_integrated_2004}[33]{taatgen_modeling_2006}[unit 5]{actr_tutorial}. The chunks in the current context are often referred to as \emph{sources of activation}. $\varepsilon$ is a noise value ``generated according to a logistic distribution'' \cite[unit 4, p. 4]{actr_tutorial}. Figure \ref{fig:chunk_activation} illustrates the addition-fact $5 + 2 = 7$ with the corresponding quantities introduced in the last equation. 
 
 \begin{figure}[htb]
@@ -403,23 +464,18 @@ depending on the version of the ACT-R theory \cites[1042]{anderson_integrated_20
 \label{actr:fan_effect}
 
 In equation \eqref{eq:activation_equation} the strength of association $S_{ji}$ from a chunk $j$ to a chunk $i$ is used to determine the activation of a chunk $i$.  In the ACT-R theory, the value of $S_{ji}$ is determined by the following rule: If chunk $j$ is not a value in the slots of chunk $i$ and $j \neq i$, then $S_{ji}$ is set to 0. Otherwise $S_{ji}$ is set to: 
-
 \begin{equation}
 \label{eq:assoc_strength}
 S_{ji} = S - \mathrm{ln}(\mathrm{fan}_j)
 \end{equation}
-
 where $\mathrm{fan}_j$ is the number of facts associated to term $j$ \cite[1042]{anderson_implications_2000}. In more detail: ``$\mathrm{fan}_j$ is the number of chunks in declarative memory in which $j$ is the value of a slot plus one for chunk $j$ being associated with itself'' \cite[unit 5, p. 2]{actr_tutorial}. Hence, equation \eqref{eq:assoc_strength} states that the associative strength from chunk $j$ to $i$ decreases the more facts are associated to $j$.
 
-This is due to the \emph{fan effect:} The more facts a person studies about a certain concept, the more time he or she needs to retrieve a particular fact of that concept \cite[186]{anderson_fan_1999}. This has been demonstrated in an experiment presented in \cite{anderson_fan_1999}, where every participant studied facts about persons and locations like:
-
+This is due to the \emph{fan effect:} The more facts a person studies about a certain concept, the more time he or she needs to retrieve a particular fact of that concept \cite[186]{anderson_fan_1999}. This has been demonstrated in an experiment presented in \cite{anderson_fan_1999}, where every participant studied facts about persons and locations like for example:
 \begin{itemize}
  \item A hippie is in the park.
  \item A hippie is in the church.
  \item A captain is in the bank.
- \item \dots
 \end{itemize}
-
 For every person the participants studied either one, two or three facts. Afterwards, they were asked to identify targets, that are sentences they studied, and foils, i.e. sentences constructed from the same persons and locations, but that were not in the original set of sentences. ``The term \emph{fan} refers to the number of facts associated with a particular concept'' \cite[186]{anderson_fan_1999}. Figure~\ref{fig:fans} represents an example chunk network of the studied sentences with their fan, $S_{ji}$ and $B_i$ values.
 
 \begin{figure}[htb]
@@ -465,24 +521,22 @@ For every person the participants studied either one, two or three facts. Afterw
 \path[draw] (fan) -- (fanlabel);
 \path[draw] (bi) -- (d);
 \end{tikzpicture}
-\caption{The ellipses represent chunks which encode one fact like ``a hippie is in the park'' (marked chunk $i$). The words are primitive elements. The special arrows show the direction of activation spreading from an element to a chunk. The numbers in the chunks signify the fan of the associated element, e.g. the fan of the element \emph{hippie} is 3. The associative strength of the element hippie to the marked chunk $i$ is $S_{\mathrm{hippie},i} = S - \mathrm{ln}(\mathrm{fan_{hippie}}) = S - \mathrm{ln}(3)$. \cite[fig.~6]{anderson_integrated_2004}}
+\caption{The ellipses represent chunks which encode one fact like ``a hippie is in the park'' (highlighted chunk $i$). The words are primitive elements. The special arrows show the direction of activation spreading from an element to a chunk. The numbers in the chunks signify the fan of the associated element, e.g. the fan of the element \emph{hippie} is 3. The associative strength of the element hippie to the highlighted chunk $i$ is $S_{\mathrm{hippie},i} = S - \mathrm{ln}(\mathrm{fan_{hippie}}) = S - \mathrm{ln}(3)$. \cite[fig.~6]{anderson_integrated_2004}}
 \label{fig:fans}
 \end{figure}
 
-The result of the experiment was, that the more facts are associated with a certain concept, the higher the retrieval time for a particular fact about that concept was.
-
-In the ACT-R theory, this result has been integrated in the calculation of the strengths of association: In equation \eqref{eq:assoc_strength} the associative strength decreases with the number of associated elements. The value $S$ is a model-dependent constant, but in many models estimated about 2 \cite[1042]{anderson_integrated_2004}. Modelers should take notice of setting $S$ high enough that all associative strengths in the model are positive \cite[unit 5, p. 3]{actr_tutorial}. Figure \ref{fig:activation_spreading} illustrates the activation spreading process with respect to the associative strengths.
+The result of the experiment was, that the more facts are associated with a certain concept, the higher the retrieval time for a particular fact about that concept was. In the ACT-R theory, this result has been integrated in the calculation of the strengths of association: In equation \eqref{eq:assoc_strength} the associative strength decreases with the number of associated elements. The value $S$ is a model-dependent constant, but in many models estimated about 2 \cite[1042]{anderson_integrated_2004}. Modelers should take notice of setting $S$ high enough that all associative strengths in the model are positive \cite[unit 5, p. 3]{actr_tutorial}. Figure \ref{fig:activation_spreading} illustrates the activation spreading process with respect to the associative strengths.
 
 \begin{figure}[htb]
 \centering
 \tikzstyle{chunk} = [ellipse, fill=blue!20, draw, text centered, text width=3em, minimum height=1cm]
-\tikzstyle{source} = [rectangle, fill=blue!20, draw, text centered, text width=3em, minimum height=1cm]
+\tikzstyle{source} = [rectangle, fill=blue!20, draw, text centered, text width=4em, minimum height=1cm]
 \tikzstyle{buffer} = [rectangle, fill=yellow!20, draw, text centered, minimum height=1cm]
 \tikzstyle{empty} = [ellipse, text centered, text width=3em, minimum height=1cm]
 \tikzstyle{line} = [draw,diamond-latex]
 
 \begin{tikzpicture}[remember picture]
-\matrix[column sep=2cm,row sep=5mm] {
+\matrix[column sep=2cm,row sep=2mm] {
 &\node[source] (source1) {$\mathrm{source_1}$}; 
 & &
 \node[chunk] (c1) {$\mathrm{chunk_1}$};\\
@@ -511,25 +565,21 @@ In the ACT-R theory, this result has been integrated in the calculation of the s
 \path[line] (source2.east) --  node[below right, near start] {$S_{2,2}$} (c2.west);
 \path[line] (source2.south east) --  node[below right, near start] {$S_{2,3}$} (c3.west);
 \end{tikzpicture}
-\caption{The goal buffer holds a chunk with two slots wich therefore are sources of activation. The special arrows signify the spreading of activation from those sources to the chunks in the declarative memory. The attentional weighting values $W_1$ and $W_2$ determine how much of the overall amount of activation spreads from each single source. If there are only those two sources, the $W_i$ are set to $\frac{1}{2}$. From each source the activation may spread to the chunks in the declarative memory. The amount of spreading activation depends on the connection between the source chunk and the chunk in the memory. If the source chunk does not appear in the slots of a chunk, the value of the associative strength from the source $j$ to the chunk $i$ is $S_{ji} = 0$. Otherwise, if the source appears in the slots of a chunk, the associative strength depends on the fan value of the source chunk -- the higher the fan of the source, the lower the associative strength. I.e. if the source chunk appears in the slots of many chunks, the value of the associative strength will be lower than if the connection is exclusive.}
+\caption{The goal buffer holds a chunk with two slots wich therefore are sources of activation. The special arrows signify the spreading of activation from those sources to the chunks in the declarative memory. The attentional weighting values $W_1$ and $W_2$ determine how much of the overall amount of activation spreads from each single source. If there are only those two sources, the $W_i$ are set to $\frac{1}{2}$. From each source the activation may spread to the chunks in the declarative memory. The amount of spreading activation depends on the connection between the source chunk and the chunk in the memory. If the source chunk does not appear in the slots of a chunk, the value of the associative strength from the source $j$ to the chunk $i$ is $S_{ji} = 0$. Otherwise, if the source appears in the slots of a chunk, the associative strength depends on the fan value of the source chunk -- the higher the fan of the source, the lower the associative strength. I.e. if the source chunk appears in the slots of many chunks, the value of the associative strength will be lower than if the connection is exclusive. \cite[unit 5]{actr_tutorial}}
 \label{fig:activation_spreading}
 \end{figure}
 
 \subsubsection{Latency of Retrieval}
 
 As mentioned before, the activation of a chunk affects if the chunk can be retrieved (depending on a threshold and the activation values of the other matching chunks). In addition, activation also has an effect on the retrieval time of a chunk:
-
 \begin{equation}
 \label{eq:retrieval_latency}
 T_i = F \cdot \mathrm{e}^{-A_i}
 \end{equation}
-
 where $T_i$ is the \emph{latency} of retrieving chunk $i$, $A_i$ the activation of this chunk, as defined in equation \eqref{eq:activation_equation}, and $F$ the \emph{latency factor}, which is usually estimated to be
-
 \begin{equation}
 F \approx 0.35\mathrm{e}^\tau
 \end{equation}
-
 where $\tau$ is the retrieval threshold as mentioned in section \ref{activation}, but $F$ can also be set individually by the modeller. Nevertheless, in \cite[1042]{anderson_integrated_2004} it is stated that the relationship of the retrieval threshold and the latency factor in equation \eqref{eq:retrieval_latency} seems to be suitable for a lot of models.
 
 \subsection{Production Utility}
@@ -540,12 +590,10 @@ For the production system, there is the subsymbolic concept of \emph{production 
 In ACT-R, the production utility is a number attached to each production rule in the system. Just like with activation of chunks, the production rule with the highest utility will be chosen, if there is more than one matching rule. The utilities can be set statically by the modeler, but they can also be learned automatically by practice.
 
 In the current version of the ACT-R theory, a reinforcement learning rule based on the Rescorla-Wagner learning rule \cite{rescorla_wagner_1972} has been introduced. The utility $U_i$ of a production rule $i$ is defined as:
-
 \begin{equation}
 \label{eq:utility_learning}
 U_i(n) = U_i(n - 1) + \alpha \left(R_i(n) - U_i(n - 1)\right)
 \end{equation}
-
 where $\alpha$ is the \emph{learning rate} which is usually set around .2 and $R_i(n)$ is the reward the production rule $i$ receives at its $n$\textsuperscript{th} application \cite[160--161]{anderson_how_2007}. This leads the utility of a production rule being gradually adjusted to the average reward the rule receives \cite[6--7]{actr_tutorial}. 
 
 Usually, rewards can occur at any time and it is not clear which production rule will be strengthened by the reward. In \citetitle{anderson_how_2007} \citeauthor{anderson_how_2007} describes an example, where a monkey receives a squirt of juice a second after he presses a button \cite[161]{anderson_how_2007}. Now, the question is, which production rule is rewarded, since between the reward and the firing of a rule there always is a break. In ACT-R, every production that has been fired since the last reward event will be rewarded, but the more time lies between the reward and the firing of the rule, the less rewarded the particular rule gets. The reward for a rule is defined as the amount of external reward minus the the time from the rule to the reward. This implies, that the reward has to be measured in units of time, e.g., how much time is a monkey willing to spend to get a squirt of juice? \cite[161]{anderson_how_2007}
@@ -586,11 +634,11 @@ In \cite{taatgen_production_2003}, \citeauthor{taatgen_production_2003} present 
 
 \subsection{Subsymbolic Layer}
 
-The concepts introduced in section~\ref{subsymbolic_layer} are a kind of learning: The practice of particular facts strengthens the chunks encoding this fact and chunks that are not practiced are forgotten over time\footnote{This is the concept of base-level learning as described in section~\ref{base_level_activation}}. Additionally, associative weights are learned from the current context. These processes adapt to the problems a particular human mind is confronted with and thereby work autonomously.
+The concepts introduced in section~\ref{subsymbolic_layer} are a kind of learning: The practice of particular facts strengthens the chunks encoding this fact and chunks that are not practiced are forgotten over time.\footnote{This is the concept of base-level learning as described in section~\ref{base_level_activation}} Additionally, associative weights are learned from the current context. These processes adapt to the problems a particular human mind is confronted with and thereby work autonomously.
 
 The same is valid for production rules: Over time, the experience tells us, which strategies might be successful in certain situations and which are not. This process is also called \emph{conditioning} and described in equation~\eqref{eq:utility_learning}.
 
 \section{Experiment Environment}
 \label{experiment_environment}
 
-In experiments conducted with humans, the test subjects are confronted with visual or aural stimuli very often, for instance in the fan effect experiment described in section~\ref{actr:fan_effect} on page~\pageref{actr:fan_effect} a permutation of sentences over some objects have been shown and people had to remember the combinations. ACT-R provides an environment, where visual stimuli, mouse gestures or clicks, window openings etc. can be produced or measured respectively, so experiments can be run with both humans and the implemented model using the same environment. The model is then able to perform clicks or write text on the same graphical user interface as the humans are confronted with. However, this part of ACT-R will not be subject of this particular work, which examines the fundamental concept of the ACT-R theory first.
+In experiments conducted with humans, the test subjects are very often confronted with visual or aural stimuli, for instance in the fan effect experiment described in section~\ref{actr:fan_effect} on page~\pageref{actr:fan_effect} a permutation of sentences over some objects has been shown and people had to remember the combinations. ACT-R provides an environment, where visual stimuli, mouse gestures or clicks, window openings etc. can be produced or measured respectively, so experiments can be run with both humans and the implemented model using the same environment. The model is then able to perform clicks or write text on the same graphical user interface as the humans are confronted with. However, this part of ACT-R will not be subject of this particular work, which examines the fundamental concept of the ACT-R theory first.

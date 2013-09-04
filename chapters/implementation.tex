@@ -36,11 +36,11 @@ $\rel{HasSlot} \subseteq C \times \mathcal{S} \times V$ and $\rel{Isa} \subseteq
 
 The $\rel{Isa}$ relation has to be right-unique and left-total, so each chunk has to have exactly one type. The following functions are defined:
 \begin{align*}
-\fun{slots}: C \rightarrow \mathcal{S} \times V &\\
-\fun{slots}(c) = \{ \enspace (s,v) \enspace | \enspace (c,s,v) \in HasSlot \enspace \}&\\
-\\
-\fun{slots}: \mathcal{T}_{\var{name}} \rightarrow \mathcal{S} &\\
-      \fun{slots}(t) = 
+&\fun{slots}: C \rightarrow \mathcal{S} \times V \\
+&\fun{slots}(c) = \{ \enspace (s,v) \enspace | \enspace (c,s,v) \in HasSlot \enspace \} \enspace \text{and}\\
+\vspace{0.8\baselineskip}
+&\fun{slots}: \mathcal{T}_{\var{name}} \rightarrow \mathcal{S}\\
+&\fun{slots}(t) = 
 \left\{                     
   \begin{array}{ll}         
     S & \mathord{\mathit{for}} \enspace (t,S) \in \mathcal{T} \\ 
@@ -106,9 +106,7 @@ Declarative knowledge is represented as a network of chunks, defined by the two 
 % chunk_type_has_slot(ChunkTypeName, SlotName).
 \end{lstlisting}
 
-The \lstinline|chunk_type/1| constraint represents the set $\mathcal{T}$ of chunk-types in the store, but refers only to the chunk-type names. The set of slots of a chunk-type is specified by the \lstinline|chunk_type_has_slot/2| constraint, i.e. for a chunk-type $T \in \mathcal{T}$, with $T = (t, S)$, there exists a \texttt{chunk\_type(t)} and for every slot $s \in S$ there is a constraint \lstinline|chunk_type_has_slot(t,s)| in the constraint store.
-
-For the chunks, the following constraints are defined:
+The \lstinline|chunk_type/1| constraint represents the set $\mathcal{T}$ of chunk-types in the store, but refers only to the chunk-type names. The set of slots of a chunk-type is specified by the \lstinline|chunk_type_has_slot/2| constraint, i.e. for a chunk-type $T \in \mathcal{T}$, with $T = (t, S)$, there exists a \texttt{chunk\_type(t)} and for every slot $s \in S$ there is a constraint \lstinline|chunk_type_has_slot(t,s)| in the constraint store. For the chunks, the following constraints are defined:
 
 \begin{lstlisting}
 :- chr_constraint chunk(+,+).
@@ -122,8 +120,9 @@ The \lstinline|chunk/2| constraint represents both the set $C$ of chunks and the
 
 Note that all values in the just presented constraints have to be ground. This is a demand claimed by the original ACT-R implementation and makes sense, since each value in a slot of a chunk is a real, ground value and the concept of variables does not have an advantage in this context, because every element that can be stored in the brain is assumed to be known by the brain.
 
-Additionally, from the definition of a chunk store it is known that the $\rel{Isa}$ relation has to be left-total and right-unique. Therefore, for every chunk \lstinline|c| in the store, exactly one \lstinline|chunk(c,t)| constraint has to be in the store. Due to type-consistency, for each \lstinline|chunk_type_has_slot(t,s)| constraint a \lstinline|chunk_has_slot(c,s,v)| constraint has to be defined. If it should be expressed that a chunk has an empty slot, the special chunk name \lstinline|nil| can be used as slot value to indicate that. Note that \lstinline|nil| must not be the name of a regular chunk or chunk-type.
+Additionally, from the definition of a chunk store it is known that the $\rel{Isa}$ relation has to be left-total and right-unique. Therefore, for every chunk \lstinline|c| in the store, exactly one \lstinline|chunk(c,t)| constraint has to be in the store. Due to type-consistency, for each constraint \lstinline|chunk_type_has_slot(t,s)| a \lstinline|chunk_has_slot(c,s,v)| constraint has to be defined. If it should be expressed that a chunk has an empty slot, the special chunk name \lstinline|nil| can be used as slot value to indicate that. Note that \lstinline|nil| must not be the name of a regular chunk or chunk-type.
 
+%\raggedbottom
 \begin{example}
 \label{ex:addition_fact_chr}
 The chunk and chunk-type in example~\ref{ex:addition_fact_formal} are represented as:
@@ -140,6 +139,7 @@ chunk_has_slot(a,arg2,2)
 chunk_has_slot(a,sum,7)
 \end{lstlisting}
 \end{example}
+%\flushbottom
 
 
 \subsubsection{Distinction of Elements and Chunks}
@@ -252,7 +252,8 @@ On top of the rules in listing~\ref{lst:add_chunk_rules}, there must be added a 
 
 The following rules create a new chunk type:
 
-\begin{lstlisting}[caption={rules for \texttt{add\_chunk\_type}}]
+%[caption={rules for \texttt{add\_chunk\_type}}]
+\begin{lstlisting}
 <<add_chunk_type(CT, [])>> <=> 
   chunk_type(CT).
 <<add_chunk_type(CT, [S|Ss])>> <=> 
@@ -286,16 +287,15 @@ This method removes all occurrences of a chunk from the store. I.e., all \lstinl
 
 This method creates a chunk specification as defined in section~\ref{chunk_specification} from the chunk name of a chunk in the store.
 
-\begin{lstlisting}[caption={rules for \texttt{return\_chunk}}]
+%[caption={rules for \texttt{return\_chunk}}]
+\begin{lstlisting}
 <<chunk(ChunkName, ChunkType)>> \ <<return_chunk(ChunkName,Res)>> <=> 
   <<<var(Res)>>> | 
   build_chunk_list(chunk(ChunkName, ChunkType, []),Res).
-
 <<chunk_has_slot(ChunkName, S, V)>> \ <<build_chunk_list(chunk(ChunkName, ChunkType, L), Res)>> <=> 
   <<<\+member((S,V),L)>>> | 
-  build_chunk_list(chunk(ChunkName, ChunkType, [(S,V)|L]),Res).
-  
-build_chunk_list(X,Res) <=> Res=X.
+  build_chunk_list(chunk(ChunkName, ChunkType, [(S,V)|L]),Res).  
+<<build_chunk_list(X,Res)>> <=> Res=X.
 \end{lstlisting}
 
 The first rule creates the initial chunk specification with name and type set, but without any slot specification. This initial representation is handed to the \lstinline|build_chunk_list| constraint. The second rule adds a slot-value pair from the store to the list of slot-value pairs in the specification and builds the next chunk specification from this new representation. In the last rule, the process terminates if no other rule can fire any more. Then the result is bound to the handed specification.
@@ -410,7 +410,7 @@ Generally, a condition is either a \emph{buffer test}, i.e. a specification of s
 If the chunks in the buffers pass all buffer tests specified by the rule, the rule can fire, i.e. its right hand side will be applied. The LHS is a conjunction of buffer tests, i.e. there is no specific order for the tests \cite[p. 165]{actr_reference}.
 
 \begin{example}[counting example -- left hand side]
-The left hand side of the counting rule specified in the example in section~\ref{example_counting} could be defined as follows:
+This example introduces the ACT-R syntax to define the left hand side of a production rule. The left hand side of the counting rule specified in the example in section~\ref{example_counting} can be defined as follows:\enlargethispage{-\baselineskip}
 
 \begin{lstlisting}
 (p count-rule
@@ -424,8 +424,6 @@ The left hand side of the counting rule specified in the example in section~\ref
 ==>
   ... )
 \end{lstlisting}
-
-\enlargethispage{-\baselineskip}
 
 The condition part consists of two buffer tests:
 
@@ -441,7 +439,7 @@ For the right hand side of a rule the following actions are allowed:
 
 \begin{description}
  \item[Buffer Modifications] of the form
-\begin{lstlisting}
+\begin{lstlisting}[aboveskip=0.5\baselineskip]
 =buffer>
   s  v
   ...
@@ -450,7 +448,7 @@ For the right hand side of a rule the following actions are allowed:
 They are indicated by the buffer modifier \lstinline|=| right before the buffer name and are specified through a list of slot-value pairs. Note that this list can be incomplete and must not contain a \lstinline|isa| specification. It leads to all slots mentioned in the modification action of a buffer being replaced by the specified values.
 
  \item[Buffer Requests] of the form
-\begin{lstlisting}
+\begin{lstlisting}[aboveskip=0.5\baselineskip]
 +buffer>
   s  v
   ...
@@ -459,14 +457,12 @@ They are indicated by the buffer modifier \lstinline|=| right before the buffer 
 Requests are indicated by the buffer modifier \lstinline|+| and specified by a list of slot-value pairs. A request will be sent to the module of the specified buffer which reacts to the transmitted chunk of the request specification (in form of the slot-value pairs). The semantics of a request depends on the module, but the buffer is always first cleared before stating the request.
  \item[Buffer Clearings] of the form
  
-\begin{lstlisting}
+\begin{lstlisting}[aboveskip=0.5\baselineskip]
 -buffer>
 \end{lstlisting}
 
 Clearings are indicated by the buffer modifier \lstinline|-|. When a buffer is cleared, the chunk it contains will be removed from the chunk-store of the buffer system and then be added to the declarative memory. 
 \end{description}
-
-\enlargethispage{-2\baselineskip}
 
 \begin{example}[counting example]
 \label{ex:counting}
@@ -620,18 +616,15 @@ The production rule in example~\ref{ex:counting} can be translated to:
 A buffer query
 
 \begin{lstlisting}
-...
 ?buffer>
   state  bstate 
 ...
-==> ...
 \end{lstlisting}
 
 on the LHS of a production rule can be translated to the following CHR rule head:
 
 \begin{lstlisting}
-...
-<<buffer_state(buffer,bstate)>> ... ==> ...
+<<... buffer_state(buffer,bstate) ...>> ==> ...
 \end{lstlisting}
 
 \subsection{The Production Rule Grammar}
@@ -672,7 +665,7 @@ $\textrm{bound-variable}$ ::= a variable which is used in the $\textrm{buffer-te
 \subsubsection{The Order of Rule Applications}
 \label{implementation:rule_application_order}
 
-In the current translation scheme, the order of the rule applications does not match the semantics as described in the ACT-R theory.\footnote{see section~\ref{procedural_knowledge}} Consider the following rules in a compact notation:
+In the current translation scheme, the order of the rule applications does not match the semantics as described in the ACT-R theory (see section~\ref{procedural_knowledge}). Consider the following rules in a compact notation:
 
 \begin{lstlisting}
 =b1>
@@ -762,7 +755,6 @@ The example would be modified as follows:
 buffer_change(b1,chunk(_,_,[(s1,v2)])),
 buffer_change(b2,chunk(_,_,[(s,x)])),
 fire.
-
 <<buffer(b1,C),
   chunk(C,foo),
   chunk_has_slot(C,s1,v2)
@@ -983,14 +975,14 @@ Note that in this case, no binding occurs, since both, \lstinline|Bar| and \lsti
 
 The concept of negation-as-absence as described in \cite[147\psqq]{fru_chr_book_2009} is provided by many production rule systems. It enables the programmer to negate a fact in the sense that the fact is not explicitly in the store and therefore the rule is applicable -- so the programmer asks for the absence of a particular fact.
 
-At the first glance, the slot modifiers seem to implement this concept, but this is not the case: All negated slot tests in ACT-R can be reduced to simple built-in guard checks, because the chunks in the store are always described completely and the values are ground, so simple built-in checks work automatically. This also works for invalid slot-tests that ask for slots which are not offered by the chunk-type they ask for. Then there will never be a constraint matching the head of the rule due to type consistency. With these restrictions, ACT-R avoids the problems that come with negation-as-absence as they are explained in \cite[147\psqq]{fru_chr_book_2009} and the translation of such tests to CHR is very simple.
+At the first glance, the slot modifiers seem to implement this concept, but this is not the case: All negated slot tests in ACT-R can be reduced to simple built-in guard checks, because the chunks in the store are always described completely and the values are ground, so simple built-in checks work automatically. This also works for invalid slot-tests that ask for slots which are not offered by the chunk-type they ask for. Then there will never be a constraint matching the head of the rule due to type consistency. With these restrictions, ACT-R avoids the problems that come with negation-as-absence as they are explained in \cite[147\psqq]{fru_chr_book_2009} and the translation of such tests to CHR is very simple.\looseness=-1
 
 \subsubsection{Empty Slots}
 \label{empty_slots}
 
 An important special case in the semantics of ACT-R production rules is that if there is a slot test specified, a potential chunk only matches if it really has a value in this slot. Chunks that have \lstinline|nil| in a slot specified in a buffer test will not match the test. Hence, variables can not be used to test if two slots have the same value and the value is \lstinline|nil|, since every positive slot test involving \lstinline|nil| fails automatically \cite[p. 164, section ``Variables'', last sentence]{actr_reference}.
 
-In CHR this special case can be handled by adding a guard for each variable occurring in a positive slot-test checking that this variable does not equal \lstinline|nil|. For negated slot tests, this is not the case: 
+In CHR this special case can be handled by adding a guard for each variable occurring in a positive slot-test checking that this variable does not equal \lstinline|nil|. For negated slot tests, this is not the case: The following rule matches also a chunk with an empty \lstinline|spam| slot:
 
 \begin{lstlisting}
 =buffer>
@@ -998,7 +990,7 @@ In CHR this special case can be handled by adding a guard for each variable occu
   -spam  4
 \end{lstlisting}
 
-matches also a chunk with an empty \lstinline|spam| slot (\lstinline|nil| in its \lstinline|spam| slot).
+
 
 \subsubsection{Outputs}
 
@@ -1106,6 +1098,7 @@ A buffer request can now be handled as follows:
 
 \begin{lstlisting}[caption={Retrieval Request in CHR}, label=lst:retrieval_request_symbolic]
 <<buffer(BufName, ModName, _) \ buffer_request(BufName, Chunk)>> <=>
+  % module is busy now
   set_buffer_state(BufName,busy),
   % clear buffer immediately
   buffer_clear(BufName), 
@@ -1137,57 +1130,63 @@ It is important to mention, that in the figure, each component which is included
 
 \begin{sidewaysfigure}[p]
 \centering
- \begin{tikzpicture}
+\begin{tikzpicture}
 \begin{umlcomponent}{model}
-  \umlbasiccomponent[y=1.5]{user-defined rules}
-  \begin{umlcomponent}[x=5]{core}
-    \begin{umlcomponent}[y=-3]{buffers}
+  \umlbasiccomponent[x=1.5,y=-4]{user-defined rules}
+  \begin{umlcomponent}[]{core}
+    \begin{umlcomponent}[x=4]{buffers}
         \umlbasiccomponent{chunk-store}
     \end{umlcomponent}
-    \umlbasiccomponent[x=1.5,y=1]{stdlisp}
+    \umlbasiccomponent[x=-2,y=1]{stdlisp}
   \end{umlcomponent}
 \end{umlcomponent}
 
-\begin{umlcomponent}[y=-8, x=5]{declarative module}
+\begin{umlcomponent}[x=12, y=1.5]{declarative module}
         \umlbasiccomponent{chunk-store}
 \end{umlcomponent}
 
-\umlbasiccomponent[x=-0.8,y=-8]{scheduler}
-\umlbasiccomponent[x=5, y=-12]{configuration}
+\umlbasiccomponent[x=1,y=-6.5]{scheduler}
+\umlbasiccomponent[x=12, y=-4.5]{configuration}
 
 
-%\umlrequiredinterface[distance=2cm, interface=IScheduler]{model}
+%\umlrequiredinterface[distance=4cm, padding=12cm]{core}
 %\umlprovidedinterface[interface=IScheduler]{scheduler}
 
-\umlVHVassemblyconnector[interface=IScheduler, distance=3cm, with port, anchor1=south west, anchor2=north]{model}{scheduler}
-\umlport{core}{west}
-\umlassemblyconnector[anchor1=south west, anchor2=west]{model}{core}
+ \umlVHassemblyconnector[interface=IScheduler, distance=3cm, with port, anchor1=320, anchor2=east]{core}{scheduler}
 
-\umlassemblyconnector[padding=2cm,with port, interface=IObserver, anchor1=south west,anchor2=-230]{declarative module}{configuration}
-\umlassemblyconnector[with port, interface=IConfiguration, anchor1=south east, anchor2=-310]{declarative module}{configuration}
-\umlVHassemblyconnector[with port, interface=IConfiguration, anchor1=240, anchor2=west]{model}{configuration}
+ 
+ \umlassemblyconnector[padding=2cm,with port, interface=IObserver, anchor1=south west,anchor2=-230]{declarative module}{configuration}
+ \umlassemblyconnector[with port, interface=IConfiguration, anchor1=south east, anchor2=-310]{declarative module}{configuration}
+ \umlHVHassemblyconnector[with port, interface=IConfiguration, anchor1=340, anchor2=west]{model}{configuration}
 
-\umlVHVassemblyconnector[anchor1=south, anchor2=70,with port, interface=IAddDM]{model}{declarative module}
-\umlport{core}{295}
-\umlassemblyconnector{model-south-port}{core-295-port}
-\umlassemblyconnector{core-295-port}{buffers-south-port}
-\umlVHVassemblyconnector[arm1=3.3cm]{core-295-port}{stdlisp-south-port}
+ \umlHVHassemblyconnector[anchor1=10, anchor2=160,with port, interface=IAddDM]{buffers}{declarative module}
 
-\umlport{model}{250}
+ \umlHVHassemblyconnector[arm1=3, anchor1=-10, anchor2=200,with port, interface=IModule]{buffers}{declarative module}
 
-\umlport{buffers}{west}
-\umlport{core}{217}
-\umlHVassemblyconnector{buffers-west-port}{model-250-port}
-\umlport{declarative module}{140}
-\umlVHassemblyconnector[interface=IModule]{model-250-port}{declarative module-140-port}
+\umlport{core}{240} 
+\umlport{stdlisp}{south} 
 
-\umlport{core}{155}
-\umlport{user-defined rules}{east}
-\umlHVHassemblyconnector[interface=ICore]{user-defined rules-east-port}{core-155-port}
-
-\umlassemblyconnector[interface=IBuffers]{core-155-port}{buffers-north-port}
-\umlport{stdlisp}{west}
-\umlassemblyconnector[interface=ILispFunctions]{core-155-port}{stdlisp-west-port}
+% \umlassemblyconnector{model-south-port}{core-295-port}
+% \umlassemblyconnector{core-295-port}{buffers-south-port}
+% \umlVHVassemblyconnector[arm1=3.3cm]{core-295-port}{stdlisp-south-port}
+% 
+% \umlport{model}{250}
+% 
+% \umlport{buffers}{west}
+% \umlport{core}{217}
+% \umlHVassemblyconnector{buffers-west-port}{model-250-port}
+% \umlport{declarative module}{140}
+% \umlVHassemblyconnector[interface=IModule]{model-250-port}{declarative module-140-port}
+% 
+% \umlport{core}{155}
+% \umlport{user-defined rules}{east}
+\umlport{user-defined rules}{north}
+ \umlVHVassemblyconnector[interface=ICore]{user-defined rules-north-port}{core-240-port}
+% 
+\umlport{buffers}{210}
+ \umlVHassemblyconnector[interface=IBuffers]{core-240-port}{buffers-210-port}
+% \umlport{stdlisp}{west}
+ \umlVHVassemblyconnector[interface=ILispFunctions]{core-240-port}{stdlisp-south-port}
 
 \end{tikzpicture} 
 \caption{UML-Component Diagram of the implementation}
@@ -1215,30 +1214,30 @@ A retrieval request gets an incomplete chunk specification as input and returns 
 
 \subsubsection{Chunk Patterns}
 
-\enlargethispage{-\baselineskip}
-
 The chunk patterns are transmitted in form of chunk specifications as defined in section~\ref{chunk_specification}. Since those specifications may be incomplete, variables are considered as place-holders for values in the result. The result always is a complete and ground chunk specification, because every chunk in a chunk store has to be defined completely; empty slots are indicated by the value nil.
+
+\enlargethispage{-\baselineskip}
 
 \begin{example}
 In this example, some possible requests are discussed.
 
 \begin{enumerate}
  \item Request:
-\begin{lstlisting}
+\begin{lstlisting}[aboveskip=0.5\baselineskip]
 chunk(foo,bar,_)        
 \end{lstlisting}
 
 A chunk with name \lstinline|foo|, type \lstinline|bar| and arbitrary slot values is requested.
 
  \item Request:
-\begin{lstlisting}
+\begin{lstlisting}[aboveskip=0.5\baselineskip]
 chunk(_,bar,_)        
 \end{lstlisting}
 
 This request is satisfied by every chunk of type \lstinline|bar|.
 
  \item Request:
-\begin{lstlisting}
+\begin{lstlisting}[aboveskip=0.5\baselineskip]
 chunk(_,t,[(foo,bar),(spam,eggs)])        
 \end{lstlisting}
 
@@ -1270,7 +1269,7 @@ First, each chunk in the store whose name and type are unifiable with the specif
 
 The rule in line~7 is for chunk specifications that do not specify the slots. In this case, no slots have to be tested. If all chunks have been tested or no chunk matches at all, the process is finished (rule in line ~13).
 
-\looseness=-1 After adding each matching candidate to the match set whose name and type have already been checked, the match set is pruned from chunks that have non-matching slot values:
+After adding each matching candidate to the match set whose name and type have already been checked, the match set is pruned from chunks that have non-matching slot values:
 
 \begin{lstlisting}
 <<test_slots(_,[])>> <=> true.
@@ -1292,7 +1291,7 @@ The first rule is the base case, where no slots have to be tested any more and t
 
 In line~3, the rule is applicable if there is at least one slot \lstinline|(S,V2)| that has to be tested and a $HasSlot$ relation of the kind \lstinline|N| $\xrightarrow[]{\mathtt{S}}$ \lstinline|V1| with the slot \lstinline|S| to be tested, that is still in the match set, so no conflicting slot has been found yet. If the values \lstinline|V1| and \lstinline|V2| are unifiable, i.e. both are the same constant or at least one is a variable, the test passes and the chunk \lstinline|N| remains in the match set and the rest of the slot tests are performed.
 
-\looseness=-1 The third rule in line~8 is applied if the guard of the first rule did not hold, so the values \lstinline|V1| and \lstinline|V2| are not unifiable, but there is a connection \lstinline|N| $\xrightarrow[]{\mathtt{S}}$ \lstinline|V1| and in the request it has been specified that the value of slot \lstinline|S| has to be \lstinline|V2|. In this case, \lstinline|V1| $\neq$ \lstinline|V2|, so the test fails and the chunk \lstinline|N| has to be removed from the match set, since one of its slots does not match.
+The third rule in line~8 is applied if the guard of the first rule did not hold, so the values \lstinline|V1| and \lstinline|V2| are not unifiable, but there is a connection \lstinline|N| $\xrightarrow[]{\mathtt{S}}$ \lstinline|V1| and in the request it has been specified that the value of slot \lstinline|S| has to be \lstinline|V2|. In this case, \lstinline|V1| $\neq$ \lstinline|V2|, so the test fails and the chunk \lstinline|N| has to be removed from the match set, since one of its slots does not match.
 
 If the last two rules cannot be applied, the chunk does not provide a slot that, however, has been specified in the request. Hence, the chunk does not match and the last rule therefore deletes it from the match set. \FIXME{make simpagation rule to simplification rule?}
 
@@ -1315,6 +1314,8 @@ The first rule merges two match sets to one single merge set containing a list w
 In the second rule, if there are no two match sets to merge in the store any more, the result of the \lstinline|collect_matches| operation is the remaining match set. The same applies for the last rule, where no match set is in the store and therefore the result is empty. Note that this implies that the rules have to be applied from top to bottom, left to right.\footnote{This is called the refined operational semantics of CHR}
 
 The symbolic layer does not implement any rule stating which chunk will be returned if there is more than one chunk in the match set. In this implementation, the first chunk in the list is chosen. The module request is now implemented as follows:
+
+\enlargethispage{-\baselineskip}
 
 \begin{lstlisting}
 <<module_request(retrieval,chunk(Name,Type,Slots),ResChunk, ResState)>> <=> 
@@ -1397,15 +1398,13 @@ For the easier use of the identical constraint at other points, transitive ident
 Additionally, identical chunks should not be added to the store explicitly, since they are just a copy of another chunk and their name is a reference to this actual chunk. The helper chunks with the artificial \lstinline|:new| suffix are also not added to the store and their identical information is deleted in the end, since their nomenclature was only store internal, so only the original name must be kept:
 
 \begin{lstlisting}
-% do not add help chunks with :new tag and remove identical information
+% do not add chunks with :new tag, remove identical information
 add_chunk(chunk(C:new,T,S)), identical(C,C:new) <=> true. 
 % do not add identical chunk, but keep identical information
 identical(C1,C2) \ add_chunk(chunk(C2,T,S)) <=> true. 
 \end{lstlisting}
 
 In the declarative module, the chunk search must be extended to find merged chunks by both names. This can be achieved as follows:
-
-\enlargethispage{-\baselineskip}
 
 \begin{lstlisting}
 <<identical(C1,C2) \ find_chunk(C2,T2,Ss2)>> <=> 
@@ -1515,11 +1514,7 @@ node[node distance=2cm, minimum width=\x2-\x1] (times) at ({(\x2+\x1)/2},\y1-15m
 \label{fig:scheduler}
 \end{figure}
 
-The system periodically removes the first event from the queue, sets the current time to the time of the event and executes it which may lead to new events in the queue. The queue organizes the right order of the events automatically. Figure~\ref{fig:scheduler:b} shows the effect of the removal to the queue and the system time.
-
-With this approach, the simulation of a parallel execution of ACT-R can be achieved: Each buffer action on the RHS of a rule just schedules an event that actually performs the action at a specified time (the current time plus its duration). 
-
-The central part of the scheduler is a \emph{priority queue} which manages a list of events and returns them by time. It is described in the next section.
+The system periodically removes the first event from the queue, sets the current time to the time of the event and executes it which may lead to new events in the queue. The queue organizes the right order of the events automatically. Figure~\ref{fig:scheduler:b} shows the effect of the removal to the queue and the system time. With this approach, the simulation of a parallel execution of ACT-R can be achieved: Each buffer action on the RHS of a rule just schedules an event that actually performs the action at a specified time (the current time plus its duration). The central part of the scheduler is a \emph{priority queue} which manages a list of events and returns them by time. It is described in the next section.
 
 \subsection{Priority Queue}
 
@@ -1570,7 +1565,7 @@ The first rule states, that if an object is its own successor, this information 
 \begin{lstlisting}
 leq(s,_).
 
-% Time1 < Time2 -> event with time1 first, priority does not matter
+% Time1 < Time2 -> event with time1 first, ignore priority
 leq(q(Time1,_,_), q(Time2,_,_)) :- 
   Time1 < Time2.
 
@@ -1581,25 +1576,28 @@ leq(q(Time,Priority1,_), q(Time,Priority2,_)) :-
 
 The first predicate states that the start symbol is less than every other object. The other two rules directly implement the time-priority condition as defined in definition~\ref{def:time-priority-condition}.
 
-Note that two objects are considered the same, iff their time, priority and event are syntactically the same. If an object is altered in one of the \lstinline|-->| constraints, it has to be edited in every other occurrence in the   list to avoid gaps.
+Note that two objects are considered the same, iff their time, priority and event are syntactically the same. If an object is altered in one of the \lstinline|-->| constraints, it has to be edited in every other occurrence in the list to avoid gaps.
 
 Another important property is, that the list does not have any gaps, so it must be possible to track the queue from every element backwards to the start symbol. This condition is not achieved by the rules above, but since a priority queue only offers two mechanisms to modify it, a lot of those problems can be avoided:
 
 \begin{description}
- \item[add\_q(Time,Priority,Event)] Enqueues an object with the specified properties. I.e., a new \lstinline|q(Time,Priority,Event)| object will be created and the following constraint will be added: \lstinline|s --> q(Time,Priority,Event)|. The rules presented above will lead to a linear, serialized list achieving the time-priority condition without gaps.
-\begin{lstlisting}
+ \item[add\_q(Time,Priority,Event)] Enqueues an object with the specified properties. I.e., a new \lstinline|q(Time,Priority,Event)| object will be created and the following constraint will be added: \lstinline|s --> q(Time,Priority,Event)|. The rules presented above will move the element to the correct position since it conflicts potentially with the former successor of the start symbol \lstinline|s|. This leads to a linear, serialized list achieving the time-priority condition without gaps.
+\begin{lstlisting}[aboveskip=0.5\baselineskip]
 <<add_q(Time,Priority,Evt)>> <=>
   s --> q(Time,Priority,Evt).
 \end{lstlisting}
  \item[de\_q(X)] Dequeues the first element of the queue according to the time-priority condition and binds its value to \lstinline|X|.
-\begin{lstlisting}
+\begin{lstlisting}[aboveskip=0.5\baselineskip]
+% queue with more than one element
 <<de_q(X), s --> A, A --> B>> <=>
   X = A,
   s --> B.
 
+% queue with only one element
 <<de_q(X), s --> A>> <=>
   X = A.  
-  
+ 
+% empty queue 
 <<de_q(X)>> <=> X = nil.
 \end{lstlisting}
 
@@ -1721,7 +1719,6 @@ If the queue element is \lstinline|nil| (i.e. no event has been in the queue), t
 \begin{lstlisting}
 % no event in queue -> do nothing and remove current time
 <<call_event(nil) \ now(_)>> <=> write('No more events in queue. End of computation.'),nl.
-
 <<call_event(q(Time,Priority,Evt)), now(Now)>> <=> 
   Now =< Time | 
   now(Time),
@@ -1773,7 +1770,7 @@ As the last production rule, there has to be:
     no_rule.
 \end{lstlisting}
 
-which removes the \lstinline|fire| constraint if still present and states that no rule has been fired, because otherwise the firing of a rule would have removed the \lstinline|fire| constraint. If no rule was applicable, a new \lstinline|fire| event is scheduled after the next event:
+which removes the \lstinline|fire| constraint if still present and states that no rule has been fired, because otherwise the firing of a rule would have removed the \lstinline|fire| constraint. If no rule was applicable, a new \lstinline|fire| event is scheduled after the next event:\enlargethispage{-\baselineskip}
 
 \begin{lstlisting}
 <<no_rule>> <=> 
@@ -1853,7 +1850,6 @@ The activation of a chunk is a numerical value that determines if a chunk is ret
 \subsubsection{Base-Level Learning}
 
 One part of the activation value is the base-level activation of a chunk. The value is learned by the system and depends on practice as stated in equation~\eqref{eq:base_level_learning}:
-
 \begin{equation*}
 B_i = \mathrm{ln}\left(\sum_{j=1}^n{t_j^{-d}}\right) 
 \end{equation*}
@@ -1905,7 +1901,8 @@ Each of those \lstinline|base_level_part| constraints are part of the result whi
 \begin{lstlisting}
 % if A and B not set: set B to Time^(-D). Time is the time since the presentation of this base_level_part
 <<base_level_part(_,Time,B,A)>> ==>
-  <<<var(A), var(B), 
+  <<<var(A), 
+  var(B), 
   Time =\= 0>>> |
   get_conf(bll,D), % decay parameter
   B is Time ** (-D).
@@ -1916,7 +1913,8 @@ The result is bound to the variable \lstinline|B|. The rule can only be applied 
 \begin{lstlisting}
 % collect base level parts and add them together. Only if Bs are set
 <<base_level_part(C,_,B1,A), base_level_part(C,_,B2,A)>> <=>
-  <<<nonvar(B1), nonvar(B2), 
+  <<<nonvar(B1), 
+  nonvar(B2), 
   var(A)>>> |
   B is B1+B2,
   base_level_part(C,_,B,A).
@@ -1927,7 +1925,8 @@ If this rule is applied to exhaustion, only one \lstinline|base_level_part| cons
 \begin{lstlisting}
 % if B is set, A is not set and there are no more base_level_parts of this chunk: calculate actual base level activation and store it in A. Only possible if B is =\= 0.
 <<base_level_part(_,_,B,A)>> <=>
-  <<<var(A),nonvar(B), 
+  <<<var(A),
+  nonvar(B), 
   B =\= 0>>> |
   A is log(B).
 \end{lstlisting}
@@ -1967,18 +1966,16 @@ The activation calculation also depends on a contextual component, the associati
 \end{lstlisting}
 
 The \lstinline|calc_sji(J,I,Sji)| gets a chunk \lstinline|J| and a chunk \lstinline|I|, calculates their associative weight from \lstinline|J| to \lstinline|I| and binds it to \lstinline|Sji|. The first rule can be applied if \lstinline|J| appears in the slots of chunk \lstinline|I|. Then, the associative weight is calculated according to equation~\eqref{eq:assoc_strength}:
-
 \begin{equation*}
 S_{ji} = S - \mathrm{ln}(\mathrm{fan}_j) 
 \end{equation*}
-
 The value of $S$ is assumed to be $2$ in this rule; a configurable constant for $S$ as described in section~\ref{configuration} can be introduced easily.
 
 If \lstinline|J| does not appear in the slots of chunk \lstinline|I|, then $S_{\mathtt{JI}} := 0$ by definition (line~\ref{lst:sji:no_connection}).
 
 \paragraph{Calculating the Overall-Activations}
 
-The new constraint \lstinline|calc_activations/2| gets a list of chunks and a context and initiates the computation of the overall activation values of the chunks in the list regarding the context. Remember that for the associative weights, the current context plays a role, since all associative weights from the chunks (the $j$s) in the context to the chunk whose activation is calculated are summed up (see section~\ref{activation} for details).
+To calculate the overall-activations, the constraint \lstinline|calc_activations/2| is introduced. It gets a list of chunks and a context and initiates the computation of the overall activation values of the chunks in the list regarding the context. Remember that for the associative weights, the current context plays a role, since all associative weights from the chunks (the $j$s) in the context to the chunk whose activation is calculated are summed up (see section~\ref{activation} for details).
 
 \begin{lstlisting}[escapeinside={(*@}{@*)}]
 <<calc_activations([],_)>> <=>
@@ -2056,12 +2053,14 @@ where \lstinline|Context| is a list of the chunk names that are in the current c
 A similar method as for the buffer modifications or clearings is applied for buffer requests: They are divided into three rules with three trigger constraints -- \lstinline|buffer_request/2|, \lstinline|start_request/2| and \lstinline|do_buffer_request/2| -- similar to the division into two rules as already described in section~\ref{changing_the_buffer_system} on page~\pageref{changing_the_buffer_system} for the other actions. The difference is that, since a request may take a certain time, the first rule schedules the start of the request with the priority \lstinline|0|, so all other types of buffer actions have been performed. The request is actually performed immediately when calling \lstinline|start_request|, but the effects to the requested buffer are applied not until \lstinline|do_buffer_request| is called, which is scheduled at the result time (\lstinline|ResTime|) of the request. This is due to the dependence of the latency of a request on the activation values of the matching chunks, so the request has to be performed in advance to calculate the correct time it will take, so the result has to be known before the request ends in simulation time. This yields the following code in the buffer system:
 
 \begin{lstlisting}[caption=Schedule the start of a buffer request, escapeinside={(*@}{@*)}]
+% just add start_request event with current time
 buffer_request(BufName, Chunk) <=>
   get_now(Now),
   add_q(Now,0,start_request(BufName,Chunk)).
 \end{lstlisting}
 
 \begin{lstlisting}[caption=Execute the buffer request and schedule time the result is applied, label=lst:schedule_buffer_request, escapeinside={(*@}{@*)}]
+% start the request
 buffer(BufName, ModName, _) \ start_request(BufName, Chunk) <=> 
   write('Started buffer request '),
   write(BufName),nl,
@@ -2078,6 +2077,7 @@ buffer(BufName, ModName, _) \ start_request(BufName, Chunk) <=>
 In line~\ref{lst:schedule_buffer_request:context} the current context is calculated and bound in form of a list of chunk names to the variable \lstinline|Context|.
   
 \begin{lstlisting}[caption=Apply the results of the buffer request]
+% apply the results
 do_buffer_request(BufName, _), buffer(BufName, ModName, _), buffer_state(BufName,_), performed_request(BufName, ResChunk, ResState) <=>  
   write('performing request: '),write(BufName),nl,
   (ResState=error, 
@@ -2124,14 +2124,14 @@ With the now defined methods, the overall activation of a chunk can be calculate
  \item[Return a chunk specification] (line~\ref{lst:retrieval_request_subsymbolic:return_chunk}) The request is supposed to return a complete chunk specification in the variable \lstinline|ResChunk|. This is achieved by \lstinline|return_chunk|.
  \item[Return the resulting state of the buffer] (line~\ref{lst:retrieval_request_subsymbolic:get_state}) The resulting state \lstinline|ResState| of the requested retrieval buffer is \lstinline|free|, if a matching chunk has been found and \lstinline|error| if no chunk matches the request:
  
-\begin{lstlisting}
+\begin{lstlisting}[aboveskip=0.5\baselineskip]
 get_state(nil,error).
 get_state(_,free).
 \end{lstlisting}
 
  \item[Return the time the request takes] (line~\ref{lst:retrieval_request_subsymbolic:calc_time}) The time depends on the activation of the chunk. If no matching chunk has been found, the activation is assumed to be the threshold value. This is already achieved by the maximum calculation as described above. According to equation~\eqref{eq:retrieval_latency}, the resulting time is computed as follows:
  
-\begin{lstlisting}
+\begin{lstlisting}[aboveskip=0.5\baselineskip]
 calc_time(Act,ResTime) :-
   get_conf(lf,F),
   ResTime=F*exp(-Act). 
@@ -2266,9 +2266,15 @@ In \cite{fru_chr_book_2009}, the \lstinline|conflict_set| and \lstinline|apply_r
 
 \begin{lstlisting}
 <<<delay-name>>> @
-  <<fire, {buffer tests}>> ==> {guard} | conflict_set(rule(name, {Variables in the head of the rule})).
+  <<fire, 
+  {buffer tests}>> 
+  ==> {guard} | 
+  conflict_set(rule(name, {Variables in the head of the rule})).
 <<<name>>> @
-  <<{buffer tests}, apply_rule(rule(name, {Variables in the head of the rule}))>> <=> {guard} | {actions}, conflict_resolution.
+  <<{buffer tests}, 
+  apply_rule(rule(name, {Variables in the head of the rule}))>> 
+  <=> {guard} | 
+  {actions}, conflict_resolution.
 \end{lstlisting}
 
 This is due to the fact that during the conflict resolution process other rules may have changed the constraint store and the rule might not be applicable anymore. However, in ACT-R the procedural module is a serial bottleneck, so no rules that change the state of the buffer system can be applied during the conflict resolution. Additionally, in \cite{fru_chr_book_2009} the rules that were in the conflict set but have not been applied, remain in the conflict set for the next cycle and are applied, if they have at some point the highest priority in the set and are still applicable (ensured by the bound variables in \lstinline|apply_rule|). In ACT-R, this does not play a role, since the recognize-act cycle is defined serially and only one rule is applied in each cycle. In the next cycle, all rules are checked again for matching heads and the computations are performed on the new values. Note that the problem of trivial non-termination of propagation rules described in \cite[5]{abdennadher_sts_chr13}, which has to be considered when changing the operational order of rule applications in CHR, does not play a role for ACT-R, since it does not implement propagation rules.
@@ -2298,7 +2304,7 @@ This will reward all rules that have a \lstinline|to_reward/2| constraint in the
   NewU is U + Alpha*(Reward-U), (*@\label{lst:trigger_reward:learning}@*)
   production_utility(P,NewU).
   
-calc_reward(R,FireTime,Reward) :- (*@\label{lst:trigger_reward:calc_reward}@*)
+<<calc_reward(R,FireTime,Reward)>> :- (*@\label{lst:trigger_reward:calc_reward}@*)
   get_now(Now),
   Reward is R - (Now-FireTime).
 \end{lstlisting}
@@ -2318,14 +2324,14 @@ There are some methods to influence the conflict resolution process using the AC
 \begin{description}
  \item[Setting the utility of a rule] Utilities can be set statically by the user by the ACT-R command \lstinline|(spp P :u U)| which sets the utility of the rule \lstinline|P| to \lstinline|U|.
  \item[Setting the reward of a rule] The amount of reward a rule can distribute is set by the user. By default, no rules have a reward to trigger. With the ACT-R command \lstinline|(spp P :reward R)|, the reward of the rule \lstinline|P| is set to \lstinline|R|. This command is also implemented among the standard lisp methods.  
- \item[Default values and turning the utility mechanisms off] At the moment, there is no command in the CHR implementation that allows to turn off the conflict resolution mechanisms: The system sets a default utility value for each production rule and no rewards in the initialization process (the rule \lstinline|init @ run <=> ...| as described in section~\ref{initialization}). The user is able to set other initial utility values and rewards for particular rules. If no rewards are set, the utility values will remain at their initial values. Hence, if the user does not set any utilities or rewards, each rule will have the same utility value that does not change. If there are competing rules, the conflict resolution process will pick one. This can be regarded as turned off utility mechanisms.
+ \item[Default values and turning the utility mechanisms off] At the moment, there is no command in the CHR implementation that allows to turn off the conflict resolution mechanisms: The system sets a default utility value for each production rule and no rewards in the initialization process (the rule \lstinline|init @ run <=> ...| as described in section~\ref{initialization}). The user is able to set other initial utility values and rewards for particular rules. If no rewards are set, the utility values will remain at their initial values. Hence, if the user does not set any utilities or rewards, each rule will have the same utility value that does not change. If there are competing rules, the conflict resolution process will pick one. This can be regarded as turned off utility mechanisms.\looseness=-1
  \item[Learning rate] The learning rate $\alpha$ is set by the command \lstinline|(sgp :alpha A)| that sets the configuration variable \lstinline|alpha| to \lstinline|A|.
 \end{description}
 
 \subsubsection{Public Methods of the Conflict Resolution}
 \label{implementation:icore_interface}
 
-Since the scheduler has to have access to the constraints \lstinline|fire/0| and \lstinline|apply_rule/1| to control the timing conflict resolution, those constraints are added to the \emph{ICore} interface as described in section~\ref{implementation:components}. Additionally, the constraint \lstinline|set_production_utility/2| is added to the \emph{ICore} interface, because the utilities may be set from outside the procedural module initially.
+Since the scheduler has to have access to the constraints \lstinline|fire/0| and \lstinline|apply_rule/1| to control the timing conflict resolution, those constraints are added to the \emph{ICore} interface as described in section~\ref{implementation:components}. Additionally, the constraint \lstinline|set_production_utility/2| is added to the \emph{ICore} interface, because the utilities may be set from outside the procedural module initially. \enlargethispage{\baselineskip}
 
 \section{Compiler}
 
@@ -2431,14 +2437,19 @@ The first predicate is the base case. The second rule just drops the white-space
 \begin{lstlisting}
 getToken(start, [X|Xs],Rest,LT) :-
   letter(X), 
-  getToken(identifier, Xs,Rest,[X],T), % find rest of word
-  downcase_atom(T,LT). % convert uppercase letters to lowercase
+  % find rest of word
+  getToken(identifier, Xs,Rest,[X],T), 
+  % convert uppercase letters to lowercase
+  downcase_atom(T,LT).
   
 getToken(identifier, [C|R],Rest,S,T) :-
-  (letter(C); digit(C); minus(C)), 
+  (letter(C); 
+    digit(C); 
+    minus(C)), 
   getToken(identifier,R,Rest,[C|S],T).
   
 getToken(identifier,Rest,Rest,S,W) :-
+  % tokens are accumulated in wrong order
   reverse(S,S1),
   atom_chars(W,S1). 
 \end{lstlisting}

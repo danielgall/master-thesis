@@ -319,12 +319,12 @@ The next step is to define the goal chunk stored in the goal buffer. In this chu
 \tikzstyle{element} = [] 
 \tikzstyle{slot} = [draw, -latex]   
 
-\begin{tikzpicture}[node distance = 4cm, auto]
+\begin{tikzpicture}[node distance = 5.5cm, auto]
  \node[chunk] (goal-chunk) {goal-chunk: count}; 
- \node[element, above of=goal-chunk, node distance=1.5cm] (current-number) {2}; 
+ \node[element, left of=goal-chunk] (current-number) {2}; 
 
     % Draw edges
- \path[slot] (goal-chunk) -- node {current-number} (current-number);
+ \path[slot] (goal-chunk) -- node[above] {current-number} (current-number);
 \end{tikzpicture}
 \caption{The goal-chunk of type \emph{count} with the current number 2.}
 \label{fig:example_counting_goal_chunk}
@@ -345,7 +345,7 @@ In this example we assume that the model starts with this goal chunk in the goal
 This notation indicates that the goal buffer holds a chunk with the name \emph{goal-chunk} of the type \emph{count}, which has the slot \emph{current-number} with the value $2$ (the same is valid analogously for the retrieval buffer). Now the rule to implement counting can be defined as:
 
 \tikzstyle{rule}=[rectangle, draw=Uulmin,  
-        rounded corners, anchor=west, text=white, text width=8cm]
+        rounded corners, anchor=west, text=white, text width=9cm]
 
 \begin{center}
 \begin{tikzpicture}[node distance=0.5cm]
@@ -372,6 +372,8 @@ The example also uses the concept of \emph{variables}, which will be introduced 
 
 In the previous sections there were some remarks on the serial and parallel aspects of ACT-R. According to \cite[p. 68]{anderson_how_2007}, four types of parallelism and seriality can be distinguished:
 
+\enlargethispage{\baselineskip}
+
 \begin{description}
  \item[Within-Module Parallelism:] As mentioned above, one module is able to explore a big amount of data in parallel. For example, the visual module can inspect the whole visual field or the declarative module performs a massively parallel search over all chunks.
  \item[Within-Module Seriality:] Since modules have to communicate, they have a limited amount of buffers and each of those buffers can only hold one chunk. For example, the visual module only can concentrate on one single visual object at one visual location, the declarative module only can have one single concept present, the production system can fire only one rule at a time, \dots 
@@ -380,6 +382,8 @@ In the previous sections there were some remarks on the serial and parallel aspe
 \end{description}
 
 The procedural module is the central serial bottleneck in the system, since the whole communication between modules is going through the production system and the whole computation process is controlled there. The fact that only one rule can fire at a time leads to a serial overall computation. Another serial aspect is that some computations need to wait for the results of a module request. If no other rule matches in the time while the request is performed, the whole system has to wait for this calculation to finish. After the request, the module puts the result in its buffer and the rule waiting for this result can fire and computation is continued.
+
+\enlargethispage{\baselineskip}
 
 \section{Subsymbolic layer}
 \label{subsymbolic_layer}
@@ -405,34 +409,28 @@ Additionally, a very low chunk activation can prevent a chunk from being retriev
 \label{base_level_activation}
 
 The activation $A_i$ of a chunk $i$ is defined as:
-
 \begin{equation}
  \label{eq:activation_equation_simpl}
  A_i = B_i + \Gamma
 \end{equation}
-
-where $B_i$ is the \emph{base-level activation} of the chunk $i$. $\Gamma$ is a context component that will be described later on. Equation \eqref{eq:activation_equation_simpl} is a simplified variant of the \emph{Activation Equation} which is completed in equation~\eqref{eq:activation_equation}.
+where $B_i$ is the \emph{base-level activation} of the chunk $i$. $\Gamma$ is a context component that will be described later on. Equation \eqref{eq:activation_equation_simpl} is a simplified variant of the \emph{Activation Equation} which is completed in equation~\eqref{eq:activation_equation}. 
 
 The base-level activation is a value associated with each chunk. It depends on how often a chunk has been practiced and when this practice has been performed. A chunk is \emph{practiced} when it is retrieved. Hence, $B_i$ of chunk $i$ is defined as:
-
 \begin{equation}
 \label{eq:base_level_learning}
 B_i = \mathrm{ln}\left(\sum_{j=1}^n{t_j^{-d}}\right)
 \end{equation}
-
-where $t_j$ is the time since the $j$th practice, $n$ the number of overall practices of the chunk and $d$ is the decay rate that describes how fast the base-level activation decreases if a chunk has not been practiced (how fast a chunk will be forgotten). Usually, $d$ is set to $0.5$ \cite[p. 1042]{anderson_integrated_2004}. Equation \eqref{eq:base_level_learning} is called \emph{Base-Level Learning Equation}, as it defines the adaptive learning process of the base-level value.
+where $t_j$ is the time since the $j$th practice, $n$ the number of overall practices of the chunk and $d$ is the decay rate that describes how fast the base-level activation decreases if a chunk has not been practiced (how fast a chunk will be forgotten). Usually, $d$ is set to $0.5$ \cite[p. 1042]{anderson_integrated_2004}. Equation \eqref{eq:base_level_learning} is called \emph{Base-Level Learning Equation} as it defines the adaptive learning process of the base-level value.
 
 This equation is the result of a rational analysis by Anderson and Schooler. It reflects the log odds that a chunk will reappear depending on when it has appeared in the past \cite[33]{taatgen_modeling_2006}. This analysis led to the \emph{power law of practice} \cite[1042]{anderson_integrated_2004}. In \cite[8--11]{anderson_implications_2000} equation \eqref{eq:base_level_learning} is motivated in more detail by describing the power law of learning/practice, the power law of forgetting and the multiplicative effect of practice and retention with some data. Shortly, it states that if a particular fact is practiced, there is an improvement of performance which corresponds to a power law. At the same time, performance degrades with time corresponding to a power law. Additionally, they state that if a fact has been practiced a lot, it will not be forgotten for a longer time.
 
 \subsubsection{Activation Spreading}
 
 In ACT-R, the basic idea of activation is that it consists of two parts: The base-level component described above, and a context component. Every chunk in the current context has a certain amount of activation that can spread over the declarative memory and enhance activation of other chunks that are somehow connected to those chunks in the context. The activation equation \eqref{eq:activation_equation_simpl} is extended as follows:
-
 \begin{equation}
 \label{eq:activation_equation}
  A_i = B_i + \sum_{j \in C}{W_j S_{ji}} + \varepsilon
 \end{equation}
-
 where $W_j$ the \emph{attentional weighting} of chunk $j$, $S_{ji}$ the \emph{associative strength} from chunk $j$ to chunk $i$ and $C$ is the \emph{current context}\label{current_context}, usually defined as the set of all chunks that are in a buffer \cites[1042]{anderson_integrated_2004}[33]{taatgen_modeling_2006}[unit 5]{actr_tutorial}. The chunks in the current context are often referred to as \emph{sources of activation}. $\varepsilon$ is a noise value ``generated according to a logistic distribution'' \cite[unit 4, p. 4]{actr_tutorial}. Figure \ref{fig:chunk_activation} illustrates the addition-fact $5 + 2 = 7$ with the corresponding quantities introduced in the last equation. 
 
 \begin{figure}[htb]
@@ -466,12 +464,10 @@ depending on the version of the ACT-R theory \cites[1042]{anderson_integrated_20
 \label{actr:fan_effect}
 
 In equation \eqref{eq:activation_equation} the strength of association $S_{ji}$ from a chunk $j$ to a chunk $i$ is used to determine the activation of a chunk $i$.  In the ACT-R theory, the value of $S_{ji}$ is determined by the following rule: If chunk $j$ is not a value in the slots of chunk $i$ and $j \neq i$, then $S_{ji}$ is set to 0. Otherwise $S_{ji}$ is set to: 
-
 \begin{equation}
 \label{eq:assoc_strength}
 S_{ji} = S - \mathrm{ln}(\mathrm{fan}_j)
 \end{equation}
-
 where $\mathrm{fan}_j$ is the number of facts associated to term $j$ \cite[1042]{anderson_implications_2000}. In more detail: ``$\mathrm{fan}_j$ is the number of chunks in declarative memory in which $j$ is the value of a slot plus one for chunk $j$ being associated with itself'' \cite[unit 5, p. 2]{actr_tutorial}. Hence, equation \eqref{eq:assoc_strength} states that the associative strength from chunk $j$ to $i$ decreases the more facts are associated to $j$.
 
 This is due to the \emph{fan effect:} The more facts a person studies about a certain concept, the more time he or she needs to retrieve a particular fact of that concept \cite[186]{anderson_fan_1999}. This has been demonstrated in an experiment presented in \cite{anderson_fan_1999}, where every participant studied facts about persons and locations like for example:
@@ -486,12 +482,12 @@ For every person the participants studied either one, two or three facts. Afterw
 
 \begin{figure}[htb]
 \centering
-\tikzstyle{chunk} = [ellipse, draw, text centered, text width=3em, minimum height=1cm]
-\tikzstyle{empty} = [ellipse, text centered, text width=3em, minimum height=1cm]
+\tikzstyle{chunk} = [ellipse, draw, text centered, text width=2.5em, minimum height=0.8cm]
+\tikzstyle{empty} = [ellipse, text centered, text width=2.5em, minimum height=0.8cm]
 \tikzstyle{line} = [draw,diamond-latex]
 
 \begin{tikzpicture}
-\matrix[row sep=4mm,column sep=2cm]{
+\matrix[row sep=2mm,column sep=2cm]{
 \node (fireman) {fireman}; &
 \node[chunk] (a) {1 -- 1};&
 \node (bank) {bank};\\
@@ -522,7 +518,7 @@ For every person the participants studied either one, two or three facts. Afterw
 \node[draw,ellipse, minimum height=3.5cm, very thick] (fan) at (intersection of arrowfire.center--arrowdoc.center and hippie.east--d.west) {};
 \node[above right of=fan, node distance=14mm] (fanlabel) {$\mathrm{fan_{hippie}}$};
 
-\node[above right of=d, node distance=12mm] (bi) {$B_i$};
+\node[below of=d, node distance=9mm] (bi) {$B_i$};
 
 \path[draw] (fan) -- (fanlabel);
 \path[draw] (bi) -- (d);
@@ -531,6 +527,7 @@ For every person the participants studied either one, two or three facts. Afterw
 \label{fig:fans}
 \end{figure}
 
+%\enlargethispage{\baselineskip}
 The result of the experiment was, that the more facts are associated with a certain concept, the higher the retrieval time for a particular fact about that concept was. In the ACT-R theory, this result has been integrated in the calculation of the strengths of association: In equation \eqref{eq:assoc_strength} the associative strength decreases with the number of associated elements. The value $S$ is a model-dependent constant, but in many models estimated about 2 \cite[1042]{anderson_integrated_2004}. Modelers should take notice of setting $S$ high enough that all associative strengths in the model are positive \cite[unit 5, p. 3]{actr_tutorial}. Figure \ref{fig:activation_spreading} illustrates the activation spreading process with respect to the associative strengths.
 
 \begin{figure}[htb]
@@ -577,19 +574,16 @@ The result of the experiment was, that the more facts are associated with a cert
 
 \subsubsection{Latency of Retrieval}
 
-As mentioned before, the activation of a chunk affects if the chunk can be retrieved (depending on a threshold and the activation values of the other matching chunks). In addition, activation also has an effect on the retrieval time of a chunk:
-
+%\enlargethispage{\baselineskip}
+As mentioned before, the activation of a chunk affects if the chunk can be retrieved (depending on a threshold and the activation values of the other matching chunks). In addition, activation also has an effect on the time it takes to retrieve a particular chunk. This time is called \emph{latency} and is calculated as follows:
 \begin{equation}
 \label{eq:retrieval_latency}
 T_i = F \cdot \mathrm{e}^{-A_i}
 \end{equation}
-
 where $T_i$ is the \emph{latency} of retrieving chunk $i$, $A_i$ the activation of this chunk, as defined in equation \eqref{eq:activation_equation}, and $F$ the \emph{latency factor}, which is usually estimated to be
-
 \begin{equation}
 F \approx 0.35\mathrm{e}^\tau
 \end{equation}
-
 where $\tau$ is the retrieval threshold as mentioned in section \ref{activation}, but $F$ can also be set individually by the modeller. Nevertheless, in \cite[1042]{anderson_integrated_2004} it is stated that the relationship of the retrieval threshold and the latency factor in equation \eqref{eq:retrieval_latency} seems to be suitable for a lot of models.
 
 \subsection{Production Utility}
@@ -600,17 +594,15 @@ For the production system, there is the subsymbolic concept of \emph{production 
 In ACT-R, the production utility is a number attached to each production rule in the system. Just like with activation of chunks, the production rule with the highest utility will be chosen, if there is more than one matching rule. The utilities can be set statically by the modeler, but they can also be learned automatically by practice.
 
 In the current version of the ACT-R theory, a reinforcement learning rule based on the Rescorla-Wagner learning rule \cite{rescorla_wagner_1972} has been introduced. The utility $U_i$ of a production rule $i$ is defined as:
-
 \begin{equation}
 \label{eq:utility_learning}
 U_i(n) = U_i(n - 1) + \alpha \left(R_i(n) - U_i(n - 1)\right)
 \end{equation}
-
 where $\alpha$ is the \emph{learning rate} which is usually set around .2 and $R_i(n)$ is the reward the production rule $i$ receives at its $n$\textsuperscript{th} application \cite[160--161]{anderson_how_2007}. This leads the utility of a production rule being gradually adjusted to the average reward the rule receives \cite[6--7]{actr_tutorial}. 
 
 Usually, rewards can occur at any time and it is not clear which production rule will be strengthened by the reward. In \citetitle{anderson_how_2007} \citeauthor{anderson_how_2007} describes an example, where a monkey receives a squirt of juice a second after he presses a button \cite[161]{anderson_how_2007}. Now, the question is, which production rule is rewarded, since between the reward and the firing of a rule there always is a break. In ACT-R, every production that has been fired since the last reward event will be rewarded, but the more time lies between the reward and the firing of the rule, the less rewarded the particular rule gets. The reward for a rule is defined as the amount of external reward minus the the time from the rule to the reward. This implies, that the reward has to be measured in units of time, e.g., how much time is a monkey willing to spend to get a squirt of juice? \cite[161]{anderson_how_2007}
 
-In implementations of ACT-R, rewards can be triggered by the user at any time or can be associated with special production rules that model the successful achievement of a goal (they check if the current state is a wanted state and then trigger a reward, so every rule that has led to the successful state will be rewarded). It is important to mention that by definition, rules can also get a negative reward if their selection was too long ago. If one wants to penalize all rules since the last reward, a rule that distributes a reward of 0 can be triggered, which leads all rules applied before being rewarded with a negative amount of reward \cite[unit 6, p. 8]{actr_tutorial}.
+In implementations of ACT-R, rewards can be triggered by the user at any time or can be associated with special production rules that model the successful achievement of a goal (they check if the current state is a wanted state and then trigger a reward, so every rule that has led to the successful state will be rewarded). It is important to mention that by definition, rules can also get a negative reward if their selection was too long ago. If one wants to penalize all rules since the last reward, a rule that distributes a reward of 0 can be triggered, which leads all rules applied before being rewarded with a negative amount of reward, so their utility value decreases and they become less likely to fire \cite[unit 6, p. 8]{actr_tutorial}.
 
 \section{Learning}
 
