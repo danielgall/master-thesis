@@ -493,8 +493,8 @@ In this example, a taxonomy of categories and properties, illustrated in figure~
 \begin{figure}[htb]
 \centering
 \begin{tikzpicture}[level distance=2cm]
-\tikzstyle{every node}=[rectangle,text centered, text height=1.5ex, text depth=0.25ex]
-\tikzstyle{category} = [draw];
+\tikzstyle{every node}=[rectangle, text centered, text height=1.5ex, text depth=0.25ex]
+\tikzstyle{category} = [draw, fill=yellow!20];
 \node[category] {animal}[sibling distance=3cm]
 [grow=down]
 child {node[category] {fish}[sibling distance=1.5cm]
@@ -537,7 +537,7 @@ Chunks, which encode a property of an object have the form as illustrated in fig
 
 \begin{figure}[htb]
 \centering
-\tikzstyle{chunk} = [ellipse, draw]
+\tikzstyle{chunk} = [ellipse, draw, fill=blue!20]
 \tikzstyle{element} = [] 
 \tikzstyle{slot} = [draw, -latex]   
 \subfigure[]{

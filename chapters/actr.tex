@@ -152,11 +152,11 @@ In figure \ref{fig:recognize_act} the general functionality of ACT-R is illustra
 
 The declarative module organizes the factual knowledge as an associative memory. I.e., it consists of a set of concepts that are connected to each other in a certain way. Such elementary concepts are represented in form of chunks that can be seen as basic knowledge elements. They can have names, but those names are not critical for the description of the facts and just for readability in the theory. So, the definition of a chunk is based only on its connections. However, in implementations, chunk names are used as unique identifiers for chunks.
 
-Chunks can have slots that are connected to other chunks or primitive elements. Such an element can be regarded as a chunk without any slots. For instance, the fact $5 + 2 = 7$ can be modeled as a chunk that is connected to the numbers 5, 2 and 7 (see figure \ref{fig:chunk_addition_fact}). Notice that in the figure each slot has an individual name. This is necessary to distinguish the connections of the chunks, otherwise the summands would be indistinguishable from the sum in the example.
+Chunks can have slots that are connected to other chunks or primitive elements. Such an element can be regarded as a chunk without any slots. For instance, the fact 5 + 2 = 7 can be modeled as a chunk that is connected to the numbers 5, 2 and 7 (see figure \ref{fig:chunk_addition_fact}). Notice that in the figure each slot has an individual name. This is necessary to distinguish the connections of the chunks, otherwise the summands would be indistinguishable from the sum in the example.
 
 \begin{figure}[hbt]
 \centering
-\tikzstyle{chunk} = [ellipse, draw]
+\tikzstyle{chunk} = [ellipse, draw, fill=blue!20]
 \tikzstyle{element} = [] 
 \tikzstyle{slot} = [draw, -latex]   
 
@@ -168,17 +168,17 @@ Chunks can have slots that are connected to other chunks or primitive elements. 
 
     % Draw edges
   \path[slot] (addition-fact) -- node[above] {arg\textsubscript{1}} (arg1);
-  \path[slot] (addition-fact) -- node[above] {arg2} (arg2);
+  \path[slot] (addition-fact) -- node[above] {arg\textsubscript{2}} (arg2);
   \path[slot] (addition-fact) -- node {sum} (sum);
 \end{tikzpicture}
-\caption[A chunk of type \emph{addition-fact} and slots \emph{arg1}, \emph{arg2} and \emph{sum} which models the fact 5 + 2 = 7. The slots are connected to the primitive elements 5, 2 and 7.]{A chunk of type \emph{addition-fact} and slots \emph{arg1}, \emph{arg2} and \emph{sum} which models the fact 5 + 2 = 7. The slots are connected to the primitive elements 5, 2 and 7. Chunks are illustrated as ellipses, whereas primitive elements are simple text. A simple arrow (\tikz[baseline=-0.5ex]{\draw [slot] (0,0) -- (0.5,0);}) signifies that the chunk at the start of the arrow has the value at the end of the arrow in the slot with the name of the label of the arrow.}
+\caption[A chunk of type \emph{addition-fact} and slots \emph{arg\textsubscript{1}}, \emph{arg\textsubscript{2}} and \emph{sum} which models the fact 5 + 2 = 7. The slots are connected to the primitive elements 5, 2 and 7.]{A chunk of type \emph{addition-fact} and slots \emph{arg\textsubscript{1}}, \emph{arg\textsubscript{2}} and \emph{sum} which models the fact 5 + 2 = 7. The slots are connected to the primitive elements 5, 2 and 7. Chunks are illustrated as ellipses, whereas primitive elements are simple text. A simple arrow (\tikz[baseline=-0.5ex]{\draw [slot] (0,0) -- (0.5,0);}) signifies that the chunk at the start of the arrow has the value at the end of the arrow in the slot with the name of the label of the arrow.}
 \label{fig:chunk_addition_fact}
 \end{figure}
 
 
 Thus, chunks are defined by their name and the values of their slots. When talking about chunk descriptions, often the term \emph{slot-value pairs} is used especially for partial chunk descriptions, i.e. descriptions which do not have a value for all possible slots. This simply refers to an arbitrary chunk that has the specified values in its slots (and the others are ignored).
 
-Each chunk is associated with a chunk-type that determines the slots a chunk can have. A chunk-type consists of a name which serves as unique identifier chunk-types and a list of slots the chunks of this type offer. For example, the fact in figure \ref{fig:chunk_addition_fact} has the type \emph{addition-fact}. All chunks of this type must provide the slots \emph{arg1}, \verb|arg2| and \verb|sum|. For the chunk-types there is no upper limit of slots they can define. However, it is suggested to limit the number of slots to Miller's Number \label{millers_number} of $7 \pm 2$, for the reason of plausibility \cite[230]{stewart_deconstructing_2007}. 
+Each chunk is associated with a chunk-type that determines the slots a chunk can have. A chunk-type consists of a name which serves as unique identifier chunk-types and a list of slots the chunks of this type offer. For example, the fact in figure \ref{fig:chunk_addition_fact} has the type \emph{addition-fact}. All chunks of this type must provide the slots \emph{arg\textsubscript{1}}, \emph{arg\textsubscript{2}} and \emph{sum}. For the chunk-types there is no upper limit of slots they can define. However, it is suggested to limit the number of slots to Miller's Number \label{millers_number} of $\text{7} \pm \text{2}$, for the reason of plausibility \cite[230]{stewart_deconstructing_2007}. 
 
 \subsubsection{Buffers}
 
@@ -189,9 +189,9 @@ For example, the declarative module has the retrieval buffer associated with it,
 \subsection{Procedural Knowledge}
 \label{procedural_knowledge}
 
-Procedural Knowledge in ACT-R is formulated as a set of condition-action rules. Each rule defines in its condition-part the circumstances under which it can be applied. Those conditions refer to the current chunks in the respective buffer. The condition-part of a rule defines which kind of chunk with which slot values must be present in which buffer for the rule to fire. For example, one rule in the process of adding the numbers 5 and 2 could have the conditions that there is a chunk of type \verb|addition-fact| in the retrieval buffer with 5 and 2 in its argument-slots and specify certain actions if this is the case.
+Procedural Knowledge in ACT-R is formulated as a set of condition-action rules. Each rule defines in its condition-part the circumstances under which it can be applied. Those conditions refer to the current chunks in the respective buffer. The condition-part of a rule defines which kind of chunk with which slot values must be present in which buffer for the rule to fire. For example, one rule in the process of adding the numbers 5 and 2 could have the conditions that there is a chunk of type \emph{addition-fact} in the retrieval buffer with 5 and 2 in its argument-slots and specify certain actions if this is the case.
 
-If the chunks in the buffers match all the conditions stated in a rule, it can be applied (``fired''), which leads its action-part to be performed. Possible actions are changes of some of the values in the chunk of a buffer, the clearing of a buffer or a buffer request, which leads the corresponding module to put a certain chunk into the requested buffer. Buffer requests are also stated in form of a (partial) chunk description\footnote{A partial chunk description is just a chunk description that does not specify all slots that are available as defined in the chunk-type.} where chunk-type and slots encode the query of the request. So all the arguments and even the task which should be performed by the module are specified through a chunk representation. The actual semantics of a request depends on the module. For example, the declarative module will search a chunk that matches the chunk in the description of the request. One production rule, for instance, in the process of adding the numbers 5 and 2 could be, if the wrong \verb|addition-fact| chunk is stored in the retrieval buffer, a retrieval request will be performed, which states that the declarative module should put a chunk into the retrieval buffer, that has 5 and 2 in its argument slots and is of type \verb|addition-fact|. After the successful performance of the request, a chunk with 5 and 2 in its argument slots will be stored in the retrieval buffer, that also has a value for the sum. The actions are described in more detail in the following section.
+If the chunks in the buffers match all the conditions stated in a rule, it can be applied (``fired''), which leads its action-part to be performed. Possible actions are changes of some of the values in the chunk of a buffer, the clearing of a buffer or a buffer request, which leads the corresponding module to put a certain chunk into the requested buffer. Buffer requests are also stated in form of a (partial) chunk description\footnote{A partial chunk description is just a chunk description that does not specify all slots that are available as defined in the chunk-type.} where chunk-type and slots encode the query of the request. So all the arguments and even the task which should be performed by the module are specified through a chunk representation. The actual semantics of a request depends on the module. For example, the declarative module will search a chunk that matches the chunk in the description of the request. One production rule, for instance, in the process of adding the numbers 5 and 2 could be, if the wrong \emph{addition-fact} chunk is stored in the retrieval buffer, a retrieval request will be performed, which states that the declarative module should put a chunk into the retrieval buffer, that has 5 and 2 in its argument slots and is of type \emph{addition-fact}. After the successful performance of the request, a chunk with 5 and 2 in its argument slots will be stored in the retrieval buffer, that also has a value for the sum. The actions are described in more detail in the following section.
 
 Although the term \emph{module} is used for the procedural system, it differs a lot from the other modules: In contrast to other modules, the procedural module has no own buffers, but can access the buffers of all the other modules. ``It really is just a system of mapping cortical buffers to other cortical buffers'' \cite[p. 54]{anderson_how_2007}.
 
@@ -279,16 +279,16 @@ The imaginal module, described in \cite[unit 2]{actr_tutorial}, is capable of cr
 
 This task can be achieved by using the imaginal module: On a request, it creates a new chunk of the type and with the slots stated in the request and puts it into its \emph{imaginal buffer}. Since the chunk in a buffer is stored in the declarative memory when the buffer is cleared,\footnote{see section \ref{description_of_proc_actions}} an unlimited amount of data can be produced and remembered by stating retrieval requests later on.
 
-It is important to mention that it takes the imaginal module $.2\,\mathrm{ms}$ to create a chunk. This amount of time is constant, but can be set by the modeler. Additionally, the imaginal module can only produce one chunk at a time.\footnote{like every module can only handle one request at a time}
+It is important to mention that it takes the imaginal module .2\,ms to create a chunk. This amount of time is constant, but can be set by the modeler. Additionally, the imaginal module can only produce one chunk at a time.\footnote{like every module can only handle one request at a time}
 
 \subsection{Example: Counting}
 \label{example_counting}
 
-The first ACT-R example model deals with the process of counting. This model relies on count facts a person has learned, e.g. ``the number after $2$ is $3$''. To model this in ACT-R, a chunk-type for those facts has to be defined: A chunk of type \emph{count-fact} has the slots \emph{first} and \emph{second}. The chunks in figure \ref{fig:example_counting_chunks} of this type model the facts that $3$ is the successor of $2$ and $4$ is the successor of $3$.
+The first ACT-R example model deals with the process of counting. This model relies on count facts a person has learned, e.g. ``the number after 2 is 3''. To model this in ACT-R, a chunk-type for those facts has to be defined: A chunk of type \emph{count-fact} has the slots \emph{first} and \emph{second}. The chunks in figure \ref{fig:example_counting_chunks} of this type model the facts that 3 is the successor of 2 and 4 is the successor of 3.
 
 \begin{figure}[htb]
 \centering
-\tikzstyle{chunk} = [ellipse, draw]
+\tikzstyle{chunk} = [ellipse, draw, fill=blue!20]
 \tikzstyle{element} = [] 
 \tikzstyle{slot} = [draw, -latex]   
 
@@ -311,11 +311,11 @@ The first ACT-R example model deals with the process of counting. This model rel
 \end{figure}
 
 
-The next step is to define the goal chunk stored in the goal buffer. In this chunk it somehow has to be encoded that the current goal is to count. This can be modeled in ACT-R by the chunk-type. To track the current number in the counting process as an intermediate result, the goal chunk could have a slot which always holds the current number that has been counted to. This leads to a goal chunk as illustrated in figure \ref{fig:example_counting_goal_chunk}, where the current number is $2$.
+The next step is to define the goal chunk stored in the goal buffer. In this chunk it somehow has to be encoded that the current goal is to count. This can be modeled in ACT-R by the chunk-type. To track the current number in the counting process as an intermediate result, the goal chunk could have a slot which always holds the current number that has been counted to. This leads to a goal chunk as illustrated in figure \ref{fig:example_counting_goal_chunk}, where the current number is 2.
 
 \begin{figure}[hbt]
 \centering
-\tikzstyle{chunk} = [ellipse, draw]
+\tikzstyle{chunk} = [ellipse, draw, fill=blue!20]
 \tikzstyle{element} = [] 
 \tikzstyle{slot} = [draw, -latex]   
 
@@ -335,14 +335,14 @@ In this example we assume that the model starts with this goal chunk in the goal
 
 \begin{center}
 \parbox{17em}{\textbf{goal buffer:} \emph{goal-chunk} of type \emph{count}\\
-\noindent\hspace*{15mm} current-number $2$}
+\noindent\hspace*{15mm} current-number\ \ 2}
 
 \parbox{17em}{\textbf{retrieval buffer:} \emph{b} of type \emph{count-fact}\\
-\noindent\hspace*{15mm} first $2$\\
-\noindent\hspace*{15mm} second $3$}
+\noindent\hspace*{15mm} first\ \ 2\\
+\noindent\hspace*{15mm} second\ \ 3}
 \end{center}
 
-This notation indicates that the goal buffer holds a chunk with the name \emph{goal-chunk} of the type \emph{count}, which has the slot \emph{current-number} with the value $2$ (the same is valid analogously for the retrieval buffer). Now the rule to implement counting can be defined as:
+This notation indicates that the goal buffer holds a chunk with the name \emph{goal-chunk} of the type \emph{count}, which has the slot \emph{current-number} with the value 2 (the same is valid analogously for the retrieval buffer). Now the rule to implement counting can be defined as:
 
 \tikzstyle{rule}=[rectangle, draw=Uulmin,  
         rounded corners, anchor=west, text=white, text width=9cm]
@@ -431,11 +431,11 @@ In ACT-R, the basic idea of activation is that it consists of two parts: The bas
 \label{eq:activation_equation}
  A_i = B_i + \sum_{j \in C}{W_j S_{ji}} + \varepsilon
 \end{equation}
-where $W_j$ the \emph{attentional weighting} of chunk $j$, $S_{ji}$ the \emph{associative strength} from chunk $j$ to chunk $i$ and $C$ is the \emph{current context}\label{current_context}, usually defined as the set of all chunks that are in a buffer \cites[1042]{anderson_integrated_2004}[33]{taatgen_modeling_2006}[unit 5]{actr_tutorial}. The chunks in the current context are often referred to as \emph{sources of activation}. $\varepsilon$ is a noise value ``generated according to a logistic distribution'' \cite[unit 4, p. 4]{actr_tutorial}. Figure \ref{fig:chunk_activation} illustrates the addition-fact $5 + 2 = 7$ with the corresponding quantities introduced in the last equation. 
+where $W_j$ the \emph{attentional weighting} of chunk $j$, $S_{ji}$ the \emph{associative strength} from chunk $j$ to chunk $i$ and $C$ is the \emph{current context}\label{current_context}, usually defined as the set of all chunks that are in a buffer \cites[1042]{anderson_integrated_2004}[33]{taatgen_modeling_2006}[unit 5]{actr_tutorial}. The chunks in the current context are often referred to as \emph{sources of activation}. $\varepsilon$ is a noise value ``generated according to a logistic distribution'' \cite[unit 4, p. 4]{actr_tutorial}. Figure \ref{fig:chunk_activation} illustrates the addition-fact 5 + 2 = 7 with the corresponding quantities introduced in the last equation. 
 
 \begin{figure}[htb]
 \centering
-\tikzstyle{chunk} = [ellipse, draw]
+\tikzstyle{chunk} = [ellipse, draw, fill=blue!20]
 \tikzstyle{element} = [] 
 \tikzstyle{slot} = [draw, latex-diamond]   
 
@@ -448,8 +448,8 @@ where $W_j$ the \emph{attentional weighting} of chunk $j$, $S_{ji}$ the \emph{as
  \node[element, below of=addition-fact, node distance=2cm] (sum) {7}; 
 
     % Draw edges
-  \path[slot] (addition-fact) -- node[above] {arg1} node[below] {$S_{ji}$} (arg1);
-  \path[slot] (addition-fact) -- node[above] {arg2} node[below] {$S_{ji}$} (arg2);
+  \path[slot] (addition-fact) -- node[above] {arg\textsubscript{1}} node[below] {$S_{ji}$} (arg1);
+  \path[slot] (addition-fact) -- node[above] {arg\textsubscript{2}} node[below] {$S_{ji}$} (arg2);
   \path[slot] (addition-fact) -- node[left]  {sum}  node[right] {$S_{ji}$} (sum);
 \end{tikzpicture}
 \caption[The \emph{addition-fact} chunk from figure~\ref{fig:chunk_addition_fact} with subsymbolic quantities.]
@@ -482,7 +482,7 @@ For every person the participants studied either one, two or three facts. Afterw
 
 \begin{figure}[htb]
 \centering
-\tikzstyle{chunk} = [ellipse, draw, text centered, text width=2.5em, minimum height=0.8cm]
+\tikzstyle{chunk} = [ellipse, draw, fill=blue!20, text centered, text width=2.5em, minimum height=0.8cm]
 \tikzstyle{empty} = [ellipse, text centered, text width=2.5em, minimum height=0.8cm]
 \tikzstyle{line} = [draw,diamond-latex]
 
@@ -495,7 +495,7 @@ For every person the participants studied either one, two or three facts. Afterw
 & \node (store) {store};\\
 & \node[empty] (c) {}; \\
 \node (hippie)  {hippie};
-&\node[chunk, fill=blue!20] (d) {3 -- 3};
+&\node[chunk, fill=red!20] (d) {3 -- 3};
 &\node (park) {park};\\
 & \node[empty] (e) {};\\
 \node (doctor) {doctor};
@@ -523,7 +523,7 @@ For every person the participants studied either one, two or three facts. Afterw
 \path[draw] (fan) -- (fanlabel);
 \path[draw] (bi) -- (d);
 \end{tikzpicture}
-\caption{The ellipses represent chunks which encode one fact like ``a hippie is in the park'' (highlighted chunk $i$). The words are primitive elements. The special arrows show the direction of activation spreading from an element to a chunk. The numbers in the chunks signify the fan of the associated element, e.g. the fan of the element \emph{hippie} is 3. The associative strength of the element hippie to the highlighted chunk $i$ is $S_{\mathrm{hippie},i} = S - \mathrm{ln}(\mathrm{fan_{hippie}}) = S - \mathrm{ln}(3)$. \cite[fig.~6]{anderson_integrated_2004}}
+\caption{The ellipses represent chunks which encode one fact like ``a hippie is in the park'' (red highlighted chunk $i$). The words are primitive elements. The special arrows show the direction of activation spreading from an element to a chunk. The numbers in the chunks signify the fan of the associated element, e.g. the fan of the element \emph{hippie} is 3. The associative strength of the element hippie to the highlighted chunk $i$ is $S_{\mathrm{hippie},i} = S - \mathrm{ln}(\mathrm{fan_{hippie}}) = S - \mathrm{ln}(3)$. \cite[fig.~6]{anderson_integrated_2004}}
 \label{fig:fans}
 \end{figure}
 
@@ -540,21 +540,21 @@ The result of the experiment was, that the more facts are associated with a cert
 
 \begin{tikzpicture}[remember picture]
 \matrix[column sep=2cm,row sep=2mm] {
-&\node[source] (source1) {$\mathrm{source_1}$}; 
+&\node[source] (source1) {source\textsubscript{1}}; 
 & &
-\node[chunk] (c1) {$\mathrm{chunk_1}$};\\
+\node[chunk] (c1) {chunk\textsubscript{1}};\\
 \node[buffer] (goal) {
 \begin{tikzpicture}
 \node (bufname) {\textbf{goal}};
-\node[below of=bufname] (slot1) {$\mathrm{slot_1}$};
-\node[below of=slot1] (slot2) {$\mathrm{slot_2}$};
+\node[below of=bufname] (slot1) {slot\textsubscript{1}};
+\node[below of=slot1] (slot2) {slot\textsubscript{2}};
 \end{tikzpicture}
 
 }; & & &
-\node[chunk] (c2) {$\mathrm{chunk_2}$};\\\
+\node[chunk] (c2) {chunk\textsubscript{2}};\\\
 &
-\node[source] (source2) {$\mathrm{source_2}$};
-& & \node[chunk] (c3) {$\mathrm{chunk_3}$};
+\node[source] (source2) {source\textsubscript{2}};
+& & \node[chunk] (c3) {chunk\textsubscript{3}};
 \\
 };
 

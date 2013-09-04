@@ -25,7 +25,7 @@ Since chunks are the central data-structure of ACT-R used for representation of 
 In multiple parts of ACT-R it is necessary to store chunks and then operate on them. Hence, the abstract data structure of such a chunk store is defined. Since chunk stores have been referred to as networks in the previous chapters, the general idea of this definition of a chunk store is based upon a relation that represents such a network.
 
 \begin{definition}[chunk-store]
-A \emph{chunk-store} $\Sigma$ is a tuple $(C,E,\mathcal{T},\rel{HasSlot},\rel{Isa})$, where $C$ is a set of chunks and $E$ a set of primitive elements both identified by unique names, with $C \cap E = \emptyset$. The \emph{values} of $\Sigma$ are defined by the set $V = C \cup E \cup \{ \mathtt{nil} \}$. $\mathcal{T}$ is a set of chunk-types. A chunk-type $T = (t,S) \in \mathcal{T}$ is a tuple with a \emph{unique}\footnote{$\forall (t,S), (t',S') \in \mathcal{T}: t = t' \Rightarrow S = S'$} type name $t$ and a set of slots $S$. The set of all chunk type names is $\mathcal{T}_{\var{name}}$ and the set of all slot-names is $\mathcal{S}$. 
+A \emph{chunk-store} $\Sigma$ is a tuple $(C,E,\mathcal{T},\rel{HasSlot},\rel{Isa})$, where $C$ is a set of chunks and $E$ a set of primitive elements both identified by unique names, with $C \cap E = \emptyset$. The \emph{values} of $\Sigma$ are defined by the set $V = C \cup E \cup \{ \mathtt{nil} \}$. $\mathcal{T}$ is a set of chunk-types. A chunk-type $T = (t,S) \in \mathcal{T}$ is a tuple with a \emph{unique}\footnote{$\forall (t,S), (t',S') \in \mathcal{T}: t = t' \Rightarrow S = S'$} type name $t$ and a set of slots $S$. The set of all chunk type names is $\mathcal{T}_{\var{name}}$ and the set of all slot names is $\mathcal{S}$. 
 
 $\rel{HasSlot} \subseteq C \times \mathcal{S} \times V$ and $\rel{Isa} \subseteq C \times \mathcal{T}$ are relations and are defined as follows:
 
@@ -190,12 +190,11 @@ The defined types can be used in the definitions of CHR constraints. The argumen
 
 \paragraph{add\_chunk} 
 
-This method creates the chunks and elements of the chunk store. The set $E$ of elements is minimal, i.e. only elements that appear in the slots of a chunk but are not chunks themselves are members of $E$. However, the set $E$ is never constructed explicitly, but represented by chunks of the special type \lstinline|chunk| that provides no slots. So each value in the slot of a chunk that is added to the store and that is not an element of the chunk store yet, gets its own chunk of type \lstinline|chunk|. As soon as a chunk with the name of such a primitive element is added to the store, the chunk of type \lstinline|chunk| is removed from the store.
+This method creates the chunks and elements of the chunk store. The set $E$ of elements is minimal, i.e. only elements that appear in the slots of a chunk but are not chunks themselves are members of $E$. However, the set $E$ is never constructed explicitly, but represented by chunks of the special type \lstinline|chunk| that provides no slots. So each value in the slot of a chunk that is added to the store and that is not an element of the chunk store yet, gets its own chunk of type \lstinline|chunk|. As soon as a chunk with the name of such a primitive element is added to the store, the chunk of type \lstinline|chunk| is removed from the store.\looseness=-1
 
 \begin{lstlisting}[caption={Rules for \texttt{add\_chunk}}, label=lst:add_chunk_rules]
 % empty chunk will not be added
 <<add_chunk(nil)>> <=> true.
-  
 % initialize all slots with nil
 <<add_chunk(chunk(Name,Type, _)), chunk_type_has_slot(Type,S)>> ==> 
   chunk_has_slot(Name,S,nil).
@@ -268,7 +267,8 @@ This method replaces the value of an existing slot for a given chunk, but only i
 \begin{lstlisting}
 <<alter_slot(Chunk,Slot,Value), chunk_has_slot(Chunk,Slot,_)>> <=>
   chunk_has_slot(Chunk,Slot,Value).  
-<<alter_slot(Chunk,Slot,Value)>> <=> false.
+<<alter_slot(Chunk,Slot,Value)>> <=> 
+  false.
 \end{lstlisting}
 
 The first rule replaces the existing \lstinline|chunk_has_slot| constraint by a new one. This is called \emph{destructive assignment} as described in \cite[32]{fru_chr_book_2009}. The second rule only matches, if the first did not match (due to the refined operational semantics of CHR). This is only the case, if it is tried to alter a slot with a non-existing \lstinline|chunk_has_slot| constraint. However, since the chunk descriptions are complete, the slot cannot be valid for the type of the chunk and the altering has to fail.
@@ -592,7 +592,7 @@ where \lstinline|add_dm| is basically just a global wrapper for the \lstinline|a
 
 
 \begin{example}[counting example in CHR -- simple]
-The production rule in example~\ref{ex:counting} can be translated to:
+In this example, the translation of a simple ACT-R production rule to a CHR rule is shown. Hence, the translation of the production rule in example~\ref{ex:counting} is inspected. It leads to the following translation:
 
 \begin{lstlisting}
 <<<count-rule>>> @
@@ -618,7 +618,6 @@ A buffer query
 \begin{lstlisting}
 ?buffer>
   state  bstate 
-...
 \end{lstlisting}
 
 on the LHS of a production rule can be translated to the following CHR rule head:
@@ -860,13 +859,13 @@ since the built-in syntactic-equality test of Prolog does never return true for 
 This approach is essentially the same as \citeauthor{chr_lecture_chap6} suggests in chapter~6 of the accompanying slides to his book \cite{fru_chr_book_2009}: For each multi-headed rule, new rule variants are added. Those variants are produced by a pairwise unification of the constraints in the head which eliminates one of the unifiable head constraints \cite{chr_lecture_chap6}. For example, consider the rule:
 
 \begin{lstlisting}
-a(1,Y), a(X,2) ==> b(X,Y).
+<<a(1,Y), a(X,2)>> ==> b(X,Y).
 \end{lstlisting}
 
 The constraints \lstinline|a(1,Y)| and \lstinline|a(X,2)| can be unified to \lstinline|a(1,2)|. Therefore the following rule is added:
 
 \begin{lstlisting}
-a(1,2) ==> b(1,2).
+<<a(1,2)>> ==> b(1,2).
 \end{lstlisting}
 
 Since in ACT-R all variables in the head of a rule have to be bound, this scheme can be simplified to a simple guard-check and the elimination of duplicate slot tests. Hence, no rule variants have to be added, but the rules containing duplicate slot tests are modified.
@@ -1399,9 +1398,9 @@ Additionally, identical chunks should not be added to the store explicitly, sinc
 
 \begin{lstlisting}
 % do not add chunks with :new tag, remove identical information
-add_chunk(chunk(C:new,T,S)), identical(C,C:new) <=> true. 
+<<add_chunk(chunk(C:new,T,S)), identical(C,C:new)>> <=> true. 
 % do not add identical chunk, but keep identical information
-identical(C1,C2) \ add_chunk(chunk(C2,T,S)) <=> true. 
+<<identical(C1,C2) \ add_chunk(chunk(C2,T,S))>> <=> true. 
 \end{lstlisting}
 
 In the declarative module, the chunk search must be extended to find merged chunks by both names. This can be achieved as follows:
@@ -1655,7 +1654,7 @@ The \emph{IScheduler} interface provides the following methods:
 \subsubsection{Recognize-Act Cycle}
 \label{implementation:scheduler:recognize-act}
 
-As described before, the procedural module can only fire one rule at a time. When executing the RHS of a rule, all its actions are added to the scheduler with the time point when their execution is finished. For example: If on the RHS of the firing rule a retrieval request has to be performed, an event will be added to the priority queue with the time $Now + Duration$, so the chunk retrieved from the declarative memory will be written to the retrieval buffer at this time point.
+As described before, the procedural module can only fire one rule at a time. When executing the RHS of a rule, all its actions are added to the scheduler with the time point when their execution is finished. For example: If on the RHS of the firing rule a retrieval request has to be performed, an event will be added to the priority queue with the time $\var{Now} + \var{Duration}$, so the chunk retrieved from the declarative memory will be written to the retrieval buffer at this time point.
 
 After all events of the RHS have been added to the scheduler, the procedural module is free again and therefore the next rule can fire. The event of firing will be added to the priority queue as well by the \lstinline|fire| constraint at the end of each production rule. The rule will be added at the current time point, but with low priority, since it has to be ensured that every action of the previously executed rule has been performed yet (in the sense that a corresponding event has been added at the specified time point). In many cases, no other rule will be applicable at this time, because most of the meaningful production rules have to wait for the results of the preceding production rule. 
 
@@ -1788,7 +1787,7 @@ In ACT-R, it is possible to call Lisp functions in the model definitions, for ex
 Lisp functions are lists (indicated by round braces \lstinline|(| and \lstinline|)|), which have the functor as their first element and the function arguments in the rest of the list. Hence, each Lisp function \lstinline|(f arg1 arg2 ...)| called in the model definition of an ACT-R model is translated into the adding of a CHR constraint \lstinline|lisp_f([arg1, arg2, ...])|. For all used functions, there has to be a default implementation in the module \lstinline|std_lisp|. In this implementation, the concept is reduced to simple procedural calls ignoring return values, which is adequate for most of the pure ACT-R models without the experiment environment. Here is an example implementation of the Lisp function \lstinline|(chunk-type name slot1 slot2 ...)| which adds a new chunk-type to the system:
 
 \begin{lstlisting}
-lisp_chunktype([Type|Slots]) <=>
+<<lisp_chunktype([Type|Slots])>> <=>
   % add type to buffer system (local module)
   add_chunk_type(Type,Slots),
   % add type to declarative module
@@ -1814,8 +1813,8 @@ The interface \emph{IConfiguration} provides the following methods to access the
 The \lstinline|(sgp ...)| call can then be translated to:
 
 \begin{lstlisting}
-lisp_sgp([]) <=> true.
-lisp_sgp([:,Var,Val|Rest]) <=>
+<<lisp_sgp([])>> <=> true.
+<<lisp_sgp([:,Var,Val|Rest])>> <=>
   set_conf(Var,Val),
   lisp_sgp(Rest).
 \end{lstlisting}
@@ -1826,15 +1825,15 @@ Sometimes it is necessary for a module to get informed about the change of a con
 
 \begin{lstlisting}
 % collect observers
-observer(Module,Var), set_conf(Var,_) ==> notify(Module,Var).
+<<observer(Module,Var), set_conf(Var,_)>> ==> notify(Module,Var).
 
 % actually set variable
-set_conf(Var,Val), configuration(Var,_) <=> 
+<<set_conf(Var,Val), configuration(Var,_)>> <=> 
   configuration(Var,Val),
   notify_all(Var). % variable has been set -> perform pending notifications
-notify_all(Var), notify(Module,Var) ==> 
+<<notify_all(Var), notify(Module,Var)>> ==> 
   Module:update. % perform all pending notifications
-notify_all(_) <=> true. % no notifications pending, clean up
+<<notify_all(_)>> <=> true. % no notifications pending, clean up
 \end{lstlisting}
 
 The constraint \lstinline|observer(Module,Var)| states that the module \lstinline|Module| observes the variable \lstinline|Var|. The observer modules have to declare a \lstinline|update/0| constraint which may trigger some action related to the change of a configuration variable.
@@ -1891,7 +1890,7 @@ Somewhere in the process of a request, the activation of a set of chunks has to 
   Time is Now - PTime, 
   base_level_part(C,Time,_,A).
   
-calc_activation(_,_) <=> true.
+<<calc_activation(_,_)>> <=> true.
 \end{lstlisting}
 
 These two rules produce for every presentation of the chunk a \lstinline|base_level_part| with the name of the chunk and the time since a particular presentation has happened. Additionally, two unbound variables are given to the part constraint: The first is a variable that will hold an intermediate result and the second is the actual activation value that is bound to the return value of the \lstinline|calc_activation| constraint.
@@ -1985,8 +1984,8 @@ To calculate the overall-activations, the constraint \lstinline|calc_activations
   calc_activation(C,B), 
   calc_activations(Cs,Context), 
   context(C,Context,Assoc), (*@\label{lst:calc_activations:context}@*)
-  
   length(Context,N), (*@\label{lst:calc_activations:attentional1}@*)
+  
   Assoc1 is 1/N * Assoc, (*@\label{lst:calc_activations:attentional2}@*)
   A is B + Assoc1, (*@\label{lst:calc_activations:final}@*)
   max(C,A). (*@\label{lst:calc_activations:max}@*)
@@ -1999,7 +1998,7 @@ For the chunk \lstinline|C| the context component, i.e. the associative weight, 
 Afterwards, the attentional weighting $W_j$ is considered in lines~\ref{lst:calc_activations:attentional1} and \ref{lst:calc_activations:attentional2}. The variable \lstinline|Assoc1| now holds the value of $W_j \cdot \sum_{j \in C}{S_{ji}}$. The overall activation of chunk \lstinline|C| is -- as defined in equation~\eqref{eq:activation_equation} -- calculated in line~\ref{lst:calc_activations:final} by adding the base-level activation to the sum of the associative weightings of the chunk. Eventually, in line~\ref{lst:calc_activations:max}, the activation of this chunk is added to the set of potential maximum candidates of all activation values. The maximum then is calculated as follows:
 
 \begin{lstlisting}[caption={Calculate highest activation of all matching chunks}, label=lst:max_activation]
-max(_,A1) \ max(_,A2) <=> 
+<<max(_,A1) \ max(_,A2)>> <=> 
   A1 >= A2 |
   true.
 \end{lstlisting}
@@ -2013,19 +2012,19 @@ The request is only successful, if there is a matching chunk that has an activat
 In the last section, the chunk with the highest activation among all matching chunks is calculated and stored in a \lstinline|max/2| constraint (there is only one \lstinline|max| constraint after the rule in listing~\ref{lst:max_activation} has been applied to exhaustion). The constraint \lstinline|get_max/2| triggers the final maximum computation and binds the chunk and its activation to its parameters:
 
 \begin{lstlisting}
-get_max(MN,MA), max(N,A), threshold(RT) <=> 
+<<get_max(MN,MA), max(N,A), threshold(RT)>> <=> 
   A >= RT | 
   MN=N,
   MA=A.
   
-get_max(MN,MA), max(_,A), threshold(RT) <=> 
+<<get_max(MN,MA), max(_,A), threshold(RT)>> <=> 
   A < RT | 
   MN=nil,
   % set activation to threshold
   MA=RT,
   write('No chunk has high enough threshold'),nl.
   
-get_max(MN,MA), threshold(RT) <=>
+<<get_max(MN,MA), threshold(RT)>> <=>
   MN=nil,
   % set activation to threshold if no chunk matches
   MA=RT,
@@ -2054,14 +2053,14 @@ A similar method as for the buffer modifications or clearings is applied for buf
 
 \begin{lstlisting}[caption=Schedule the start of a buffer request, escapeinside={(*@}{@*)}]
 % just add start_request event with current time
-buffer_request(BufName, Chunk) <=>
+<<buffer_request(BufName, Chunk)>> <=>
   get_now(Now),
   add_q(Now,0,start_request(BufName,Chunk)).
 \end{lstlisting}
 
 \begin{lstlisting}[caption=Execute the buffer request and schedule time the result is applied, label=lst:schedule_buffer_request, escapeinside={(*@}{@*)}]
 % start the request
-buffer(BufName, ModName, _) \ start_request(BufName, Chunk) <=> 
+<<buffer(BufName, ModName, _) \ start_request(BufName, Chunk)>> <=> 
   write('Started buffer request '),
   write(BufName),nl,
   get_now(Now),
@@ -2078,7 +2077,7 @@ In line~\ref{lst:schedule_buffer_request:context} the current context is calcula
   
 \begin{lstlisting}[caption=Apply the results of the buffer request]
 % apply the results
-do_buffer_request(BufName, _), buffer(BufName, ModName, _), buffer_state(BufName,_), performed_request(BufName, ResChunk, ResState) <=>  
+<<do_buffer_request(BufName, _), buffer(BufName, ModName, _), buffer_state(BufName,_), performed_request(BufName, ResChunk, ResState)>> <=>  
   write('performing request: '),write(BufName),nl,
   (ResState=error, 
   buffer(BufName, ModName, nil),
@@ -2147,15 +2146,15 @@ ACT-R offers some configuration variables which influence the retrieval process.
  
 \begin{lstlisting}
 % subsymbolic layer turned on -> add subsymbolic constraint
-set_subsymbolic(t), subsymbolic <=> 
+<<set_subsymbolic(t), subsymbolic>> <=> 
   subsymbolic.
-set_subsymbolic(t) <=> 
+<<set_subsymbolic(t)>> <=> 
   subsymbolic.
 
 % subsymbolic layer turned off -> remove subsymbolic constraint
-set_subsymbolic(nil), subsymbolic <=> 
+<<set_subsymbolic(nil), subsymbolic>> <=> 
   true.
-set_subsymbolic(nil) <=> 
+<<set_subsymbolic(nil)>> <=> 
   true.
 \end{lstlisting}
 
@@ -2166,8 +2165,8 @@ For each rule only involved in the subsymbolic layer, the \lstinline|subsymbolic
 \item[Proportion of $\theta$ and $F$] The configuration system automatically sets the latency factor if the retrieval threshold is set. If an individual value for $F$ should be set, then the automatically set value has to be overwritten after the threshold has been set.
 
 \begin{lstlisting}
-latency-factor-by-threshold @
-set_conf(rt,RT) ==> 
+<<<latency-factor-by-threshold>>> @
+<<set_conf(rt,RT)>> ==> 
   LF is 0.35*exp(RT), 
   set_conf(lf,LF). 
 \end{lstlisting}
@@ -2304,7 +2303,7 @@ This will reward all rules that have a \lstinline|to_reward/2| constraint in the
   NewU is U + Alpha*(Reward-U), (*@\label{lst:trigger_reward:learning}@*)
   production_utility(P,NewU).
   
-<<calc_reward(R,FireTime,Reward)>> :- (*@\label{lst:trigger_reward:calc_reward}@*)
+calc_reward(R,FireTime,Reward) :- (*@\label{lst:trigger_reward:calc_reward}@*)
   get_now(Now),
   Reward is R - (Now-FireTime).
 \end{lstlisting}
@@ -2385,7 +2384,7 @@ The basic idea for the implementation of such a tokenizer is described in~\cite[
 \centering
 \begin{tikzpicture}[->,>=stealth',shorten >=1pt,auto,node distance=5cm,
                     semithick]
-  \tikzstyle{every state}=[fill=none,draw,text=black,minimum size=1.5cm]
+  \tikzstyle{every state}=[fill=yellow!20,draw,text=black,minimum size=1.5cm]
 
   \node[initial,state,accepting] (start)                            {start};
   \node[state]                   (identifier) [right of=start]      {identifier};

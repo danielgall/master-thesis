@@ -29,7 +29,7 @@ A rule can be applied on the constraint store, if there are constraints in the s
 This simple example has been taken from \cite[19\psqq]{fru_chr_book_2009} and describes a CHR program that computes the minimum among the numbers $n_i$ given as multiset of numbers in the query \lstinline[mathescape]|min($n_1$), ... , min($n_k$)|. The \lstinline|min/1| constraint is interpeted such that its containing number is a minimum candidate. The minimum computation is achieved by specifying one simpagation rule:
 
 \begin{lstlisting}[caption={Minimum program}]
-min(N) \ min(M) <=> N=<M | true.
+<<min(N) \ min(M)>> <=> <<<N=<M>>> | true.
 \end{lstlisting}
 
 For every pair of numbers in the store, the rule removes the greater one and keeps the smaller one. If this rule is applied to exhaustion, only one constraint is left -- the minimum. Then the rule is not applicable any more, since it lacks a partner constraint for the single \lstinline|min| constraint to match the head.
@@ -49,11 +49,11 @@ min(0)
 This example tries to clarify the matching process and is taken from \cite[12]{fru_chr_book_2009}. The following rules are added into individual, separated programs and some queries are tested in those programs.
 
 \begin{lstlisting}
-p(a) <=> true.
-p(X) <=> true.
-p(X) <=> X=a.
-p(X) <=> X=a | true.
-p(X) <=> X==a | true.
+<<p(a)>> <=> true.
+<<p(X)>> <=> true.
+<<p(X)>> <=> X=a.
+<<p(X)>> <=> <<<X=a>>> | true.
+<<p(X)>> <=> <<<X==a>>> | true.
 \end{lstlisting}
 
 The query \lstinline|?- p(a)| matches all the rules, so the result will always be an empty constraint store, indicated by \lstinline|true|.
@@ -71,8 +71,8 @@ If a rule fires, its body is processed from left to right and behaves like a pro
 In the implementation of ACT-R, it was necessary at some points to rely on the order of rule applications from top to bottom. This is very common, for instance, if in an advanced version of the minimum computation in example~\ref{ex:minimum} the process should be triggered by a \lstinline|get_min/1| constraint that also gets the result bound to its argument. I.e., after the complete computation of the query in listing~\ref{lst:sample_derivation_min} triggered by \lstinline|get_min(Min)|, the variable \lstinline|Min| should be bound to \lstinline|Min=0|, the minimal number in the query. This can be achieved as follows:
 
 \begin{lstlisting}[caption={Minimum program with trigger}]
-get_min(_), min(N) \ min(M) <=> N=<M | true.
-get_min(Min), min(N) <=> Min=N.
+<<get_min(_), min(N) \ min(M)>> <=> <<<N=<M>>> | true.
+<<get_min(Min), min(N)>> <=> Min=N.
 \end{lstlisting}
 
 Obviously, the result of this program depends on the rule application order: The second rule is applicable as soon as the minimum computation has been triggered by \lstinline|get_min| and one single minimum candidate \lstinline|min(N)|. After the application of the second rule, the first one will not be applicable anymore, because the \lstinline|get_min/1| constraint is removed from the store. Hence, it must be ensured that this rule is not applied before the first rule has been applied to exhaustion. This is achieved by the refined operational semantics. The program computes the minimum of all numbers that are in the store at the time the \lstinline|get_min/1| trigger constraint is introduced. If there are added new minimum candidates afterwards, they will not be respected in this particular minimum computation. However, if later on a new minimum computation is triggered, all those minimum constraints will be part of the computation.

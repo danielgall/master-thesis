@@ -156,7 +156,7 @@ Chunks can have slots that are connected to other chunks or primitive elements. 
 
 \begin{figure}[hbt]
 \centering
-\tikzstyle{chunk} = [ellipse, draw]
+\tikzstyle{chunk} = [ellipse, draw, fill=blue!20]
 \tikzstyle{element} = [] 
 \tikzstyle{slot} = [draw, -latex]   
 
@@ -178,7 +178,7 @@ Chunks can have slots that are connected to other chunks or primitive elements. 
 
 Thus, chunks are defined by their name and the values of their slots. When talking about chunk descriptions, often the term \emph{slot-value pairs} is used especially for partial chunk descriptions, i.e. descriptions which do not have a value for all possible slots. This simply refers to an arbitrary chunk that has the specified values in its slots (and the others are ignored).
 
-Each chunk is associated with a chunk-type that determines the slots a chunk can have. A chunk-type consists of a name which serves as unique identifier chunk-types and a list of slots the chunks of this type offer. For example, the fact in figure \ref{fig:chunk_addition_fact} has the type \emph{addition-fact}. All chunks of this type must provide the slots \emph{arg1}, \verb|arg2| and \verb|sum|. For the chunk-types there is no upper limit of slots they can define. However, it is suggested to limit the number of slots to Miller's Number \label{millers_number} of $7 \pm 2$, for the reason of plausibility \cite[230]{stewart_deconstructing_2007}. 
+Each chunk is associated with a chunk-type that determines the slots a chunk can have. A chunk-type consists of a name which serves as unique identifier chunk-types and a list of slots the chunks of this type offer. For example, the fact in figure \ref{fig:chunk_addition_fact} has the type \emph{addition-fact}. All chunks of this type must provide the slots \emph{arg\textsubsript{1}}, \emph{arg\textsubscript{2}} and \emph{sum}. For the chunk-types there is no upper limit of slots they can define. However, it is suggested to limit the number of slots to Miller's Number \label{millers_number} of $7 \pm 2$, for the reason of plausibility \cite[230]{stewart_deconstructing_2007}. 
 
 \subsubsection{Buffers}
 
@@ -288,7 +288,7 @@ The first ACT-R example model deals with the process of counting. This model rel
 
 \begin{figure}[htb]
 \centering
-\tikzstyle{chunk} = [ellipse, draw]
+\tikzstyle{chunk} = [ellipse, draw, fill=blue!20]
 \tikzstyle{element} = [] 
 \tikzstyle{slot} = [draw, -latex]   
 
@@ -315,7 +315,7 @@ The next step is to define the goal chunk stored in the goal buffer. In this chu
 
 \begin{figure}[hbt]
 \centering
-\tikzstyle{chunk} = [ellipse, draw]
+\tikzstyle{chunk} = [ellipse, draw, fill=blue!20]
 \tikzstyle{element} = [] 
 \tikzstyle{slot} = [draw, -latex]   
 
@@ -435,7 +435,7 @@ where $W_j$ the \emph{attentional weighting} of chunk $j$, $S_{ji}$ the \emph{as
 
 \begin{figure}[htb]
 \centering
-\tikzstyle{chunk} = [ellipse, draw]
+\tikzstyle{chunk} = [ellipse, draw, fill=blue!20]
 \tikzstyle{element} = [] 
 \tikzstyle{slot} = [draw, latex-diamond]   
 
@@ -471,21 +471,23 @@ S_{ji} = S - \mathrm{ln}(\mathrm{fan}_j)
 where $\mathrm{fan}_j$ is the number of facts associated to term $j$ \cite[1042]{anderson_implications_2000}. In more detail: ``$\mathrm{fan}_j$ is the number of chunks in declarative memory in which $j$ is the value of a slot plus one for chunk $j$ being associated with itself'' \cite[unit 5, p. 2]{actr_tutorial}. Hence, equation \eqref{eq:assoc_strength} states that the associative strength from chunk $j$ to $i$ decreases the more facts are associated to $j$.
 
 This is due to the \emph{fan effect:} The more facts a person studies about a certain concept, the more time he or she needs to retrieve a particular fact of that concept \cite[186]{anderson_fan_1999}. This has been demonstrated in an experiment presented in \cite{anderson_fan_1999}, where every participant studied facts about persons and locations like for example:
+
 \begin{itemize}
  \item A hippie is in the park.
  \item A hippie is in the church.
  \item A captain is in the bank.
 \end{itemize}
+
 For every person the participants studied either one, two or three facts. Afterwards, they were asked to identify targets, that are sentences they studied, and foils, i.e. sentences constructed from the same persons and locations, but that were not in the original set of sentences. ``The term \emph{fan} refers to the number of facts associated with a particular concept'' \cite[186]{anderson_fan_1999}. Figure~\ref{fig:fans} represents an example chunk network of the studied sentences with their fan, $S_{ji}$ and $B_i$ values.
 
 \begin{figure}[htb]
 \centering
-\tikzstyle{chunk} = [ellipse, draw, text centered, text width=3em, minimum height=1cm]
-\tikzstyle{empty} = [ellipse, text centered, text width=3em, minimum height=1cm]
+\tikzstyle{chunk} = [ellipse, draw, fill=blue!20, text centered, text width=2.5em, minimum height=0.8cm]
+\tikzstyle{empty} = [ellipse, text centered, text width=2.5em, minimum height=0.8cm]
 \tikzstyle{line} = [draw,diamond-latex]
 
 \begin{tikzpicture}
-\matrix[row sep=4mm,column sep=2cm]{
+\matrix[row sep=2mm,column sep=2cm]{
 \node (fireman) {fireman}; &
 \node[chunk] (a) {1 -- 1};&
 \node (bank) {bank};\\
@@ -493,7 +495,7 @@ For every person the participants studied either one, two or three facts. Afterw
 & \node (store) {store};\\
 & \node[empty] (c) {}; \\
 \node (hippie)  {hippie};
-&\node[chunk, fill=blue!20] (d) {3 -- 3};
+&\node[chunk, fill=red!20] (d) {3 -- 3};
 &\node (park) {park};\\
 & \node[empty] (e) {};\\
 \node (doctor) {doctor};
@@ -516,15 +518,16 @@ For every person the participants studied either one, two or three facts. Afterw
 \node[draw,ellipse, minimum height=3.5cm, very thick] (fan) at (intersection of arrowfire.center--arrowdoc.center and hippie.east--d.west) {};
 \node[above right of=fan, node distance=14mm] (fanlabel) {$\mathrm{fan_{hippie}}$};
 
-\node[above right of=d, node distance=12mm] (bi) {$B_i$};
+\node[below of=d, node distance=9mm] (bi) {$B_i$};
 
 \path[draw] (fan) -- (fanlabel);
 \path[draw] (bi) -- (d);
 \end{tikzpicture}
-\caption{The ellipses represent chunks which encode one fact like ``a hippie is in the park'' (highlighted chunk $i$). The words are primitive elements. The special arrows show the direction of activation spreading from an element to a chunk. The numbers in the chunks signify the fan of the associated element, e.g. the fan of the element \emph{hippie} is 3. The associative strength of the element hippie to the highlighted chunk $i$ is $S_{\mathrm{hippie},i} = S - \mathrm{ln}(\mathrm{fan_{hippie}}) = S - \mathrm{ln}(3)$. \cite[fig.~6]{anderson_integrated_2004}}
+\caption{The ellipses represent chunks which encode one fact like ``a hippie is in the park'' (red highlighted chunk $i$). The words are primitive elements. The special arrows show the direction of activation spreading from an element to a chunk. The numbers in the chunks signify the fan of the associated element, e.g. the fan of the element \emph{hippie} is 3. The associative strength of the element hippie to the highlighted chunk $i$ is $S_{\mathrm{hippie},i} = S - \mathrm{ln}(\mathrm{fan_{hippie}}) = S - \mathrm{ln}(3)$. \cite[fig.~6]{anderson_integrated_2004}}
 \label{fig:fans}
 \end{figure}
 
+%\enlargethispage{\baselineskip}
 The result of the experiment was, that the more facts are associated with a certain concept, the higher the retrieval time for a particular fact about that concept was. In the ACT-R theory, this result has been integrated in the calculation of the strengths of association: In equation \eqref{eq:assoc_strength} the associative strength decreases with the number of associated elements. The value $S$ is a model-dependent constant, but in many models estimated about 2 \cite[1042]{anderson_integrated_2004}. Modelers should take notice of setting $S$ high enough that all associative strengths in the model are positive \cite[unit 5, p. 3]{actr_tutorial}. Figure \ref{fig:activation_spreading} illustrates the activation spreading process with respect to the associative strengths.
 
 \begin{figure}[htb]
@@ -537,21 +540,21 @@ The result of the experiment was, that the more facts are associated with a cert
 
 \begin{tikzpicture}[remember picture]
 \matrix[column sep=2cm,row sep=2mm] {
-&\node[source] (source1) {$\mathrm{source_1}$}; 
+&\node[source] (source1) {source\textsubscript{1}}; 
 & &
-\node[chunk] (c1) {$\mathrm{chunk_1}$};\\
+\node[chunk] (c1) {chunk\textsubscript{1}};\\
 \node[buffer] (goal) {
 \begin{tikzpicture}
 \node (bufname) {\textbf{goal}};
-\node[below of=bufname] (slot1) {$\mathrm{slot_1}$};
-\node[below of=slot1] (slot2) {$\mathrm{slot_2}$};
+\node[below of=bufname] (slot1) {slot\textsubscript{1}};
+\node[below of=slot1] (slot2) {slot\textsubscript{2}};
 \end{tikzpicture}
 
 }; & & &
-\node[chunk] (c2) {$\mathrm{chunk_2}$};\\\
+\node[chunk] (c2) {chunk\textsubscript{2}};\\\
 &
-\node[source] (source2) {$\mathrm{source_2}$};
-& & \node[chunk] (c3) {$\mathrm{chunk_3}$};
+\node[source] (source2) {source\textsubscript{2}};
+& & \node[chunk] (c3) {chunk\textsubscript{3}};
 \\
 };
 
@@ -571,7 +574,8 @@ The result of the experiment was, that the more facts are associated with a cert
 
 \subsubsection{Latency of Retrieval}
 
-As mentioned before, the activation of a chunk affects if the chunk can be retrieved (depending on a threshold and the activation values of the other matching chunks). In addition, activation also has an effect on the retrieval time of a chunk:
+%\enlargethispage{\baselineskip}
+As mentioned before, the activation of a chunk affects if the chunk can be retrieved (depending on a threshold and the activation values of the other matching chunks). In addition, activation also has an effect on the time it takes to retrieve a particular chunk. This time is called \emph{latency} and is calculated as follows:
 \begin{equation}
 \label{eq:retrieval_latency}
 T_i = F \cdot \mathrm{e}^{-A_i}
@@ -598,7 +602,7 @@ where $\alpha$ is the \emph{learning rate} which is usually set around .2 and $R
 
 Usually, rewards can occur at any time and it is not clear which production rule will be strengthened by the reward. In \citetitle{anderson_how_2007} \citeauthor{anderson_how_2007} describes an example, where a monkey receives a squirt of juice a second after he presses a button \cite[161]{anderson_how_2007}. Now, the question is, which production rule is rewarded, since between the reward and the firing of a rule there always is a break. In ACT-R, every production that has been fired since the last reward event will be rewarded, but the more time lies between the reward and the firing of the rule, the less rewarded the particular rule gets. The reward for a rule is defined as the amount of external reward minus the the time from the rule to the reward. This implies, that the reward has to be measured in units of time, e.g., how much time is a monkey willing to spend to get a squirt of juice? \cite[161]{anderson_how_2007}
 
-In implementations of ACT-R, rewards can be triggered by the user at any time or can be associated with special production rules that model the successful achievement of a goal (they check if the current state is a wanted state and then trigger a reward, so every rule that has led to the successful state will be rewarded). It is important to mention that by definition, rules can also get a negative reward if their selection was too long ago. If one wants to penalize all rules since the last reward, a rule that distributes a reward of 0 can be triggered, which leads all rules applied before being rewarded with a negative amount of reward \cite[unit 6, p. 8]{actr_tutorial}.
+In implementations of ACT-R, rewards can be triggered by the user at any time or can be associated with special production rules that model the successful achievement of a goal (they check if the current state is a wanted state and then trigger a reward, so every rule that has led to the successful state will be rewarded). It is important to mention that by definition, rules can also get a negative reward if their selection was too long ago. If one wants to penalize all rules since the last reward, a rule that distributes a reward of 0 can be triggered, which leads all rules applied before being rewarded with a negative amount of reward, so their utility value decreases and they become less likely to fire \cite[unit 6, p. 8]{actr_tutorial}.
 
 \section{Learning}
 
