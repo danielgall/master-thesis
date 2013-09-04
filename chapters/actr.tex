@@ -344,12 +344,12 @@ In this example we assume that the model starts with this goal chunk in the goal
 
 This notation indicates that the goal buffer holds a chunk with the name \emph{goal-chunk} of the type \emph{count}, which has the slot \emph{current-number} with the value 2 (the same is valid analogously for the retrieval buffer). Now the rule to implement counting can be defined as:
 
-\tikzstyle{rule}=[rectangle, draw=Uulmin,  
-        rounded corners, anchor=west, text=white, text width=9cm]
+\tikzstyle{rule}=[rectangle, draw=black,  
+        rounded corners, anchor=west, text=black, text width=9cm]
 
 \begin{center}
 \begin{tikzpicture}[node distance=0.5cm]
-\node (count-rule) [rule, rectangle split, rectangle split parts=5, rectangle split part fill={Uulmin, Uulmin!45,Uulmin!45,Uulmin!80,Uulmin!80}] {
+\node (count-rule) [rule, rectangle split, rectangle split parts=5, rectangle split part fill={red!30, yellow!20,yellow!20,red!20,red!20}] {
         \textbf{count-rule}
         \nodepart{two} IF the goal is to count, the current number is $n$
         \nodepart{three}AND the retrieval buffer holds a chunk of type \emph{count-fact} with the \emph{first} value $n$ and the \emph{second} value $m$
