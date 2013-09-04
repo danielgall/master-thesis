@@ -25,7 +25,7 @@ Since chunks are the central data-structure of ACT-R used for representation of 
 In multiple parts of ACT-R it is necessary to store chunks and then operate on them. Hence, the abstract data structure of such a chunk store is defined. Since chunk stores have been referred to as networks in the previous chapters, the general idea of this definition of a chunk store is based upon a relation that represents such a network.
 
 \begin{definition}[chunk-store]
-A \emph{chunk-store} $\Sigma$ is a tuple $(C,E,\mathcal{T},\rel{HasSlot},\rel{Isa})$, where $C$ is a set of chunks and $E$ a set of primitive elements both identified by unique names, with $C \cap E = \emptyset$. The \emph{values} of $\Sigma$ are defined by the set $V = C \cup E \cup \{ \mathtt{nil} \}$. $\mathcal{T}$ is a set of chunk-types. A chunk-type $T = (t,S) \in \mathcal{T}$ is a tuple with a \emph{unique}\footnote{$\forall (t,S), (t',S') \in \mathcal{T}: t = t' \Rightarrow S = S'$} type name $t$ and a set of slots $S$. The set of all slot-names is $\mathcal{S}$. 
+A \emph{chunk-store} $\Sigma$ is a tuple $(C,E,\mathcal{T},\rel{HasSlot},\rel{Isa})$, where $C$ is a set of chunks and $E$ a set of primitive elements both identified by unique names, with $C \cap E = \emptyset$. The \emph{values} of $\Sigma$ are defined by the set $V = C \cup E \cup \{ \mathtt{nil} \}$. $\mathcal{T}$ is a set of chunk-types. A chunk-type $T = (t,S) \in \mathcal{T}$ is a tuple with a \emph{unique}\footnote{$\forall (t,S), (t',S') \in \mathcal{T}: t = t' \Rightarrow S = S'$} type name $t$ and a set of slots $S$. The set of all chunk type names is $\mathcal{T}_{\var{name}}$ and the set of all slot-names is $\mathcal{S}$. 
 
 $\rel{HasSlot} \subseteq C \times \mathcal{S} \times V$ and $\rel{Isa} \subseteq C \times \mathcal{T}$ are relations and are defined as follows:
 
@@ -39,8 +39,14 @@ The $\rel{Isa}$ relation has to be right-unique and left-total, so each chunk ha
 \fun{slots}: C \rightarrow \mathcal{S} \times V &\\
 \fun{slots}(c) = \{ \enspace (s,v) \enspace | \enspace (c,s,v) \in HasSlot \enspace \}&\\
 \\
-\fun{slots}: \mathcal{T} \rightarrow \mathcal{S} &\\
-      \fun{slots}((t,S)) = S&
+\fun{slots}: \mathcal{T}_{\var{name}} \rightarrow \mathcal{S} &\\
+      \fun{slots}(t) = 
+\left\{                     
+  \begin{array}{ll}         
+    S & \mathord{\mathit{for}} \enspace (t,S) \in \mathcal{T} \\ 
+    \emptyset & \mathord{\mathit{otherwise}}
+  \end{array}
+\right.       &
 \end{align*}
 A chunk-store is \emph{type-consistent}, iff $\forall (c,(t,S)) \in \rel{Isa}: \forall s \in S \enspace \exists ! (c,s,v) \in \rel{HasSlot}$. So every chunk must have exactly one value for each slot of its type and only describe slots of its type. Empty slots are represented by the value \lstinline|nil|. Since every chunk has exactly one type, this is valid for all chunks in the store.
 
@@ -83,7 +89,7 @@ add-chunk(a isa addition-fact arg1 5 arg2 2 sum 7)
  Type consistency is checked as follows:
  \begin{align*}
  \fun{slots}(a) &= \{(\var{arg_1}, 5), (\var{arg_2}, 2), (\var{sum}, 7)\}\\
- \fun{slots}((\var{addition\mbox{-}fact},\{\var{arg_1}, \var{arg_2}, \var{sum}\}) &= \{\var{arg_1}, \var{arg_2}, \var{sum}\}
+ \fun{slots}(\var{addition\mbox{-}fact}) &= \{\var{arg_1}, \var{arg_2}, \var{sum}\}
  \end{align*}
  Since the chunk $a$ defines values for all of the possible slots of the type $\var{addition\mbox{-}fact}$ and only those slots, the store is type-consistent.
 \end{example}
@@ -112,11 +118,11 @@ For the chunks, the following constraints are defined:
 % chunk_has_slot(ChunkName, SlotName, Value)
 \end{lstlisting}
 
-The \lstinline|chunk/2| constraint represents both the set $C$ of chunks and the $Isa$ relation, since the presence of a constraint \lstinline|chunk(c,t)| signifies that chunk \lstinline|c| is of a type $T = (\mathtt{t},S)$. The $HasSlot$ relation is represented by the \lstinline|chunk_has_slot(c,s,v)| constraint, which really is just a direct translation of an element $(c,s,v) \in HasSlot$.
+The \lstinline|chunk/2| constraint represents both the set $C$ of chunks and the $\rel{Isa}$ relation, since the presence of a constraint \lstinline|chunk(c,t)| signifies that chunk \lstinline|c| is of a type $T = (\mathtt{t},S)$. The $\rel{HasSlot}$ relation is represented by the \lstinline|chunk_has_slot(c,s,v)| constraint, which really is just a direct translation of an element $(c,s,v) \in \rel{HasSlot}$.
 
 Note that all values in the just presented constraints have to be ground. This is a demand claimed by the original ACT-R implementation and makes sense, since each value in a slot of a chunk is a real, ground value and the concept of variables does not have an advantage in this context, because every element that can be stored in the brain is assumed to be known by the brain.
 
-Additionally, from the definition of a chunk store it is known that the $Isa$ relation has to be left-total. Therefore, for every chunk \lstinline|c| in the store, exactly one \lstinline|isa(c,t)| constraint has to be in the store. Due to type-consistency, for each \lstinline|chunk_type_has_slot(t,s)| constraint a \lstinline|chunk_has_slot(c,s,v)| constraint has to be defined. If it should be expressed that a chunk has an empty slot, the special chunk name \lstinline|nil| can be used as slot value to indicate that. Note that \lstinline|nil| must not be the name of a regular chunk or chunk-type.
+Additionally, from the definition of a chunk store it is known that the $\rel{Isa}$ relation has to be left-total and right-unique. Therefore, for every chunk \lstinline|c| in the store, exactly one \lstinline|chunk(c,t)| constraint has to be in the store. Due to type-consistency, for each \lstinline|chunk_type_has_slot(t,s)| constraint a \lstinline|chunk_has_slot(c,s,v)| constraint has to be defined. If it should be expressed that a chunk has an empty slot, the special chunk name \lstinline|nil| can be used as slot value to indicate that. Note that \lstinline|nil| must not be the name of a regular chunk or chunk-type.
 
 \begin{example}
 \label{ex:addition_fact_chr}
@@ -139,7 +145,7 @@ chunk_has_slot(a,sum,7)
 \subsubsection{Distinction of Elements and Chunks}
 \label{distinction_elements_chunks}
 
-A chunk store distinguishes between a set of chunks $C$ and a set of elements $E$. For implementational reasons it can be helpful if there are only chunks in the system, because elements just behave like chunks with no slots. Hence, a chunk-type \lstinline|chunk| with no slots will be added automatically to the store. Each element $e \in E$ is added as a chunk of type \lstinline|chunk| to the set of chunks $C$. After this operation $E = \emptyset$, and for every former element $e$ of $E$: $e \in C$, $(e,(\var{chunk},\emptyset)) \in \rel{Isa}$. So $E$ is now represented by $\{ c \in C \enspace | \enspace c \enspace \rel{Isa} \enspace (\val{chunk},\emptyset) \}$ in the implementation.
+A chunk store distinguishes between a set of chunks $C$ and a set of elements $E$. For implementational reasons it can be helpful if there are only chunks in the system, because elements just behave like chunks with no slots. Hence, a chunk-type \lstinline|chunk| with no slots will be added automatically to the store. Each element $e \in E$ is added as a chunk of type \lstinline|chunk| to the set of chunks $C$. After this operation $E = \emptyset$, and for every former element $e$ of $E$: $e \in C$, $(e,(\var{chunk},\emptyset)) \in \rel{Isa}$. So $E$ is now represented by $\{ c \in C \enspace | \enspace c \enspace \rel{Isa} \enspace (\var{chunk},\emptyset) \}$ in the implementation.
 
 \begin{example}
 The chunk representation from example~\ref{ex:addition_fact_chr} is changed to:
@@ -310,19 +316,19 @@ The buffer system can be regarded as a chunk-store that is enhanced by buffers. 
 
 \begin{definition}[buffer system]
 \label{def:buffer_system}
-A \emph{buffer system} is a tuple $(B,\Sigma,Holds)$, where $B$ is a set of buffers, $\Sigma = (C, E, \mathcal{T}, HasSlot, Isa)$ a type-consistent chunk-store and $Holds \subseteq B \times (C \cup \{ \mathtt{nil} \})$ a right-unique and left-total relation that assigns every buffer at most one chunk that it holds. If a buffer $b$ is empty, i.e. it does not hold a chunk, then $(b,\mathtt{nil}) \in Holds$.
+A \emph{buffer system} is a tuple $(B,\Sigma,\rel{Holds})$, where $B$ is a set of buffers, $\Sigma = (C, E, \mathcal{T}, \rel{HasSlot}, \rel{Isa})$ a type-consistent chunk-store and $\rel{Holds} \subseteq B \times (C \cup \{ \mathtt{nil} \})$ a right-unique and left-total relation that assigns every buffer at most one chunk that it holds. If a buffer $b$ is empty, i.e. it does not hold a chunk, then $(b,\mathtt{nil}) \in \rel{Holds}$.
 
-A buffer system is \emph{consistent}, if every chunk that appears in $Holds$ is a member of $C$ and $\Sigma$ is a type-consistent chunk-store.
+A buffer system is \emph{consistent}, if every chunk that appears in $\rel{Holds}$ is a member of $C$ and $\Sigma$ is a type-consistent chunk-store.
 
-A buffer system is \emph{clean}, if its chunk-store only holds chunks which appear in $Holds$.
+A buffer system is \emph{clean}, if its chunk-store only holds chunks which appear in $\rel{Holds}$.
 \end{definition}
 
-For the implementation of a buffer system, the code of a chunk-store can be extended by a \lstinline|buffer/2| constraint that encodes the set $B$ and the relation $Holds$ at once, since the relation is complete by definition.\footnote{$\forall b \in B \enspace \exists c \in (C \cup \{ \mathtt{nil} \}): (b,c) \in Holds$}
+For the implementation of a buffer system, the code of a chunk-store can be extended by a \lstinline|buffer/2| constraint that encodes the set $B$ and the relation $\rel{Holds}$ at once, since the relation is complete by definition.\footnote{$\forall b \in B \enspace \exists c \in (C \cup \{ \mathtt{nil} \}): (b,c) \in \rel{Holds}$}
 
 \subsubsection{Destructive Assignment and Consistency}
 \label{destructive_assignment}
 
-The demand of $Holds$ being right-unique\footnote{$\forall b \in B \enspace \forall c, d \in (C \cup \{ \mathtt{nil} \}): (b,c), (b,d) \in Holds \Rightarrow b = c$} is a form of destructive assignment as described in \cite[p. 32]{fru_chr_book_2009}, i.e. if a new chunk is assigned to a buffer, the old \lstinline|buffer| constraint is removed and a new \lstinline|buffer| constraint is introduced, holding the new chunk:
+The demand of $\rel{Holds}$ being right-unique\footnote{$\forall b \in B \enspace \forall c, d \in (C \cup \{ \mathtt{nil} \}): (b,c), (b,d) \in \rel{Holds} \Rightarrow b = c$} is a form of destructive assignment as described in \cite[p. 32]{fru_chr_book_2009}, i.e. if a new chunk is assigned to a buffer, the old \lstinline|buffer| constraint is removed and a new \lstinline|buffer| constraint is introduced, holding the new chunk:
 
 \begin{lstlisting}
 <<set_buffer(B, C) \ buffer(B, _)>> <=> buffer(B, C).
@@ -361,15 +367,15 @@ In addition, if a new chunk is put into a buffer, it also has to be present in t
 \\
 };
 
-\path[line] (b1) -- node[left] {$Holds$} (c);
-\path[line] (b2) -- node[right] {$Holds$} (nil);
-\path[line] (c) -- node[left] {$Isa$} (t);
-\path[line] (c) -- node[left, near end] {$HasSlot$} (v1);
+\path[line] (b1) -- node[left] {$\rel{Holds}$} (c);
+\path[line] (b2) -- node[right] {$\rel{Holds}$} (nil);
+\path[line] (c) -- node[left] {$\rel{Isa}$} (t);
+\path[line] (c) -- node[left, near end] {$\rel{HasSlot}$} (v1);
 \path[line] (c) -- node {$s_1$} (v1);
-\path[line] (c) -- node[right] {$HasSlot$} (v2);
+\path[line] (c) -- node[right] {$\rel{HasSlot}$} (v2);
 \path[line] (c) -- node[left] {$s_2$} (v2);
 \end{tikzpicture}
-\caption{A buffer system $(B,\Sigma,Holds)$ with two buffers $b_1, b_2 \in B$ and a chunk store $\Sigma = (C, E, \mathcal{T}, HasSlot, Isa)$. The relations $Holds$, $Isa$ and $HasSlot$ are illustrated by arrows. The buffer $b_1$ holds a chunk $c$ of type $T = (t,\{s_1, s_2\})$ and with values $v_1$ and $v_2$. Buffer $b_2$ is empty. The buffer system is clean, since only the chunks which are held by a buffer are in the set of chunks $C$ of the chunk store.}
+\caption{A buffer system $(B,\Sigma,\rel{Holds})$ with two buffers $b_1, b_2 \in B$ and a chunk store $\Sigma = (C, E, \mathcal{T}, \rel{HasSlot}, \rel{Isa})$. The relations $\rel{Holds}$, $\rel{Isa}$ and $\rel{HasSlot}$ are illustrated by arrows. The buffer $b_1$ holds a chunk $c$ of type $T = (t,\{s_1, s_2\})$ and with values $v_1$ and $v_2$. Buffer $b_2$ is empty. The buffer system is clean, since only the chunks which are held by a buffer are in the set of chunks $C$ of the chunk store.}
 \label{fig:buffer_system}
 \end{figure}
 
@@ -806,9 +812,7 @@ A problem that has not been addressed yet is that ACT-R allows buffer tests like
   bar  spam
 \end{lstlisting}
 
-In the logical reading, this would signify that $buffer \enspace Holds \enspace c \enspace \wedge \enspace c \enspace Isa \enspace foo \enspace \wedge \enspace c \xrightarrow{bar} spam \enspace \wedge \enspace c \xrightarrow{bar} spam$ which is equivalent to the test with only one check of the \lstinline|bar| slot.\footnote{$x \wedge x = x$}
-
-However, in CHR the following rule head resulting from the simple translation scheme would not match:
+In the logical reading, this would signify that $\var{buffer} \enspace \rel{Holds} \enspace c \enspace \wedge \enspace c \enspace \rel{Isa} \enspace foo \enspace \wedge \enspace c \xrightarrow{\var{bar}} \var{spam} \enspace \wedge \enspace c \xrightarrow{\var{bar}} \var{spam}$ which is equivalent to the test with only one check of the \lstinline|bar| slot since $x \wedge x$ can be reduced to $x$. However, in CHR the following rule head resulting from the simple translation scheme does not match:
 
 \begin{lstlisting}
 buffer(buffer,C),
@@ -817,7 +821,13 @@ buffer(buffer,C),
   chunk_has_slot(C,bar,spam)
 \end{lstlisting}
 
-Because there are no two identical \lstinline|chunk_has_slot| constraints in the store, the rule could not fire. I.e. the list of slot tests in ACT-R is interpreted as a set of conditions, whereas CHR rules operate on a multi-set of constraints. However, the semantics of CHR can be changed to a set-based semantics. The first approach to implement a set-based semantics is to simply eliminate the duplicate test:
+Because there are no two identical \lstinline|chunk_has_slot| constraints in the store, the rule cannot fire. I.e. the list of slot tests in ACT-R is interpreted as a set of conditions, whereas CHR rules operate on a multi-set of constraints. However, the semantics of CHR can be changed to a set-based semantics. The first approach to implement a set-based semantics is to simply eliminate the duplicate test:
+
+\begin{lstlisting}
+buffer(buffer,C),
+  chunk(C,foo),
+  chunk_has_slot(C,bar,spam)
+\end{lstlisting}
 
 However, this does not do the trick for all possible cases. For example, suppose a test
 
@@ -828,7 +838,7 @@ However, this does not do the trick for all possible cases. For example, suppose
   bar  =x
 \end{lstlisting}
 
-where the second test refers to a variable (or even both tests are variables). This problem could be solved by adding a guard to the rule from the simple translation:
+where the second test refers to a variable (or even both tests are variables). This problem can be solved by adding a guard to the rule from the simple translation:
 
 \begin{lstlisting}
 <<buffer(buffer,C),
@@ -837,16 +847,14 @@ chunk_has_slot(C,bar,spam)>>
 ==> <<<spam == X>>> | ...
 \end{lstlisting}
 
-Since \lstinline|X| must be bound after the matching,\footnote{see section~\ref{bound_and_unbound_variables}} the test will always give the correct result. This also works for the first example, where the test would be \lstinline|spam == spam|, which is always true and hence could be reduced to the rule with the second test eliminated and no guard.\footnote{true guards can always be reduced}
-
-It also works if the two slot-tests were contradictory, for example: 
+Since \lstinline|X| must be bound after the matching,\footnote{see section~\ref{bound_and_unbound_variables}} the test will always give the correct result. This also works for the first example, where the test would be \lstinline|spam == spam|, which is always true and hence could be reduced to the rule with the second test eliminated and no guard.\footnote{true guards can always be reduced} It also works if the two slot-tests were contradictory, for example: 
 
 \begin{lstlisting}
 bar  spam
 bar  eggs
 \end{lstlisting}
 
-would describe a rule that never can fire. The translation models exactly this behaviour:
+describes a rule that never can fire. The translation models exactly this behaviour:
 
 \begin{lstlisting}
 <<buffer(buffer,C),
@@ -855,7 +863,7 @@ chunk_has_slot(C,bar,spam)>>
 ==> <<<spam == eggs>>> | ...
 \end{lstlisting}
 
-since the built-in syntactic-equality test of Prolog would never return true for those two constants.
+since the built-in syntactic-equality test of Prolog does never return true for those two constants.
 
 This approach is essentially the same as \citeauthor{chr_lecture_chap6} suggests in chapter~6 of the accompanying slides to his book \cite{fru_chr_book_2009}: For each multi-headed rule, new rule variants are added. Those variants are produced by a pairwise unification of the constraints in the head which eliminates one of the unifiable head constraints \cite{chr_lecture_chap6}. For example, consider the rule:
 

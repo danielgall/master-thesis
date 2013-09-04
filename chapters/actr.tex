@@ -23,11 +23,11 @@ This approach leads to a modular organization of ACT-R with modules for each pur
     text width=5em, text centered, rounded corners, minimum height=3em]
 \tikzstyle{buffer} = [rectangle, draw, fill=yellow!20, 
     text width=5em, text centered, rounded corners, minimum height=3em]
-\tikzstyle{line} = [draw, -latex']
-\tikzstyle{doubleline} = [draw, latex-latex']
+\tikzstyle{line} = [draw, -latex]
+\tikzstyle{doubleline} = [draw, latex-latex]
     
-\begin{tikzpicture}[node distance = 2cm, auto]
- \matrix[row sep=4mm] (modules) {
+\begin{tikzpicture}[node distance = 2.2cm, auto]
+ \matrix[row sep=6mm] (modules) {
  \node[module] (goalmod) {goal module}; 
  \node[buffer, below right of=goalmod] (goalbuf) {goal buffer}; 
 &  \node[module] (imaginalmod) {imaginal module}; 
@@ -87,8 +87,8 @@ However, each module can perform its computation only locally and has no access 
 \tikzstyle{procmodule} = [rectangle, draw, fill=blue!20,  text centered, rounded corners, minimum height=3em]
 \tikzstyle{buffer} = [rectangle, draw, fill=yellow!20, 
     text width=6em, text centered, rounded corners, minimum height=3em]
-\tikzstyle{line} = [draw, -latex']
-\tikzstyle{doubleline} = [draw, latex-latex']
+\tikzstyle{line} = [draw, -latex]
+\tikzstyle{doubleline} = [draw, latex-latex]
 
 \begin{tikzpicture}[remember picture, auto]
 \matrix[row sep=5mm, column sep=5mm] {
@@ -167,7 +167,7 @@ Chunks can have slots that are connected to other chunks or primitive elements. 
  \node[element, below of=addition-fact, node distance=2cm] (sum) {7}; 
 
     % Draw edges
-  \path[slot] (addition-fact) -- node[above] {arg1} (arg1);
+  \path[slot] (addition-fact) -- node[above] {arg\textsubscript{1}} (arg1);
   \path[slot] (addition-fact) -- node[above] {arg2} (arg2);
   \path[slot] (addition-fact) -- node {sum} (sum);
 \end{tikzpicture}
@@ -178,7 +178,7 @@ Chunks can have slots that are connected to other chunks or primitive elements. 
 
 Thus, chunks are defined by their name and the values of their slots. When talking about chunk descriptions, often the term \emph{slot-value pairs} is used especially for partial chunk descriptions, i.e. descriptions which do not have a value for all possible slots. This simply refers to an arbitrary chunk that has the specified values in its slots (and the others are ignored).
 
-Each chunk is associated with a chunk-type that determines the slots a chunk can have. A chunk-type consists of a name which serves as unique identifier chunk-types and a list of slots the chunks of this type offer. For example, the fact in figure \ref{fig:chunk_addition_fact} has the type \verb|addition-fact|. All chunks of this type must provide the slots \verb|arg1|, \verb|arg2| and \verb|sum|. For the chunk-types there is no upper limit of slots they can define. However, it is suggested to limit the number of slots to Miller's Number \label{millers_number} of $7 \pm 2$, for the reason of plausibility \cite[230]{stewart_deconstructing_2007}. 
+Each chunk is associated with a chunk-type that determines the slots a chunk can have. A chunk-type consists of a name which serves as unique identifier chunk-types and a list of slots the chunks of this type offer. For example, the fact in figure \ref{fig:chunk_addition_fact} has the type \emph{addition-fact}. All chunks of this type must provide the slots \emph{arg1}, \verb|arg2| and \verb|sum|. For the chunk-types there is no upper limit of slots they can define. However, it is suggested to limit the number of slots to Miller's Number \label{millers_number} of $7 \pm 2$, for the reason of plausibility \cite[230]{stewart_deconstructing_2007}. 
 
 \subsubsection{Buffers}
 

@@ -1135,7 +1135,7 @@ As mentioned before, the implementation is divided into modules which provide an
 
 It is important to mention, that in the figure, each component which is included in another component signifies that the corresponding Prolog file is textually included to the parent component. The interfaces in the figure indicate that the component is a Prolog module which is included by the use of \lstinline|use_module|. The constraints defined in such a standalone component are not accessible for the other components. An exception is the component of the \emph{user-defined rules} which -- in the current version -- textually includes the \emph{core}.
 
-\begin{figure}[htbp]
+\begin{sidewaysfigure}[p]
 \centering
  \begin{tikzpicture}
 \begin{umlcomponent}{model}
@@ -1192,7 +1192,7 @@ It is important to mention, that in the figure, each component which is included
 \end{tikzpicture} 
 \caption{UML-Component Diagram of the implementation}
 \label{fig:component_diagram}
-\end{figure}
+\end{sidewaysfigure}
 
 
 \section{Declarative Module}
