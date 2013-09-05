@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.8.10)  5 SEP 2013 11:29
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013/Arch Linux) (format=pdflatex 2013.8.10)  5 SEP 2013 11:49
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1858,7 +1858,7 @@ Underfull \vbox (badness 1354) has occurred while \output is active []
 
  [113]
 [114] [115] [116]
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Underfull \vbox (badness 1648) has occurred while \output is active []
 
  [117]
 [118] [119] [120] [121] [122] [123] [124]
@@ -1906,10 +1906,10 @@ Package logreq Info: Writing requests to 'arbeit.run.xml'.
 
  ) 
 Here is how much of TeX's memory you used:
- 37714 strings out of 493315
- 685114 string characters out of 6143704
+ 37712 strings out of 493315
+ 685077 string characters out of 6143704
  1126272 words of memory out of 5000000
- 37830 multiletter control sequences out of 15000+600000
+ 37828 multiletter control sequences out of 15000+600000
  125097 words of font info for 290 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  65i,19n,76p,1885b,3164s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1938,7 +1938,7 @@ courier/ucrro8a.pfb></usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb>
 </usr/share/texmf-dist/fonts/type1/urw/helvetic/uhvbo8a.pfb></usr/share/texmf-d
 ist/fonts/type1/urw/helvetic/uhvr8a.pfb></usr/share/texmf-dist/fonts/type1/urw/
 helvetic/uhvro8a.pfb>
-Output written on arbeit.pdf (163 pages, 1008280 bytes).
+Output written on arbeit.pdf (163 pages, 1008098 bytes).
 PDF statistics:
  4423 PDF objects out of 5155 (max. 8388607)
  4154 compressed objects within 42 object streams

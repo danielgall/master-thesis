@@ -900,7 +900,7 @@ where \lstinline|~| stands for one of the modifiers in \{ \lstinline|=,-,<,>,<=,
   ...
 \end{lstlisting}
 
-where \lstinline|#| is the placeholder for the built-in constraint that computes the test specified by \lstinline|~| and \lstinline|V| is a fresh variable that has not been used in the rule, yet.
+where \lstinline|#| is the placeholder for the built-in constraint that computes the test specified by \lstinline|~| and \lstinline|V| is a fresh variable that has not been used in the rule yet.
 
 For arithmetic slot modifiers the values being compared have to be numbers. If a value is not a number, the arithmetic test will fail and the rule cannot be applied \cite{actr_reference}.
 
@@ -2349,7 +2349,7 @@ The compiler consists of three parts: A tokenizer, a parser and an actual transl
 The tokenizer gets the file with the model definition as input and does some preprocessing on it: From the input -- a sequence of characters -- it builds a list of tokens. Tokens are separated by white-space (or by special characters) and can be one of the following character sequences in the input:
 
 \begin{description}
- \item[Special Characters] are individual tokens and are defined as all allowed characters that are not letters, numbers or white-space. In ACT-R, the symbols \lstinline|!, (, ), +, -, =, >, ?| are considered special characters. Some special characters of ACT-R are missing in this list, but are not implemented in the compiler, yet.
+ \item[Special Characters] are individual tokens and are defined as all allowed characters that are not letters, numbers or white-space. In ACT-R, the symbols \lstinline|!, (, ), +, -, =, >, ?| are considered special characters. Some special characters of ACT-R are missing in this list, but are not implemented in the compiler yet.
  \item[Keywords] are treated like a special character, but contain more than one symbol. In ACT-R, one of the keywords is \lstinline|==>|, separating the LHS from the RHS of a production rule.
  \item[Identifiers] Every character sequence which starts with a letter and contains only letters or numbers. An identifier ends, if a special character or a white-space is read from the input. The \lstinline|-| character is an exception, because it can be used within identifiers, although it is a special character.
  

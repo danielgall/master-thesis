@@ -69,11 +69,11 @@ The first model is an extension of the example presented in section~\ref{example
 \end{lstlisting}
 \flushbottom
 
-First of all, in line~\ref{exmod:lst:example_counting:define_model} the model definition is initiated and a model name is given. Line~\ref{exmod:lst:example_counting:chunk_type} sq. add the two necessary chunk-types: A chunk-type for the goal-chunks and a chunk-type for the actual declarative data. These chunk-type definitions are global to the system, i.e. they are added to all chunk stores. The goal-chunks have the slots \lstinline|start| and \lstinline|end| which encode from which number the counting process should start and where it should end. The value in the slot \lstinline|count| saves the current number of the count-process, analogously as in section~\ref{example_counting}. Then the chunks are added from line~\ref{exmod:lst:example_counting:add_dm} to~\ref{exmod:lst:example_counting:add_dm_end} and are representations of the order of the natural numbers from one to six. The last chunk is the goal-chunk. Note that only the start and end numbers are specified, the current number will be set to \lstinline|nil|.
+First of all, in line~\ref{exmod:lst:example_counting:define_model} the model definition is initiated and a model name is given. Line~\ref{exmod:lst:example_counting:chunk_type} sq. add the two necessary chunk-types: A chunk-type for the goal-chunks and a chunk-type for the actual declarative data. These chunk-type definitions are global to the system, i.e. they are added to all chunk stores. The goal-chunks have the slots \lstinline|start| and \lstinline|end| that encode from which number the counting process should start and where it should end. The value in the slot \lstinline|count| saves the current number of the counting process, analogously as in section~\ref{example_counting}. Then the chunks are added from line~\ref{exmod:lst:example_counting:add_dm} to~\ref{exmod:lst:example_counting:add_dm_end}. They are representations of the order of the natural numbers from one to six. The last chunk is the goal-chunk. Note that only the start and end numbers are specified, the current number will be set to \lstinline|nil|.
 
-The first production rule \lstinline|start| in line~\ref{exmod:lst:example_counting:start} sqq. can only be applied, if the goal has an empty \lstinline|count| slot, but an actual value in the \lstinline|start| slot. This will be valid for the initial state as explained later. The production states a request for the first count-fact with the start number in its \lstinline|first| slot and sets the current number in the goal to the start number. The other slots in the goal buffer remain the same.
+The first production rule \lstinline|start| in line~\ref{exmod:lst:example_counting:start} sqq. can only be applied if the goal has an empty \lstinline|count| slot, but an actual value in the \lstinline|start| slot. This will be valid for the initial state as explained later. The production states a request for the first count-fact with the start number in its \lstinline|first| slot and sets the current number in the goal to the start number. The other slots in the goal buffer remain the same.
 
-In line~\ref{exmod:lst:example_counting:increment} sqq. the main rule \lstinline|increment| is defined. It assumes that a count-order fact which matches the current number in the goal has been retrieved. Additionally, the counting process must not end with this number, indicated by the negated slot test on the slot \lstinline|end|. The action part then states a new request for the next count-fact and increments the current number. Once the rule is applicable, it will be applicable as long there are count-facts in the declarative memory and the specified end has not been reached, yet.
+In line~\ref{exmod:lst:example_counting:increment} sqq. the main rule \lstinline|increment| is defined. It assumes that a count-order fact which matches the current number in the goal has been retrieved. Additionally, the counting process must not end with this number, indicated by the negated slot test on the slot \lstinline|end|. The action part then states a new request for the next count-fact and increments the current number. Once the rule is applicable, it will be applicable as long there are count-facts in the declarative memory and the specified end has not been reached yet.
 
 The last production rule \lstinline|stop| in line~\ref{exmod:lst:example_counting:stop} is applicable, as soon the \lstinline|increment| rule cannot be applied anymore due to the fact that the specified end of the counting process has been reached. Then, the last number will be printed and the goal buffer will be cleared.
 
@@ -118,30 +118,30 @@ The source file in listing \ref{exmod:lst:example_counting} can be translated by
 :- include('actr_core.pl').
 :- chr_constraint run/0, fire/0.
 
-delay-start @ 
-  fire,
+<<<delay-start>>> @ 
+  <<fire,
   buffer(goal,_,A),
     chunk(A,count-from),
     chunk_has_slot(A,start,B),
-    chunk_has_slot(A,count,nil)
+    chunk_has_slot(A,count,nil)>>
 ==>
-  B\==nil |
+  <<<B\==nil>>> |
   conflict_set(start).
 
-start @ 
-  buffer(goal,_,A),
+<<<start>>> @ 
+  <<buffer(goal,_,A),
     chunk(A,count-from),
     chunk_has_slot(A,start,B),
     chunk_has_slot(A,count,nil)
-  \ apply_rule(start)
+  \ apply_rule(start)>>
 <=>
-  B\==nil |
+  <<<B\==nil>>> |
   buffer_change(goal,chunk(_,_,[ (count,B)])),
   buffer_request(retrieval,chunk(_,count-order,[ (first,B)])),
   conflict_resolution.
 
-delay-increment @ 
-  fire,
+<<<delay-increment>>> @ 
+  <<fire,
   buffer(goal,_,A),
     chunk(A,count-from),
     chunk_has_slot(A,count,C),
@@ -149,15 +149,15 @@ delay-increment @
   buffer(retrieval,_,B),
     chunk(B,count-order),
     chunk_has_slot(B,first,C),
-    chunk_has_slot(B,second,E)
+    chunk_has_slot(B,second,E)>>
 ==>
-  C\==nil,
+  <<<C\==nil,
   D\==C,
-  E\==nil |
+  E\==nil>>> |
   conflict_set(increment).
 
-increment @ 
-  buffer(goal,_,A),
+<<<increment>>> @ 
+  <<buffer(goal,_,A),
     chunk(A,count-from),
     chunk_has_slot(A,count,C),
     chunk_has_slot(A,end,D),
@@ -165,40 +165,40 @@ increment @
     chunk(B,count-order),
     chunk_has_slot(B,first,C),
     chunk_has_slot(B,second,E)
-  \ apply_rule(increment)
+  \ apply_rule(increment)>>
 <=>
-  C\==nil,
+  <<<C\==nil,
   D\==C,
-  E\==nil |
+  E\==nil>>> |
   buffer_change(goal,chunk(_,_,[ (count,E)])),
   buffer_request(retrieval,chunk(_,count-order,[ (first,E)])),
   output(C),
   conflict_resolution.
 
-delay-stop @
-  fire,
+<<<delay-stop>>> @
+  <<fire,
   buffer(goal,_,A),
     chunk(A,count-from),
     chunk_has_slot(A,count,B),
-    chunk_has_slot(A,end,B)
+    chunk_has_slot(A,end,B)>>
 ==>
-  B\==nil | 
+  <<<B\==nil>>> | 
   conflict_set(stop).
 
-stop @ 
-  buffer(goal,_,A),
+<<<stop>>> @ 
+  <<buffer(goal,_,A),
     chunk(A,count-from),
     chunk_has_slot(A,count,B),
     chunk_has_slot(A,end,B)
-  \ apply_rule(stop)
+  \ apply_rule(stop)>>
 <=>
-  B\==nil |
+  <<<B\==nil>>> |
   buffer_clear(goal),
   output(B),
   conflict_resolution.
   
-init @ (*@\label{exmod:lst:example_counting_chr:init}@*)
-run <=> true | 
+<<<init>>> @ (*@\label{exmod:lst:example_counting_chr:init}@*)
+<<run>> <=> <<<true>>> | 
   set_default_utilities([stop,increment,start]),
   add_buffer(retrieval,declarative_module),
   add_buffer(goal,declarative_module),
@@ -216,9 +216,9 @@ run <=> true |
   conflict_resolution,
   nextcyc.
   
-no-rule @ (*@\label{exmod:lst:example_counting_chr:no_rule}@*)
-fire <=> 
-  true |
+<<<no-rule>>> @ (*@\label{exmod:lst:example_counting_chr:no_rule}@*)
+<<fire>> <=> 
+  <<<true>>> |
   conflict_set([]),
   choose.
 \end{lstlisting}
@@ -226,9 +226,9 @@ fire <=>
 
 First of all, it is interesting to note, that there are some more CHR rules than production rules in the original code in listing~\ref{exmod:lst:example_counting}. One very obvious extension is the rule \lstinline|init| in line~\ref{exmod:lst:example_counting_chr:init}. This rule initializes the model according to section~\ref{initialization}. First, it sets the default utilities for each of the production rules and creates the used buffers in the buffer system. Then, the Lisp functions from the original model definitions are called in their CHR versions, according to section~\ref{lisp_functions}. Those are the methods which create chunk-types and add the initial declarative knowledge to the declarative module. Note that also the artificial chunk-type \lstinline|chunk| with no slots is created. The last Lisp call moves the \lstinline|first-goal| chunk to the goal buffer. Finally, the current time is set to zero, a conflict resolution event is scheduled in the queue (according to section~\ref{implementation:conflict_resolution}) and the recognize-act cycle is started by \lstinline|nextcyc|, which will dequeue the first event from the scheduler as described in section~\ref{implementation:scheduler:recognize-act}.
 
-Furthermore, each production rule from the original module has two correspondent CHR rules in the translation due to the conflict resolution process described in section~\ref{implementation:conflict_resolution}. The first rule delays the execution by adding the rule -- if applicable -- to the conflict set as soon as a new conflict resolution event (represented by the CHR constraint \lstinline|fire|) has been triggered. The second rule actually performs the rule, if it has been chosen by the conflict resolution process (indicated by the constraint \lstinline|apply_rule/1|). After the rule application, each rule schedules the next conflict resolution event by adding \lstinline|conflict_resolution| to the store. The guards of the production rules check that each tested slot actually has a value (so its value is not \lstinline|nil|) as described in section~\ref{empty_slots} (see page~\pageref{empty_slots}) and in the rule \lstinline|increment|, for example, a negated slot test is translated to a guard check according to the pattern presented in section~\ref{slot_modifiers} (see page~\pageref{slot_modifiers}).
+Furthermore, each production rule from the original module has two correspondent CHR rules in the translation due to the conflict resolution process described in section~\ref{implementation:conflict_resolution}. The first rule delays the execution by adding the rule -- if applicable -- to the conflict set as soon as a new conflict resolution event (represented by the CHR constraint \lstinline|fire|) has been triggered. The second rule actually performs the actions of the production rule if it has been chosen by the conflict resolution process (indicated by the constraint \lstinline|apply_rule/1|). After the rule application, each rule schedules the next conflict resolution event by adding \lstinline|conflict_resolution| to the store. The guards of the production rules check that each tested slot actually has a value (so its value is not \lstinline|nil|) as described in section~\ref{empty_slots} (see page~\pageref{empty_slots}). In the rule \lstinline|increment|, for example, a negated slot test is translated to a guard check according to the pattern presented in section~\ref{slot_modifiers} (see page~\pageref{slot_modifiers}).
 
-The rule \lstinline|no-rule| in line~\ref{exmod:lst:example_counting_chr:no_rule} is the last rule tested in the collecting process of the conflict resolution. It removes the \lstinline|fire| constraint and triggers the choosing process, after it has added an empty rule to the conflict set. This is important for the choosing process to detect if no rule was applicable in this conflict resolution phase.
+The rule \lstinline|no-rule| in line~\ref{exmod:lst:example_counting_chr:no_rule} is the last rule tested in the collecting process of the conflict resolution. It removes the \lstinline|fire| constraint and triggers the choosing process after it has added an empty rule to the conflict set. This is important for the choosing process to detect if no rule was applicable in this conflict resolution phase.
 
 The output of the model is the following (pretty printed by hand):
 
@@ -290,7 +290,7 @@ output:4
 \end{lstlisting}
 \flushbottom
 
-Note that the output is very similar to the original output, especially the order of rule applications and events. However, the timings are not accurate, yet, since some constants are different from the original implementation, which can be fixed and does not really harm the theory. 
+Note that the output is very similar to the original output, especially the order of rule applications and events. However, the timings are not accurate yet, since some constants and special cases are different from the original implementation. This can be fixed and does not really harm the theory. 
 
 To demonstrate the subsymbolic layer, the original code is extended as follows:
 
@@ -375,7 +375,7 @@ To demonstrate the subsymbolic layer, the original code is extended as follows:
 \end{lstlisting}
 \flushbottom
 
-The subsymbolic layer is turned on and chunk \lstinline|d1| which encodes a false count fact is added. Additionally, there are two training rules, which just retrieve the fact \lstinline|d| to increase its activity and then reset the state to the initial state of the model in listing~\ref{exmod:lst:example_counting}. The goal is set to a chunk, which leads the first training rule to match at first. Furthermore, a broken rule which matches the same context as the original \lstinline|increment| rule is added. The initial utility of the correct \lstinline|increment| rule is set to 8, whereas the corrupted rule gets an initial value of 0. Additionally, the reward the rule \lstinline|stop| can distribute, is set to 15, so the reaching of the final state is rewarded and all rules which lead to that state get a certain amount of this reward. The full code can be found in appendix~\ref{app:ex:subsymbolic_layer}. 
+The subsymbolic layer is turned on and chunk \lstinline|d1| which encodes a false count fact is added. Additionally, there are two training rules which just retrieve the fact \lstinline|d| to increase its activity and then reset the state to the initial state of the model in listing~\ref{exmod:lst:example_counting}. The goal is set to a chunk, which leads the first training rule to match at first. Furthermore, a broken rule which matches the same context as the original \lstinline|increment| rule is added. The initial utility of the correct \lstinline|increment| rule is set to 8, whereas the corrupted rule gets an initial value of 0. Additionally, the reward the rule \lstinline|stop| can distribute is set to 15, so reaching the final state is rewarded and all rules which lead to that state get a certain amount of this reward. The full code can be found in appendix~\ref{app:ex:subsymbolic_layer}. 
 
 When executing the resulting CHR model, this yields the following output (times have been cut after four digits):
 
@@ -467,9 +467,7 @@ output:4
 \end{lstlisting}
 \flushbottom
 
-Due to the training of chunk~\lstinline|d| which increased the activation of this chunk according to the base-level learning equation, the other matching chunk \lstinline|d1| is not being retrieved in the computational process.
-
-Furthermore, the rule \lstinline|increment| is applied instead of \lstinline|incrementx|, although both are matching the context, due to the higher intitial utility value of \lstinline|increment|. The reward of the rule stop leads to the following utilities at the end of the computation (taken from the final CHR store):
+Due to the training of chunk~\lstinline|d| which increased the activation of this chunk according to the base-level learning equation, the other matching chunk \lstinline|d1| is not being retrieved in the computational process. Furthermore, the rule \lstinline|increment| is applied instead of \lstinline|incrementx|, although both are matching the context, due to the higher intitial utility value of \lstinline|increment|. The reward of the rule \lstinline|stop| leads to the following utilities at the end of the computation (taken from the final CHR store):
 
 \begin{lstlisting}
 production_utility(train1,6.916852474603892)
@@ -480,9 +478,9 @@ production_utility(stop,7.0)
 production_utility(incrementx,0)
 \end{lstlisting}
 
-All rules except from \lstinline|increment| and \lstinline|incrementx| have been initialized with an utility value of 5. The two rules \lstinline|start|, \lstinline|increment|, \lstinline|stop| and the training productions have a higher utility value than in the beginning, whereas the other rules have their initial values. This is the case because only the rules \lstinline|start| and \lstinline|increment| have lead to the final state and therefore have received the reward distributed by the \lstinline|stop| rule.
+All rules except from \lstinline|increment| and \lstinline|incrementx| have been initialized with an utility value of 5. The rules \lstinline|start|, \lstinline|increment|, \lstinline|stop| and the training productions have a higher utility value than in the beginning, whereas the other rules have their initial values. This is the case because only the rules \lstinline|start| and \lstinline|increment| have lead to the final state and therefore have received the reward distributed by the \lstinline|stop| rule.
 
-Note that the times may vary from the execution of the same model in the vanilla implementation, since some constants are set differently.
+Note that the times in the output may vary from the execution of the same model in the vanilla implementation, since some constants are set differently.
 
 %\section{The Addition Model}
 
@@ -533,7 +531,7 @@ child{node[category] {bird}[sibling distance=1.5cm]
 \label{fig:semantic_model_example}
 \end{figure}
 
-Chunks, which encode a property of an object have the form as illustrated in figure~\ref{fig:semantic_model_example:chunks:property}: Each property chunk has a slot \emph{object} which encodes the name of the object. The slot \emph{attribute} holds the name of the attribute like for example \emph{dangerous} or \emph{locomotion}. In the \emph{value} slot, the value of the attribute is defined. The value of the attribute \emph{locomotion} is \emph{swimming} in this example. The chunk in figure~\ref{fig:semantic_model_example:chunks:category} encodes the membership of the object \emph{shark} in the category \emph{fish}. 
+Chunks which encode a property of an object are of the form illustrated in figure~\ref{fig:semantic_model_example:chunks:property}: Each property chunk has a slot \emph{object} which encodes the name of the object. The slot \emph{attribute} holds the name of the attribute like for example \emph{dangerous} or \emph{locomotion}. In the \emph{value} slot, the value of the attribute is defined. The value of the attribute \emph{locomotion} is \emph{swimming} in this example. The chunk in figure~\ref{fig:semantic_model_example:chunks:category} encodes the membership of the object \emph{shark} in the category \emph{fish}. 
 
 \begin{figure}[htb]
 \centering
@@ -575,6 +573,7 @@ Chunks, which encode a property of an object have the form as illustrated in fig
 
 
 To answer a query like ``Is a canary an animal?'' which cannot be answered directly from a \emph{property} chunk, the model must support a recursive search in the tree. The full model code and translation can be found in appendix~\ref{app:ex:semantic_model}. The model uses the concept of duplicate slot tests as described in section~\ref{implementation:duplicate_slot_tests} (see page~\pageref{implementation:duplicate_slot_tests}). However, the compiler cannot handle those tests in the current version and hence the compiled model has to be edited using the pattern from section~\ref{implementation:duplicate_slot_tests}:
+\enlargethispage{-\baselineskip}
 
 \begin{lstlisting}
 =retrieval>
@@ -588,8 +587,8 @@ To answer a query like ``Is a canary an animal?'' which cannot be answered direc
 has to be translated to:
 
 \begin{lstlisting}
-chain-category@
-  buffer(goal,_,A),
+<<<chain-category>>> @
+  <<buffer(goal,_,A),
     chunk(A,is-member),
     chunk_has_slot(A,object,C),
     chunk_has_slot(A,category,D),
@@ -599,12 +598,12 @@ chain-category@
     chunk_has_slot(B,object,C),
     chunk_has_slot(B,attribute,category),
     chunk_has_slot(B,value,E)
-  \ apply_rule(chain-category) 
+  \ apply_rule(chain-category)>>
 <=> 
-  C\==nil,
+  <<<C\==nil,
   D\==nil,
   E\==nil,
-  E\==D |
+  E\==D>>> |
   ...
 \end{lstlisting}
 
