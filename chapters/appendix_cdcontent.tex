@@ -1,0 +1,11 @@
+\chapter{CD Content}
+\label{appendix:cd_content}
+
+\begin{description}
+ \item[Thesis] The thesis can be found in the folder \lstinline|thesis|. It contains the \LaTeX{} source files. The base document is \lstinline|thesis.tex|, the individual chapters can be found in \lstinline|chapters|. To compile the files, a lot of packages are needed. For example, the graphics are produced with Ti\emph{k}Z, so make sure, all necessary packages are installed on your system.
+ \item[CHR-ACT-R] The source of the implementation presented in this work can be found in the directory \lstinline|CHR-ACT-R/src|. It is separated into two parts: the compiler and the framework.
+ \begin{itemize}
+  \item The compiler is in the directory \lstinline|compiler|. It can be started by consulting \lstinline|actr2chr.pl| in SWI-Prolog. The query \lstinline|compile_file(f).| compiles the file \lstinline|f|. There are several example model files in the directory of the compiler which all start with the prefix \lstinline|example_|.
+  \item The framework can be found in the directory \lstinline|core|. To load a model, the compiled model file has to be consulted in SWI-Prolog. There are several compiled example models all starting with the prefix \lstinline|example_|. Make sure that the models are in the same folder as the framework. The query \lstinline|run.| runs the model.
+ \end{itemize}
+\end{description}
