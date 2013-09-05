@@ -1,24 +1,24 @@
 \chapter{Introduction}
 
-\emph{Computational psychology} or \emph{computational cognitive modeling} is a research field in the cognitive sciences. Among the other approaches -- mathematical and verbal-conceptual modeling, ``computational modeling appears to be the most promising approach in many ways and offers the flexibility and the expressive power that no other approaches can match'' \cite[vii]{sun_introduction_2008}. It explores human cognition by implementing detailed computational models that enable computers to execute them and simulate human behaviour \cite[3]{sun_introduction_2008}. By conducting the same experiments with humans and with simulations of the suggested underlying cognitive models, the plausibility of models can be checked and models can be improved gradually. This approach is illustrated in figure~\ref{fig:cognitive_modeling_exp}. Furthermore, an important benefit of computational models is that they are -- as a matter of principle -- very detailed and have a very clear semantics, in order that they can be executed by a computer. 
+\emph{Computational psychology} or \emph{computational cognitive modeling} is a research field in the cognitive sciences. Among the other approaches -- mathematical and verbal-conceptual modeling -- ``computational modeling appears to be the most promising approach in many ways and offers the flexibility and the expressive power that no other approaches can match'' \cite[vii]{sun_introduction_2008}. It explores human cognition by implementing detailed computational models that enable computers to execute them and simulate human behaviour \cite[3]{sun_introduction_2008}. By conducting the same experiments with humans and with simulations of the suggested underlying cognitive models, the plausibility of models can be checked and models can be improved gradually. This approach is illustrated in figure~\ref{fig:cognitive_modeling_exp}. Furthermore, an important benefit of computational models is that they are -- as a matter of principle -- detailed and have a clear semantics, in order to be executed by a computer. Hence, the problem of being imprecise about a model definition, as it may appear with verbal modeling, can be overcome.
 
 \begin{figure}[hbt]
 \centering
 % Define block styles
 \tikzstyle{decision} = [diamond, draw, fill=blue!20, 
-    text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
+    text width=4.5em, text badly centered, inner sep=0pt]
 \tikzstyle{block} = [rectangle, draw, fill=blue!20, 
     text width=5em, text centered, rounded corners, minimum height=2.5em]
 \tikzstyle{line} = [draw, -latex']
-\tikzstyle{cloud} = [draw, ellipse,fill=red!20, node distance=3cm,
+\tikzstyle{cloud} = [draw, ellipse,fill=red!20, 
     minimum height=1.5em]
     
-\begin{tikzpicture}[node distance = 2cm, auto]
+\begin{tikzpicture}[node distance = 2.5cm, auto]
     % Place nodes
     \node [block] (experiment) {experiment};
     \node [cloud, below left of=experiment] (humansub) {\parbox{1.5cm}{\centering human subjects}};
     \node [cloud, below right of=experiment] (cogmod) {\parbox{1.5cm}{\centering cognitive model}};
-    \node [decision, below of=experiment, node distance=4.5cm] (match) {match?};
+    \node [decision, below of=experiment, node distance=3.8cm] (match) {match?};
     \node [block, below of=match, node distance=2cm] (update) {update model};
     % Draw edges
     \path [line] (experiment) -- (humansub);
